@@ -1,0 +1,1378 @@
+<!doctype html>
+<html lang="en" class="h-full">
+ <head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Is Your Business AI-Resilient?™</title>
+  <script src="https://cdn.tailwindcss.com/3.4.17"></script>
+  <script src="/_sdk/element_sdk.js"></script>
+  <script src="/_sdk/data_sdk.js"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&amp;family=Inter:wght@400;500;600&amp;display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg-primary: #0a0f1c;
+      --bg-secondary: #111827;
+      --text-primary: #f8fafc;
+      --accent-primary: #3b82f6;
+      --accent-secondary: #1e3a5f;
+    }
+    * { box-sizing: border-box; }
+    html, body { margin: 0; padding: 0; }
+    .font-display { font-family: 'Space Grotesk', sans-serif; }
+    .font-body { font-family: 'Inter', sans-serif; }
+    .gradient-bg { background: linear-gradient(135deg, #0a0f1c 0%, #1a1f3c 50%, #0a0f1c 100%); }
+    .glass-card { background: rgba(17, 24, 39, 0.8); backdrop-filter: blur(12px); border: 1px solid rgba(59, 130, 246, 0.2); }
+    .glow-border { box-shadow: 0 0 20px rgba(59, 130, 246, 0.15); }
+    .progress-fill { transition: width 0.4s ease-out; }
+    .fade-in { animation: fadeIn 0.3s ease-out; }
+    @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+    .score-ring { stroke-dasharray: 283; stroke-dashoffset: 283; transition: stroke-dashoffset 1.5s ease-out; }
+    .nav-link { transition: color 0.2s ease; }
+    .nav-link:hover { color: #3b82f6; }
+    .btn-primary { transition: all 0.2s ease; }
+    .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 8px 25px rgba(59, 130, 246, 0.4); }
+  </style>
+  <style>body { box-sizing: border-box; }</style>
+ </head>
+ <body class="h-full gradient-bg text-slate-100 font-body overflow-auto">
+  <div id="app" class="w-full h-full"><!-- Navigation -->
+   <nav id="navbar" class="fixed top-0 left-0 right-0 z-50 bg-slate-900/90 backdrop-blur-md border-b border-slate-800">
+    <div class="max-w-6xl mx-auto px-4 py-4 flex items-center justify-between">
+     <div class="font-display font-bold text-xl text-white">
+      AI-Resilient<span class="text-blue-500">™</span>
+     </div>
+     <div class="hidden md:flex items-center gap-8"><a href="#how-it-works" class="nav-link text-slate-300 text-sm">How It Works</a> <a href="#scorecard" class="nav-link text-slate-300 text-sm">Scorecard</a> <a href="#pricing" class="nav-link text-slate-300 text-sm">Pricing</a> <a href="#faq" class="nav-link text-slate-300 text-sm">FAQ</a>
+     </div><button onclick="showAssessment()" class="bg-blue-600 hover:bg-blue-700 text-white text-sm font-medium px-4 py-2 rounded-lg btn-primary"> Start Assessment </button>
+    </div>
+   </nav><!-- Main Landing Page -->
+   <main id="landing-page" class="pt-20"><!-- Hero Section -->
+    <section class="min-h-screen flex items-center justify-center px-4 py-20">
+     <div class="max-w-4xl mx-auto text-center">
+      <div class="inline-block mb-6 px-4 py-2 rounded-full bg-blue-500/10 border border-blue-500/30"><span class="text-blue-400 text-sm font-medium">Free 5-Minute Assessment</span>
+      </div>
+      <h1 id="hero-headline" class="font-display text-4xl md:text-6xl lg:text-7xl font-bold text-white mb-6 leading-tight">Is your business<br><span class="text-blue-500">AI-resilient?</span></h1>
+      <p id="hero-subheadline" class="text-lg md:text-xl text-slate-400 mb-10 max-w-2xl mx-auto leading-relaxed">Take the 5-minute assessment. Get your AI Resilience Score. Discover exactly where your business stands and what to do next.</p>
+      <div class="flex flex-col sm:flex-row gap-4 justify-center"><button id="hero-cta" onclick="showAssessment()" class="bg-blue-600 hover:bg-blue-700 text-white font-semibold px-8 py-4 rounded-xl text-lg btn-primary"> Start Free Assessment </button> <a href="#how-it-works" class="border border-slate-600 hover:border-slate-500 text-slate-300 font-medium px-8 py-4 rounded-xl text-lg transition-colors"> Learn More </a>
+      </div>
+      <div class="mt-12 flex items-center justify-center gap-8 text-sm text-slate-500">
+       <div class="flex items-center gap-2">
+        <svg class="w-5 h-5 text-green-500" fill="currentColor" viewbox="0 0 20 20">
+         <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" />
+        </svg><span>No credit card required</span>
+       </div>
+       <div class="flex items-center gap-2">
+        <svg class="w-5 h-5 text-green-500" fill="currentColor" viewbox="0 0 20 20">
+         <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" />
+        </svg><span>Results in 5 minutes</span>
+       </div>
+      </div>
+     </div>
+    </section><!-- Context/Proof Section -->
+    <section class="py-20 px-4 bg-slate-900/50">
+     <div class="max-w-5xl mx-auto">
+      <div class="text-center mb-16">
+       <h2 class="font-display text-3xl md:text-4xl font-bold text-white mb-6">The Reality of AI Adoption</h2>
+       <p class="text-slate-400 text-lg max-w-3xl mx-auto">Most businesses know AI matters. Few have a systematic approach to measuring readiness or building resilience. This assessment changes that.</p>
+      </div>
+      <div class="grid md:grid-cols-3 gap-8">
+       <div class="glass-card rounded-2xl p-8 text-center glow-border">
+        <div class="text-4xl font-display font-bold text-blue-500 mb-2">
+         73%
+        </div>
+        <p class="text-slate-400">of businesses lack a formal AI strategy</p>
+       </div>
+       <div class="glass-card rounded-2xl p-8 text-center glow-border">
+        <div class="text-4xl font-display font-bold text-blue-500 mb-2">
+         4.2x
+        </div>
+        <p class="text-slate-400">productivity gains for AI-integrated teams</p>
+       </div>
+       <div class="glass-card rounded-2xl p-8 text-center glow-border">
+        <div class="text-4xl font-display font-bold text-blue-500 mb-2">
+         18mo
+        </div>
+        <p class="text-slate-400">average competitive window before disruption</p>
+       </div>
+      </div>
+     </div>
+    </section><!-- How It Works -->
+    <section id="how-it-works" class="py-20 px-4">
+     <div class="max-w-5xl mx-auto">
+      <div class="text-center mb-16">
+       <h2 class="font-display text-3xl md:text-4xl font-bold text-white mb-6">How It Works</h2>
+       <p class="text-slate-400 text-lg">Three steps to clarity on your AI position.</p>
+      </div>
+      <div class="grid md:grid-cols-3 gap-8">
+       <div class="relative">
+        <div class="w-12 h-12 bg-blue-600 rounded-full flex items-center justify-center font-display font-bold text-xl mb-6">
+         1
+        </div>
+        <h3 class="font-display text-xl font-semibold text-white mb-3">Answer 20 Questions</h3>
+        <p class="text-slate-400">Evaluate your business across four critical dimensions of AI readiness. Takes approximately 5 minutes.</p>
+       </div>
+       <div class="relative">
+        <div class="w-12 h-12 bg-blue-600 rounded-full flex items-center justify-center font-display font-bold text-xl mb-6">
+         2
+        </div>
+        <h3 class="font-display text-xl font-semibold text-white mb-3">Get Your Score</h3>
+        <p class="text-slate-400">Receive your AI Resilience Score with category breakdowns and your current tier classification.</p>
+       </div>
+       <div class="relative">
+        <div class="w-12 h-12 bg-blue-600 rounded-full flex items-center justify-center font-display font-bold text-xl mb-6">
+         3
+        </div>
+        <h3 class="font-display text-xl font-semibold text-white mb-3">Take Action</h3>
+        <p class="text-slate-400">Get prioritized recommendations and a clear roadmap to strengthen your AI resilience.</p>
+       </div>
+      </div>
+     </div>
+    </section><!-- Scorecard Categories -->
+    <section id="scorecard" class="py-20 px-4 bg-slate-900/50">
+     <div class="max-w-5xl mx-auto">
+      <div class="text-center mb-16">
+       <h2 class="font-display text-3xl md:text-4xl font-bold text-white mb-6">The Four Pillars of AI Resilience</h2>
+       <p class="text-slate-400 text-lg max-w-3xl mx-auto">Your assessment evaluates readiness across these interconnected dimensions.</p>
+      </div>
+      <div class="grid md:grid-cols-2 gap-8">
+       <div class="glass-card rounded-2xl p-8 glow-border">
+        <div class="flex items-center gap-4 mb-4">
+         <div class="w-12 h-12 bg-emerald-500/20 rounded-xl flex items-center justify-center">
+          <svg class="w-6 h-6 text-emerald-500" fill="none" stroke="currentColor" viewbox="0 0 24 24">
+           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+          </svg>
+         </div>
+         <h3 class="font-display text-xl font-semibold text-white">Revenue Leverage</h3>
+        </div>
+        <p class="text-slate-400">How effectively are you using AI to identify opportunities, personalize customer experiences, and accelerate sales cycles?</p>
+       </div>
+       <div class="glass-card rounded-2xl p-8 glow-border">
+        <div class="flex items-center gap-4 mb-4">
+         <div class="w-12 h-12 bg-blue-500/20 rounded-xl flex items-center justify-center">
+          <svg class="w-6 h-6 text-blue-500" fill="none" stroke="currentColor" viewbox="0 0 24 24">
+           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z" />
+          </svg>
+         </div>
+         <h3 class="font-display text-xl font-semibold text-white">Operational Efficiency</h3>
+        </div>
+        <p class="text-slate-400">Are your workflows, processes, and daily operations enhanced by AI automation and intelligent systems?</p>
+       </div>
+       <div class="glass-card rounded-2xl p-8 glow-border">
+        <div class="flex items-center gap-4 mb-4">
+         <div class="w-12 h-12 bg-purple-500/20 rounded-xl flex items-center justify-center">
+          <svg class="w-6 h-6 text-purple-500" fill="none" stroke="currentColor" viewbox="0 0 24 24">
+           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
+          </svg>
+         </div>
+         <h3 class="font-display text-xl font-semibold text-white">Decision Intelligence</h3>
+        </div>
+        <p class="text-slate-400">Do you have AI-powered insights informing strategic decisions, forecasting, and resource allocation?</p>
+       </div>
+       <div class="glass-card rounded-2xl p-8 glow-border">
+        <div class="flex items-center gap-4 mb-4">
+         <div class="w-12 h-12 bg-amber-500/20 rounded-xl flex items-center justify-center">
+          <svg class="w-6 h-6 text-amber-500" fill="none" stroke="currentColor" viewbox="0 0 24 24">
+           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
+          </svg>
+         </div>
+         <h3 class="font-display text-xl font-semibold text-white">Strategic Positioning</h3>
+        </div>
+        <p class="text-slate-400">Is your business positioned to adapt as AI capabilities evolve? Do you have systems for continuous learning and improvement?</p>
+       </div>
+      </div>
+     </div>
+    </section><!-- Assessment Preview -->
+    <section class="py-20 px-4">
+     <div class="max-w-4xl mx-auto text-center">
+      <h2 class="font-display text-3xl md:text-4xl font-bold text-white mb-6">Sample Assessment Question</h2>
+      <div class="glass-card rounded-2xl p-8 md:p-12 glow-border">
+       <div class="text-sm text-blue-400 mb-4 uppercase tracking-wide">
+        Revenue Leverage
+       </div>
+       <p class="text-xl md:text-2xl text-white mb-8">"We use AI tools to identify and prioritize high-value leads or customer segments."</p>
+       <div class="space-y-4 max-w-md mx-auto text-left">
+        <div class="p-4 rounded-xl border border-slate-700 hover:border-blue-500 transition-colors cursor-pointer"><span class="text-slate-300">Not implemented</span>
+        </div>
+        <div class="p-4 rounded-xl border border-slate-700 hover:border-blue-500 transition-colors cursor-pointer"><span class="text-slate-300">Partially implemented</span>
+        </div>
+        <div class="p-4 rounded-xl border border-slate-700 hover:border-blue-500 transition-colors cursor-pointer"><span class="text-slate-300">Fully implemented</span>
+        </div>
+       </div>
+      </div><button onclick="showAssessment()" class="mt-8 bg-blue-600 hover:bg-blue-700 text-white font-semibold px-8 py-4 rounded-xl text-lg btn-primary"> Start Your Assessment </button>
+     </div>
+    </section><!-- Pricing Section -->
+    <section id="pricing" class="py-20 px-4 bg-slate-900/50">
+     <div class="max-w-5xl mx-auto">
+      <div class="text-center mb-16">
+       <h2 class="font-display text-3xl md:text-4xl font-bold text-white mb-6">Choose Your Path</h2>
+       <p class="text-slate-400 text-lg">Get insights that match your needs.</p>
+      </div>
+      <div class="grid md:grid-cols-2 gap-8 max-w-4xl mx-auto"><!-- Free Tier -->
+       <div class="glass-card rounded-2xl p-8 glow-border">
+        <div class="text-sm text-slate-400 uppercase tracking-wide mb-2">
+         Free
+        </div>
+        <div class="text-4xl font-display font-bold text-white mb-6">
+         $0
+        </div>
+        <ul class="space-y-4 mb-8">
+         <li class="flex items-start gap-3">
+          <svg class="w-5 h-5 text-green-500 mt-0.5" fill="currentColor" viewbox="0 0 20 20">
+           <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" />
+          </svg><span class="text-slate-300">AI Resilience Score (0-100%)</span></li>
+         <li class="flex items-start gap-3">
+          <svg class="w-5 h-5 text-green-500 mt-0.5" fill="currentColor" viewbox="0 0 20 20">
+           <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" />
+          </svg><span class="text-slate-300">Tier Classification</span></li>
+         <li class="flex items-start gap-3">
+          <svg class="w-5 h-5 text-green-500 mt-0.5" fill="currentColor" viewbox="0 0 20 20">
+           <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" />
+          </svg><span class="text-slate-300">3 Priority Moves</span></li>
+         <li class="flex items-start gap-3">
+          <svg class="w-5 h-5 text-green-500 mt-0.5" fill="currentColor" viewbox="0 0 20 20">
+           <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" />
+          </svg><span class="text-slate-300">30-Day Action Items</span></li>
+        </ul><button onclick="showAssessment()" class="w-full border border-slate-600 hover:border-slate-500 text-white font-medium py-3 rounded-xl transition-colors"> Start Free Assessment </button>
+       </div><!-- Pro Tier -->
+       <div class="glass-card rounded-2xl p-8 border-2 border-blue-500 relative">
+        <div class="absolute -top-3 left-1/2 -translate-x-1/2 bg-blue-600 text-white text-xs font-semibold px-4 py-1 rounded-full">
+         RECOMMENDED
+        </div>
+        <div class="text-sm text-blue-400 uppercase tracking-wide mb-2">
+         Pro
+        </div>
+        <div class="text-4xl font-display font-bold text-white mb-6">
+         $49 <span class="text-lg text-slate-400 font-normal">one-time</span>
+        </div>
+        <ul class="space-y-4 mb-8">
+         <li class="flex items-start gap-3">
+          <svg class="w-5 h-5 text-green-500 mt-0.5" fill="currentColor" viewbox="0 0 20 20">
+           <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" />
+          </svg><span class="text-slate-300">Everything in Free</span></li>
+         <li class="flex items-start gap-3">
+          <svg class="w-5 h-5 text-blue-500 mt-0.5" fill="currentColor" viewbox="0 0 20 20">
+           <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" />
+          </svg><span class="text-white font-medium">90-Day AI Advantage Plan</span></li>
+         <li class="flex items-start gap-3">
+          <svg class="w-5 h-5 text-blue-500 mt-0.5" fill="currentColor" viewbox="0 0 20 20">
+           <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" />
+          </svg><span class="text-white font-medium">Department Automation Map</span></li>
+         <li class="flex items-start gap-3">
+          <svg class="w-5 h-5 text-blue-500 mt-0.5" fill="currentColor" viewbox="0 0 20 20">
+           <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" />
+          </svg><span class="text-white font-medium">ROI Tracking Template</span></li>
+         <li class="flex items-start gap-3">
+          <svg class="w-5 h-5 text-blue-500 mt-0.5" fill="currentColor" viewbox="0 0 20 20">
+           <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" />
+          </svg><span class="text-white font-medium">Risk Exposure Analysis</span></li>
+        </ul><button onclick="showAssessment()" class="w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 rounded-xl btn-primary"> Start Assessment &amp; Unlock Pro </button>
+       </div>
+      </div>
+     </div>
+    </section><!-- FAQ Section -->
+    <section id="faq" class="py-20 px-4">
+     <div class="max-w-3xl mx-auto">
+      <div class="text-center mb-16">
+       <h2 class="font-display text-3xl md:text-4xl font-bold text-white mb-6">Frequently Asked Questions</h2>
+      </div>
+      <div class="space-y-4">
+       <div class="glass-card rounded-xl p-6">
+        <h3 class="font-semibold text-white mb-2">How long does the assessment take?</h3>
+        <p class="text-slate-400">Approximately 5 minutes. There are 20 questions, each requiring a simple selection from three options.</p>
+       </div>
+       <div class="glass-card rounded-xl p-6">
+        <h3 class="font-semibold text-white mb-2">What do the tier classifications mean?</h3>
+        <p class="text-slate-400">Your tier reflects your current AI readiness: AI Exposed (0-25%), AI Curious (26-50%), AI Enabled (51-75%), or AI Integrated (76-100%). Each tier comes with specific recommendations.</p>
+       </div>
+       <div class="glass-card rounded-xl p-6">
+        <h3 class="font-semibold text-white mb-2">What is included in the Pro upgrade?</h3>
+        <p class="text-slate-400">The Pro upgrade includes a detailed 90-Day AI Advantage Plan, department-specific automation opportunities, an ROI tracking template, and a competitive risk exposure analysis.</p>
+       </div>
+       <div class="glass-card rounded-xl p-6">
+        <h3 class="font-semibold text-white mb-2">Is my data secure?</h3>
+        <p class="text-slate-400">Yes. Your assessment responses and email are stored securely. We do not share your data with third parties.</p>
+       </div>
+       <div class="glass-card rounded-xl p-6">
+        <h3 class="font-semibold text-white mb-2">Can I retake the assessment?</h3>
+        <p class="text-slate-400">Yes. You can retake the assessment at any time to track your progress as you implement AI initiatives.</p>
+       </div>
+      </div>
+     </div>
+    </section><!-- Footer -->
+    <footer class="py-12 px-4 border-t border-slate-800">
+     <div class="max-w-6xl mx-auto">
+      <div class="flex flex-col md:flex-row items-center justify-between gap-6">
+       <div class="font-display font-bold text-xl text-white">
+        AI-Resilient<span class="text-blue-500">™</span>
+       </div>
+       <div class="flex items-center gap-8 text-sm text-slate-400"><a href="#" class="hover:text-white transition-colors">Privacy Policy</a> <a href="#" class="hover:text-white transition-colors">Terms of Service</a> <a href="#" class="hover:text-white transition-colors">Contact</a>
+       </div>
+       <div class="text-sm text-slate-500">
+        © 2024 AI-Resilient. All rights reserved.
+       </div>
+      </div>
+     </div>
+    </footer>
+   </main><!-- Assessment Container (Hidden by default) -->
+   <div id="assessment-container" class="hidden min-h-screen pt-20 px-4 py-8">
+    <div class="max-w-2xl mx-auto"><!-- Progress Bar -->
+     <div class="mb-8">
+      <div class="flex items-center justify-between text-sm text-slate-400 mb-2"><span id="progress-label">Question 1 of 20</span> <span id="progress-percent">0%</span>
+      </div>
+      <div class="h-2 bg-slate-800 rounded-full overflow-hidden">
+       <div id="progress-bar" class="h-full bg-blue-600 progress-fill" style="width: 0%"></div>
+      </div>
+     </div><!-- Question Card -->
+     <div id="question-card" class="glass-card rounded-2xl p-8 glow-border fade-in">
+      <div id="question-category" class="text-sm text-blue-400 uppercase tracking-wide mb-4">
+       Category
+      </div>
+      <p id="question-text" class="text-xl md:text-2xl text-white mb-8">Question text goes here</p>
+      <div id="options-container" class="space-y-4"><!-- Options will be rendered here -->
+      </div>
+      <div id="validation-error" class="hidden mt-4 text-red-400 text-sm">
+       Please select an answer to continue.
+      </div>
+     </div><!-- Navigation Buttons -->
+     <div class="flex items-center justify-between mt-8"><button id="prev-btn" onclick="prevQuestion()" class="hidden border border-slate-600 hover:border-slate-500 text-slate-300 font-medium px-6 py-3 rounded-xl transition-colors"> Previous </button>
+      <div></div><button id="next-btn" onclick="nextQuestion()" class="bg-blue-600 hover:bg-blue-700 text-white font-semibold px-8 py-3 rounded-xl btn-primary"> Next </button>
+     </div>
+    </div>
+   </div><!-- Email Collection (Hidden by default) -->
+   <div id="email-container" class="hidden min-h-screen pt-20 px-4 py-8 flex items-center justify-center">
+    <div class="max-w-md w-full glass-card rounded-2xl p-8 glow-border fade-in">
+     <div class="text-center mb-8">
+      <div class="w-16 h-16 bg-blue-600/20 rounded-full flex items-center justify-center mx-auto mb-4">
+       <svg class="w-8 h-8 text-blue-500" fill="none" stroke="currentColor" viewbox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+       </svg>
+      </div>
+      <h2 class="font-display text-2xl font-bold text-white mb-2">Almost There!</h2>
+      <p class="text-slate-400">Enter your email to receive your AI Resilience Score and personalized recommendations.</p>
+     </div>
+     <form id="email-form" onsubmit="submitEmail(event)"><label for="email-input" class="block text-sm text-slate-400 mb-2">Email Address</label> <input type="email" id="email-input" required placeholder="you@company.com" class="w-full bg-slate-800 border border-slate-700 rounded-xl px-4 py-3 text-white placeholder-slate-500 focus:outline-none focus:border-blue-500 mb-4">
+      <div id="email-error" class="hidden text-red-400 text-sm mb-4">
+       Please enter a valid email address.
+      </div><button type="submit" id="email-submit-btn" class="w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 rounded-xl btn-primary"> Get My Results </button>
+     </form>
+     <p class="text-xs text-slate-500 text-center mt-4">We respect your privacy. No spam, ever.</p>
+    </div>
+   </div><!-- Results View (Hidden by default) -->
+   <div id="results-container" class="hidden min-h-screen pt-20 px-4 py-8">
+    <div class="max-w-4xl mx-auto"><!-- Score Header -->
+     <div class="text-center mb-12 fade-in">
+      <h2 class="font-display text-3xl md:text-4xl font-bold text-white mb-4">Your AI Resilience Score</h2>
+      <div class="relative inline-block">
+       <svg class="w-48 h-48" viewbox="0 0 100 100"><circle cx="50" cy="50" r="45" fill="none" stroke="#1e293b" stroke-width="8" /> <circle id="score-ring" class="score-ring" cx="50" cy="50" r="45" fill="none" stroke="#3b82f6" stroke-width="8" stroke-linecap="round" transform="rotate(-90 50 50)" />
+       </svg>
+       <div class="absolute inset-0 flex items-center justify-center">
+        <div>
+         <div id="score-display" class="font-display text-5xl font-bold text-white">
+          0%
+         </div>
+         <div id="tier-display" class="text-blue-400 text-sm">
+          Loading...
+         </div>
+        </div>
+       </div>
+      </div>
+     </div><!-- Category Scores -->
+     <div class="grid md:grid-cols-2 gap-6 mb-12">
+      <div id="category-scores" class="space-y-4"><!-- Category scores will be rendered here -->
+      </div>
+      <div class="glass-card rounded-2xl p-6 glow-border">
+       <h3 class="font-display text-lg font-semibold text-white mb-4">Your Tier: <span id="tier-name" class="text-blue-400">Loading...</span></h3>
+       <p id="tier-description" class="text-slate-400 text-sm mb-4">Loading tier description...</p>
+      </div>
+     </div><!-- Free Results Section -->
+     <div id="free-results" class="space-y-8 mb-12"><!-- Priority Moves -->
+      <div class="glass-card rounded-2xl p-8 glow-border">
+       <h3 class="font-display text-xl font-semibold text-white mb-6">Your 3 Priority Moves</h3>
+       <p class="text-slate-400 text-sm mb-4">Based on your lowest-scoring category: <span id="lowest-category" class="text-blue-400">Loading...</span></p>
+       <div id="priority-moves" class="space-y-4"><!-- Priority moves will be rendered here -->
+       </div>
+      </div><!-- 30-Day Actions -->
+      <div class="glass-card rounded-2xl p-8 glow-border">
+       <h3 class="font-display text-xl font-semibold text-white mb-6">Your Next 30 Days</h3>
+       <div id="thirty-day-actions" class="space-y-4"><!-- 30-day actions will be rendered here -->
+       </div>
+      </div>
+     </div><!-- Pro Upsell (for non-Pro users) -->
+     <div id="pro-upsell" class="glass-card rounded-2xl p-8 border-2 border-blue-500 mb-12">
+      <div class="flex flex-col md:flex-row items-center gap-8">
+       <div class="flex-1">
+        <h3 class="font-display text-2xl font-bold text-white mb-4">Unlock Your 90-Day AI Advantage Plan</h3>
+        <p class="text-slate-400 mb-4">Get the complete roadmap to transform your business with AI, including department-specific opportunities and ROI tracking.</p>
+        <ul class="space-y-2 text-sm">
+         <li class="flex items-center gap-2 text-slate-300">
+          <svg class="w-4 h-4 text-blue-500" fill="currentColor" viewbox="0 0 20 20">
+           <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" />
+          </svg> Month-by-month implementation plan</li>
+         <li class="flex items-center gap-2 text-slate-300">
+          <svg class="w-4 h-4 text-blue-500" fill="currentColor" viewbox="0 0 20 20">
+           <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" />
+          </svg> Department automation opportunities</li>
+         <li class="flex items-center gap-2 text-slate-300">
+          <svg class="w-4 h-4 text-blue-500" fill="currentColor" viewbox="0 0 20 20">
+           <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" />
+          </svg> Competitive risk analysis</li>
+        </ul>
+       </div>
+       <div class="text-center">
+        <div class="text-4xl font-display font-bold text-white mb-2">
+         $49
+        </div>
+        <div class="text-slate-400 text-sm mb-4">
+         One-time payment
+        </div><button onclick="showPaywall()" class="bg-blue-600 hover:bg-blue-700 text-white font-semibold px-8 py-3 rounded-xl btn-primary"> Unlock Pro </button>
+       </div>
+      </div>
+     </div><!-- Pro Results (Hidden until unlocked) -->
+     <div id="pro-results" class="hidden space-y-8 mb-12"><!-- 90-Day Plan -->
+      <div class="glass-card rounded-2xl p-8 glow-border">
+       <div class="flex items-center gap-3 mb-6">
+        <div class="px-3 py-1 bg-blue-600 rounded-full text-xs font-semibold text-white">
+         PRO
+        </div>
+        <h3 class="font-display text-xl font-semibold text-white">Your 90-Day AI Advantage Plan</h3>
+       </div>
+       <div class="grid md:grid-cols-3 gap-6"><!-- Month 1 -->
+        <div class="bg-slate-800/50 rounded-xl p-6">
+         <div class="text-blue-400 text-sm font-semibold mb-2">
+          Month 1: Foundation
+         </div>
+         <ul id="month1-tasks" class="space-y-2 text-sm text-slate-300"><!-- Tasks will be rendered here -->
+         </ul>
+        </div><!-- Month 2 -->
+        <div class="bg-slate-800/50 rounded-xl p-6">
+         <div class="text-blue-400 text-sm font-semibold mb-2">
+          Month 2: Integration
+         </div>
+         <ul id="month2-tasks" class="space-y-2 text-sm text-slate-300"><!-- Tasks will be rendered here -->
+         </ul>
+        </div><!-- Month 3 -->
+        <div class="bg-slate-800/50 rounded-xl p-6">
+         <div class="text-blue-400 text-sm font-semibold mb-2">
+          Month 3: Acceleration
+         </div>
+         <ul id="month3-tasks" class="space-y-2 text-sm text-slate-300"><!-- Tasks will be rendered here -->
+         </ul>
+        </div>
+       </div>
+      </div><!-- Department Automation Map -->
+      <div class="glass-card rounded-2xl p-8 glow-border">
+       <div class="flex items-center gap-3 mb-6">
+        <div class="px-3 py-1 bg-blue-600 rounded-full text-xs font-semibold text-white">
+         PRO
+        </div>
+        <h3 class="font-display text-xl font-semibold text-white">Department Automation Opportunities</h3>
+       </div>
+       <div class="grid md:grid-cols-2 gap-6" id="department-opportunities"><!-- Opportunities will be rendered here -->
+       </div>
+      </div><!-- ROI Tracking Template -->
+      <div class="glass-card rounded-2xl p-8 glow-border">
+       <div class="flex items-center gap-3 mb-6">
+        <div class="px-3 py-1 bg-blue-600 rounded-full text-xs font-semibold text-white">
+         PRO
+        </div>
+        <h3 class="font-display text-xl font-semibold text-white">ROI Tracking Scorecard</h3>
+       </div>
+       <div class="overflow-x-auto">
+        <table class="w-full text-sm">
+         <thead>
+          <tr class="border-b border-slate-700">
+           <th class="text-left py-3 px-4 text-slate-400 font-medium">Metric</th>
+           <th class="text-left py-3 px-4 text-slate-400 font-medium">Baseline</th>
+           <th class="text-left py-3 px-4 text-slate-400 font-medium">30-Day Target</th>
+           <th class="text-left py-3 px-4 text-slate-400 font-medium">90-Day Target</th>
+          </tr>
+         </thead>
+         <tbody id="roi-table-body"><!-- ROI rows will be rendered here -->
+         </tbody>
+        </table>
+       </div>
+      </div><!-- Risk Exposure Map -->
+      <div class="glass-card rounded-2xl p-8 glow-border">
+       <div class="flex items-center gap-3 mb-6">
+        <div class="px-3 py-1 bg-blue-600 rounded-full text-xs font-semibold text-white">
+         PRO
+        </div>
+        <h3 class="font-display text-xl font-semibold text-white">Competitive Risk Exposure</h3>
+       </div>
+       <p class="text-slate-400 text-sm mb-6">What breaks if competitors adopt AI faster than you:</p>
+       <div id="risk-items" class="space-y-4"><!-- Risk items will be rendered here -->
+       </div>
+      </div>
+     </div><!-- Retake Button -->
+     <div class="text-center mb-12"><button onclick="retakeAssessment()" class="border border-slate-600 hover:border-slate-500 text-slate-300 font-medium px-6 py-3 rounded-xl transition-colors"> Retake Assessment </button>
+     </div>
+    </div>
+   </div><!-- Paywall Modal -->
+   <div id="paywall-modal" class="hidden fixed inset-0 z-50 flex items-center justify-center p-4">
+    <div class="absolute inset-0 bg-black/80 backdrop-blur-sm" onclick="hidePaywall()"></div>
+    <div class="relative glass-card rounded-2xl p-8 max-w-md w-full glow-border fade-in"><button onclick="hidePaywall()" class="absolute top-4 right-4 text-slate-400 hover:text-white">
+      <svg class="w-6 h-6" fill="none" stroke="currentColor" viewbox="0 0 24 24">
+       <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+      </svg></button>
+     <div class="text-center mb-6">
+      <div class="w-16 h-16 bg-blue-600/20 rounded-full flex items-center justify-center mx-auto mb-4">
+       <svg class="w-8 h-8 text-blue-500" fill="none" stroke="currentColor" viewbox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
+       </svg>
+      </div>
+      <h3 class="font-display text-2xl font-bold text-white mb-2">Unlock Pro Results</h3>
+      <p class="text-slate-400">Get your complete 90-Day AI Advantage Plan and detailed action roadmap.</p>
+     </div>
+     <div class="bg-slate-800/50 rounded-xl p-4 mb-6">
+      <div class="flex items-center justify-between mb-4"><span class="text-slate-300">Pro Upgrade</span> <span class="font-display font-bold text-white text-xl">$49</span>
+      </div>
+      <ul class="space-y-2 text-sm text-slate-400">
+       <li class="flex items-center gap-2">
+        <svg class="w-4 h-4 text-green-500" fill="currentColor" viewbox="0 0 20 20">
+         <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" />
+        </svg> 90-Day Implementation Plan</li>
+       <li class="flex items-center gap-2">
+        <svg class="w-4 h-4 text-green-500" fill="currentColor" viewbox="0 0 20 20">
+         <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" />
+        </svg> Department Automation Map</li>
+       <li class="flex items-center gap-2">
+        <svg class="w-4 h-4 text-green-500" fill="currentColor" viewbox="0 0 20 20">
+         <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" />
+        </svg> ROI Tracking Template</li>
+       <li class="flex items-center gap-2">
+        <svg class="w-4 h-4 text-green-500" fill="currentColor" viewbox="0 0 20 20">
+         <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" />
+        </svg> Risk Exposure Analysis</li>
+      </ul>
+     </div><a href="https://buy.stripe.com/placeholder" target="_blank" rel="noopener noreferrer" id="stripe-link" class="block w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 rounded-xl text-center btn-primary mb-3"> Pay with Stripe </a> <button onclick="simulateProUnlock()" class="w-full border border-slate-600 hover:border-slate-500 text-slate-300 font-medium py-3 rounded-xl transition-colors text-sm"> Simulate Unlock (Demo) </button>
+     <p class="text-xs text-slate-500 text-center mt-4">Secure payment via Stripe. Instant access after payment.</p>
+    </div>
+   </div><!-- Loading Overlay -->
+   <div id="loading-overlay" class="hidden fixed inset-0 z-50 flex items-center justify-center bg-slate-900/90">
+    <div class="text-center">
+     <div class="w-12 h-12 border-4 border-blue-600 border-t-transparent rounded-full animate-spin mx-auto mb-4"></div>
+     <p class="text-slate-400">Calculating your results...</p>
+    </div>
+   </div>
+  </div>
+  <script>
+    // Assessment Questions Data
+    const assessmentQuestions = [
+      // Revenue Leverage (5 questions)
+      {
+        id: 1,
+        category: "Revenue Leverage",
+        prompt: "We use AI tools to identify and prioritize high-value leads or customer segments.",
+        options: [
+          { text: "Not implemented", score: 0 },
+          { text: "Partially implemented", score: 1 },
+          { text: "Fully implemented", score: 2 }
+        ]
+      },
+      {
+        id: 2,
+        category: "Revenue Leverage",
+        prompt: "Our marketing content (emails, ads, copy) is created or optimized with AI assistance.",
+        options: [
+          { text: "Not implemented", score: 0 },
+          { text: "Partially implemented", score: 1 },
+          { text: "Fully implemented", score: 2 }
+        ]
+      },
+      {
+        id: 3,
+        category: "Revenue Leverage",
+        prompt: "We personalize customer experiences using AI-driven recommendations or dynamic content.",
+        options: [
+          { text: "Not implemented", score: 0 },
+          { text: "Partially implemented", score: 1 },
+          { text: "Fully implemented", score: 2 }
+        ]
+      },
+      {
+        id: 4,
+        category: "Revenue Leverage",
+        prompt: "AI helps us predict customer churn or identify upsell opportunities.",
+        options: [
+          { text: "Not implemented", score: 0 },
+          { text: "Partially implemented", score: 1 },
+          { text: "Fully implemented", score: 2 }
+        ]
+      },
+      {
+        id: 5,
+        category: "Revenue Leverage",
+        prompt: "Our sales team uses AI tools for prospecting, outreach, or proposal generation.",
+        options: [
+          { text: "Not implemented", score: 0 },
+          { text: "Partially implemented", score: 1 },
+          { text: "Fully implemented", score: 2 }
+        ]
+      },
+      // Operational Efficiency (5 questions)
+      {
+        id: 6,
+        category: "Operational Efficiency",
+        prompt: "Repetitive administrative tasks (scheduling, data entry, reporting) are automated with AI.",
+        options: [
+          { text: "Not implemented", score: 0 },
+          { text: "Partially implemented", score: 1 },
+          { text: "Fully implemented", score: 2 }
+        ]
+      },
+      {
+        id: 7,
+        category: "Operational Efficiency",
+        prompt: "Customer support inquiries are handled or triaged by AI chatbots or assistants.",
+        options: [
+          { text: "Not implemented", score: 0 },
+          { text: "Partially implemented", score: 1 },
+          { text: "Fully implemented", score: 2 }
+        ]
+      },
+      {
+        id: 8,
+        category: "Operational Efficiency",
+        prompt: "Document processing (invoices, contracts, forms) uses AI for extraction or categorization.",
+        options: [
+          { text: "Not implemented", score: 0 },
+          { text: "Partially implemented", score: 1 },
+          { text: "Fully implemented", score: 2 }
+        ]
+      },
+      {
+        id: 9,
+        category: "Operational Efficiency",
+        prompt: "Team members use AI assistants for writing, research, or communication tasks.",
+        options: [
+          { text: "Not implemented", score: 0 },
+          { text: "Partially implemented", score: 1 },
+          { text: "Fully implemented", score: 2 }
+        ]
+      },
+      {
+        id: 10,
+        category: "Operational Efficiency",
+        prompt: "Workflow bottlenecks are identified and addressed using AI-powered analytics.",
+        options: [
+          { text: "Not implemented", score: 0 },
+          { text: "Partially implemented", score: 1 },
+          { text: "Fully implemented", score: 2 }
+        ]
+      },
+      // Decision Intelligence (5 questions)
+      {
+        id: 11,
+        category: "Decision Intelligence",
+        prompt: "Business decisions are informed by AI-generated insights or predictive models.",
+        options: [
+          { text: "Not implemented", score: 0 },
+          { text: "Partially implemented", score: 1 },
+          { text: "Fully implemented", score: 2 }
+        ]
+      },
+      {
+        id: 12,
+        category: "Decision Intelligence",
+        prompt: "We use AI for financial forecasting, demand planning, or resource allocation.",
+        options: [
+          { text: "Not implemented", score: 0 },
+          { text: "Partially implemented", score: 1 },
+          { text: "Fully implemented", score: 2 }
+        ]
+      },
+      {
+        id: 13,
+        category: "Decision Intelligence",
+        prompt: "Market research and competitive analysis include AI-powered data gathering or synthesis.",
+        options: [
+          { text: "Not implemented", score: 0 },
+          { text: "Partially implemented", score: 1 },
+          { text: "Fully implemented", score: 2 }
+        ]
+      },
+      {
+        id: 14,
+        category: "Decision Intelligence",
+        prompt: "Real-time dashboards powered by AI help us monitor key business metrics.",
+        options: [
+          { text: "Not implemented", score: 0 },
+          { text: "Partially implemented", score: 1 },
+          { text: "Fully implemented", score: 2 }
+        ]
+      },
+      {
+        id: 15,
+        category: "Decision Intelligence",
+        prompt: "Risk assessment and scenario planning incorporate AI-based analysis.",
+        options: [
+          { text: "Not implemented", score: 0 },
+          { text: "Partially implemented", score: 1 },
+          { text: "Fully implemented", score: 2 }
+        ]
+      },
+      // Strategic Positioning (5 questions)
+      {
+        id: 16,
+        category: "Strategic Positioning",
+        prompt: "We have a documented AI strategy with clear objectives and timelines.",
+        options: [
+          { text: "Not implemented", score: 0 },
+          { text: "Partially implemented", score: 1 },
+          { text: "Fully implemented", score: 2 }
+        ]
+      },
+      {
+        id: 17,
+        category: "Strategic Positioning",
+        prompt: "Team members receive training on AI tools and best practices.",
+        options: [
+          { text: "Not implemented", score: 0 },
+          { text: "Partially implemented", score: 1 },
+          { text: "Fully implemented", score: 2 }
+        ]
+      },
+      {
+        id: 18,
+        category: "Strategic Positioning",
+        prompt: "We actively monitor AI developments relevant to our industry.",
+        options: [
+          { text: "Not implemented", score: 0 },
+          { text: "Partially implemented", score: 1 },
+          { text: "Fully implemented", score: 2 }
+        ]
+      },
+      {
+        id: 19,
+        category: "Strategic Positioning",
+        prompt: "There is dedicated budget or resources allocated for AI initiatives.",
+        options: [
+          { text: "Not implemented", score: 0 },
+          { text: "Partially implemented", score: 1 },
+          { text: "Fully implemented", score: 2 }
+        ]
+      },
+      {
+        id: 20,
+        category: "Strategic Positioning",
+        prompt: "We have processes to evaluate, test, and adopt new AI tools systematically.",
+        options: [
+          { text: "Not implemented", score: 0 },
+          { text: "Partially implemented", score: 1 },
+          { text: "Fully implemented", score: 2 }
+        ]
+      }
+    ];
+
+    // Priority Moves by Category (based on lowest score)
+    const priorityMovesByCategory = {
+      "Revenue Leverage": [
+        "Implement an AI-powered lead scoring system to prioritize your sales pipeline",
+        "Start using AI copywriting tools for email campaigns and ad copy creation",
+        "Set up basic customer segmentation using AI clustering on your existing data"
+      ],
+      "Operational Efficiency": [
+        "Deploy an AI chatbot to handle first-line customer support inquiries",
+        "Automate document processing for invoices and contracts using AI extraction",
+        "Train your team on AI writing assistants for daily communication tasks"
+      ],
+      "Decision Intelligence": [
+        "Implement AI-powered dashboards for real-time business metric monitoring",
+        "Start using AI forecasting tools for demand planning and inventory",
+        "Establish a weekly AI-assisted competitive analysis routine"
+      ],
+      "Strategic Positioning": [
+        "Document your AI strategy with specific 90-day objectives",
+        "Schedule monthly AI capability reviews to stay current with developments",
+        "Allocate specific budget for AI tool experimentation and training"
+      ]
+    };
+
+    // 30-Day Actions by Category
+    const thirtyDayActionsByCategory = {
+      "Revenue Leverage": [
+        "Week 1-2: Audit current marketing tools for AI integration opportunities",
+        "Week 2-3: Pilot one AI tool for lead prioritization or content creation",
+        "Week 3-4: Measure baseline metrics and set 60-day improvement targets"
+      ],
+      "Operational Efficiency": [
+        "Week 1-2: Map all repetitive tasks across departments",
+        "Week 2-3: Implement one AI automation for your highest-volume task",
+        "Week 3-4: Train team on AI assistant usage and document time savings"
+      ],
+      "Decision Intelligence": [
+        "Week 1-2: Identify top 5 decisions that would benefit from better data",
+        "Week 2-3: Set up one AI-powered analytics dashboard or report",
+        "Week 3-4: Establish weekly review cadence using AI-generated insights"
+      ],
+      "Strategic Positioning": [
+        "Week 1-2: Draft initial AI strategy document with 3 key objectives",
+        "Week 2-3: Subscribe to 2-3 AI industry newsletters for your sector",
+        "Week 3-4: Complete first team AI training session or workshop"
+      ]
+    };
+
+    // 90-Day Plan Tasks
+    const ninetyDayPlan = {
+      month1: [
+        "Complete AI readiness audit across all departments",
+        "Select and pilot 2-3 AI tools aligned with priority gaps",
+        "Establish baseline metrics for AI impact measurement",
+        "Begin team AI literacy training program"
+      ],
+      month2: [
+        "Scale successful pilot tools to full team adoption",
+        "Integrate AI workflows into standard operating procedures",
+        "Implement cross-department AI collaboration protocols",
+        "Launch customer-facing AI features (chatbot, personalization)"
+      ],
+      month3: [
+        "Optimize AI implementations based on 60-day data",
+        "Expand AI capabilities to secondary use cases",
+        "Establish continuous AI monitoring and improvement cycles",
+        "Document ROI and prepare scaling roadmap"
+      ]
+    };
+
+    // Department Automation Opportunities
+    const departmentOpportunities = {
+      "Marketing": [
+        "AI content generation for blog posts and social media",
+        "Automated A/B testing and campaign optimization",
+        "Predictive audience segmentation and targeting",
+        "AI-powered SEO analysis and recommendations"
+      ],
+      "Sales": [
+        "Intelligent lead scoring and prioritization",
+        "AI-assisted proposal and quote generation",
+        "Automated follow-up sequences and timing",
+        "Conversation intelligence for call analysis"
+      ],
+      "Operations": [
+        "Automated inventory forecasting and ordering",
+        "AI-driven scheduling and resource allocation",
+        "Intelligent document processing and routing",
+        "Predictive maintenance and quality control"
+      ],
+      "Support": [
+        "24/7 AI chatbot for first-line inquiries",
+        "Automated ticket categorization and routing",
+        "Sentiment analysis for escalation triggers",
+        "Knowledge base article generation and updates"
+      ]
+    };
+
+    // ROI Tracking Metrics
+    const roiMetrics = [
+      { metric: "Time saved on repetitive tasks", baseline: "___hrs/week", target30: "+20%", target90: "+50%" },
+      { metric: "Lead conversion rate", baseline: "___%", target30: "+10%", target90: "+25%" },
+      { metric: "Customer support response time", baseline: "___hrs", target30: "-30%", target90: "-60%" },
+      { metric: "Content production volume", baseline: "___/month", target30: "+50%", target90: "+150%" },
+      { metric: "Decision turnaround time", baseline: "___days", target30: "-25%", target90: "-50%" }
+    ];
+
+    // Risk Exposure Items
+    const riskItems = [
+      {
+        risk: "Customer Experience Gap",
+        description: "Competitors using AI personalization will deliver superior experiences, increasing churn risk",
+        impact: "High"
+      },
+      {
+        risk: "Cost Efficiency Disadvantage",
+        description: "Without AI automation, your cost structure will become uncompetitive as others streamline operations",
+        impact: "High"
+      },
+      {
+        risk: "Talent Attraction",
+        description: "Top talent increasingly prefers AI-enabled workplaces with modern tools and efficient processes",
+        impact: "Medium"
+      },
+      {
+        risk: "Market Response Speed",
+        description: "Manual processes slow your ability to respond to market changes compared to AI-augmented competitors",
+        impact: "Medium"
+      }
+    ];
+
+    // Tier Definitions
+    const tierDefinitions = {
+      "AI Exposed": {
+        range: "0-25%",
+        description: "Your business has minimal AI integration. This creates vulnerability as competitors adopt AI capabilities. Immediate action is recommended to close the gap."
+      },
+      "AI Curious but Unstructured": {
+        range: "26-50%",
+        description: "You have started exploring AI but lack systematic implementation. Focus on building structure around your AI initiatives and expanding beyond initial experiments."
+      },
+      "AI Enabled": {
+        range: "51-75%",
+        description: "AI is actively contributing to your operations. Continue scaling successful implementations and address remaining gaps to maintain competitive position."
+      },
+      "AI Integrated Enterprise": {
+        range: "76-100%",
+        description: "AI is embedded throughout your operations. Focus on optimization, staying current with new capabilities, and maintaining your competitive advantage."
+      }
+    };
+
+    // State Management
+    let currentQuestion = 0;
+    let answers = {};
+    let userEmail = '';
+    let isPro = false;
+    let calculatedResults = null;
+    let storedRecords = [];
+
+    // Default Config for Element SDK
+    const defaultConfig = {
+      hero_headline: "Is your business AI-resilient?",
+      hero_subheadline: "Take the 5-minute assessment. Get your AI Resilience Score. Discover exactly where your business stands and what to do next.",
+      cta_button_text: "Start Free Assessment",
+      background_color: "#0a0f1c",
+      surface_color: "#111827",
+      text_color: "#f8fafc",
+      primary_color: "#3b82f6",
+      secondary_color: "#1e3a5f"
+    };
+
+    // Initialize Element SDK
+    async function initElementSdk() {
+      if (window.elementSdk) {
+        await window.elementSdk.init({
+          defaultConfig,
+          onConfigChange: async (config) => {
+            document.getElementById('hero-headline').innerHTML = (config.hero_headline || defaultConfig.hero_headline).replace('AI-resilient?', '<span class="text-blue-500">AI-resilient?</span>');
+            document.getElementById('hero-subheadline').textContent = config.hero_subheadline || defaultConfig.hero_subheadline;
+            document.getElementById('hero-cta').textContent = config.cta_button_text || defaultConfig.cta_button_text;
+          },
+          mapToCapabilities: (config) => ({
+            recolorables: [
+              {
+                get: () => config.background_color || defaultConfig.background_color,
+                set: (v) => window.elementSdk.setConfig({ background_color: v })
+              },
+              {
+                get: () => config.surface_color || defaultConfig.surface_color,
+                set: (v) => window.elementSdk.setConfig({ surface_color: v })
+              },
+              {
+                get: () => config.text_color || defaultConfig.text_color,
+                set: (v) => window.elementSdk.setConfig({ text_color: v })
+              },
+              {
+                get: () => config.primary_color || defaultConfig.primary_color,
+                set: (v) => window.elementSdk.setConfig({ primary_color: v })
+              },
+              {
+                get: () => config.secondary_color || defaultConfig.secondary_color,
+                set: (v) => window.elementSdk.setConfig({ secondary_color: v })
+              }
+            ],
+            borderables: [],
+            fontEditable: undefined,
+            fontSizeable: undefined
+          }),
+          mapToEditPanelValues: (config) => new Map([
+            ["hero_headline", config.hero_headline || defaultConfig.hero_headline],
+            ["hero_subheadline", config.hero_subheadline || defaultConfig.hero_subheadline],
+            ["cta_button_text", config.cta_button_text || defaultConfig.cta_button_text]
+          ])
+        });
+      }
+    }
+
+    // Initialize Data SDK
+    async function initDataSdk() {
+      if (window.dataSdk) {
+        const result = await window.dataSdk.init({
+          onDataChanged: (data) => {
+            storedRecords = data;
+          }
+        });
+        if (!result.isOk) {
+          console.error("Failed to initialize Data SDK");
+        }
+      }
+    }
+
+    // Scoring Logic
+    function calculateScores() {
+      const categories = {
+        "Revenue Leverage": { total: 0, max: 10 },
+        "Operational Efficiency": { total: 0, max: 10 },
+        "Decision Intelligence": { total: 0, max: 10 },
+        "Strategic Positioning": { total: 0, max: 10 }
+      };
+
+      // Calculate category totals
+      assessmentQuestions.forEach(q => {
+        if (answers[q.id] !== undefined) {
+          categories[q.category].total += answers[q.id];
+        }
+      });
+
+      // Calculate overall score
+      const totalScore = Object.values(categories).reduce((sum, cat) => sum + cat.total, 0);
+      const maxScore = 40;
+      const percentScore = Math.round((totalScore / maxScore) * 100);
+
+      // Determine tier
+      let tier;
+      if (percentScore <= 25) {
+        tier = "AI Exposed";
+      } else if (percentScore <= 50) {
+        tier = "AI Curious but Unstructured";
+      } else if (percentScore <= 75) {
+        tier = "AI Enabled";
+      } else {
+        tier = "AI Integrated Enterprise";
+      }
+
+      // Find lowest scoring category
+      let lowestCategory = null;
+      let lowestScore = Infinity;
+      Object.entries(categories).forEach(([cat, data]) => {
+        if (data.total < lowestScore) {
+          lowestScore = data.total;
+          lowestCategory = cat;
+        }
+      });
+
+      return {
+        categories,
+        totalScore,
+        percentScore,
+        tier,
+        lowestCategory
+      };
+    }
+
+    // UI Navigation Functions
+    function showAssessment() {
+      document.getElementById('landing-page').classList.add('hidden');
+      document.getElementById('assessment-container').classList.remove('hidden');
+      document.getElementById('email-container').classList.add('hidden');
+      document.getElementById('results-container').classList.add('hidden');
+      currentQuestion = 0;
+      answers = {};
+      renderQuestion();
+    }
+
+    function showLandingPage() {
+      document.getElementById('landing-page').classList.remove('hidden');
+      document.getElementById('assessment-container').classList.add('hidden');
+      document.getElementById('email-container').classList.add('hidden');
+      document.getElementById('results-container').classList.add('hidden');
+    }
+
+    function showEmailCollection() {
+      document.getElementById('landing-page').classList.add('hidden');
+      document.getElementById('assessment-container').classList.add('hidden');
+      document.getElementById('email-container').classList.remove('hidden');
+      document.getElementById('results-container').classList.add('hidden');
+    }
+
+    function showResults() {
+      document.getElementById('landing-page').classList.add('hidden');
+      document.getElementById('assessment-container').classList.add('hidden');
+      document.getElementById('email-container').classList.add('hidden');
+      document.getElementById('results-container').classList.remove('hidden');
+      renderResults();
+    }
+
+    function showPaywall() {
+      document.getElementById('paywall-modal').classList.remove('hidden');
+    }
+
+    function hidePaywall() {
+      document.getElementById('paywall-modal').classList.add('hidden');
+    }
+
+    function showLoading() {
+      document.getElementById('loading-overlay').classList.remove('hidden');
+    }
+
+    function hideLoading() {
+      document.getElementById('loading-overlay').classList.add('hidden');
+    }
+
+    // Question Rendering
+    function renderQuestion() {
+      const question = assessmentQuestions[currentQuestion];
+      const progress = ((currentQuestion + 1) / assessmentQuestions.length) * 100;
+
+      document.getElementById('progress-label').textContent = `Question ${currentQuestion + 1} of ${assessmentQuestions.length}`;
+      document.getElementById('progress-percent').textContent = `${Math.round(progress)}%`;
+      document.getElementById('progress-bar').style.width = `${progress}%`;
+
+      document.getElementById('question-category').textContent = question.category;
+      document.getElementById('question-text').textContent = question.prompt;
+
+      const optionsContainer = document.getElementById('options-container');
+      optionsContainer.innerHTML = question.options.map((opt, idx) => `
+        <button onclick="selectOption(${question.id}, ${opt.score}, ${idx})" 
+                id="option-${idx}"
+                class="w-full p-4 rounded-xl border ${answers[question.id] === opt.score ? 'border-blue-500 bg-blue-500/10' : 'border-slate-700 hover:border-blue-500'} text-left transition-colors">
+          <span class="text-slate-300">${opt.text}</span>
+        </button>
+      `).join('');
+
+      // Show/hide prev button
+      document.getElementById('prev-btn').classList.toggle('hidden', currentQuestion === 0);
+
+      // Update next button text
+      const nextBtn = document.getElementById('next-btn');
+      nextBtn.textContent = currentQuestion === assessmentQuestions.length - 1 ? 'Complete' : 'Next';
+
+      // Hide validation error
+      document.getElementById('validation-error').classList.add('hidden');
+
+      // Add fade-in effect
+      document.getElementById('question-card').classList.remove('fade-in');
+      void document.getElementById('question-card').offsetWidth;
+      document.getElementById('question-card').classList.add('fade-in');
+    }
+
+    function selectOption(questionId, score, idx) {
+      answers[questionId] = score;
+      
+      // Update UI to show selection
+      document.querySelectorAll('#options-container button').forEach((btn, i) => {
+        if (i === idx) {
+          btn.classList.remove('border-slate-700');
+          btn.classList.add('border-blue-500', 'bg-blue-500/10');
+        } else {
+          btn.classList.remove('border-blue-500', 'bg-blue-500/10');
+          btn.classList.add('border-slate-700');
+        }
+      });
+
+      document.getElementById('validation-error').classList.add('hidden');
+    }
+
+    function nextQuestion() {
+      const question = assessmentQuestions[currentQuestion];
+      
+      // Validate answer
+      if (answers[question.id] === undefined) {
+        document.getElementById('validation-error').classList.remove('hidden');
+        return;
+      }
+
+      if (currentQuestion < assessmentQuestions.length - 1) {
+        currentQuestion++;
+        renderQuestion();
+      } else {
+        showEmailCollection();
+      }
+    }
+
+    function prevQuestion() {
+      if (currentQuestion > 0) {
+        currentQuestion--;
+        renderQuestion();
+      }
+    }
+
+    async function submitEmail(event) {
+      event.preventDefault();
+      
+      const emailInput = document.getElementById('email-input');
+      const email = emailInput.value.trim();
+      
+      if (!email || !email.includes('@')) {
+        document.getElementById('email-error').classList.remove('hidden');
+        return;
+      }
+
+      document.getElementById('email-error').classList.add('hidden');
+      userEmail = email;
+
+      // Show loading
+      showLoading();
+
+      // Calculate results
+      calculatedResults = calculateScores();
+
+      // Save to Data SDK
+      if (window.dataSdk) {
+        const submitBtn = document.getElementById('email-submit-btn');
+        submitBtn.disabled = true;
+        submitBtn.textContent = 'Saving...';
+
+        const result = await window.dataSdk.create({
+          email: userEmail,
+          answers: JSON.stringify(answers),
+          category_scores: JSON.stringify(calculatedResults.categories),
+          total_score: calculatedResults.totalScore,
+          percent_score: calculatedResults.percentScore,
+          tier: calculatedResults.tier,
+          is_pro: false,
+          completed_at: new Date().toISOString()
+        });
+
+        submitBtn.disabled = false;
+        submitBtn.textContent = 'Get My Results';
+
+        if (!result.isOk) {
+          console.error("Failed to save assessment results");
+        }
+      }
+
+      // Simulate calculation time
+      setTimeout(() => {
+        hideLoading();
+        showResults();
+      }, 1500);
+    }
+
+    function renderResults() {
+      if (!calculatedResults) return;
+
+      const { categories, percentScore, tier, lowestCategory } = calculatedResults;
+
+      // Animate score ring
+      const scoreRing = document.getElementById('score-ring');
+      const circumference = 283;
+      const offset = circumference - (percentScore / 100) * circumference;
+      setTimeout(() => {
+        scoreRing.style.strokeDashoffset = offset;
+      }, 100);
+
+      // Update score display
+      document.getElementById('score-display').textContent = `${percentScore}%`;
+      document.getElementById('tier-display').textContent = tier;
+      document.getElementById('tier-name').textContent = tier;
+      document.getElementById('tier-description').textContent = tierDefinitions[tier].description;
+
+      // Render category scores
+      const categoryColors = {
+        "Revenue Leverage": "emerald",
+        "Operational Efficiency": "blue",
+        "Decision Intelligence": "purple",
+        "Strategic Positioning": "amber"
+      };
+
+      document.getElementById('category-scores').innerHTML = Object.entries(categories).map(([cat, data]) => {
+        const color = categoryColors[cat];
+        const percent = (data.total / data.max) * 100;
+        return `
+          <div class="glass-card rounded-xl p-4">
+            <div class="flex items-center justify-between mb-2">
+              <span class="text-sm text-slate-300">${cat}</span>
+              <span class="text-sm font-semibold text-${color}-500">${data.total}/${data.max}</span>
+            </div>
+            <div class="h-2 bg-slate-800 rounded-full overflow-hidden">
+              <div class="h-full bg-${color}-500 progress-fill" style="width: ${percent}%"></div>
+            </div>
+          </div>
+        `;
+      }).join('');
+
+      // Render lowest category and priority moves
+      document.getElementById('lowest-category').textContent = lowestCategory;
+      document.getElementById('priority-moves').innerHTML = priorityMovesByCategory[lowestCategory].map((move, idx) => `
+        <div class="flex items-start gap-3">
+          <div class="w-6 h-6 bg-blue-600 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5">
+            <span class="text-xs font-semibold text-white">${idx + 1}</span>
+          </div>
+          <p class="text-slate-300">${move}</p>
+        </div>
+      `).join('');
+
+      // Render 30-day actions
+      document.getElementById('thirty-day-actions').innerHTML = thirtyDayActionsByCategory[lowestCategory].map(action => `
+        <div class="flex items-start gap-3">
+          <svg class="w-5 h-5 text-blue-500 mt-0.5 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/></svg>
+          <p class="text-slate-300">${action}</p>
+        </div>
+      `).join('');
+
+      // Show/hide pro content based on status
+      if (isPro) {
+        document.getElementById('pro-upsell').classList.add('hidden');
+        document.getElementById('pro-results').classList.remove('hidden');
+        renderProContent();
+      } else {
+        document.getElementById('pro-upsell').classList.remove('hidden');
+        document.getElementById('pro-results').classList.add('hidden');
+      }
+    }
+
+    function renderProContent() {
+      // Render 90-day plan
+      document.getElementById('month1-tasks').innerHTML = ninetyDayPlan.month1.map(task => `<li>• ${task}</li>`).join('');
+      document.getElementById('month2-tasks').innerHTML = ninetyDayPlan.month2.map(task => `<li>• ${task}</li>`).join('');
+      document.getElementById('month3-tasks').innerHTML = ninetyDayPlan.month3.map(task => `<li>• ${task}</li>`).join('');
+
+      // Render department opportunities
+      document.getElementById('department-opportunities').innerHTML = Object.entries(departmentOpportunities).map(([dept, opps]) => `
+        <div class="bg-slate-800/50 rounded-xl p-6">
+          <h4 class="font-semibold text-white mb-3">${dept}</h4>
+          <ul class="space-y-2 text-sm text-slate-300">
+            ${opps.map(opp => `<li>• ${opp}</li>`).join('')}
+          </ul>
+        </div>
+      `).join('');
+
+      // Render ROI table
+      document.getElementById('roi-table-body').innerHTML = roiMetrics.map(row => `
+        <tr class="border-b border-slate-800">
+          <td class="py-3 px-4 text-slate-300">${row.metric}</td>
+          <td class="py-3 px-4 text-slate-400">${row.baseline}</td>
+          <td class="py-3 px-4 text-blue-400">${row.target30}</td>
+          <td class="py-3 px-4 text-green-400">${row.target90}</td>
+        </tr>
+      `).join('');
+
+      // Render risk items
+      document.getElementById('risk-items').innerHTML = riskItems.map(item => `
+        <div class="bg-slate-800/50 rounded-xl p-4">
+          <div class="flex items-center justify-between mb-2">
+            <h4 class="font-semibold text-white">${item.risk}</h4>
+            <span class="text-xs px-2 py-1 rounded-full ${item.impact === 'High' ? 'bg-red-500/20 text-red-400' : 'bg-amber-500/20 text-amber-400'}">${item.impact} Impact</span>
+          </div>
+          <p class="text-sm text-slate-400">${item.description}</p>
+        </div>
+      `).join('');
+    }
+
+    async function simulateProUnlock() {
+      isPro = true;
+      hidePaywall();
+      
+      // Update stored record if exists
+      if (window.dataSdk && storedRecords.length > 0) {
+        const latestRecord = storedRecords[storedRecords.length - 1];
+        if (latestRecord.__backendId) {
+          await window.dataSdk.update({
+            ...latestRecord,
+            is_pro: true
+          });
+        }
+      }
+
+      // Re-render results with pro content
+      renderResults();
+
+      // Scroll to pro content
+      setTimeout(() => {
+        document.getElementById('pro-results').scrollIntoView({ behavior: 'smooth' });
+      }, 300);
+    }
+
+    function retakeAssessment() {
+      currentQuestion = 0;
+      answers = {};
+      calculatedResults = null;
+      isPro = false;
+      showAssessment();
+    }
+
+    // Initialize on load
+    initElementSdk();
+    initDataSdk();
+  </script>
+ <script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'9d19f885e31c2643',t:'MTc3MTcxNTk4OS4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+</html>

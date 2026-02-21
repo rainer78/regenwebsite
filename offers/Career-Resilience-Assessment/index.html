@@ -1,0 +1,1295 @@
+<!doctype html>
+<html lang="en" class="h-full">
+ <head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Are You Replaceable? Career Resilience Assessment</title>
+  <script src="https://cdn.tailwindcss.com/3.4.17"></script>
+  <script src="/_sdk/element_sdk.js"></script>
+  <script src="/_sdk/data_sdk.js"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&amp;family=Inter:wght@400;500;600&amp;display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --color-bg: #0a0f1a;
+      --color-surface: #141b2d;
+      --color-text: #e8eaed;
+      --color-primary: #4f8cff;
+      --color-secondary: #2d3a52;
+    }
+    * { box-sizing: border-box; }
+    html, body { margin: 0; padding: 0; }
+    body {
+      font-family: 'Inter', sans-serif;
+      background: var(--color-bg);
+      color: var(--color-text);
+    }
+    .font-display { font-family: 'Space Grotesk', sans-serif; }
+    .gradient-text {
+      background: linear-gradient(135deg, #4f8cff 0%, #a78bfa 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    .card-glow {
+      box-shadow: 0 0 40px rgba(79, 140, 255, 0.1);
+    }
+    .progress-bar {
+      background: linear-gradient(90deg, #4f8cff, #a78bfa);
+    }
+    .tier-high-risk { color: #ef4444; }
+    .tier-vulnerable { color: #f59e0b; }
+    .tier-emerging { color: #10b981; }
+    .tier-strategic { color: #4f8cff; }
+    .fade-in {
+      animation: fadeIn 0.3s ease-out;
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    .btn-primary {
+      background: linear-gradient(135deg, #4f8cff 0%, #6366f1 100%);
+      transition: all 0.2s ease;
+    }
+    .btn-primary:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 25px rgba(79, 140, 255, 0.3);
+    }
+    .btn-secondary {
+      background: var(--color-secondary);
+      transition: all 0.2s ease;
+    }
+    .btn-secondary:hover {
+      background: #3d4a62;
+    }
+  </style>
+  <style>body { box-sizing: border-box; }</style>
+ </head>
+ <body class="h-full">
+  <div id="app" class="h-full overflow-auto"><!-- Navigation -->
+   <nav id="nav" class="fixed top-0 left-0 right-0 z-50 bg-opacity-95" style="background: var(--color-bg); border-bottom: 1px solid var(--color-secondary);">
+    <div class="max-w-6xl mx-auto px-4 py-4 flex items-center justify-between"><a href="#hero" class="font-display font-bold text-xl"> <span class="gradient-text">Are You Replaceable?</span><span class="text-xs align-super">™</span> </a>
+     <div class="hidden md:flex items-center gap-6 text-sm"><a href="#how-it-works" class="hover:text-blue-400 transition">How It Works</a> <a href="#scorecard" class="hover:text-blue-400 transition">Scorecard</a> <a href="#pricing" class="hover:text-blue-400 transition">Pricing</a> <a href="#faq" class="hover:text-blue-400 transition">FAQ</a>
+     </div><button onclick="startAssessment()" class="btn-primary px-4 py-2 rounded-lg text-sm font-medium"> Take Assessment </button>
+    </div>
+   </nav><!-- Hero Section -->
+   <section id="hero" class="pt-24 pb-16 px-4 min-h-screen flex items-center" style="background: linear-gradient(180deg, var(--color-bg) 0%, #0d1424 100%);">
+    <div class="max-w-4xl mx-auto text-center">
+     <div class="inline-block px-4 py-1 rounded-full text-xs font-medium mb-6" style="background: var(--color-secondary); color: var(--color-primary);">
+      Free Assessment • 5 Minutes • Immediate Results
+     </div>
+     <h1 id="hero-headline" class="font-display text-4xl md:text-6xl font-bold mb-6 leading-tight">How resilient is your career<br><span class="gradient-text">in the age of AI?</span></h1>
+     <p id="hero-subheadline" class="text-lg md:text-xl mb-8 max-w-2xl mx-auto" style="color: #9ca3af;">Discover where you stand before disruption decides for you. Get your personalized Career Resilience Score and actionable roadmap in under 5 minutes.</p>
+     <div class="flex flex-col sm:flex-row gap-4 justify-center mb-12"><button onclick="startAssessment()" id="cta-button" class="btn-primary px-8 py-4 rounded-xl text-lg font-semibold"> Start Free Assessment </button> <a href="#how-it-works" class="btn-secondary px-8 py-4 rounded-xl text-lg font-medium"> Learn More </a>
+     </div>
+     <div class="flex items-center justify-center gap-8 text-sm" style="color: #6b7280;">
+      <div class="flex items-center gap-2">
+       <svg class="w-5 h-5" fill="none" stroke="currentColor" viewbox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"></path>
+       </svg><span>No login required</span>
+      </div>
+      <div class="flex items-center gap-2">
+       <svg class="w-5 h-5" fill="none" stroke="currentColor" viewbox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+       </svg><span>Science-backed framework</span>
+      </div>
+     </div>
+    </div>
+   </section><!-- Context/Proof Section -->
+   <section id="context" class="py-20 px-4" style="background: var(--color-surface);">
+    <div class="max-w-4xl mx-auto">
+     <div class="text-center mb-12">
+      <h2 class="font-display text-3xl md:text-4xl font-bold mb-4">The landscape is shifting</h2>
+      <p style="color: #9ca3af;">These numbers are not predictions. They are current trajectories.</p>
+     </div>
+     <div class="grid md:grid-cols-3 gap-6">
+      <div class="p-6 rounded-2xl text-center card-glow" style="background: var(--color-bg);">
+       <div class="text-4xl font-display font-bold gradient-text mb-2">
+        85%
+       </div>
+       <p class="text-sm" style="color: #9ca3af;">of jobs will be transformed by AI within the next decade</p>
+      </div>
+      <div class="p-6 rounded-2xl text-center card-glow" style="background: var(--color-bg);">
+       <div class="text-4xl font-display font-bold gradient-text mb-2">
+        44%
+       </div>
+       <p class="text-sm" style="color: #9ca3af;">of workers will need significant reskilling by 2027</p>
+      </div>
+      <div class="p-6 rounded-2xl text-center card-glow" style="background: var(--color-bg);">
+       <div class="text-4xl font-display font-bold gradient-text mb-2">
+        3x
+       </div>
+       <p class="text-sm" style="color: #9ca3af;">faster career advancement for those who adapt proactively</p>
+      </div>
+     </div>
+     <p class="text-center mt-8 text-sm" style="color: #6b7280;">Sources: World Economic Forum, McKinsey Global Institute, LinkedIn Workforce Report 2024</p>
+    </div>
+   </section><!-- How It Works -->
+   <section id="how-it-works" class="py-20 px-4" style="background: var(--color-bg);">
+    <div class="max-w-4xl mx-auto">
+     <div class="text-center mb-12">
+      <h2 class="font-display text-3xl md:text-4xl font-bold mb-4">How It Works</h2>
+      <p style="color: #9ca3af;">Three steps to career clarity</p>
+     </div>
+     <div class="grid md:grid-cols-3 gap-8">
+      <div class="text-center">
+       <div class="w-16 h-16 rounded-2xl mx-auto mb-4 flex items-center justify-center text-2xl font-display font-bold" style="background: linear-gradient(135deg, #4f8cff 0%, #6366f1 100%);">
+        1
+       </div>
+       <h3 class="font-display font-semibold text-xl mb-2">Answer 20 Questions</h3>
+       <p class="text-sm" style="color: #9ca3af;">Honest self-assessment across four critical dimensions of career resilience. Takes under 5 minutes.</p>
+      </div>
+      <div class="text-center">
+       <div class="w-16 h-16 rounded-2xl mx-auto mb-4 flex items-center justify-center text-2xl font-display font-bold" style="background: linear-gradient(135deg, #4f8cff 0%, #6366f1 100%);">
+        2
+       </div>
+       <h3 class="font-display font-semibold text-xl mb-2">Get Your Score</h3>
+       <p class="text-sm" style="color: #9ca3af;">Receive your Career Resilience Score with breakdown by category. Understand exactly where you stand.</p>
+      </div>
+      <div class="text-center">
+       <div class="w-16 h-16 rounded-2xl mx-auto mb-4 flex items-center justify-center text-2xl font-display font-bold" style="background: linear-gradient(135deg, #4f8cff 0%, #6366f1 100%);">
+        3
+       </div>
+       <h3 class="font-display font-semibold text-xl mb-2">Take Action</h3>
+       <p class="text-sm" style="color: #9ca3af;">Get immediate actions you can implement today, plus a personalized 30-day improvement plan.</p>
+      </div>
+     </div>
+    </div>
+   </section><!-- Scorecard Categories -->
+   <section id="scorecard" class="py-20 px-4" style="background: var(--color-surface);">
+    <div class="max-w-4xl mx-auto">
+     <div class="text-center mb-12">
+      <h2 class="font-display text-3xl md:text-4xl font-bold mb-4">The Four Pillars of Career Resilience</h2>
+      <p style="color: #9ca3af;">Your score measures these critical dimensions</p>
+     </div>
+     <div class="grid md:grid-cols-2 gap-6">
+      <div class="p-6 rounded-2xl card-glow" style="background: var(--color-bg);">
+       <div class="flex items-center gap-4 mb-4">
+        <div class="w-12 h-12 rounded-xl flex items-center justify-center" style="background: rgba(79, 140, 255, 0.2);">
+         <svg class="w-6 h-6" fill="none" stroke="#4f8cff" viewbox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path>
+         </svg>
+        </div>
+        <h3 class="font-display font-semibold text-xl">AI Usage</h3>
+       </div>
+       <p class="text-sm mb-4" style="color: #9ca3af;">How effectively you leverage AI tools to amplify your work output and decision-making quality.</p>
+       <ul class="text-sm space-y-2" style="color: #6b7280;">
+        <li class="flex items-center gap-2"><span class="text-blue-400">•</span> Daily AI tool integration</li>
+        <li class="flex items-center gap-2"><span class="text-blue-400">•</span> Prompt engineering skills</li>
+        <li class="flex items-center gap-2"><span class="text-blue-400">•</span> AI-assisted problem solving</li>
+       </ul>
+      </div>
+      <div class="p-6 rounded-2xl card-glow" style="background: var(--color-bg);">
+       <div class="flex items-center gap-4 mb-4">
+        <div class="w-12 h-12 rounded-xl flex items-center justify-center" style="background: rgba(79, 140, 255, 0.2);">
+         <svg class="w-6 h-6" fill="none" stroke="#4f8cff" viewbox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>
+         </svg>
+        </div>
+        <h3 class="font-display font-semibold text-xl">Documentation</h3>
+       </div>
+       <p class="text-sm mb-4" style="color: #9ca3af;">Your ability to create lasting records of your contributions, processes, and institutional knowledge.</p>
+       <ul class="text-sm space-y-2" style="color: #6b7280;">
+        <li class="flex items-center gap-2"><span class="text-blue-400">•</span> Impact tracking systems</li>
+        <li class="flex items-center gap-2"><span class="text-blue-400">•</span> Process documentation</li>
+        <li class="flex items-center gap-2"><span class="text-blue-400">•</span> Knowledge transfer readiness</li>
+       </ul>
+      </div>
+      <div class="p-6 rounded-2xl card-glow" style="background: var(--color-bg);">
+       <div class="flex items-center gap-4 mb-4">
+        <div class="w-12 h-12 rounded-xl flex items-center justify-center" style="background: rgba(79, 140, 255, 0.2);">
+         <svg class="w-6 h-6" fill="none" stroke="#4f8cff" viewbox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"></path>
+         </svg>
+        </div>
+        <h3 class="font-display font-semibold text-xl">Skill Stacking</h3>
+       </div>
+       <p class="text-sm mb-4" style="color: #9ca3af;">Your unique combination of skills that creates compound value and makes you difficult to replace.</p>
+       <ul class="text-sm space-y-2" style="color: #6b7280;">
+        <li class="flex items-center gap-2"><span class="text-blue-400">•</span> Cross-functional capabilities</li>
+        <li class="flex items-center gap-2"><span class="text-blue-400">•</span> Rare skill combinations</li>
+        <li class="flex items-center gap-2"><span class="text-blue-400">•</span> Continuous learning habits</li>
+       </ul>
+      </div>
+      <div class="p-6 rounded-2xl card-glow" style="background: var(--color-bg);">
+       <div class="flex items-center gap-4 mb-4">
+        <div class="w-12 h-12 rounded-xl flex items-center justify-center" style="background: rgba(79, 140, 255, 0.2);">
+         <svg class="w-6 h-6" fill="none" stroke="#4f8cff" viewbox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"></path>
+         </svg>
+        </div>
+        <h3 class="font-display font-semibold text-xl">Internal Visibility</h3>
+       </div>
+       <p class="text-sm mb-4" style="color: #9ca3af;">How well your contributions are recognized by decision-makers within your organization.</p>
+       <ul class="text-sm space-y-2" style="color: #6b7280;">
+        <li class="flex items-center gap-2"><span class="text-blue-400">•</span> Executive relationships</li>
+        <li class="flex items-center gap-2"><span class="text-blue-400">•</span> Strategic project involvement</li>
+        <li class="flex items-center gap-2"><span class="text-blue-400">•</span> Internal brand strength</li>
+       </ul>
+      </div>
+     </div>
+    </div>
+   </section><!-- Assessment Preview -->
+   <section id="assessment-preview" class="py-20 px-4" style="background: var(--color-bg);">
+    <div class="max-w-2xl mx-auto text-center">
+     <h2 class="font-display text-3xl md:text-4xl font-bold mb-4">Sample Question</h2>
+     <p class="mb-8" style="color: #9ca3af;">Here is what to expect from the assessment</p>
+     <div class="p-8 rounded-2xl card-glow" style="background: var(--color-surface);">
+      <div class="text-xs font-medium mb-4 px-3 py-1 rounded-full inline-block" style="background: rgba(79, 140, 255, 0.2); color: var(--color-primary);">
+       AI Usage
+      </div>
+      <p class="text-xl font-display font-medium mb-6">"I use AI tools to draft, edit, or improve my written work."</p>
+      <div class="space-y-3">
+       <div class="p-4 rounded-xl text-left" style="background: var(--color-bg);"><span class="text-sm">Not yet (0 points)</span>
+       </div>
+       <div class="p-4 rounded-xl text-left" style="background: var(--color-bg);"><span class="text-sm">Sometimes (1 point)</span>
+       </div>
+       <div class="p-4 rounded-xl text-left border-2" style="background: var(--color-bg); border-color: var(--color-primary);"><span class="text-sm">Consistently (2 points)</span>
+       </div>
+      </div>
+     </div><button onclick="startAssessment()" class="btn-primary px-8 py-4 rounded-xl text-lg font-semibold mt-8"> Start Your Assessment </button>
+    </div>
+   </section><!-- Pricing Section -->
+   <section id="pricing" class="py-20 px-4" style="background: var(--color-surface);">
+    <div class="max-w-4xl mx-auto">
+     <div class="text-center mb-12">
+      <h2 class="font-display text-3xl md:text-4xl font-bold mb-4">Choose Your Path</h2>
+      <p style="color: #9ca3af;">Start free, upgrade when you are ready for deeper guidance</p>
+     </div>
+     <div class="grid md:grid-cols-2 gap-6 max-w-3xl mx-auto">
+      <div class="p-8 rounded-2xl" style="background: var(--color-bg); border: 1px solid var(--color-secondary);">
+       <div class="text-sm font-medium mb-2" style="color: var(--color-primary);">
+        Free
+       </div>
+       <div class="text-4xl font-display font-bold mb-4">
+        $0
+       </div>
+       <p class="text-sm mb-6" style="color: #9ca3af;">Essential insights to get started</p>
+       <ul class="space-y-3 mb-8">
+        <li class="flex items-center gap-3 text-sm">
+         <svg class="w-5 h-5 text-green-400 flex-shrink-0" fill="none" stroke="currentColor" viewbox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+         </svg><span>Career Resilience Score</span></li>
+        <li class="flex items-center gap-3 text-sm">
+         <svg class="w-5 h-5 text-green-400 flex-shrink-0" fill="none" stroke="currentColor" viewbox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+         </svg><span>Risk tier classification</span></li>
+        <li class="flex items-center gap-3 text-sm">
+         <svg class="w-5 h-5 text-green-400 flex-shrink-0" fill="none" stroke="currentColor" viewbox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+         </svg><span>3 immediate actions</span></li>
+        <li class="flex items-center gap-3 text-sm">
+         <svg class="w-5 h-5 text-green-400 flex-shrink-0" fill="none" stroke="currentColor" viewbox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+         </svg><span>3 thirty-day actions</span></li>
+        <li class="flex items-center gap-3 text-sm" style="color: #6b7280;">
+         <svg class="w-5 h-5 flex-shrink-0" fill="none" stroke="currentColor" viewbox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+         </svg><span>Personalized roadmap</span></li>
+       </ul><button onclick="startAssessment()" class="w-full btn-secondary py-3 rounded-xl font-medium"> Start Free </button>
+      </div>
+      <div class="p-8 rounded-2xl card-glow relative" style="background: linear-gradient(135deg, rgba(79, 140, 255, 0.1) 0%, rgba(99, 102, 241, 0.1) 100%); border: 2px solid var(--color-primary);">
+       <div class="absolute -top-3 right-6 px-3 py-1 rounded-full text-xs font-medium" style="background: var(--color-primary);">
+        Most Popular
+       </div>
+       <div class="text-sm font-medium mb-2" style="color: var(--color-primary);">
+        Pro
+       </div>
+       <div class="text-4xl font-display font-bold mb-4" id="pro-price-display">
+        $19
+       </div>
+       <p class="text-sm mb-6" style="color: #9ca3af;">Complete transformation toolkit</p>
+       <ul class="space-y-3 mb-8">
+        <li class="flex items-center gap-3 text-sm">
+         <svg class="w-5 h-5 text-green-400 flex-shrink-0" fill="none" stroke="currentColor" viewbox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+         </svg><span>Everything in Free</span></li>
+        <li class="flex items-center gap-3 text-sm">
+         <svg class="w-5 h-5 text-green-400 flex-shrink-0" fill="none" stroke="currentColor" viewbox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+         </svg><span>4-week personalized roadmap</span></li>
+        <li class="flex items-center gap-3 text-sm">
+         <svg class="w-5 h-5 text-green-400 flex-shrink-0" fill="none" stroke="currentColor" viewbox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+         </svg><span>Visibility strategy playbook</span></li>
+        <li class="flex items-center gap-3 text-sm">
+         <svg class="w-5 h-5 text-green-400 flex-shrink-0" fill="none" stroke="currentColor" viewbox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+         </svg><span>Documentation templates</span></li>
+        <li class="flex items-center gap-3 text-sm">
+         <svg class="w-5 h-5 text-green-400 flex-shrink-0" fill="none" stroke="currentColor" viewbox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+         </svg><span>Skill stacking path guide</span></li>
+       </ul><button onclick="startAssessment()" class="w-full btn-primary py-3 rounded-xl font-medium"> Start Assessment </button>
+      </div>
+     </div>
+    </div>
+   </section><!-- FAQ Section -->
+   <section id="faq" class="py-20 px-4" style="background: var(--color-bg);">
+    <div class="max-w-3xl mx-auto">
+     <div class="text-center mb-12">
+      <h2 class="font-display text-3xl md:text-4xl font-bold mb-4">Frequently Asked Questions</h2>
+     </div>
+     <div class="space-y-4">
+      <div class="rounded-xl overflow-hidden" style="background: var(--color-surface);"><button onclick="toggleFaq(this)" class="w-full p-6 text-left flex items-center justify-between"> <span class="font-medium">How accurate is the assessment?</span>
+        <svg class="w-5 h-5 transform transition-transform" fill="none" stroke="currentColor" viewbox="0 0 24 24">
+         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+        </svg></button>
+       <div class="hidden px-6 pb-6 text-sm" style="color: #9ca3af;">
+        The assessment is based on research from organizational psychology and labor economics. It measures behaviors and practices correlated with career resilience during periods of technological change. Your results are as accurate as your honest self-reflection.
+       </div>
+      </div>
+      <div class="rounded-xl overflow-hidden" style="background: var(--color-surface);"><button onclick="toggleFaq(this)" class="w-full p-6 text-left flex items-center justify-between"> <span class="font-medium">How long does the assessment take?</span>
+        <svg class="w-5 h-5 transform transition-transform" fill="none" stroke="currentColor" viewbox="0 0 24 24">
+         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+        </svg></button>
+       <div class="hidden px-6 pb-6 text-sm" style="color: #9ca3af;">
+        Most people complete the 20-question assessment in 3-5 minutes. There are no trick questions or time limits. Take your time to reflect honestly on each question.
+       </div>
+      </div>
+      <div class="rounded-xl overflow-hidden" style="background: var(--color-surface);"><button onclick="toggleFaq(this)" class="w-full p-6 text-left flex items-center justify-between"> <span class="font-medium">What if my score is low?</span>
+        <svg class="w-5 h-5 transform transition-transform" fill="none" stroke="currentColor" viewbox="0 0 24 24">
+         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+        </svg></button>
+       <div class="hidden px-6 pb-6 text-sm" style="color: #9ca3af;">
+        A low score is not a judgment. It is information. Every dimension measured in this assessment can be improved with intentional action. That is exactly why we provide immediate action items and a 30-day plan, regardless of your score.
+       </div>
+      </div>
+      <div class="rounded-xl overflow-hidden" style="background: var(--color-surface);"><button onclick="toggleFaq(this)" class="w-full p-6 text-left flex items-center justify-between"> <span class="font-medium">Is my data private?</span>
+        <svg class="w-5 h-5 transform transition-transform" fill="none" stroke="currentColor" viewbox="0 0 24 24">
+         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+        </svg></button>
+       <div class="hidden px-6 pb-6 text-sm" style="color: #9ca3af;">
+        Yes. Your assessment responses and email are stored securely and never shared with third parties. We use your email only to deliver your results and, if you opt in, occasional career resilience insights.
+       </div>
+      </div>
+      <div class="rounded-xl overflow-hidden" style="background: var(--color-surface);"><button onclick="toggleFaq(this)" class="w-full p-6 text-left flex items-center justify-between"> <span class="font-medium">What is included in the Pro upgrade?</span>
+        <svg class="w-5 h-5 transform transition-transform" fill="none" stroke="currentColor" viewbox="0 0 24 24">
+         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+        </svg></button>
+       <div class="hidden px-6 pb-6 text-sm" style="color: #9ca3af;">
+        Pro includes a personalized 4-week action roadmap, a visibility strategy playbook tailored to your weak areas, ready-to-use documentation templates, and a skill stacking path guide based on your current profile.
+       </div>
+      </div>
+     </div>
+    </div>
+   </section><!-- Footer -->
+   <footer class="py-12 px-4" style="background: var(--color-surface); border-top: 1px solid var(--color-secondary);">
+    <div class="max-w-4xl mx-auto text-center">
+     <div class="font-display font-bold text-xl mb-4"><span class="gradient-text">Are You Replaceable?</span><span class="text-xs align-super">™</span>
+     </div>
+     <p class="text-sm mb-6" style="color: #6b7280;">Building career resilience in the age of AI</p>
+     <div class="flex justify-center gap-6 text-sm" style="color: #6b7280;"><a href="#hero" class="hover:text-white transition">Home</a> <a href="#how-it-works" class="hover:text-white transition">How It Works</a> <a href="#pricing" class="hover:text-white transition">Pricing</a> <a href="#faq" class="hover:text-white transition">FAQ</a>
+     </div>
+     <p class="text-xs mt-8" style="color: #4b5563;">© 2024 Are You Replaceable? All rights reserved.</p>
+    </div>
+   </footer><!-- Assessment Modal -->
+   <div id="assessment-modal" class="fixed inset-0 z-50 hidden">
+    <div class="absolute inset-0 bg-black bg-opacity-80" onclick="closeAssessment()"></div>
+    <div class="absolute inset-4 md:inset-8 lg:inset-16 rounded-2xl overflow-hidden flex flex-col" style="background: var(--color-surface);">
+     <div class="p-4 flex items-center justify-between" style="border-bottom: 1px solid var(--color-secondary);"><span class="font-display font-semibold">Career Resilience Assessment</span> <button onclick="closeAssessment()" class="p-2 rounded-lg hover:bg-gray-700 transition">
+       <svg class="w-5 h-5" fill="none" stroke="currentColor" viewbox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+       </svg></button>
+     </div>
+     <div id="assessment-content" class="flex-1 overflow-auto p-6"><!-- Assessment content injected here -->
+     </div>
+    </div>
+   </div><!-- Paywall Modal -->
+   <div id="paywall-modal" class="fixed inset-0 z-50 hidden">
+    <div class="absolute inset-0 bg-black bg-opacity-80"></div>
+    <div class="absolute inset-4 md:inset-auto md:top-1/2 md:left-1/2 md:-translate-x-1/2 md:-translate-y-1/2 md:w-full md:max-w-lg rounded-2xl overflow-hidden" style="background: var(--color-surface);">
+     <div class="p-6 md:p-8">
+      <div class="text-center mb-6">
+       <div class="w-16 h-16 rounded-full mx-auto mb-4 flex items-center justify-center" style="background: linear-gradient(135deg, rgba(79, 140, 255, 0.2) 0%, rgba(99, 102, 241, 0.2) 100%);">
+        <svg class="w-8 h-8" fill="none" stroke="#4f8cff" viewbox="0 0 24 24">
+         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"></path>
+        </svg>
+       </div>
+       <h3 class="font-display text-2xl font-bold mb-2">Unlock Your Pro Roadmap</h3>
+       <p class="text-sm" style="color: #9ca3af;">Get your personalized 4-week action plan and complete toolkit</p>
+      </div>
+      <div class="p-4 rounded-xl mb-6" style="background: var(--color-bg);">
+       <ul class="space-y-3 text-sm">
+        <li class="flex items-center gap-3">
+         <svg class="w-5 h-5 text-green-400 flex-shrink-0" fill="none" stroke="currentColor" viewbox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+         </svg><span>4-week personalized roadmap</span></li>
+        <li class="flex items-center gap-3">
+         <svg class="w-5 h-5 text-green-400 flex-shrink-0" fill="none" stroke="currentColor" viewbox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+         </svg><span>Visibility strategy playbook</span></li>
+        <li class="flex items-center gap-3">
+         <svg class="w-5 h-5 text-green-400 flex-shrink-0" fill="none" stroke="currentColor" viewbox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+         </svg><span>Documentation templates</span></li>
+        <li class="flex items-center gap-3">
+         <svg class="w-5 h-5 text-green-400 flex-shrink-0" fill="none" stroke="currentColor" viewbox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+         </svg><span>Skill stacking path guide</span></li>
+       </ul>
+      </div>
+      <div class="text-center mb-6"><span class="text-3xl font-display font-bold" id="paywall-price">$19</span> <span class="text-sm" style="color: #6b7280;"> one-time</span>
+      </div><a href="https://buy.stripe.com/placeholder" target="_blank" rel="noopener noreferrer" onclick="simulateProUnlock()" class="block w-full btn-primary py-4 rounded-xl font-semibold text-center mb-3"> Unlock Pro Access </a> <button onclick="closePaywall()" class="w-full py-3 rounded-xl font-medium text-center" style="color: #6b7280;"> Maybe later </button>
+      <p class="text-xs text-center mt-4" style="color: #4b5563;">Secure payment via Stripe. 30-day money-back guarantee.</p>
+     </div>
+    </div>
+   </div>
+  </div>
+  <script>
+    // Assessment Questions Data
+    const assessmentQuestions = [
+      // AI Usage (5 questions)
+      {
+        id: 1,
+        category: "ai_usage",
+        categoryLabel: "AI Usage",
+        prompt: "I use AI tools (ChatGPT, Claude, Copilot) to draft, edit, or improve my written work.",
+        options: [
+          { label: "Not yet", score: 0 },
+          { label: "Sometimes", score: 1 },
+          { label: "Consistently", score: 2 }
+        ]
+      },
+      {
+        id: 2,
+        category: "ai_usage",
+        categoryLabel: "AI Usage",
+        prompt: "I use AI to analyze data, summarize documents, or extract insights from information.",
+        options: [
+          { label: "Not yet", score: 0 },
+          { label: "Sometimes", score: 1 },
+          { label: "Consistently", score: 2 }
+        ]
+      },
+      {
+        id: 3,
+        category: "ai_usage",
+        categoryLabel: "AI Usage",
+        prompt: "I have developed effective prompt engineering skills to get better outputs from AI tools.",
+        options: [
+          { label: "Not yet", score: 0 },
+          { label: "Sometimes", score: 1 },
+          { label: "Consistently", score: 2 }
+        ]
+      },
+      {
+        id: 4,
+        category: "ai_usage",
+        categoryLabel: "AI Usage",
+        prompt: "I experiment with new AI tools and features as they become available.",
+        options: [
+          { label: "Not yet", score: 0 },
+          { label: "Sometimes", score: 1 },
+          { label: "Consistently", score: 2 }
+        ]
+      },
+      {
+        id: 5,
+        category: "ai_usage",
+        categoryLabel: "AI Usage",
+        prompt: "I can identify which tasks in my work are best suited for AI assistance versus human judgment.",
+        options: [
+          { label: "Not yet", score: 0 },
+          { label: "Sometimes", score: 1 },
+          { label: "Consistently", score: 2 }
+        ]
+      },
+      // Documentation (5 questions)
+      {
+        id: 6,
+        category: "documentation",
+        categoryLabel: "Documentation",
+        prompt: "I maintain a written record of my key accomplishments, projects, and measurable impacts.",
+        options: [
+          { label: "Not yet", score: 0 },
+          { label: "Sometimes", score: 1 },
+          { label: "Consistently", score: 2 }
+        ]
+      },
+      {
+        id: 7,
+        category: "documentation",
+        categoryLabel: "Documentation",
+        prompt: "I document processes and workflows so others could replicate my work if needed.",
+        options: [
+          { label: "Not yet", score: 0 },
+          { label: "Sometimes", score: 1 },
+          { label: "Consistently", score: 2 }
+        ]
+      },
+      {
+        id: 8,
+        category: "documentation",
+        categoryLabel: "Documentation",
+        prompt: "I quantify my contributions with specific metrics (revenue impact, time saved, efficiency gains).",
+        options: [
+          { label: "Not yet", score: 0 },
+          { label: "Sometimes", score: 1 },
+          { label: "Consistently", score: 2 }
+        ]
+      },
+      {
+        id: 9,
+        category: "documentation",
+        categoryLabel: "Documentation",
+        prompt: "I update my resume or professional portfolio at least quarterly with new accomplishments.",
+        options: [
+          { label: "Not yet", score: 0 },
+          { label: "Sometimes", score: 1 },
+          { label: "Consistently", score: 2 }
+        ]
+      },
+      {
+        id: 10,
+        category: "documentation",
+        categoryLabel: "Documentation",
+        prompt: "I could hand off my current role with comprehensive documentation within two weeks notice.",
+        options: [
+          { label: "Not yet", score: 0 },
+          { label: "Sometimes", score: 1 },
+          { label: "Consistently", score: 2 }
+        ]
+      },
+      // Skill Stacking (5 questions)
+      {
+        id: 11,
+        category: "skill_stacking",
+        categoryLabel: "Skill Stacking",
+        prompt: "I have developed expertise in more than one functional area (e.g., marketing + data analysis).",
+        options: [
+          { label: "Not yet", score: 0 },
+          { label: "Sometimes", score: 1 },
+          { label: "Consistently", score: 2 }
+        ]
+      },
+      {
+        id: 12,
+        category: "skill_stacking",
+        categoryLabel: "Skill Stacking",
+        prompt: "I regularly learn new skills through courses, certifications, or structured practice.",
+        options: [
+          { label: "Not yet", score: 0 },
+          { label: "Sometimes", score: 1 },
+          { label: "Consistently", score: 2 }
+        ]
+      },
+      {
+        id: 13,
+        category: "skill_stacking",
+        categoryLabel: "Skill Stacking",
+        prompt: "I can name 2-3 skills I possess that are rare in combination within my industry.",
+        options: [
+          { label: "Not yet", score: 0 },
+          { label: "Sometimes", score: 1 },
+          { label: "Consistently", score: 2 }
+        ]
+      },
+      {
+        id: 14,
+        category: "skill_stacking",
+        categoryLabel: "Skill Stacking",
+        prompt: "I seek projects that allow me to develop skills adjacent to my primary expertise.",
+        options: [
+          { label: "Not yet", score: 0 },
+          { label: "Sometimes", score: 1 },
+          { label: "Consistently", score: 2 }
+        ]
+      },
+      {
+        id: 15,
+        category: "skill_stacking",
+        categoryLabel: "Skill Stacking",
+        prompt: "I have a clear 12-month learning plan for skills that will increase my market value.",
+        options: [
+          { label: "Not yet", score: 0 },
+          { label: "Sometimes", score: 1 },
+          { label: "Consistently", score: 2 }
+        ]
+      },
+      // Internal Visibility (5 questions)
+      {
+        id: 16,
+        category: "visibility",
+        categoryLabel: "Internal Visibility",
+        prompt: "Decision-makers two levels above me know my name and can describe my contributions.",
+        options: [
+          { label: "Not yet", score: 0 },
+          { label: "Sometimes", score: 1 },
+          { label: "Consistently", score: 2 }
+        ]
+      },
+      {
+        id: 17,
+        category: "visibility",
+        categoryLabel: "Internal Visibility",
+        prompt: "I present my work or share updates in meetings with senior leadership.",
+        options: [
+          { label: "Not yet", score: 0 },
+          { label: "Sometimes", score: 1 },
+          { label: "Consistently", score: 2 }
+        ]
+      },
+      {
+        id: 18,
+        category: "visibility",
+        categoryLabel: "Internal Visibility",
+        prompt: "I volunteer for or am assigned to cross-functional or strategic projects.",
+        options: [
+          { label: "Not yet", score: 0 },
+          { label: "Sometimes", score: 1 },
+          { label: "Consistently", score: 2 }
+        ]
+      },
+      {
+        id: 19,
+        category: "visibility",
+        categoryLabel: "Internal Visibility",
+        prompt: "I have at least one mentor or sponsor who advocates for my advancement.",
+        options: [
+          { label: "Not yet", score: 0 },
+          { label: "Sometimes", score: 1 },
+          { label: "Consistently", score: 2 }
+        ]
+      },
+      {
+        id: 20,
+        category: "visibility",
+        categoryLabel: "Internal Visibility",
+        prompt: "My manager could articulate my top 3 contributions from the past quarter without preparation.",
+        options: [
+          { label: "Not yet", score: 0 },
+          { label: "Sometimes", score: 1 },
+          { label: "Consistently", score: 2 }
+        ]
+      }
+    ];
+
+    // Scoring Logic
+    function calculateScores(answers) {
+      const categoryScores = {
+        ai_usage: 0,
+        documentation: 0,
+        skill_stacking: 0,
+        visibility: 0
+      };
+
+      // Calculate category totals
+      answers.forEach(answer => {
+        const question = assessmentQuestions.find(q => q.id === answer.questionId);
+        if (question) {
+          categoryScores[question.category] += answer.score;
+        }
+      });
+
+      // Total and percent
+      const totalScore = Object.values(categoryScores).reduce((a, b) => a + b, 0);
+      const percentScore = Math.round((totalScore / 40) * 100);
+
+      // Tier logic
+      let tier, tierClass;
+      if (percentScore <= 25) {
+        tier = "High Risk Zone";
+        tierClass = "tier-high-risk";
+      } else if (percentScore <= 50) {
+        tier = "Stable but Vulnerable";
+        tierClass = "tier-vulnerable";
+      } else if (percentScore <= 75) {
+        tier = "Emerging Leverage";
+        tierClass = "tier-emerging";
+      } else {
+        tier = "Strategic Asset";
+        tierClass = "tier-strategic";
+      }
+
+      return {
+        categoryScores,
+        totalScore,
+        percentScore,
+        tier,
+        tierClass
+      };
+    }
+
+    // State management
+    let currentQuestion = 0;
+    let answers = [];
+    let userEmail = "";
+    let assessmentResults = null;
+    let isPro = false;
+    let currentRecordId = null;
+    let storedRecords = [];
+
+    // Config for edit panel
+    const defaultConfig = {
+      hero_headline: "How resilient is your career in the age of AI?",
+      hero_subheadline: "Discover where you stand before disruption decides for you. Get your personalized Career Resilience Score and actionable roadmap in under 5 minutes.",
+      cta_button_text: "Start Free Assessment",
+      pro_price: "$19",
+      primary_color: "#0a0f1a",
+      surface_color: "#141b2d",
+      text_color: "#e8eaed",
+      action_color: "#4f8cff",
+      secondary_color: "#2d3a52",
+      font_family: "Inter"
+    };
+
+    // Data handler for SDK
+    const dataHandler = {
+      onDataChanged(data) {
+        storedRecords = data;
+      }
+    };
+
+    // Initialize SDKs
+    async function initApp() {
+      // Initialize Element SDK
+      if (window.elementSdk) {
+        window.elementSdk.init({
+          defaultConfig,
+          onConfigChange: async (config) => {
+            document.getElementById('hero-headline').innerHTML = (config.hero_headline || defaultConfig.hero_headline).replace('in the age of AI?', '<br><span class="gradient-text">in the age of AI?</span>');
+            document.getElementById('hero-subheadline').textContent = config.hero_subheadline || defaultConfig.hero_subheadline;
+            document.getElementById('cta-button').textContent = config.cta_button_text || defaultConfig.cta_button_text;
+            document.getElementById('pro-price-display').textContent = config.pro_price || defaultConfig.pro_price;
+            document.getElementById('paywall-price').textContent = config.pro_price || defaultConfig.pro_price;
+            
+            // Apply colors
+            document.documentElement.style.setProperty('--color-bg', config.primary_color || defaultConfig.primary_color);
+            document.documentElement.style.setProperty('--color-surface', config.surface_color || defaultConfig.surface_color);
+            document.documentElement.style.setProperty('--color-text', config.text_color || defaultConfig.text_color);
+            document.documentElement.style.setProperty('--color-primary', config.action_color || defaultConfig.action_color);
+            document.documentElement.style.setProperty('--color-secondary', config.secondary_color || defaultConfig.secondary_color);
+            
+            // Apply font
+            const font = config.font_family || defaultConfig.font_family;
+            document.body.style.fontFamily = `'${font}', Inter, sans-serif`;
+          },
+          mapToCapabilities: (config) => ({
+            recolorables: [
+              {
+                get: () => config.primary_color || defaultConfig.primary_color,
+                set: (v) => { config.primary_color = v; window.elementSdk.setConfig({ primary_color: v }); }
+              },
+              {
+                get: () => config.surface_color || defaultConfig.surface_color,
+                set: (v) => { config.surface_color = v; window.elementSdk.setConfig({ surface_color: v }); }
+              },
+              {
+                get: () => config.text_color || defaultConfig.text_color,
+                set: (v) => { config.text_color = v; window.elementSdk.setConfig({ text_color: v }); }
+              },
+              {
+                get: () => config.action_color || defaultConfig.action_color,
+                set: (v) => { config.action_color = v; window.elementSdk.setConfig({ action_color: v }); }
+              },
+              {
+                get: () => config.secondary_color || defaultConfig.secondary_color,
+                set: (v) => { config.secondary_color = v; window.elementSdk.setConfig({ secondary_color: v }); }
+              }
+            ],
+            borderables: [],
+            fontEditable: {
+              get: () => config.font_family || defaultConfig.font_family,
+              set: (v) => { config.font_family = v; window.elementSdk.setConfig({ font_family: v }); }
+            },
+            fontSizeable: undefined
+          }),
+          mapToEditPanelValues: (config) => new Map([
+            ["hero_headline", config.hero_headline || defaultConfig.hero_headline],
+            ["hero_subheadline", config.hero_subheadline || defaultConfig.hero_subheadline],
+            ["cta_button_text", config.cta_button_text || defaultConfig.cta_button_text],
+            ["pro_price", config.pro_price || defaultConfig.pro_price]
+          ])
+        });
+      }
+
+      // Initialize Data SDK
+      if (window.dataSdk) {
+        const result = await window.dataSdk.init(dataHandler);
+        if (!result.isOk) {
+          console.error("Failed to initialize data SDK");
+        }
+      }
+    }
+
+    initApp();
+
+    // Assessment Functions
+    function startAssessment() {
+      currentQuestion = 0;
+      answers = [];
+      userEmail = "";
+      assessmentResults = null;
+      isPro = false;
+      currentRecordId = null;
+      document.getElementById('assessment-modal').classList.remove('hidden');
+      renderQuestion();
+    }
+
+    function closeAssessment() {
+      document.getElementById('assessment-modal').classList.add('hidden');
+    }
+
+    function renderQuestion() {
+      const content = document.getElementById('assessment-content');
+      
+      if (currentQuestion >= assessmentQuestions.length) {
+        renderEmailCapture();
+        return;
+      }
+
+      const q = assessmentQuestions[currentQuestion];
+      const progress = ((currentQuestion) / assessmentQuestions.length) * 100;
+      const existingAnswer = answers.find(a => a.questionId === q.id);
+
+      content.innerHTML = `
+        <div class="max-w-xl mx-auto fade-in">
+          <div class="mb-6">
+            <div class="flex items-center justify-between text-sm mb-2" style="color: #6b7280;">
+              <span>Question ${currentQuestion + 1} of ${assessmentQuestions.length}</span>
+              <span>${q.categoryLabel}</span>
+            </div>
+            <div class="h-2 rounded-full" style="background: var(--color-bg);">
+              <div class="h-2 rounded-full progress-bar transition-all duration-300" style="width: ${progress}%;"></div>
+            </div>
+          </div>
+          
+          <div class="text-center mb-8">
+            <div class="inline-block px-3 py-1 rounded-full text-xs font-medium mb-4" style="background: rgba(79, 140, 255, 0.2); color: var(--color-primary);">
+              ${q.categoryLabel}
+            </div>
+            <p class="text-xl md:text-2xl font-display font-medium">"${q.prompt}"</p>
+          </div>
+
+          <div class="space-y-3" id="options-container">
+            ${q.options.map((opt, i) => `
+              <button onclick="selectAnswer(${q.id}, ${opt.score}, ${i})" 
+                class="w-full p-4 rounded-xl text-left transition-all hover:scale-[1.02] ${existingAnswer && existingAnswer.optionIndex === i ? 'ring-2' : ''}"
+                style="background: var(--color-bg); ${existingAnswer && existingAnswer.optionIndex === i ? 'ring-color: var(--color-primary);' : ''}">
+                <span class="text-sm">${opt.label} (${opt.score} ${opt.score === 1 ? 'point' : 'points'})</span>
+              </button>
+            `).join('')}
+          </div>
+
+          <div class="flex justify-between mt-8">
+            <button onclick="previousQuestion()" 
+              class="px-6 py-3 rounded-xl font-medium transition ${currentQuestion === 0 ? 'opacity-50 cursor-not-allowed' : ''}" 
+              style="background: var(--color-secondary);"
+              ${currentQuestion === 0 ? 'disabled' : ''}>
+              Back
+            </button>
+            <button id="next-btn" onclick="nextQuestion()" 
+              class="px-6 py-3 rounded-xl font-medium transition ${!existingAnswer ? 'opacity-50 cursor-not-allowed' : ''}"
+              style="background: ${existingAnswer ? 'linear-gradient(135deg, #4f8cff 0%, #6366f1 100%)' : 'var(--color-secondary)'};"
+              ${!existingAnswer ? 'disabled' : ''}>
+              ${currentQuestion === assessmentQuestions.length - 1 ? 'Continue' : 'Next'}
+            </button>
+          </div>
+        </div>
+      `;
+    }
+
+    function selectAnswer(questionId, score, optionIndex) {
+      const existingIndex = answers.findIndex(a => a.questionId === questionId);
+      if (existingIndex >= 0) {
+        answers[existingIndex] = { questionId, score, optionIndex };
+      } else {
+        answers.push({ questionId, score, optionIndex });
+      }
+      renderQuestion();
+    }
+
+    function previousQuestion() {
+      if (currentQuestion > 0) {
+        currentQuestion--;
+        renderQuestion();
+      }
+    }
+
+    function nextQuestion() {
+      const q = assessmentQuestions[currentQuestion];
+      const hasAnswer = answers.find(a => a.questionId === q.id);
+      if (!hasAnswer) return;
+      
+      currentQuestion++;
+      renderQuestion();
+    }
+
+    function renderEmailCapture() {
+      const content = document.getElementById('assessment-content');
+      content.innerHTML = `
+        <div class="max-w-md mx-auto text-center fade-in">
+          <div class="w-20 h-20 rounded-full mx-auto mb-6 flex items-center justify-center" style="background: linear-gradient(135deg, rgba(79, 140, 255, 0.2) 0%, rgba(99, 102, 241, 0.2) 100%);">
+            <svg class="w-10 h-10" fill="none" stroke="#4f8cff" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+          </div>
+          <h3 class="font-display text-2xl font-bold mb-2">Assessment Complete!</h3>
+          <p class="mb-6" style="color: #9ca3af;">Enter your email to see your Career Resilience Score and personalized recommendations.</p>
+          
+          <form onsubmit="submitEmail(event)" class="space-y-4">
+            <input type="email" id="email-input" required placeholder="your@email.com"
+              class="w-full p-4 rounded-xl text-center outline-none focus:ring-2"
+              style="background: var(--color-bg); border: 1px solid var(--color-secondary);">
+            <p id="email-error" class="hidden text-red-400 text-sm">Please enter a valid email address</p>
+            <button type="submit" id="submit-email-btn" class="w-full btn-primary py-4 rounded-xl font-semibold">
+              See My Results
+            </button>
+          </form>
+          
+          <p class="text-xs mt-4" style="color: #4b5563;">
+            We respect your privacy. Your email is used only to deliver results.
+          </p>
+        </div>
+      `;
+    }
+
+    async function submitEmail(e) {
+      e.preventDefault();
+      const emailInput = document.getElementById('email-input');
+      const errorEl = document.getElementById('email-error');
+      const submitBtn = document.getElementById('submit-email-btn');
+      
+      const email = emailInput.value.trim();
+      if (!email || !email.includes('@')) {
+        errorEl.classList.remove('hidden');
+        return;
+      }
+      errorEl.classList.add('hidden');
+
+      userEmail = email;
+      assessmentResults = calculateScores(answers);
+
+      // Save to Data SDK
+      submitBtn.disabled = true;
+      submitBtn.textContent = 'Processing...';
+
+      if (window.dataSdk && storedRecords.length < 999) {
+        const result = await window.dataSdk.create({
+          email: userEmail,
+          total_score: assessmentResults.totalScore,
+          percent_score: assessmentResults.percentScore,
+          tier: assessmentResults.tier,
+          ai_usage_score: assessmentResults.categoryScores.ai_usage,
+          documentation_score: assessmentResults.categoryScores.documentation,
+          skill_stacking_score: assessmentResults.categoryScores.skill_stacking,
+          visibility_score: assessmentResults.categoryScores.visibility,
+          is_pro: false,
+          created_at: new Date().toISOString()
+        });
+        
+        if (!result.isOk) {
+          console.error("Failed to save assessment");
+        }
+      }
+
+      renderResults();
+    }
+
+    function renderResults() {
+      const content = document.getElementById('assessment-content');
+      const r = assessmentResults;
+
+      // Immediate actions based on lowest scores
+      const immediateActions = getImmediateActions(r.categoryScores);
+      const thirtyDayActions = getThirtyDayActions(r.categoryScores);
+
+      content.innerHTML = `
+        <div class="max-w-2xl mx-auto fade-in">
+          <div class="text-center mb-8">
+            <h3 class="font-display text-3xl font-bold mb-2">Your Career Resilience Score</h3>
+            <p style="color: #9ca3af;">Here is where you stand today</p>
+          </div>
+
+          <div class="p-8 rounded-2xl mb-8 text-center card-glow" style="background: var(--color-bg);">
+            <div class="text-6xl font-display font-bold gradient-text mb-2">${r.percentScore}%</div>
+            <div class="text-2xl font-display font-semibold ${r.tierClass} mb-4">${r.tier}</div>
+            <p class="text-sm" style="color: #6b7280;">Total Score: ${r.totalScore} / 40 points</p>
+          </div>
+
+          <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
+            <div class="p-4 rounded-xl text-center" style="background: var(--color-bg);">
+              <div class="text-2xl font-display font-bold gradient-text">${r.categoryScores.ai_usage}</div>
+              <div class="text-xs" style="color: #6b7280;">AI Usage</div>
+              <div class="text-xs" style="color: #4b5563;">/10</div>
+            </div>
+            <div class="p-4 rounded-xl text-center" style="background: var(--color-bg);">
+              <div class="text-2xl font-display font-bold gradient-text">${r.categoryScores.documentation}</div>
+              <div class="text-xs" style="color: #6b7280;">Documentation</div>
+              <div class="text-xs" style="color: #4b5563;">/10</div>
+            </div>
+            <div class="p-4 rounded-xl text-center" style="background: var(--color-bg);">
+              <div class="text-2xl font-display font-bold gradient-text">${r.categoryScores.skill_stacking}</div>
+              <div class="text-xs" style="color: #6b7280;">Skill Stacking</div>
+              <div class="text-xs" style="color: #4b5563;">/10</div>
+            </div>
+            <div class="p-4 rounded-xl text-center" style="background: var(--color-bg);">
+              <div class="text-2xl font-display font-bold gradient-text">${r.categoryScores.visibility}</div>
+              <div class="text-xs" style="color: #6b7280;">Visibility</div>
+              <div class="text-xs" style="color: #4b5563;">/10</div>
+            </div>
+          </div>
+
+          <div class="p-6 rounded-xl mb-6" style="background: var(--color-bg);">
+            <h4 class="font-display font-semibold text-lg mb-4">3 Actions to Take Today</h4>
+            <ul class="space-y-3">
+              ${immediateActions.map(action => `
+                <li class="flex items-start gap-3 text-sm">
+                  <svg class="w-5 h-5 text-green-400 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+                  <span>${action}</span>
+                </li>
+              `).join('')}
+            </ul>
+          </div>
+
+          <div class="p-6 rounded-xl mb-6" style="background: var(--color-bg);">
+            <h4 class="font-display font-semibold text-lg mb-4">Your 30-Day Focus Areas</h4>
+            <ul class="space-y-3">
+              ${thirtyDayActions.map(action => `
+                <li class="flex items-start gap-3 text-sm">
+                  <svg class="w-5 h-5 flex-shrink-0 mt-0.5" fill="none" stroke="#4f8cff" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg>
+                  <span>${action}</span>
+                </li>
+              `).join('')}
+            </ul>
+          </div>
+
+          ${isPro ? renderProContent() : `
+            <div class="p-6 rounded-xl mb-6" style="background: linear-gradient(135deg, rgba(79, 140, 255, 0.1) 0%, rgba(99, 102, 241, 0.1) 100%); border: 2px solid var(--color-primary);">
+              <div class="flex items-center gap-4 mb-4">
+                <div class="w-12 h-12 rounded-xl flex items-center justify-center" style="background: rgba(79, 140, 255, 0.2);">
+                  <svg class="w-6 h-6" fill="none" stroke="#4f8cff" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"></path></svg>
+                </div>
+                <div>
+                  <h4 class="font-display font-semibold">Unlock Your Pro Roadmap</h4>
+                  <p class="text-sm" style="color: #9ca3af;">Get your personalized 4-week action plan</p>
+                </div>
+              </div>
+              <ul class="space-y-2 mb-4 text-sm" style="color: #9ca3af;">
+                <li class="flex items-center gap-2"><span class="text-blue-400">•</span> 4-week personalized roadmap</li>
+                <li class="flex items-center gap-2"><span class="text-blue-400">•</span> Visibility strategy playbook</li>
+                <li class="flex items-center gap-2"><span class="text-blue-400">•</span> Documentation templates</li>
+                <li class="flex items-center gap-2"><span class="text-blue-400">•</span> Skill stacking path guide</li>
+              </ul>
+              <button onclick="openPaywall()" class="w-full btn-primary py-3 rounded-xl font-semibold">
+                Unlock Pro for $19
+              </button>
+            </div>
+          `}
+
+          <button onclick="closeAssessment()" class="w-full py-4 rounded-xl font-medium" style="background: var(--color-secondary);">
+            Close
+          </button>
+        </div>
+      `;
+    }
+
+    function renderProContent() {
+      const r = assessmentResults;
+      const roadmap = generateRoadmap(r.categoryScores);
+      
+      return `
+        <div class="mb-6">
+          <div class="flex items-center gap-2 mb-4">
+            <span class="px-3 py-1 rounded-full text-xs font-medium" style="background: var(--color-primary);">PRO</span>
+            <h4 class="font-display font-semibold text-lg">Your 4-Week Roadmap</h4>
+          </div>
+          ${roadmap.map((week, i) => `
+            <div class="p-4 rounded-xl mb-3" style="background: var(--color-bg);">
+              <h5 class="font-medium mb-2">Week ${i + 1}: ${week.focus}</h5>
+              <ul class="space-y-2 text-sm" style="color: #9ca3af;">
+                ${week.tasks.map(task => `
+                  <li class="flex items-start gap-2">
+                    <span class="text-blue-400">•</span>
+                    <span>${task}</span>
+                  </li>
+                `).join('')}
+              </ul>
+            </div>
+          `).join('')}
+        </div>
+
+        <div class="p-4 rounded-xl mb-3" style="background: var(--color-bg);">
+          <h5 class="font-medium mb-2">Visibility Strategy Move</h5>
+          <p class="text-sm" style="color: #9ca3af;">${getVisibilityMove(r.categoryScores)}</p>
+        </div>
+
+        <div class="p-4 rounded-xl mb-3" style="background: var(--color-bg);">
+          <h5 class="font-medium mb-2">Documentation Template</h5>
+          <p class="text-sm mb-2" style="color: #9ca3af;">Use this format to track your contributions:</p>
+          <div class="p-3 rounded text-xs font-mono" style="background: var(--color-surface);">
+            <div>[Date] [Project Name]</div>
+            <div>Action: What you did</div>
+            <div>Impact: Measurable result</div>
+            <div>Skills: Skills demonstrated</div>
+          </div>
+        </div>
+
+        <div class="p-4 rounded-xl mb-6" style="background: var(--color-bg);">
+          <h5 class="font-medium mb-2">Skill Stacking Path</h5>
+          <p class="text-sm" style="color: #9ca3af;">${getSkillStackingPath(r.categoryScores)}</p>
+        </div>
+      `;
+    }
+
+    function getImmediateActions(scores) {
+      const actions = [];
+      const sortedCategories = Object.entries(scores).sort((a, b) => a[1] - b[1]);
+      
+      const actionMap = {
+        ai_usage: [
+          "Sign up for ChatGPT or Claude and use it to improve one email or document today",
+          "Ask an AI tool to summarize a long document you have been putting off reading",
+          "Use AI to brainstorm three approaches to a current work challenge"
+        ],
+        documentation: [
+          "Create a simple spreadsheet to track your accomplishments starting today",
+          "Write down three measurable impacts you have had in the past 30 days",
+          "Document one process you own that others might need to know"
+        ],
+        skill_stacking: [
+          "Identify one adjacent skill to your role that would multiply your value",
+          "Enroll in a free online course in a skill you have been curious about",
+          "List the unique combination of skills you bring that no one else on your team has"
+        ],
+        visibility: [
+          "Send a brief update to your manager highlighting a recent win",
+          "Volunteer to present your work at the next team meeting",
+          "Schedule a coffee chat with someone one or two levels above you"
+        ]
+      };
+
+      sortedCategories.slice(0, 3).forEach(([category]) => {
+        const categoryActions = actionMap[category];
+        const randomAction = categoryActions[Math.floor(Math.random() * categoryActions.length)];
+        actions.push(randomAction);
+      });
+
+      return actions;
+    }
+
+    function getThirtyDayActions(scores) {
+      const actions = [];
+      const sortedCategories = Object.entries(scores).sort((a, b) => a[1] - b[1]);
+
+      const actionMap = {
+        ai_usage: "Integrate AI into at least one daily workflow and measure time saved",
+        documentation: "Build a complete impact portfolio with metrics for your last 6 months",
+        skill_stacking: "Complete one certification or course in an adjacent skill area",
+        visibility: "Secure a presentation opportunity or cross-functional project assignment"
+      };
+
+      sortedCategories.slice(0, 3).forEach(([category]) => {
+        actions.push(actionMap[category]);
+      });
+
+      return actions;
+    }
+
+    function generateRoadmap(scores) {
+      const sortedCategories = Object.entries(scores).sort((a, b) => a[1] - b[1]);
+      const weakest = sortedCategories[0][0];
+      const second = sortedCategories[1][0];
+
+      const roadmaps = {
+        ai_usage: {
+          focus: "AI Foundation",
+          tasks: [
+            "Select 2-3 AI tools relevant to your work and create accounts",
+            "Complete one task per day using AI assistance",
+            "Document time saved and quality improvements"
+          ]
+        },
+        documentation: {
+          focus: "Impact Tracking System",
+          tasks: [
+            "Set up a weekly review process for logging accomplishments",
+            "Create templates for project summaries and impact metrics",
+            "Gather data on past contributions from emails and calendars"
+          ]
+        },
+        skill_stacking: {
+          focus: "Strategic Skill Building",
+          tasks: [
+            "Research skills that complement your current expertise",
+            "Enroll in one structured learning program",
+            "Find opportunities to practice new skills in current role"
+          ]
+        },
+        visibility: {
+          focus: "Visibility Campaign",
+          tasks: [
+            "Map key decision-makers and create connection plan",
+            "Prepare talking points about your contributions",
+            "Identify one high-visibility project to pursue"
+          ]
+        }
+      };
+
+      return [
+        roadmaps[weakest],
+        roadmaps[second],
+        {
+          focus: "Integration",
+          tasks: [
+            "Combine improvements from weeks 1-2 into daily habits",
+            "Create accountability system to maintain new practices",
+            "Document progress and adjust approach based on results"
+          ]
+        },
+        {
+          focus: "Acceleration",
+          tasks: [
+            "Expand successful practices from weeks 1-3",
+            "Measure overall improvement in resilience score",
+            "Plan next 30-day cycle targeting remaining weak areas"
+          ]
+        }
+      ];
+    }
+
+    function getVisibilityMove(scores) {
+      if (scores.visibility < 5) {
+        return "Your priority visibility move: Request a 1-on-1 with a senior leader outside your direct reporting line. Prepare three talking points about a recent project impact. The goal is simply to get on their radar, not to ask for anything. Send the meeting request this week.";
+      } else if (scores.visibility < 8) {
+        return "Your priority visibility move: Volunteer to present your team's work at the next department or all-hands meeting. Prepare a 5-minute summary of key accomplishments with specific metrics. This positions you as someone who communicates value clearly.";
+      } else {
+        return "Your priority visibility move: Propose a cross-functional initiative that addresses a company-wide challenge. Position yourself as a connector across teams. This elevates your profile from contributor to leader.";
+      }
+    }
+
+    function getSkillStackingPath(scores) {
+      const weakAreas = Object.entries(scores).sort((a, b) => a[1] - b[1]);
+      const paths = {
+        ai_usage: "Your skill stacking path: AI + Your Domain Expertise. Become the person who knows how to apply AI specifically to your field. This combination is rare and valuable. Start with prompt engineering, then move to workflow automation. Within 6 months, you can be the go-to AI translator for your team.",
+        documentation: "Your skill stacking path: Communication + Analytical Skills. Strong documentation signals strong thinking. Layer in data visualization or technical writing skills. This combination positions you for roles that bridge execution and strategy.",
+        skill_stacking: "Your skill stacking path: Depth + Adjacent Breadth. Double down on your primary skill while adding one complementary capability. If you are in marketing, add data analysis. If you are in engineering, add product thinking. The intersection creates unique value.",
+        visibility: "Your skill stacking path: Expertise + Executive Communication. Your skills need better packaging. Add presentation skills, executive summary writing, or stakeholder management. The goal is translating your work into language that resonates with decision-makers."
+      };
+      return paths[weakAreas[0][0]];
+    }
+
+    function openPaywall() {
+      document.getElementById('paywall-modal').classList.remove('hidden');
+    }
+
+    function closePaywall() {
+      document.getElementById('paywall-modal').classList.add('hidden');
+    }
+
+    function simulateProUnlock() {
+      isPro = true;
+      closePaywall();
+      renderResults();
+    }
+
+    function toggleFaq(button) {
+      const content = button.nextElementSibling;
+      const arrow = button.querySelector('svg');
+      content.classList.toggle('hidden');
+      arrow.classList.toggle('rotate-180');
+    }
+  </script>
+ <script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'9d18dc21467e2643',t:'MTc3MTcwNDM0MC4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+</html>

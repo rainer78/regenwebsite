@@ -10,100 +10,122 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&amp;display=swap" rel="stylesheet">
   <script>
-    tailwind.config = {
-      theme: {
-        extend: {
-          fontFamily: {
-            'space': ['"Space Grotesk"', 'system-ui', 'sans-serif'],
-          },
-          colors: {
-            'bof-dark': '#0a0a0b',
-            'bof-surface': '#141416',
-            'bof-accent': '#7dd3a0'
-            'bof-text': '#e8e8e8',
-            'bof-muted': '#6b6b6b',
-          }
-        }
-      }
-    }
-  </script>
-  <style>
-    html, body { height: 100%; }
-    * { box-sizing: border-box; }
-    
-    .stat-block {
-      background: linear-gradient(145deg, #1a1a1d 0%, #141416 100%);
-      border: 1px solid rgba(125, 211, 160, 0.1);
-      transition: all 0.3s ease;
-    }
-    
-    .stat-block:hover {
-      border-color: rgba(125, 211, 160, 0.3);
-      transform: translateY(-2px);
-    }
-    
-    .cta-button {
-      background: linear-gradient(135deg, #7dd3a0 0%, #5bc47d 100%);
-      transition: all 0.3s ease;
-    }
-    
-    .cta-button:hover {
-      transform: translateY(-1px);
-      box-shadow: 0 8px 24px rgba(125, 211, 160, 0.25);
-    }
-    
-    .input-field {
-      background: rgba(20, 20, 22, 0.8);
-      border: 1px solid rgba(125, 211, 160, 0.15);
-      transition: border-color 0.3s ease;
-    }
-    
-    .input-field:focus {
-      border-color: #7dd3a0;
-      outline: none;
-    }
-    
-    .section-divider {
-      height: 1px;
-      background: linear-gradient(90deg, transparent, rgba(125, 211, 160, 0.2), transparent);
-    }
-    
-    .driver-item {
-      position: relative;
-      padding-left: 1.5rem;
-    }
-    
-    .driver-item::before {
-      content: '';
-      position: absolute;
-      left: 0;
-      top: 0.6rem;
-      width: 6px;
-      height: 6px;
-      background: #7dd3a0;
-      border-radius: 50%;
-    }
+  tailwind.config = {
+    theme: {
+      extend: {
+        fontFamily: {
+          space: ['"Space Grotesk"', 'system-ui', 'sans-serif'],
+        },
+        colors: {
+          'bof-dark': '#0a0a0b',
+          'bof-surface': '#141416',
 
-    @keyframes fadeInUp {
-      from {
-        opacity: 0;
-        transform: translateY(20px);
-      }
-      to {
-        opacity: 1;
-        transform: translateY(0);
-      }
-    }
+          /* Regen logo inspired accent (soft coral-red) */
+          'bof-accent': '#e65a59',
+          'bof-accent-hi': '#ff7a6a',
 
-    .animate-in {
-      animation: fadeInUp 0.6s ease forwards;
-    }
+          'bof-text': '#e8e8e8',
+          'bof-muted': '#6b6b6b',
+        },
+      },
+    },
+  }
+</script>
 
-    .delay-1 { animation-delay: 0.1s; }
-    .delay-2 { animation-delay: 0.2s; }
-    .delay-3 { animation-delay: 0.3s; }
-    .delay-4 { animation-delay: 0.4s; }
-  </style>
+<style>
+  html, body { height: 100%; }
+  * { box-sizing: border-box; }
+
+  /* Optional: define as CSS vars so you can reuse outside Tailwind */
+  :root{
+    --bof-accent: #e65a59;
+    --bof-accent-hi: #ff7a6a;
+    --bof-dark: #0a0a0b;
+    --bof-surface: #141416;
+  }
+
+  /* Cards: match the logo’s soft 3D + clean neutral feel */
+  .stat-block{
+    background: linear-gradient(145deg, rgba(255,255,255,0.06) 0%, rgba(255,255,255,0.03) 45%, rgba(20,20,22,0.92) 100%);
+    border: 1px solid rgba(230, 90, 89, 0.14);
+    box-shadow:
+      0 18px 60px rgba(0,0,0,0.45),
+      inset 0 1px 0 rgba(255,255,255,0.05);
+    transition: transform 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease;
+  }
+
+  .stat-block:hover{
+    border-color: rgba(230, 90, 89, 0.32);
+    transform: translateY(-2px);
+    box-shadow:
+      0 22px 70px rgba(0,0,0,0.55),
+      0 0 0 1px rgba(255,122,106,0.08),
+      inset 0 1px 0 rgba(255,255,255,0.06);
+  }
+
+  /* CTA: coral-to-highlight gradient, soft glow like the logo */
+  .cta-button{
+    background: linear-gradient(135deg, var(--bof-accent) 0%, var(--bof-accent-hi) 100%);
+    transition: transform 0.25s ease, box-shadow 0.25s ease, filter 0.25s ease;
+  }
+
+  .cta-button:hover{
+    transform: translateY(-1px);
+    box-shadow: 0 10px 26px rgba(230, 90, 89, 0.28);
+    filter: saturate(1.05);
+  }
+
+  /* Inputs: neutral glass with coral focus */
+  .input-field{
+    background: rgba(20, 20, 22, 0.72);
+    border: 1px solid rgba(230, 90, 89, 0.18);
+    box-shadow: inset 0 1px 0 rgba(255,255,255,0.04);
+    transition: border-color 0.25s ease, box-shadow 0.25s ease;
+  }
+
+  .input-field:focus{
+    border-color: var(--bof-accent-hi);
+    box-shadow:
+      0 0 0 4px rgba(230, 90, 89, 0.18),
+      inset 0 1px 0 rgba(255,255,255,0.05);
+    outline: none;
+  }
+
+  /* Divider: subtle coral fade */
+  .section-divider{
+    height: 1px;
+    background: linear-gradient(90deg, transparent, rgba(230, 90, 89, 0.22), transparent);
+  }
+
+  /* Bullets: coral dot */
+  .driver-item{
+    position: relative;
+    padding-left: 1.5rem;
+  }
+
+  .driver-item::before{
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0.6rem;
+    width: 6px;
+    height: 6px;
+    background: var(--bof-accent);
+    border-radius: 999px;
+    box-shadow: 0 0 0 3px rgba(230, 90, 89, 0.12);
+  }
+
+  @keyframes fadeInUp{
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .animate-in{ animation: fadeInUp 0.6s ease forwards; }
+  .delay-1{ animation-delay: 0.1s; }
+  .delay-2{ animation-delay: 0.2s; }
+  .delay-3{ animation-delay: 0.3s; }
+  .delay-4{ animation-delay: 0.4s; }
+</style>
   <style>body { box-sizing: border-box; }</style>
   <script src="/_sdk/data_sdk.js" type="text/javascript"></script>
  </head>

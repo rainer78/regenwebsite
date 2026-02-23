@@ -1,1 +1,473 @@
+<!doctype html>
+<html lang="en" class="h-full">
+ <head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>What is Biz Ops Fatigue?</title>
+  <script src="https://cdn.tailwindcss.com/3.4.17"></script>
+  <script src="/_sdk/element_sdk.js"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&amp;display=swap" rel="stylesheet">
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            'space': ['"Space Grotesk"', 'system-ui', 'sans-serif'],
+          },
+          colors: {
+            'bof-dark': '#0a0a0b',
+            'bof-surface': '#141416',
+            'bof-accent': '#7dd3a0',
+            'bof-text': '#e8e8e8',
+            'bof-muted': '#6b6b6b',
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    html, body { height: 100%; }
+    * { box-sizing: border-box; }
+    
+    .stat-block {
+      background: linear-gradient(145deg, #1a1a1d 0%, #141416 100%);
+      border: 1px solid rgba(125, 211, 160, 0.1);
+      transition: all 0.3s ease;
+    }
+    
+    .stat-block:hover {
+      border-color: rgba(125, 211, 160, 0.3);
+      transform: translateY(-2px);
+    }
+    
+    .cta-button {
+      background: linear-gradient(135deg, #7dd3a0 0%, #5bc47d 100%);
+      transition: all 0.3s ease;
+    }
+    
+    .cta-button:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 8px 24px rgba(125, 211, 160, 0.25);
+    }
+    
+    .input-field {
+      background: rgba(20, 20, 22, 0.8);
+      border: 1px solid rgba(125, 211, 160, 0.15);
+      transition: border-color 0.3s ease;
+    }
+    
+    .input-field:focus {
+      border-color: #7dd3a0;
+      outline: none;
+    }
+    
+    .section-divider {
+      height: 1px;
+      background: linear-gradient(90deg, transparent, rgba(125, 211, 160, 0.2), transparent);
+    }
+    
+    .driver-item {
+      position: relative;
+      padding-left: 1.5rem;
+    }
+    
+    .driver-item::before {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 0.6rem;
+      width: 6px;
+      height: 6px;
+      background: #7dd3a0;
+      border-radius: 50%;
+    }
 
+    @keyframes fadeInUp {
+      from {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .animate-in {
+      animation: fadeInUp 0.6s ease forwards;
+    }
+
+    .delay-1 { animation-delay: 0.1s; }
+    .delay-2 { animation-delay: 0.2s; }
+    .delay-3 { animation-delay: 0.3s; }
+    .delay-4 { animation-delay: 0.4s; }
+  </style>
+  <style>body { box-sizing: border-box; }</style>
+  <script src="/_sdk/data_sdk.js" type="text/javascript"></script>
+ </head>
+ <body class="h-full bg-bof-dark font-space text-bof-text overflow-auto">
+  <div class="w-full min-h-full"><!-- Hero Section -->
+   <section class="w-full px-6 py-16 lg:py-24">
+    <div class="max-w-6xl mx-auto">
+     <div class="grid lg:grid-cols-2 gap-12 lg:gap-16 items-center"><!-- Left Content -->
+      <div class="space-y-8 animate-in">
+       <div class="space-y-4"><span class="text-bof-accent text-sm font-medium tracking-widest uppercase">Understanding the Phenomenon</span>
+        <h1 id="headline" class="text-4xl lg:text-5xl xl:text-6xl font-bold leading-tight">What is Biz Ops<br>
+         Fatigue?</h1>
+       </div>
+       <p id="hero-description" class="text-lg lg:text-xl text-bof-muted leading-relaxed max-w-lg">The exhaustion from repeated business opportunity cycles that never compound. A modern syndrome where constant pivoting replaces strategic depth.</p><!-- Email Form -->
+       <form id="hero-form" class="space-y-4 max-w-md">
+        <div class="flex flex-col sm:flex-row gap-3"><input type="email" id="hero-email" placeholder="Enter your email" required class="input-field flex-1 px-5 py-4 rounded-lg text-bof-text placeholder-bof-muted" aria-label="Email address"> <button type="submit" id="hero-cta" class="cta-button px-6 py-4 rounded-lg text-bof-dark font-semibold whitespace-nowrap"> Get the BOF Brief </button>
+        </div>
+        <p id="hero-form-message" class="text-sm text-bof-accent hidden"></p>
+       </form>
+      </div><!-- Right Grid -->
+      <div class="grid grid-cols-2 gap-4">
+       <div class="stat-block p-6 rounded-xl animate-in delay-1">
+        <div class="space-y-3">
+         <div class="w-10 h-10 rounded-lg bg-bof-accent/10 flex items-center justify-center">
+          <svg class="w-5 h-5 text-bof-accent" fill="none" viewbox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z" />
+          </svg>
+         </div>
+         <h3 class="text-xl font-bold text-bof-text">Saturation</h3>
+         <p class="text-sm text-bof-muted leading-relaxed">Constant exposure to new business models overwhelming decision capacity</p>
+        </div>
+       </div>
+       <div class="stat-block p-6 rounded-xl animate-in delay-2">
+        <div class="space-y-3">
+         <div class="w-10 h-10 rounded-lg bg-bof-accent/10 flex items-center justify-center">
+          <svg class="w-5 h-5 text-bof-accent" fill="none" viewbox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 5a1 1 0 011-1h14a1 1 0 011 1v2a1 1 0 01-1 1H5a1 1 0 01-1-1V5zM4 13a1 1 0 011-1h6a1 1 0 011 1v6a1 1 0 01-1 1H5a1 1 0 01-1-1v-6zM16 13a1 1 0 011-1h2a1 1 0 011 1v6a1 1 0 01-1 1h-2a1 1 0 01-1-1v-6z" />
+          </svg>
+         </div>
+         <h3 class="text-xl font-bold text-bof-text">Fragmentation</h3>
+         <p class="text-sm text-bof-muted leading-relaxed">Jumping between strategies without allowing any to mature</p>
+        </div>
+       </div>
+       <div class="stat-block p-6 rounded-xl animate-in delay-3">
+        <div class="space-y-3">
+         <div class="w-10 h-10 rounded-lg bg-bof-accent/10 flex items-center justify-center">
+          <svg class="w-5 h-5 text-bof-accent" fill="none" viewbox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8.228 9c.549-1.165 2.03-2 3.772-2 2.21 0 4 1.343 4 3 0 1.4-1.278 2.575-3.006 2.907-.542.104-.994.54-.994 1.093m0 3h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+          </svg>
+         </div>
+         <h3 class="text-xl font-bold text-bof-text">ROI Ambiguity</h3>
+         <p class="text-sm text-bof-muted leading-relaxed">High promise with unclear return metrics and timelines</p>
+        </div>
+       </div>
+       <div class="stat-block p-6 rounded-xl animate-in delay-4">
+        <div class="space-y-3">
+         <div class="w-10 h-10 rounded-lg bg-bof-accent/10 flex items-center justify-center">
+          <svg class="w-5 h-5 text-bof-accent" fill="none" viewbox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
+          </svg>
+         </div>
+         <h3 class="text-xl font-bold text-bof-text">Decision Fatigue</h3>
+         <p class="text-sm text-bof-muted leading-relaxed">Too many viable options paralyzing strategic action</p>
+        </div>
+       </div>
+      </div>
+     </div>
+    </div>
+   </section>
+   <div class="section-divider w-full"></div><!-- Section 1: What is BOF -->
+   <section class="w-full px-6 py-16 lg:py-24">
+    <div class="max-w-4xl mx-auto">
+     <div class="space-y-8">
+      <div class="space-y-4"><span class="text-bof-accent text-sm font-medium tracking-widest uppercase">Section 01</span>
+       <h2 id="section1-title" class="text-3xl lg:text-4xl font-bold">What is Biz Ops Fatigue (BOF)</h2>
+      </div>
+      <div class="grid md:grid-cols-2 gap-8">
+       <div class="space-y-4">
+        <p class="text-bof-muted leading-relaxed">Biz Ops Fatigue is a <span class="text-bof-text font-medium">cultural phenomenon</span> driven by opportunity overload in the modern business landscape. It manifests when entrepreneurs and operators become paralyzed by the sheer volume of "viable" business models, strategies, and tactics available to them.</p>
+        <p class="text-bof-muted leading-relaxed">The result? <span class="text-bof-accent">Stalled execution.</span> Instead of building depth in one direction, energy disperses across multiple half-started initiatives that never reach critical mass.</p>
+       </div>
+       <div class="stat-block p-6 rounded-xl">
+        <div class="space-y-4">
+         <h4 class="text-lg font-semibold text-bof-text">The BOF Cycle</h4>
+         <div class="space-y-3">
+          <div class="flex items-center gap-3"><span class="w-8 h-8 rounded-full bg-bof-accent/20 text-bof-accent text-sm font-bold flex items-center justify-center">1</span> <span class="text-bof-muted">Discover new opportunity</span>
+          </div>
+          <div class="flex items-center gap-3"><span class="w-8 h-8 rounded-full bg-bof-accent/20 text-bof-accent text-sm font-bold flex items-center justify-center">2</span> <span class="text-bof-muted">Initial excitement &amp; planning</span>
+          </div>
+          <div class="flex items-center gap-3"><span class="w-8 h-8 rounded-full bg-bof-accent/20 text-bof-accent text-sm font-bold flex items-center justify-center">3</span> <span class="text-bof-muted">Early friction &amp; doubt</span>
+          </div>
+          <div class="flex items-center gap-3"><span class="w-8 h-8 rounded-full bg-bof-accent/20 text-bof-accent text-sm font-bold flex items-center justify-center">4</span> <span class="text-bof-muted">New opportunity appears</span>
+          </div>
+          <div class="flex items-center gap-3"><span class="w-8 h-8 rounded-full bg-bof-accent/10 text-bof-muted text-sm font-bold flex items-center justify-center">↻</span> <span class="text-bof-muted">Repeat indefinitely</span>
+          </div>
+         </div>
+        </div>
+       </div>
+      </div>
+     </div>
+    </div>
+   </section>
+   <div class="section-divider w-full"></div><!-- Section 2: Operational Drivers -->
+   <section class="w-full px-6 py-16 lg:py-24 bg-bof-surface/30">
+    <div class="max-w-4xl mx-auto">
+     <div class="space-y-8">
+      <div class="space-y-4"><span class="text-bof-accent text-sm font-medium tracking-widest uppercase">Section 02</span>
+       <h2 id="section2-title" class="text-3xl lg:text-4xl font-bold">Operational Drivers of BOF</h2>
+       <p class="text-bof-muted text-lg max-w-2xl">Understanding the root causes helps break the cycle. These four operational patterns fuel Biz Ops Fatigue:</p>
+      </div>
+      <div class="grid md:grid-cols-2 gap-6">
+       <div class="stat-block p-6 rounded-xl">
+        <div class="space-y-3">
+         <div class="flex items-center gap-3"><span class="text-2xl font-bold text-bof-accent">01</span>
+          <h4 class="text-lg font-semibold">Excess Distribution Channels</h4>
+         </div>
+         <p class="text-bof-muted text-sm leading-relaxed driver-item">The proliferation of platforms creates pressure to be everywhere. Each channel demands unique content, strategy, and optimization—fragmenting focus and diluting impact.</p>
+        </div>
+       </div>
+       <div class="stat-block p-6 rounded-xl">
+        <div class="space-y-3">
+         <div class="flex items-center gap-3"><span class="text-2xl font-bold text-bof-accent">02</span>
+          <h4 class="text-lg font-semibold">Constant Repositioning</h4>
+         </div>
+         <p class="text-bof-muted text-sm leading-relaxed driver-item">Market trends shift rapidly, triggering reactive pivots before any positioning has time to compound. Identity becomes fluid rather than established.</p>
+        </div>
+       </div>
+       <div class="stat-block p-6 rounded-xl">
+        <div class="space-y-3">
+         <div class="flex items-center gap-3"><span class="text-2xl font-bold text-bof-accent">03</span>
+          <h4 class="text-lg font-semibold">Shallow Implementation Cycles</h4>
+         </div>
+         <p class="text-bof-muted text-sm leading-relaxed driver-item">Strategies get tested but rarely perfected. The learning curve is abandoned just as mastery approaches, preventing the exponential returns that come from deep expertise.</p>
+        </div>
+       </div>
+       <div class="stat-block p-6 rounded-xl">
+        <div class="space-y-3">
+         <div class="flex items-center gap-3"><span class="text-2xl font-bold text-bof-accent">04</span>
+          <h4 class="text-lg font-semibold">Lack of Operational Systems</h4>
+         </div>
+         <p class="text-bof-muted text-sm leading-relaxed driver-item">Without documented processes, every new initiative starts from zero. Institutional knowledge doesn't accumulate, making each opportunity feel equally difficult.</p>
+        </div>
+       </div>
+      </div>
+     </div>
+    </div>
+   </section>
+   <div class="section-divider w-full"></div><!-- Final CTA Section -->
+   <section class="w-full px-6 py-16 lg:py-24">
+    <div class="max-w-3xl mx-auto text-center">
+     <div class="space-y-8">
+      <div class="space-y-4">
+       <h2 id="final-headline" class="text-3xl lg:text-5xl font-bold">Stop Chasing.<br><span class="text-bof-accent">Start Compounding.</span></h2>
+       <p id="final-subtext" class="text-lg text-bof-muted max-w-xl mx-auto">Get the BOF Brief: A tactical framework for identifying high-leverage opportunities and building operational systems that compound over time.</p>
+      </div><!-- Email Form -->
+      <form id="footer-form" class="space-y-4 max-w-md mx-auto">
+       <div class="flex flex-col sm:flex-row gap-3"><input type="email" id="footer-email" placeholder="Enter your email" required class="input-field flex-1 px-5 py-4 rounded-lg text-bof-text placeholder-bof-muted text-center sm:text-left" aria-label="Email address"> <button type="submit" id="footer-cta" class="cta-button px-8 py-4 rounded-lg text-bof-dark font-semibold whitespace-nowrap"> Get the BOF Brief </button>
+       </div>
+       <p id="footer-form-message" class="text-sm text-bof-accent hidden"></p>
+      </form>
+      <p class="text-xs text-bof-muted">No spam. Unsubscribe anytime. Your data stays private.</p>
+     </div>
+    </div>
+   </section><!-- Footer -->
+   <footer class="w-full px-6 py-8 border-t border-bof-surface">
+    <div class="max-w-6xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-4">
+     <p class="text-sm text-bof-muted">© 2024 BOF Brief. All rights reserved.</p>
+     <div class="flex items-center gap-6"><a href="#" class="text-sm text-bof-muted hover:text-bof-accent transition-colors">Privacy</a> <a href="#" class="text-sm text-bof-muted hover:text-bof-accent transition-colors">Terms</a>
+     </div>
+    </div>
+   </footer>
+  </div>
+  <script>
+    const defaultConfig = {
+      headline: 'What is Biz Ops Fatigue?',
+      hero_description: 'The exhaustion from repeated business opportunity cycles that never compound. A modern syndrome where constant pivoting replaces strategic depth.',
+      cta_button_text: 'Get the BOF Brief',
+      section1_title: 'What is Biz Ops Fatigue (BOF)',
+      section2_title: 'Operational Drivers of BOF',
+      final_headline: 'Stop Chasing. Start Compounding.',
+      final_subtext: 'Get the BOF Brief: A tactical framework for identifying high-leverage opportunities and building operational systems that compound over time.',
+      background_color: '#0a0a0b',
+      surface_color: '#141416',
+      text_color: '#e8e8e8',
+      accent_color: '#7dd3a0',
+      muted_color: '#6b6b6b',
+      font_family: 'Space Grotesk',
+      font_size: 16
+    };
+
+    const WEBHOOK_URL = 'https://hook.make.com/your-webhook-url';
+
+    async function submitEmail(email, formId) {
+      const messageEl = document.getElementById(`${formId}-form-message`);
+      const buttonEl = document.getElementById(`${formId}-cta`);
+      const originalText = buttonEl.textContent;
+      
+      buttonEl.textContent = 'Sending...';
+      buttonEl.disabled = true;
+      
+      try {
+        const response = await fetch(WEBHOOK_URL, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            email: email,
+            source: 'bof-landing-page',
+            timestamp: new Date().toISOString()
+          })
+        });
+        
+        messageEl.textContent = '✓ Thanks! Check your inbox for the BOF Brief.';
+        messageEl.classList.remove('hidden');
+        buttonEl.textContent = 'Sent!';
+        
+        setTimeout(() => {
+          messageEl.classList.add('hidden');
+          buttonEl.textContent = originalText;
+          buttonEl.disabled = false;
+        }, 4000);
+        
+      } catch (error) {
+        messageEl.textContent = '✓ Thanks! We\'ll send the BOF Brief shortly.';
+        messageEl.classList.remove('hidden');
+        buttonEl.textContent = originalText;
+        buttonEl.disabled = false;
+      }
+    }
+
+    document.getElementById('hero-form').addEventListener('submit', function(e) {
+      e.preventDefault();
+      const email = document.getElementById('hero-email').value;
+      submitEmail(email, 'hero');
+      document.getElementById('hero-email').value = '';
+    });
+
+    document.getElementById('footer-form').addEventListener('submit', function(e) {
+      e.preventDefault();
+      const email = document.getElementById('footer-email').value;
+      submitEmail(email, 'footer');
+      document.getElementById('footer-email').value = '';
+    });
+
+    async function onConfigChange(config) {
+      const c = { ...defaultConfig, ...config };
+      
+      document.getElementById('headline').innerHTML = c.headline.includes('Biz Ops') 
+        ? c.headline.replace('Biz Ops', 'Biz Ops<br>') 
+        : c.headline;
+      document.getElementById('hero-description').textContent = c.hero_description;
+      document.getElementById('hero-cta').textContent = c.cta_button_text;
+      document.getElementById('footer-cta').textContent = c.cta_button_text;
+      document.getElementById('section1-title').textContent = c.section1_title;
+      document.getElementById('section2-title').textContent = c.section2_title;
+      
+      const finalHeadlineParts = c.final_headline.split('.');
+      if (finalHeadlineParts.length >= 2) {
+        document.getElementById('final-headline').innerHTML = 
+          `${finalHeadlineParts[0]}.<br><span class="text-bof-accent">${finalHeadlineParts.slice(1).join('.').trim()}</span>`;
+      } else {
+        document.getElementById('final-headline').textContent = c.final_headline;
+      }
+      
+      document.getElementById('final-subtext').textContent = c.final_subtext;
+      
+      document.body.style.fontFamily = `${c.font_family}, system-ui, sans-serif`;
+      document.documentElement.style.setProperty('--font-size-base', `${c.font_size}px`);
+    }
+
+    function mapToCapabilities(config) {
+      const c = { ...defaultConfig, ...config };
+      return {
+        recolorables: [
+          {
+            get: () => c.background_color,
+            set: (value) => {
+              c.background_color = value;
+              document.body.style.backgroundColor = value;
+              window.elementSdk.setConfig({ background_color: value });
+            }
+          },
+          {
+            get: () => c.surface_color,
+            set: (value) => {
+              c.surface_color = value;
+              document.querySelectorAll('.stat-block').forEach(el => {
+                el.style.background = `linear-gradient(145deg, ${value}dd 0%, ${value} 100%)`;
+              });
+              window.elementSdk.setConfig({ surface_color: value });
+            }
+          },
+          {
+            get: () => c.text_color,
+            set: (value) => {
+              c.text_color = value;
+              document.body.style.color = value;
+              window.elementSdk.setConfig({ text_color: value });
+            }
+          },
+          {
+            get: () => c.accent_color,
+            set: (value) => {
+              c.accent_color = value;
+              document.querySelectorAll('.text-bof-accent').forEach(el => {
+                el.style.color = value;
+              });
+              document.querySelectorAll('.cta-button').forEach(el => {
+                el.style.background = `linear-gradient(135deg, ${value} 0%, ${value}cc 100%)`;
+              });
+              window.elementSdk.setConfig({ accent_color: value });
+            }
+          },
+          {
+            get: () => c.muted_color,
+            set: (value) => {
+              c.muted_color = value;
+              document.querySelectorAll('.text-bof-muted').forEach(el => {
+                el.style.color = value;
+              });
+              window.elementSdk.setConfig({ muted_color: value });
+            }
+          }
+        ],
+        borderables: [],
+        fontEditable: {
+          get: () => c.font_family,
+          set: (value) => {
+            c.font_family = value;
+            document.body.style.fontFamily = `${value}, system-ui, sans-serif`;
+            window.elementSdk.setConfig({ font_family: value });
+          }
+        },
+        fontSizeable: {
+          get: () => c.font_size,
+          set: (value) => {
+            c.font_size = value;
+            document.documentElement.style.fontSize = `${value}px`;
+            window.elementSdk.setConfig({ font_size: value });
+          }
+        }
+      };
+    }
+
+    function mapToEditPanelValues(config) {
+      const c = { ...defaultConfig, ...config };
+      return new Map([
+        ['headline', c.headline],
+        ['hero_description', c.hero_description],
+        ['cta_button_text', c.cta_button_text],
+        ['section1_title', c.section1_title],
+        ['section2_title', c.section2_title],
+        ['final_headline', c.final_headline],
+        ['final_subtext', c.final_subtext]
+      ]);
+    }
+
+    if (window.elementSdk) {
+      window.elementSdk.init({
+        defaultConfig,
+        onConfigChange,
+        mapToCapabilities,
+        mapToEditPanelValues
+      });
+    } else {
+      onConfigChange(defaultConfig);
+    }
+  </script>
+ <script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'9d2696bf274bb84c',t:'MTc3MTg0ODI5OS4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+</html>

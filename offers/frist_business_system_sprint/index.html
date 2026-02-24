@@ -1,0 +1,294 @@
+<!doctype html>
+<html lang="en" class="h-full">
+ <head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Regen Creatives | Execution Sprint</title>
+  <script src="https://cdn.tailwindcss.com/3.4.17"></script>
+  <script src="/_sdk/element_sdk.js"></script>
+  <script src="/_sdk/data_sdk.js"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&amp;display=swap" rel="stylesheet">
+  <style>
+    * { font-family: 'DM Sans', sans-serif; }
+    html, body { height: 100%; margin: 0; }
+  </style>
+  <style>body { box-sizing: border-box; }</style>
+ </head>
+ <body class="h-full">
+  <div id="app-wrapper" class="w-full h-full overflow-auto" style="background-color: #F5F2ED;">
+   <div class="w-full max-w-[700px] mx-auto px-6 py-16 md:py-24"><!-- Logo -->
+    <div class="mb-20"><span id="logo" class="text-sm tracking-wide" style="color: #1C1C1C;">Regen Creatives</span>
+    </div><!-- Hero Section -->
+    <div class="mb-16">
+     <h1 id="headline" class="text-3xl md:text-4xl font-bold leading-tight mb-6" style="color: #1C1C1C;">Build One Working System That Improves Your Business.</h1>
+     <p id="subheadline" class="text-lg" style="color: #4A4A4A;">A four-week execution sprint for service-based business owners ready to turn interest into predictable revenue.</p>
+    </div><!-- Body Content -->
+    <div class="mb-16 space-y-6" style="color: #3D3D3D;">
+     <p id="body-1" class="text-base leading-relaxed">Most entrepreneurs believe growth comes from working harder.</p>
+     <p id="body-2" class="text-base leading-relaxed">It does not.</p>
+     <p id="body-3" class="text-base leading-relaxed">Growth comes from knowing exactly what happens after someone says, "I'm interested."</p>
+     <p id="body-4" class="text-base leading-relaxed">If your process changes depending on the day, revenue will too.</p>
+     <p id="body-5" class="text-base leading-relaxed">This Sprint is a focused working room to build one operational system that improves productivity or revenue.</p>
+    </div><!-- Credibility Line -->
+    <div class="mb-16">
+     <p class="text-sm" style="color: #6B6B6B;">Built and led by Lorraine Dukes, Founder of Regen Creatives.</p>
+    </div><!-- Divider -->
+    <div class="mb-16" style="border-top: 1px solid #E0DCD6;"></div><!-- Application Form -->
+    <div id="form-section">
+     <form id="application-form" class="space-y-5">
+      <div><label for="name" class="block text-sm mb-2" style="color: #1C1C1C;">Your name</label> <input type="text" id="name" name="name" required class="w-full px-4 py-3 text-base border outline-none transition-all duration-200" style="background-color: #FDFCFA; border-color: #D9D5CF; border-radius: 6px; color: #1C1C1C;" onfocus="this.style.borderColor='#B8352E'" onblur="this.style.borderColor='#D9D5CF'">
+      </div>
+      <div><label for="email" class="block text-sm mb-2" style="color: #1C1C1C;">Your best email</label> <input type="email" id="email" name="email" required class="w-full px-4 py-3 text-base border outline-none transition-all duration-200" style="background-color: #FDFCFA; border-color: #D9D5CF; border-radius: 6px; color: #1C1C1C;" onfocus="this.style.borderColor='#B8352E'" onblur="this.style.borderColor='#D9D5CF'">
+      </div>
+      <div class="pt-4"><button id="submit-btn" type="submit" class="w-full py-4 text-base font-medium transition-all duration-200" style="background-color: #B8352E; color: #FFFFFF; border-radius: 6px;" onmouseover="this.style.backgroundColor='#9E2D28'" onmouseout="this.style.backgroundColor='#B8352E'"> Apply for the Sprint </button>
+      </div>
+      <p id="footer-text" class="text-center text-sm pt-2" style="color: #6B6B6B;">Enrollment confirms your commitment to implement.</p>
+     </form><!-- Loading State -->
+     <div id="loading-state" class="hidden text-center py-8">
+      <div class="inline-block w-6 h-6 border-2 border-t-transparent rounded-full animate-spin" style="border-color: #B8352E; border-top-color: transparent;"></div>
+      <p class="mt-3 text-sm" style="color: #4A4A4A;">Submitting your application...</p>
+     </div><!-- Success State -->
+     <div id="success-state" class="hidden text-center py-8">
+      <div class="w-12 h-12 mx-auto mb-4 flex items-center justify-center rounded-full" style="background-color: #E8F5E9;">
+       <svg class="w-6 h-6" fill="none" stroke="#2E7D32" viewbox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+       </svg>
+      </div>
+      <h3 class="text-xl font-bold mb-2" style="color: #1C1C1C;">Application Received</h3>
+      <p class="text-sm" style="color: #4A4A4A;">We'll be in touch within 48 hours.</p>
+     </div><!-- Error State -->
+     <div id="error-state" class="hidden text-center py-4">
+      <p class="text-sm" style="color: #B8352E;">Something went wrong. Please try again.</p>
+     </div>
+    </div>
+   </div>
+  </div>
+  <script>
+    // Default configuration
+    const defaultConfig = {
+      // Colors
+      background_color: '#F5F2ED',
+      text_color: '#1C1C1C',
+      secondary_text_color: '#4A4A4A',
+      accent_color: '#B8352E',
+      surface_color: '#FDFCFA',
+      // Font
+      font_family: 'DM Sans',
+      font_size: 16,
+      // Content
+      headline: 'Build One Working System That Improves Your Business.',
+      subheadline: 'A four-week execution sprint for service-based business owners ready to turn interest into predictable revenue.',
+      body_line_1: 'Most entrepreneurs believe growth comes from working harder.',
+      body_line_2: 'It does not.',
+      body_line_3: 'Growth comes from knowing exactly what happens after someone says, "I\'m interested."',
+      body_line_4: 'If your process changes depending on the day, revenue will too.',
+      body_line_5: 'This Sprint is a focused working room to build one operational system that improves productivity or revenue.',
+      button_text: 'Apply for the Sprint',
+      footer_text: 'Enrollment confirms your commitment to implement.'
+    };
+
+    // Data handler for SDK
+    const dataHandler = {
+      onDataChanged(data) {
+        // Write-only form - no data display needed
+      }
+    };
+
+    // Form submission handler
+    async function handleSubmit(e) {
+      e.preventDefault();
+      
+      const form = document.getElementById('application-form');
+      const loadingState = document.getElementById('loading-state');
+      const successState = document.getElementById('success-state');
+      const errorState = document.getElementById('error-state');
+      const submitBtn = document.getElementById('submit-btn');
+      
+      const name = document.getElementById('name').value.trim();
+      const email = document.getElementById('email').value.trim();
+      
+      if (!name || !email) return;
+      
+      // Show loading state
+      form.classList.add('hidden');
+      loadingState.classList.remove('hidden');
+      errorState.classList.add('hidden');
+      submitBtn.disabled = true;
+      
+      try {
+        const result = await window.dataSdk.create({
+          name: name,
+          email: email,
+          submitted_at: new Date().toISOString()
+        });
+        
+        loadingState.classList.add('hidden');
+        
+        if (result.isOk) {
+          successState.classList.remove('hidden');
+        } else {
+          form.classList.remove('hidden');
+          errorState.classList.remove('hidden');
+          submitBtn.disabled = false;
+        }
+      } catch (err) {
+        loadingState.classList.add('hidden');
+        form.classList.remove('hidden');
+        errorState.classList.remove('hidden');
+        submitBtn.disabled = false;
+      }
+    }
+
+    // Render function to update UI based on config
+    async function onConfigChange(config) {
+      const fontFamily = config.font_family || defaultConfig.font_family;
+      const fontSize = config.font_size || defaultConfig.font_size;
+      const baseFontStack = 'sans-serif';
+      
+      // Apply background
+      document.getElementById('app-wrapper').style.backgroundColor = config.background_color || defaultConfig.background_color;
+      
+      // Apply text colors and fonts
+      const headline = document.getElementById('headline');
+      headline.textContent = config.headline || defaultConfig.headline;
+      headline.style.color = config.text_color || defaultConfig.text_color;
+      headline.style.fontFamily = `${fontFamily}, ${baseFontStack}`;
+      headline.style.fontSize = `${fontSize * 2.25}px`;
+      
+      const subheadline = document.getElementById('subheadline');
+      subheadline.textContent = config.subheadline || defaultConfig.subheadline;
+      subheadline.style.color = config.secondary_text_color || defaultConfig.secondary_text_color;
+      subheadline.style.fontFamily = `${fontFamily}, ${baseFontStack}`;
+      subheadline.style.fontSize = `${fontSize * 1.125}px`;
+      
+      // Body content
+      const bodyLines = [
+        { id: 'body-1', key: 'body_line_1' },
+        { id: 'body-2', key: 'body_line_2' },
+        { id: 'body-3', key: 'body_line_3' },
+        { id: 'body-4', key: 'body_line_4' },
+        { id: 'body-5', key: 'body_line_5' }
+      ];
+      
+      bodyLines.forEach(({ id, key }) => {
+        const el = document.getElementById(id);
+        el.textContent = config[key] || defaultConfig[key];
+        el.style.fontFamily = `${fontFamily}, ${baseFontStack}`;
+        el.style.fontSize = `${fontSize}px`;
+      });
+      
+      // Logo
+      const logo = document.getElementById('logo');
+      logo.style.color = config.text_color || defaultConfig.text_color;
+      logo.style.fontFamily = `${fontFamily}, ${baseFontStack}`;
+      
+      // Button
+      const submitBtn = document.getElementById('submit-btn');
+      submitBtn.textContent = config.button_text || defaultConfig.button_text;
+      submitBtn.style.backgroundColor = config.accent_color || defaultConfig.accent_color;
+      submitBtn.style.fontFamily = `${fontFamily}, ${baseFontStack}`;
+      
+      // Update button hover colors
+      const accentColor = config.accent_color || defaultConfig.accent_color;
+      const darkerAccent = adjustColor(accentColor, -15);
+      submitBtn.onmouseover = () => submitBtn.style.backgroundColor = darkerAccent;
+      submitBtn.onmouseout = () => submitBtn.style.backgroundColor = accentColor;
+      
+      // Footer text
+      const footerText = document.getElementById('footer-text');
+      footerText.textContent = config.footer_text || defaultConfig.footer_text;
+      footerText.style.fontFamily = `${fontFamily}, ${baseFontStack}`;
+      
+      // Form inputs
+      const inputs = document.querySelectorAll('input');
+      inputs.forEach(input => {
+        input.style.backgroundColor = config.surface_color || defaultConfig.surface_color;
+        input.style.fontFamily = `${fontFamily}, ${baseFontStack}`;
+        const accent = config.accent_color || defaultConfig.accent_color;
+        input.onfocus = () => input.style.borderColor = accent;
+        input.onblur = () => input.style.borderColor = '#D9D5CF';
+      });
+      
+      // Labels
+      const labels = document.querySelectorAll('label');
+      labels.forEach(label => {
+        label.style.color = config.text_color || defaultConfig.text_color;
+        label.style.fontFamily = `${fontFamily}, ${baseFontStack}`;
+      });
+    }
+    
+    // Helper to darken/lighten color
+    function adjustColor(hex, percent) {
+      const num = parseInt(hex.replace('#', ''), 16);
+      const r = Math.min(255, Math.max(0, (num >> 16) + percent));
+      const g = Math.min(255, Math.max(0, ((num >> 8) & 0x00FF) + percent));
+      const b = Math.min(255, Math.max(0, (num & 0x0000FF) + percent));
+      return '#' + (0x1000000 + r * 0x10000 + g * 0x100 + b).toString(16).slice(1);
+    }
+
+    // Initialize SDKs
+    (async function() {
+      // Initialize Element SDK
+      if (window.elementSdk) {
+        window.elementSdk.init({
+          defaultConfig,
+          onConfigChange,
+          mapToCapabilities: (config) => ({
+            recolorables: [
+              {
+                get: () => config.background_color || defaultConfig.background_color,
+                set: (v) => { config.background_color = v; window.elementSdk.setConfig({ background_color: v }); }
+              },
+              {
+                get: () => config.surface_color || defaultConfig.surface_color,
+                set: (v) => { config.surface_color = v; window.elementSdk.setConfig({ surface_color: v }); }
+              },
+              {
+                get: () => config.text_color || defaultConfig.text_color,
+                set: (v) => { config.text_color = v; window.elementSdk.setConfig({ text_color: v }); }
+              },
+              {
+                get: () => config.accent_color || defaultConfig.accent_color,
+                set: (v) => { config.accent_color = v; window.elementSdk.setConfig({ accent_color: v }); }
+              },
+              {
+                get: () => config.secondary_text_color || defaultConfig.secondary_text_color,
+                set: (v) => { config.secondary_text_color = v; window.elementSdk.setConfig({ secondary_text_color: v }); }
+              }
+            ],
+            borderables: [],
+            fontEditable: {
+              get: () => config.font_family || defaultConfig.font_family,
+              set: (v) => { config.font_family = v; window.elementSdk.setConfig({ font_family: v }); }
+            },
+            fontSizeable: {
+              get: () => config.font_size || defaultConfig.font_size,
+              set: (v) => { config.font_size = v; window.elementSdk.setConfig({ font_size: v }); }
+            }
+          }),
+          mapToEditPanelValues: (config) => new Map([
+            ['headline', config.headline || defaultConfig.headline],
+            ['subheadline', config.subheadline || defaultConfig.subheadline],
+            ['body_line_1', config.body_line_1 || defaultConfig.body_line_1],
+            ['body_line_2', config.body_line_2 || defaultConfig.body_line_2],
+            ['body_line_3', config.body_line_3 || defaultConfig.body_line_3],
+            ['body_line_4', config.body_line_4 || defaultConfig.body_line_4],
+            ['body_line_5', config.body_line_5 || defaultConfig.body_line_5],
+            ['button_text', config.button_text || defaultConfig.button_text],
+            ['footer_text', config.footer_text || defaultConfig.footer_text]
+          ])
+        });
+      }
+      
+      // Initialize Data SDK
+      if (window.dataSdk) {
+        await window.dataSdk.init(dataHandler);
+      }
+      
+      // Set up form submission
+      document.getElementById('application-form').addEventListener('submit', handleSubmit);
+    })();
+  </script>
+ <script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'9d2f03c153ec8bb8',t:'MTc3MTkzNjY1MC4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+</html>

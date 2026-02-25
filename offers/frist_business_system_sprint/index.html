@@ -250,34 +250,100 @@ that improves productivity, revenue clarity, and operational discipline.
       <div class="mb-16" style="border-top: 1px solid #D5D0C8;"></div>
 
       <!-- Form -->
-      <div id="form-section">
-        <form id="application-form" class="space-y-5">
-          <div>
-            <label for="name" class="block text-sm mb-2" style="color: #1C1C1C;">Your name</label>
-            <input type="text" id="name" required
-              class="w-full px-4 py-3 text-base border outline-none transition-all duration-200"
-              style="background-color: #FDFCFA; border-color: #C8C3BC; border-radius: 6px; color: #1C1C1C;">
-          </div>
+<div id="form-section">
+  <form id="application-form" class="space-y-5">
+    <div>
+      <label for="name" class="block text-sm mb-2" style="color: #1C1C1C;">Your name</label>
+      <input type="text" id="name" required
+        class="w-full px-4 py-3 text-base border outline-none transition-all duration-200"
+        style="background-color: #FDFCFA; border-color: #C8C3BC; border-radius: 6px; color: #1C1C1C;">
+    </div>
 
-          <div>
-            <label for="email" class="block text-sm mb-2" style="color: #1C1C1C;">Your best email</label>
-            <input type="email" id="email" required
-              class="w-full px-4 py-3 text-base border outline-none transition-all duration-200"
-              style="background-color: #FDFCFA; border-color: #C8C3BC; border-radius: 6px; color: #1C1C1C;">
-          </div>
+    <div>
+      <label for="email" class="block text-sm mb-2" style="color: #1C1C1C;">Your best email</label>
+      <input type="email" id="email" required
+        class="w-full px-4 py-3 text-base border outline-none transition-all duration-200"
+        style="background-color: #FDFCFA; border-color: #C8C3BC; border-radius: 6px; color: #1C1C1C;">
+    </div>
 
-          <div class="pt-4">
-            <button id="submit-btn" type="submit"
-              class="w-full py-4 text-base font-medium transition-all duration-200"
-              style="background-color: #B8352E; color: #FFFFFF; border-radius: 6px;">
-              Apply for the Sprint
-            </button>
-          </div>
+    <div class="pt-4">
+      <button id="submit-btn" type="submit"
+        class="w-full py-4 text-base font-medium transition-all duration-200"
+        style="background-color: #B8352E; color: #FFFFFF; border-radius: 6px;">
+        Apply for the Sprint
+      </button>
+    </div>
 
-          <p id="footer-text" class="text-center text-sm pt-2" style="color: #3F3F3F;">
-            Enrollment confirms your commitment to implement.
-          </p>
-        </form>
+    <p id="footer-text" class="text-center text-sm pt-2" style="color: #3F3F3F;">
+      Enrollment confirms your commitment to implement.
+    </p>
+  </form>
+
+  <!-- Inline status (no design changes, stays subtle) -->
+  <p id="form-status" class="text-sm pt-4 hidden" style="color:#3F3F3F;"></p>
+</div>
+
+<script>
+  (function () {
+    // TODO: Replace this with the real Stripe Checkout URL you generate server-side.
+    // For now it is a placeholder that proves the flow works.
+    const STRIPE_CHECKOUT_PLACEHOLDER_URL = "https://example.com/stripe-checkout-placeholder";
+
+    const form = document.getElementById("application-form");
+    const nameEl = document.getElementById("name");
+    const emailEl = document.getElementById("email");
+    const btn = document.getElementById("submit-btn");
+    const statusEl = document.getElementById("form-status");
+
+    function setBusy(isBusy) {
+      btn.disabled = isBusy;
+      btn.style.opacity = isBusy ? "0.85" : "1";
+      btn.style.cursor = isBusy ? "not-allowed" : "pointer";
+      btn.textContent = isBusy ? "Redirecting to checkout…" : "Apply for the Sprint";
+    }
+
+    function showStatus(msg) {
+      statusEl.textContent = msg;
+      statusEl.classList.remove("hidden");
+    }
+
+    form.addEventListener("submit", function (e) {
+      e.preventDefault();
+
+      const name = (nameEl.value || "").trim();
+      const email = (emailEl.value || "").trim();
+
+      if (!name) {
+        showStatus("Please enter your name.");
+        nameEl.focus();
+        return;
+      }
+      if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+        showStatus("Please enter a valid email address.");
+        emailEl.focus();
+        return;
+      }
+
+      setBusy(true);
+      showStatus("Sending you to secure checkout…");
+
+      // Save locally so you can use it on a success page or later steps.
+      // This is optional but useful.
+      try {
+        sessionStorage.setItem("sprint_applicant_name", name);
+        sessionStorage.setItem("sprint_applicant_email", email);
+      } catch (_) {}
+
+      // OPTIONAL: add query params so your checkout/success page can read them.
+      const url = new URL(STRIPE_CHECKOUT_PLACEHOLDER_URL);
+      url.searchParams.set("name", name);
+      url.searchParams.set("email", email);
+
+      // Redirect
+      window.location.href = url.toString();
+    });
+  })();
+</script>
 
  
 

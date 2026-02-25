@@ -249,27 +249,79 @@ that improves productivity, revenue clarity, and operational discipline.
       <!-- Divider -->
       <div class="mb-16" style="border-top: 1px solid #D5D0C8;"></div>
 
-      <!-- Form -->
+
+<!-- Form -->
 <div id="form-section">
-  <form id="application-form" class="space-y-5">
+  <!-- Context (kept subtle, matches your palette) -->
+  <div class="mb-6">
+    <p class="text-sm leading-relaxed" style="color:#3F3F3F;">
+      Apply to enroll in the First Business System Sprint. You will be redirected to secure checkout.
+      After enrollment, you will receive a confirmation email with next steps and your implementation packet.
+    </p>
+  </div>
+
+  <form id="application-form" class="space-y-5" novalidate>
+    <!-- Honeypot (anti-bot) -->
+    <div class="hidden" aria-hidden="true">
+      <label for="company">Company</label>
+      <input type="text" id="company" tabindex="-1" autocomplete="off">
+    </div>
+
     <div>
       <label for="name" class="block text-sm mb-2" style="color: #1C1C1C;">Your name</label>
-      <input type="text" id="name" required
+      <input
+        type="text"
+        id="name"
+        required
+        autocomplete="name"
         class="w-full px-4 py-3 text-base border outline-none transition-all duration-200"
-        style="background-color: #FDFCFA; border-color: #C8C3BC; border-radius: 6px; color: #1C1C1C;">
+        style="background-color: #FDFCFA; border-color: #C8C3BC; border-radius: 6px; color: #1C1C1C;"
+      >
+      <p id="name-error" class="mt-2 text-sm hidden" style="color:#B8352E;"></p>
     </div>
 
     <div>
       <label for="email" class="block text-sm mb-2" style="color: #1C1C1C;">Your best email</label>
-      <input type="email" id="email" required
+      <input
+        type="email"
+        id="email"
+        required
+        autocomplete="email"
+        inputmode="email"
         class="w-full px-4 py-3 text-base border outline-none transition-all duration-200"
-        style="background-color: #FDFCFA; border-color: #C8C3BC; border-radius: 6px; color: #1C1C1C;">
+        style="background-color: #FDFCFA; border-color: #C8C3BC; border-radius: 6px; color: #1C1C1C;"
+      >
+      <p id="email-error" class="mt-2 text-sm hidden" style="color:#B8352E;"></p>
+      <p class="mt-2 text-xs" style="color:#3F3F3F;">
+        Use an email you check. This is where your confirmation and materials will be sent.
+      </p>
+    </div>
+
+    <!-- Optional: business context (minimal friction, high signal) -->
+    <div>
+      <label for="goal" class="block text-sm mb-2" style="color:#1C1C1C;">What are you building?</label>
+      <select
+        id="goal"
+        required
+        class="w-full px-4 py-3 text-base border outline-none transition-all duration-200"
+        style="background-color:#FDFCFA; border-color:#C8C3BC; border-radius:6px; color:#1C1C1C;"
+      >
+        <option value="" selected>Select one</option>
+        <option value="services">Service business (clients)</option>
+        <option value="product">Product or digital offer</option>
+        <option value="content">Content / audience-based business</option>
+        <option value="other">Other</option>
+      </select>
+      <p id="goal-error" class="mt-2 text-sm hidden" style="color:#B8352E;"></p>
     </div>
 
     <div class="pt-4">
-      <button id="submit-btn" type="submit"
+      <button
+        id="submit-btn"
+        type="submit"
         class="w-full py-4 text-base font-medium transition-all duration-200"
-        style="background-color: #B8352E; color: #FFFFFF; border-radius: 6px;">
+        style="background-color: #B8352E; color: #FFFFFF; border-radius: 6px;"
+      >
         Apply for the Sprint
       </button>
     </div>
@@ -277,23 +329,48 @@ that improves productivity, revenue clarity, and operational discipline.
     <p id="footer-text" class="text-center text-sm pt-2" style="color: #3F3F3F;">
       Enrollment confirms your commitment to implement.
     </p>
-  </form>
 
-  <!-- Inline status (no design changes, stays subtle) -->
-  <p id="form-status" class="text-sm pt-4 hidden" style="color:#3F3F3F;"></p>
+    <p id="form-status" class="text-sm pt-3 hidden" style="color:#3F3F3F;"></p>
+  </form>
 </div>
 
 <script>
   (function () {
-    // TODO: Replace this with the real Stripe Checkout URL you generate server-side.
-    // For now it is a placeholder that proves the flow works.
+    // Placeholder for now. Replace with the URL you create server-side with Stripe Checkout.
     const STRIPE_CHECKOUT_PLACEHOLDER_URL = "https://example.com/stripe-checkout-placeholder";
 
     const form = document.getElementById("application-form");
-    const nameEl = document.getElementById("name");
-    const emailEl = document.getElementById("email");
     const btn = document.getElementById("submit-btn");
     const statusEl = document.getElementById("form-status");
+
+    const nameEl = document.getElementById("name");
+    const emailEl = document.getElementById("email");
+    const goalEl = document.getElementById("goal");
+    const honeypotEl = document.getElementById("company");
+
+    const nameErr = document.getElementById("name-error");
+    const emailErr = document.getElementById("email-error");
+    const goalErr = document.getElementById("goal-error");
+
+    // Lightweight disposable domain blocklist (not perfect, but catches common throwaways)
+    const BLOCKED_EMAIL_DOMAINS = new Set([
+      "mailinator.com", "guerrillamail.com", "10minutemail.com", "temp-mail.org",
+      "yopmail.com", "trashmail.com", "getnada.com"
+    ]);
+
+    function show(el, msg) {
+      el.textContent = msg;
+      el.classList.remove("hidden");
+    }
+
+    function hide(el) {
+      el.textContent = "";
+      el.classList.add("hidden");
+    }
+
+    function setFieldBorder(el, hasError) {
+      el.style.borderColor = hasError ? "#B8352E" : "#C8C3BC";
+    }
 
     function setBusy(isBusy) {
       btn.disabled = isBusy;
@@ -307,39 +384,92 @@ that improves productivity, revenue clarity, and operational discipline.
       statusEl.classList.remove("hidden");
     }
 
-    form.addEventListener("submit", function (e) {
-      e.preventDefault();
+    function validName(name) {
+      // Must be 2+ chars, allow letters, spaces, hyphen, apostrophe, period
+      if (name.length < 2) return "Please enter your full name.";
+      if (name.length > 80) return "Name is too long.";
+      if (!/^[A-Za-zÀ-ÖØ-öø-ÿ.' -]+$/.test(name)) return "Name contains invalid characters.";
+      // Avoid single-word names (helps with deliverability + seriousness)
+      if (name.trim().split(/\s+/).length < 2) return "Please enter first and last name.";
+      return "";
+    }
+
+    function validEmail(email) {
+      if (email.length < 6) return "Please enter a valid email address.";
+      if (email.length > 254) return "Email address is too long.";
+      // Basic but strong email format check
+      if (!/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(email)) return "Please enter a valid email address.";
+      const domain = email.split("@")[1].toLowerCase();
+      if (BLOCKED_EMAIL_DOMAINS.has(domain)) return "Please use a non-temporary email address.";
+      return "";
+    }
+
+    function validGoal(val) {
+      if (!val) return "Please select one option.";
+      return "";
+    }
+
+    function validateAll() {
+      let ok = true;
 
       const name = (nameEl.value || "").trim();
       const email = (emailEl.value || "").trim();
+      const goal = (goalEl.value || "").trim();
 
-      if (!name) {
-        showStatus("Please enter your name.");
-        nameEl.focus();
+      const nMsg = validName(name);
+      const eMsg = validEmail(email);
+      const gMsg = validGoal(goal);
+
+      if (nMsg) { ok = false; show(nameErr, nMsg); setFieldBorder(nameEl, true); }
+      else { hide(nameErr); setFieldBorder(nameEl, false); }
+
+      if (eMsg) { ok = false; show(emailErr, eMsg); setFieldBorder(emailEl, true); }
+      else { hide(emailErr); setFieldBorder(emailEl, false); }
+
+      if (gMsg) { ok = false; show(goalErr, gMsg); setFieldBorder(goalEl, true); }
+      else { hide(goalErr); setFieldBorder(goalEl, false); }
+
+      return { ok, name, email, goal };
+    }
+
+    // Inline validation on blur (disciplined, not annoying)
+    [nameEl, emailEl, goalEl].forEach((el) => {
+      el.addEventListener("blur", () => validateAll());
+    });
+
+    form.addEventListener("submit", function (e) {
+      e.preventDefault();
+
+      // Bot trap
+      if ((honeypotEl.value || "").trim().length > 0) {
+        // Act like success but do nothing
+        showStatus("Redirecting to checkout…");
         return;
       }
-      if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
-        showStatus("Please enter a valid email address.");
-        emailEl.focus();
+
+      const { ok, name, email, goal } = validateAll();
+      if (!ok) {
+        showStatus("Please correct the highlighted fields.");
         return;
       }
 
       setBusy(true);
       showStatus("Sending you to secure checkout…");
 
-      // Save locally so you can use it on a success page or later steps.
-      // This is optional but useful.
+      // Store locally for later use on success page
       try {
         sessionStorage.setItem("sprint_applicant_name", name);
         sessionStorage.setItem("sprint_applicant_email", email);
+        sessionStorage.setItem("sprint_applicant_goal", goal);
       } catch (_) {}
 
-      // OPTIONAL: add query params so your checkout/success page can read them.
+      // Build redirect URL with context (placeholder)
       const url = new URL(STRIPE_CHECKOUT_PLACEHOLDER_URL);
       url.searchParams.set("name", name);
       url.searchParams.set("email", email);
+      url.searchParams.set("goal", goal);
+      url.searchParams.set("source", "first_business_system_sprint");
 
-      // Redirect
       window.location.href = url.toString();
     });
   })();

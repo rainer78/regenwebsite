@@ -75,114 +75,108 @@ that improves productivity, revenue clarity, and operational discipline.
   <div class="w-full rounded-md overflow-hidden border"
        style="border-color:#C8C3BC; background-color:#E6E1DA;">
 
-   <!-- VIDEO SECTION: Regen-styled thumbnail + modal YouTube player (lazy + click-to-play) -->
-<section class="w-full px-6 py-16 lg:py-20">
-  <div class="max-w-6xl mx-auto">
-    <div class="grid lg:grid-cols-2 gap-10 lg:gap-14 items-center">
-      <!-- Copy -->
-      <div class="space-y-5">
-        <p class="text-xs font-semibold tracking-[0.24em] uppercase text-neutral-600">
+    <!-- Explainer Video (Regen-style thumbnail + modal player) -->
+<section class="w-full">
+  <div class="rounded-2xl border border-black/10 bg-black/[0.03] p-6 sm:p-8">
+    <div class="grid lg:grid-cols-2 gap-8 items-center">
+      <!-- Left: Copy -->
+      <div class="space-y-4">
+        <p class="text-xs font-semibold tracking-[0.22em] uppercase text-black/60">
           Explainer Video
         </p>
-        <h2 class="text-3xl lg:text-4xl font-bold leading-tight text-neutral-900">
+
+        <h3 class="text-3xl sm:text-4xl font-bold leading-tight text-black">
           Build your first automated business system.
-        </h2>
-        <p class="text-base leading-relaxed text-neutral-700 max-w-xl">
-          Watch a short overview of the First Business System Sprint and how we move from scattered effort to a working system
-          that reliably converts interest into revenue.
+        </h3>
+
+        <p class="text-base leading-relaxed text-black/70 max-w-prose">
+          Watch a short overview of the First Business System Sprint and how we move from scattered effort to a working
+          system that reliably converts interest into revenue.
         </p>
+
         <div class="pt-2 flex flex-wrap gap-3">
           <button
             type="button"
             data-open-video
-            class="inline-flex items-center justify-center rounded-lg px-5 py-3 text-sm font-semibold bg-neutral-900 text-white hover:bg-neutral-800 focus:outline-none focus:ring-2 focus:ring-neutral-300"
+            class="inline-flex items-center justify-center rounded-xl px-5 py-3 text-sm font-semibold bg-black text-white hover:bg-black/90 focus:outline-none focus:ring-2 focus:ring-black/20"
           >
             Watch the overview
           </button>
-          <a
-            href="https://regencreatives.com/offers/frist_business_system_sprint/"
-            class="inline-flex items-center justify-center rounded-lg px-5 py-3 text-sm font-semibold border border-neutral-300 text-neutral-900 hover:bg-neutral-50 focus:outline-none focus:ring-2 focus:ring-neutral-200"
-          >
-            View the sprint
-          </a>
+
+          <span class="inline-flex items-center rounded-xl border border-black/10 bg-white/70 px-4 py-3 text-sm text-black/70">
+            2–4 minutes
+          </span>
         </div>
       </div>
 
-      <!-- Thumbnail (click-to-open modal) -->
+      <!-- Right: Thumbnail -->
       <div class="relative">
         <button
           type="button"
           data-open-video
-          class="group relative w-full overflow-hidden rounded-2xl border border-neutral-200 bg-white shadow-[0_12px_40px_rgba(0,0,0,0.12)] focus:outline-none focus:ring-2 focus:ring-neutral-200"
-          aria-label="Play video"
+          class="group relative w-full overflow-hidden rounded-2xl border border-black/10 bg-white shadow-sm focus:outline-none focus:ring-2 focus:ring-black/15"
+          aria-label="Play explainer video"
         >
-          <!-- 16:9 container -->
           <div class="relative pb-[56.25%] h-0">
-            <!-- Use YouTube's thumbnail endpoint (fast). Swap to your own hosted image anytime. -->
+            <!-- Custom thumbnail (fast). Swap to your own image if you prefer. -->
             <img
-              src="https://i.ytimg.com/vi/GeMRzttM3BM/hqdefault.jpg"
-              srcset="https://i.ytimg.com/vi/GeMRzttM3BM/maxresdefault.jpg 1280w, https://i.ytimg.com/vi/GeMRzttM3BM/hqdefault.jpg 480w"
-              sizes="(max-width: 1024px) 100vw, 560px"
-              alt="Video thumbnail"
+              src="https://i.ytimg.com/vi/GeMRzttM3BM/maxresdefault.jpg"
+              onerror="this.onerror=null;this.src='https://i.ytimg.com/vi/GeMRzttM3BM/hqdefault.jpg';"
+              alt="First Business System Sprint video thumbnail"
               class="absolute inset-0 w-full h-full object-cover transition-transform duration-300 group-hover:scale-[1.02]"
               loading="lazy"
               decoding="async"
             />
 
-            <!-- Soft overlay -->
-            <div class="absolute inset-0 bg-gradient-to-t from-black/45 via-black/10 to-transparent"></div>
+            <!-- Gentle overlay (matches your subtle palette) -->
+            <div class="absolute inset-0 bg-gradient-to-t from-black/35 via-black/10 to-transparent"></div>
 
-            <!-- Play chip -->
-            <div class="absolute left-4 bottom-4 flex items-center gap-3 rounded-xl bg-white/90 backdrop-blur px-4 py-3 border border-white/70 shadow-sm">
-              <span class="inline-flex items-center justify-center w-10 h-10 rounded-lg bg-neutral-900 text-white">
-                <!-- Play icon -->
-                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-                  <path d="M9 8.5V15.5L16 12L9 8.5Z" fill="currentColor"></path>
-                  <path d="M12 22C6.477 22 2 17.523 2 12C2 6.477 6.477 2 12 2C17.523 2 22 6.477 22 12C22 17.523 17.523 22 12 22Z" stroke="currentColor" stroke-width="1.6" opacity="0.25"></path>
-                </svg>
-              </span>
-              <div class="text-left">
-                <p class="text-sm font-semibold text-neutral-900">Watch the overview</p>
-                <p class="text-xs text-neutral-600">2–4 minutes</p>
+            <!-- Play pill -->
+            <div class="absolute left-4 bottom-4 right-4">
+              <div class="inline-flex w-full items-center gap-3 rounded-2xl border border-black/10 bg-white/85 backdrop-blur px-4 py-3 shadow-sm">
+                <span class="inline-flex items-center justify-center w-11 h-11 rounded-xl bg-black text-white">
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                    <path d="M9 8.5V15.5L16 12L9 8.5Z" fill="currentColor"></path>
+                  </svg>
+                </span>
+                <div class="text-left">
+                  <p class="text-sm font-semibold text-black">Watch the overview</p>
+                  <p class="text-xs text-black/60">First Business System Sprint</p>
+                </div>
               </div>
             </div>
 
-            <!-- Corner label -->
-            <div class="absolute top-4 right-4 rounded-lg bg-white/85 backdrop-blur px-3 py-1.5 text-xs font-semibold text-neutral-900 border border-white/70">
-              First Business System Sprint
+            <!-- Corner tag -->
+            <div class="absolute top-4 right-4 rounded-xl border border-black/10 bg-white/75 backdrop-blur px-3 py-1.5 text-xs font-semibold text-black/80">
+              See how it works
             </div>
           </div>
         </button>
-
-        <!-- Subtle credibility line (optional) -->
-        <p class="mt-3 text-sm text-neutral-600">
-          Built and led by Lorraine Dukes, Founder of Regen Creatives.
-        </p>
       </div>
     </div>
   </div>
 </section>
 
-<!-- MODAL -->
+<!-- Modal -->
 <div
-  id="videoModal"
+  id="regenVideoModal"
   class="fixed inset-0 z-[9999] hidden items-center justify-center p-4"
   role="dialog"
   aria-modal="true"
-  aria-labelledby="videoModalTitle"
+  aria-labelledby="regenVideoTitle"
 >
   <!-- Backdrop -->
-  <div class="absolute inset-0 bg-black/70 backdrop-blur-sm" data-close-video></div>
+  <div class="absolute inset-0 bg-black/60 backdrop-blur-sm" data-close-video></div>
 
   <!-- Panel -->
-  <div class="relative w-full max-w-4xl rounded-2xl bg-white shadow-[0_20px_80px_rgba(0,0,0,0.35)] overflow-hidden border border-neutral-200">
-    <div class="flex items-center justify-between px-5 py-4 border-b border-neutral-200">
-      <p id="videoModalTitle" class="text-sm font-semibold text-neutral-900">
-        Execution Sprint Overview
+  <div class="relative w-full max-w-4xl overflow-hidden rounded-2xl border border-black/10 bg-[#F7F3EE] shadow-[0_20px_80px_rgba(0,0,0,0.35)]">
+    <div class="flex items-center justify-between px-5 py-4 border-b border-black/10">
+      <p id="regenVideoTitle" class="text-sm font-semibold text-black">
+        First Business System Sprint Overview
       </p>
       <button
         type="button"
-        class="inline-flex items-center justify-center rounded-lg w-9 h-9 text-neutral-700 hover:bg-neutral-100 focus:outline-none focus:ring-2 focus:ring-neutral-200"
+        class="inline-flex items-center justify-center rounded-xl w-10 h-10 text-black/70 hover:bg-black/5 focus:outline-none focus:ring-2 focus:ring-black/15"
         data-close-video
         aria-label="Close video"
       >
@@ -192,24 +186,18 @@ that improves productivity, revenue clarity, and operational discipline.
       </button>
     </div>
 
-    <!-- 16:9 Video container -->
     <div class="relative pb-[56.25%] h-0 bg-black">
-      <!-- We inject the iframe on open for true lazy loading -->
-      <div id="videoMount" class="absolute inset-0"></div>
+      <!-- Inject iframe on open (true lazy loading) -->
+      <div id="regenVideoMount" class="absolute inset-0"></div>
     </div>
 
-    <div class="px-5 py-4 border-t border-neutral-200">
-      <p class="text-sm text-neutral-700">
-        Prefer to read first? Visit the sprint page for the structure, outcomes, and enrollment details.
-      </p>
-      <div class="mt-3">
-        <a
-          href="https://regencreatives.com/offers/frist_business_system_sprint/"
-          class="inline-flex items-center justify-center rounded-lg px-4 py-2.5 text-sm font-semibold bg-neutral-900 text-white hover:bg-neutral-800 focus:outline-none focus:ring-2 focus:ring-neutral-300"
-        >
-          View the sprint
-        </a>
-      </div>
+    <div class="px-5 py-4 border-t border-black/10">
+      <a
+        href="https://regencreatives.com/offers/frist_business_system_sprint/"
+        class="inline-flex items-center justify-center rounded-xl px-4 py-2.5 text-sm font-semibold bg-black text-white hover:bg-black/90 focus:outline-none focus:ring-2 focus:ring-black/20"
+      >
+        View the sprint
+      </a>
     </div>
   </div>
 </div>
@@ -217,17 +205,16 @@ that improves productivity, revenue clarity, and operational discipline.
 <script>
   (function () {
     const VIDEO_ID = "GeMRzttM3BM";
-    const modal = document.getElementById("videoModal");
-    const mount = document.getElementById("videoMount");
+    const modal = document.getElementById("regenVideoModal");
+    const mount = document.getElementById("regenVideoMount");
 
     function openModal() {
-      // Create iframe only when needed (lazy, better performance)
+      // Create iframe only on demand (performance)
       const iframe = document.createElement("iframe");
       iframe.className = "w-full h-full";
       iframe.src = "https://www.youtube.com/embed/" + VIDEO_ID + "?autoplay=1&rel=0";
-      iframe.title = "Execution Sprint Overview";
-      iframe.allow =
-        "accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share";
+      iframe.title = "First Business System Sprint Overview";
+      iframe.allow = "accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share";
       iframe.allowFullscreen = true;
       iframe.loading = "lazy";
       iframe.referrerPolicy = "strict-origin-when-cross-origin";
@@ -244,29 +231,19 @@ that improves productivity, revenue clarity, and operational discipline.
       modal.classList.add("hidden");
       modal.classList.remove("flex");
       document.documentElement.classList.remove("overflow-hidden");
-      // Stop playback by removing iframe
+      // Stop playback
       mount.innerHTML = "";
     }
 
-    // Open triggers
-    document.querySelectorAll("[data-open-video]").forEach((btn) => {
-      btn.addEventListener("click", openModal);
-    });
+    document.querySelectorAll("[data-open-video]").forEach((btn) => btn.addEventListener("click", openModal));
+    modal.querySelectorAll("[data-close-video]").forEach((el) => el.addEventListener("click", closeModal));
 
-    // Close triggers
-    modal.querySelectorAll("[data-close-video]").forEach((el) => {
-      el.addEventListener("click", closeModal);
-    });
-
-    // Close on Escape
     document.addEventListener("keydown", (e) => {
-      if (e.key === "Escape" && !modal.classList.contains("hidden")) {
-        closeModal();
-      }
+      if (e.key === "Escape" && !modal.classList.contains("hidden")) closeModal();
     });
   })();
 </script>
-
+  
   <p class="text-sm mt-4"
      style="color:#3F3F3F;">
     A brief overview of what we build together and how it changes your business operations.

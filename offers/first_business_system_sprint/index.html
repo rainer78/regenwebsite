@@ -1,969 +1,1021 @@
 <!doctype html>
 <html lang="en" class="h-full">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+ <head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>The LOOP Builder</title>
-
   <script src="https://cdn.tailwindcss.com/3.4.17"></script>
   <script src="/_sdk/element_sdk.js"></script>
-  <script src="/_sdk/data_sdk.js" type="text/javascript"></script>
-
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link
-    href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Source+Serif+4:wght@600;700&display=swap"
-    rel="stylesheet"
-  />
-
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&amp;family=IBM+Plex+Mono:wght@400;500&amp;display=swap" rel="stylesheet">
   <script>
     tailwind.config = {
       theme: {
         extend: {
           colors: {
-            surface: "#F8F9FA",
-            card: "#FFFFFF",
-            navy: "#1E3A5F",
-            navyLight: "#2D4A6F",
-            slate: "#64748B",
-            text: "#1F2937",
-            muted: "#6B7280",
-            border: "#E5E7EB",
-            success: "#059669",
-            warning: "#D97706",
-            caution: "#DC2626",
+            slate: {
+              50: '#f8fafc',
+              100: '#f1f5f9',
+              200: '#e2e8f0',
+              300: '#cbd5e1',
+              400: '#94a3b8',
+              500: '#64748b',
+              600: '#475569',
+              700: '#334155',
+              800: '#1e293b',
+              900: '#0f172a'
+            },
+            accent: {
+              DEFAULT: '#1e3a5f',
+              light: '#2d4a6f',
+              dark: '#0f2847'
+            },
+            sage: {
+              DEFAULT: '#4a5d52',
+              light: '#5a6d62'
+            }
           },
           fontFamily: {
-            sans: ["Inter", "system-ui", "sans-serif"],
-            serif: ["Source Serif 4", "Georgia", "serif"],
-          },
-        },
-      },
-    };
-  </script>
-
-  <style>
-    html, body { height: 100%; margin: 0; }
-    body { box-sizing: border-box; }
-    .feedback-card { transition: all 0.2s ease; }
-    .feedback-card.selected { transform: scale(1.02); }
-    .step-indicator { transition: all 0.3s ease; }
-    .input-field:focus {
-      outline: none;
-      border-color: #1E3A5F;
-      box-shadow: 0 0 0 3px rgba(30, 58, 95, 0.1);
+            sans: ['DM Sans', 'system-ui', 'sans-serif'],
+            mono: ['IBM Plex Mono', 'monospace']
+          }
+        }
+      }
     }
-    .btn-primary { transition: all 0.2s ease; }
-    .btn-primary:hover { transform: translateY(-1px); box-shadow: 0 4px 12px rgba(30, 58, 95, 0.3); }
-    .screen { animation: fadeIn 0.3s ease; }
+  </script>
+  <style>
+    html, body {
+      height: 100%;
+      margin: 0;
+      padding: 0;
+    }
+    .feedback-card {
+      transition: all 0.2s ease;
+    }
+    .feedback-card.selected {
+      transform: scale(1.02);
+    }
+    .step-indicator {
+      transition: all 0.3s ease;
+    }
+    .fade-in {
+      animation: fadeIn 0.4s ease-out;
+    }
     @keyframes fadeIn {
       from { opacity: 0; transform: translateY(10px); }
       to { opacity: 1; transform: translateY(0); }
     }
+    input:focus, select:focus, textarea:focus {
+      outline: none;
+      box-shadow: 0 0 0 2px rgba(30, 58, 95, 0.2);
+    }
+    .scrollbar-thin::-webkit-scrollbar {
+      width: 6px;
+    }
+    .scrollbar-thin::-webkit-scrollbar-track {
+      background: transparent;
+    }
+    .scrollbar-thin::-webkit-scrollbar-thumb {
+      background: #cbd5e1;
+      border-radius: 3px;
+    }
   </style>
-</head>
-
-<body class="h-full bg-surface font-sans">
-  <div id="app" class="h-full w-full overflow-auto">
-    <!-- Header -->
-    <header class="sticky top-0 bg-white border-b border-border z-10">
-      <div class="max-w-2xl mx-auto px-4 py-4">
-        <div class="flex items-center justify-between">
-          <div>
-            <h1 id="main-title" class="font-serif text-xl font-bold text-navy">The LOOP Builder</h1>
-            <p id="subtitle" class="text-sm text-muted mt-0.5">Build your first working business system.</p>
-          </div>
-          <div class="flex items-center gap-2">
-            <span id="step-label" class="text-sm font-medium text-slate">Step 1 of 5</span>
-          </div>
-        </div>
-
-        <!-- Progress Bar -->
-        <div class="mt-4 flex gap-2">
-          <div id="progress-1" class="step-indicator h-1.5 flex-1 rounded-full bg-navy"></div>
-          <div id="progress-2" class="step-indicator h-1.5 flex-1 rounded-full bg-border"></div>
-          <div id="progress-3" class="step-indicator h-1.5 flex-1 rounded-full bg-border"></div>
-          <div id="progress-4" class="step-indicator h-1.5 flex-1 rounded-full bg-border"></div>
-          <div id="progress-5" class="step-indicator h-1.5 flex-1 rounded-full bg-border"></div>
-        </div>
+  <style>body { box-sizing: border-box; }</style>
+  <script src="/_sdk/data_sdk.js" type="text/javascript"></script>
+ </head>
+ <body class="h-full bg-slate-100 font-sans text-slate-800">
+  <div id="app" class="h-full w-full overflow-auto scrollbar-thin">
+   <!-- Header -->
+   <header id="header" class="sticky top-0 z-10 bg-white/95 backdrop-blur-sm border-b border-slate-200 px-4 py-4 md:px-8">
+    <div class="max-w-2xl mx-auto">
+     <div class="flex items-center justify-between mb-3">
+      <div>
+       <h1 id="main-title" class="text-lg md:text-xl font-semibold text-slate-900 tracking-tight">The LOOP Builder</h1>
+       <p id="subtitle" class="text-sm text-slate-500 mt-0.5">Build your first working business system.</p>
       </div>
-    </header>
-
-    <!-- Main Content -->
-    <main class="max-w-2xl mx-auto px-4 py-6 pb-24">
-
-      <!-- Screen 1: Lead Trigger -->
-      <div id="screen-1" class="screen">
-        <div class="mb-6">
-          <div class="flex items-center gap-2 mb-2">
-            <span class="w-8 h-8 rounded-full bg-navy text-white flex items-center justify-center text-sm font-semibold">L</span>
-            <h2 class="font-serif text-2xl font-bold text-text">Define the Trigger</h2>
-          </div>
-          <p class="text-muted text-base leading-relaxed">What specific action starts your system?</p>
-        </div>
-
-        <div class="bg-card rounded-xl shadow-sm border border-border p-5 mb-6">
-          <div class="space-y-4">
-            <div>
-              <label class="block text-sm font-medium text-text mb-1.5">Who do you serve?</label>
-              <input type="text" id="lead-audience" class="input-field w-full px-4 py-3 border border-border rounded-lg text-text placeholder-slate" placeholder="e.g., Independent HVAC contractors in Cobb County" />
-            </div>
-            <div>
-              <label class="block text-sm font-medium text-text mb-1.5">What problem do they have?</label>
-              <input type="text" id="lead-problem" class="input-field w-full px-4 py-3 border border-border rounded-lg text-text placeholder-slate" placeholder="e.g., Inquiries do not convert into booked calls" />
-            </div>
-            <div>
-              <label class="block text-sm font-medium text-text mb-1.5">What is your first call to action?</label>
-              <input type="text" id="lead-cta" class="input-field w-full px-4 py-3 border border-border rounded-lg text-text placeholder-slate" placeholder="e.g., Book a 15-minute diagnostic call" />
-            </div>
-            <div>
-              <label class="block text-sm font-medium text-text mb-1.5">Primary channel</label>
-              <select id="lead-channel" class="input-field w-full px-4 py-3 border border-border rounded-lg text-text bg-white">
-                <option value="">Select a channel</option>
-                <option value="linkedin">LinkedIn</option>
-                <option value="landing">Landing Page</option>
-                <option value="event">Event</option>
-                <option value="email">Email</option>
-                <option value="other">Other</option>
-              </select>
-            </div>
-          </div>
-        </div>
-
-        <!-- Feedback Panel (manual selection still works; can be replaced with auto-eval later) -->
-        <div class="mb-6">
-          <p class="text-sm font-medium text-muted mb-3 uppercase tracking-wide">Feedback Status</p>
-          <div class="grid gap-3">
-            <div class="feedback-card cursor-pointer bg-card border-2 border-border rounded-xl p-4 hover:border-caution" data-feedback="1-1" onclick="selectFeedback('1-1')">
-              <div class="flex items-start gap-3">
-                <div class="w-3 h-3 rounded-full bg-caution mt-1 flex-shrink-0"></div>
-                <div>
-                  <p class="font-medium text-text text-sm">Needs Focus</p>
-                  <p class="text-muted text-sm mt-1">Your audience is too broad. If you cannot picture a real person, narrow it.</p>
-                </div>
-              </div>
-            </div>
-            <div class="feedback-card cursor-pointer bg-card border-2 border-border rounded-xl p-4 hover:border-warning" data-feedback="1-2" onclick="selectFeedback('1-2')">
-              <div class="flex items-start gap-3">
-                <div class="w-3 h-3 rounded-full bg-warning mt-1 flex-shrink-0"></div>
-                <div>
-                  <p class="font-medium text-text text-sm">Getting Clear</p>
-                  <p class="text-muted text-sm mt-1">The problem is specific, but the outcome is not measurable. Clarify what changes.</p>
-                </div>
-              </div>
-            </div>
-            <div class="feedback-card cursor-pointer bg-card border-2 border-border rounded-xl p-4 hover:border-success" data-feedback="1-3" onclick="selectFeedback('1-3')">
-              <div class="flex items-start gap-3">
-                <div class="w-3 h-3 rounded-full bg-success mt-1 flex-shrink-0"></div>
-                <div>
-                  <p class="font-medium text-text text-sm">Ready to Test</p>
-                  <p class="text-muted text-sm mt-1">Clear audience. Clear problem. Clear action. This can generate real conversations.</p>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <button onclick="goToScreen(2)" class="btn-primary w-full bg-navy text-white font-medium py-4 rounded-xl hover:bg-navyLight">
-          Continue to Operational Steps
-        </button>
+      <div class="flex items-center gap-2">
+       <span id="step-label" class="text-xs font-mono text-slate-400 bg-slate-100 px-2 py-1 rounded">Step 1 of 5</span>
       </div>
-
-      <!-- Screen 2: Operational Steps -->
-      <div id="screen-2" class="screen hidden">
-        <div class="mb-6">
-          <div class="flex items-center gap-2 mb-2">
-            <span class="w-8 h-8 rounded-full bg-navy text-white flex items-center justify-center text-sm font-semibold">O</span>
-            <h2 class="font-serif text-2xl font-bold text-text">Map the Steps</h2>
-          </div>
-          <p class="text-muted text-base leading-relaxed">What happens every single time after someone says, "I'm interested"?</p>
-        </div>
-
-        <div class="bg-card rounded-xl shadow-sm border border-border p-5 mb-6">
-          <div class="space-y-4">
-            <div>
-              <label class="block text-sm font-medium text-text mb-1.5">Step 1</label>
-              <input type="text" id="op-step-1" class="input-field w-full px-4 py-3 border border-border rounded-lg text-text placeholder-slate" placeholder="e.g., Send a DM with calendar link" />
-            </div>
-            <div>
-              <label class="block text-sm font-medium text-text mb-1.5">Step 2</label>
-              <input type="text" id="op-step-2" class="input-field w-full px-4 py-3 border border-border rounded-lg text-text placeholder-slate" placeholder="e.g., Follow up after 24 hours if no response" />
-            </div>
-            <div>
-              <label class="block text-sm font-medium text-text mb-1.5">Step 3</label>
-              <input type="text" id="op-step-3" class="input-field w-full px-4 py-3 border border-border rounded-lg text-text placeholder-slate" placeholder="e.g., Send invoice or confirm booking" />
-            </div>
-            <div>
-              <label class="block text-sm font-medium text-text mb-1.5">Step 4</label>
-              <input type="text" id="op-step-4" class="input-field w-full px-4 py-3 border border-border rounded-lg text-text placeholder-slate" placeholder="e.g., Onboarding email and intake form" />
-            </div>
-          </div>
-        </div>
-
-        <div class="mb-6">
-          <p class="text-sm font-medium text-muted mb-3 uppercase tracking-wide">Feedback Status</p>
-          <div class="grid gap-3">
-            <div class="feedback-card cursor-pointer bg-card border-2 border-border rounded-xl p-4 hover:border-caution" data-feedback="2-1" onclick="selectFeedback('2-1')">
-              <div class="flex items-start gap-3">
-                <div class="w-3 h-3 rounded-full bg-caution mt-1 flex-shrink-0"></div>
-                <div>
-                  <p class="font-medium text-text text-sm">Needs Structure</p>
-                  <p class="text-muted text-sm mt-1">Steps are out of order or incomplete. Every lead must move forward without confusion.</p>
-                </div>
-              </div>
-            </div>
-            <div class="feedback-card cursor-pointer bg-card border-2 border-border rounded-xl p-4 hover:border-warning" data-feedback="2-2" onclick="selectFeedback('2-2')">
-              <div class="flex items-start gap-3">
-                <div class="w-3 h-3 rounded-full bg-warning mt-1 flex-shrink-0"></div>
-                <div>
-                  <p class="font-medium text-text text-sm">Clear Sequence</p>
-                  <p class="text-muted text-sm mt-1">The steps flow logically. Now remove unnecessary friction.</p>
-                </div>
-              </div>
-            </div>
-            <div class="feedback-card cursor-pointer bg-card border-2 border-border rounded-xl p-4 hover:border-success" data-feedback="2-3" onclick="selectFeedback('2-3')">
-              <div class="flex items-start gap-3">
-                <div class="w-3 h-3 rounded-full bg-success mt-1 flex-shrink-0"></div>
-                <div>
-                  <p class="font-medium text-text text-sm">System Ready</p>
-                  <p class="text-muted text-sm mt-1">This sequence can run consistently without relying on memory.</p>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <div class="flex gap-3">
-          <button onclick="goToScreen(1)" class="flex-1 bg-white border border-border text-text font-medium py-4 rounded-xl hover:bg-gray-50">Back</button>
-          <button onclick="goToScreen(3)" class="flex-1 btn-primary bg-navy text-white font-medium py-4 rounded-xl hover:bg-navyLight">Continue to Ownership</button>
-        </div>
+     </div><!-- Progress Bar -->
+     <div class="flex gap-1.5">
+      <div id="prog-1" class="step-indicator h-1 flex-1 rounded-full bg-accent"></div>
+      <div id="prog-2" class="step-indicator h-1 flex-1 rounded-full bg-slate-200"></div>
+      <div id="prog-3" class="step-indicator h-1 flex-1 rounded-full bg-slate-200"></div>
+      <div id="prog-4" class="step-indicator h-1 flex-1 rounded-full bg-slate-200"></div>
+      <div id="prog-5" class="step-indicator h-1 flex-1 rounded-full bg-slate-200"></div>
+     </div>
+    </div>
+   </header><!-- Main Content -->
+   <main class="px-4 py-6 md:px-8 pb-24">
+    <div class="max-w-2xl mx-auto">
+     <!-- Screen 1: Lead Trigger -->
+     <section id="screen-1" class="fade-in">
+      <div class="mb-6">
+       <div class="flex items-center gap-2 mb-2">
+        <span class="text-xs font-mono font-medium text-accent bg-accent/10 px-2 py-0.5 rounded">L</span>
+        <h2 class="text-base font-semibold text-slate-800">Define the Trigger</h2>
+       </div>
+       <p class="text-sm text-slate-500">What specific action starts your system?</p>
       </div>
-
-      <!-- Screen 3: Ownership -->
-      <div id="screen-3" class="screen hidden">
-        <div class="mb-6">
-          <div class="flex items-center gap-2 mb-2">
-            <span class="w-8 h-8 rounded-full bg-navy text-white flex items-center justify-center text-sm font-semibold">O</span>
-            <h2 class="font-serif text-2xl font-bold text-text">Assign Ownership</h2>
-          </div>
-          <p class="text-muted text-base leading-relaxed">Who performs each step?</p>
+      <div class="space-y-4 mb-6">
+       <div class="bg-white rounded-xl p-4 shadow-sm border border-slate-200">
+        <label class="block text-xs font-medium text-slate-600 mb-2">Who do you serve?</label> <input type="text" id="input-audience" class="w-full px-3 py-2.5 text-sm bg-slate-50 border border-slate-200 rounded-lg focus:border-accent focus:bg-white transition-colors" placeholder="e.g., First-time founders in B2B SaaS">
+       </div>
+       <div class="bg-white rounded-xl p-4 shadow-sm border border-slate-200">
+        <label class="block text-xs font-medium text-slate-600 mb-2">What problem do they have?</label> <input type="text" id="input-problem" class="w-full px-3 py-2.5 text-sm bg-slate-50 border border-slate-200 rounded-lg focus:border-accent focus:bg-white transition-colors" placeholder="e.g., No consistent way to generate sales conversations">
+       </div>
+       <div class="bg-white rounded-xl p-4 shadow-sm border border-slate-200">
+        <label class="block text-xs font-medium text-slate-600 mb-2">What is your first call to action?</label> <input type="text" id="input-cta" class="w-full px-3 py-2.5 text-sm bg-slate-50 border border-slate-200 rounded-lg focus:border-accent focus:bg-white transition-colors" placeholder="e.g., Book a 15-min strategy call">
+       </div>
+       <div class="bg-white rounded-xl p-4 shadow-sm border border-slate-200">
+        <label class="block text-xs font-medium text-slate-600 mb-2">Primary channel</label> <select id="input-channel" class="w-full px-3 py-2.5 text-sm bg-slate-50 border border-slate-200 rounded-lg focus:border-accent focus:bg-white transition-colors appearance-none cursor-pointer"> <option value="">Select a channel...</option> <option value="LinkedIn">LinkedIn</option> <option value="Landing Page">Landing Page</option> <option value="Event">Event</option> <option value="Email">Email</option> <option value="Other">Other</option> </select>
+       </div>
+      </div><!-- Feedback Panel -->
+      <div class="bg-slate-50 rounded-xl p-4 border border-slate-200">
+       <p class="text-xs font-medium text-slate-500 mb-3 uppercase tracking-wide">Feedback State</p>
+       <div class="space-y-2">
+        <div class="feedback-card cursor-pointer p-3 rounded-lg border-2 border-transparent bg-white hover:border-amber-300 transition-all" data-feedback="needs-focus" onclick="selectFeedback(1, this)">
+         <div class="flex items-center gap-2 mb-1">
+          <span class="w-2 h-2 rounded-full bg-amber-400"></span> <span class="text-xs font-semibold text-amber-700">Needs Focus</span>
+         </div>
+         <p class="text-xs text-slate-600 leading-relaxed">Your audience is too broad. If you cannot picture a real person, narrow it.</p>
         </div>
-
-        <div class="bg-card rounded-xl shadow-sm border border-border p-5 mb-6">
-          <div class="space-y-4">
-            <div class="flex items-center justify-between gap-4 p-3 bg-surface rounded-lg">
-              <div class="flex-1 min-w-0">
-                <p class="text-sm font-medium text-text">Step 1</p>
-                <p id="owner-step-1-text" class="text-sm text-muted truncate">—</p>
-              </div>
-              <select id="owner-step-1" class="input-field px-3 py-2 border border-border rounded-lg text-sm text-text bg-white min-w-[120px]" onchange="updateScreen3Feedback()">
-                <option value="human">Human</option>
-                <option value="ai">AI</option>
-                <option value="automation">Automation</option>
-                <option value="hybrid">Hybrid</option>
-              </select>
-            </div>
-
-            <div class="flex items-center justify-between gap-4 p-3 bg-surface rounded-lg">
-              <div class="flex-1 min-w-0">
-                <p class="text-sm font-medium text-text">Step 2</p>
-                <p id="owner-step-2-text" class="text-sm text-muted truncate">—</p>
-              </div>
-              <select id="owner-step-2" class="input-field px-3 py-2 border border-border rounded-lg text-sm text-text bg-white min-w-[120px]" onchange="updateScreen3Feedback()">
-                <option value="human">Human</option>
-                <option value="ai">AI</option>
-                <option value="automation">Automation</option>
-                <option value="hybrid">Hybrid</option>
-              </select>
-            </div>
-
-            <div class="flex items-center justify-between gap-4 p-3 bg-surface rounded-lg">
-              <div class="flex-1 min-w-0">
-                <p class="text-sm font-medium text-text">Step 3</p>
-                <p id="owner-step-3-text" class="text-sm text-muted truncate">—</p>
-              </div>
-              <select id="owner-step-3" class="input-field px-3 py-2 border border-border rounded-lg text-sm text-text bg-white min-w-[120px]" onchange="updateScreen3Feedback()">
-                <option value="human">Human</option>
-                <option value="ai">AI</option>
-                <option value="automation">Automation</option>
-                <option value="hybrid">Hybrid</option>
-              </select>
-            </div>
-
-            <div class="flex items-center justify-between gap-4 p-3 bg-surface rounded-lg">
-              <div class="flex-1 min-w-0">
-                <p class="text-sm font-medium text-text">Step 4</p>
-                <p id="owner-step-4-text" class="text-sm text-muted truncate">—</p>
-              </div>
-              <select id="owner-step-4" class="input-field px-3 py-2 border border-border rounded-lg text-sm text-text bg-white min-w-[120px]" onchange="updateScreen3Feedback()">
-                <option value="human">Human</option>
-                <option value="ai">AI</option>
-                <option value="automation">Automation</option>
-                <option value="hybrid">Hybrid</option>
-              </select>
-            </div>
-          </div>
+        <div class="feedback-card cursor-pointer p-3 rounded-lg border-2 border-transparent bg-white hover:border-blue-300 transition-all" data-feedback="getting-clear" onclick="selectFeedback(1, this)">
+         <div class="flex items-center gap-2 mb-1">
+          <span class="w-2 h-2 rounded-full bg-blue-400"></span> <span class="text-xs font-semibold text-blue-700">Getting Clear</span>
+         </div>
+         <p class="text-xs text-slate-600 leading-relaxed">The problem is specific, but the outcome is not measurable. Clarify what changes.</p>
         </div>
-
-        <div class="mb-6">
-          <p class="text-sm font-medium text-muted mb-3 uppercase tracking-wide">System Strength</p>
-          <div id="screen-3-feedback" class="bg-card border-2 border-border rounded-xl p-4">
-            <div class="flex items-start gap-3">
-              <div id="screen-3-feedback-icon" class="w-3 h-3 rounded-full bg-border mt-1 flex-shrink-0"></div>
-              <div class="flex-1">
-                <p id="screen-3-feedback-title" class="font-medium text-text text-sm">Assigning ownership...</p>
-                <p id="screen-3-feedback-note" class="text-muted text-sm mt-1"></p>
-              </div>
-            </div>
-          </div>
+        <div class="feedback-card cursor-pointer p-3 rounded-lg border-2 border-transparent bg-white hover:border-emerald-300 transition-all" data-feedback="ready" onclick="selectFeedback(1, this)">
+         <div class="flex items-center gap-2 mb-1">
+          <span class="w-2 h-2 rounded-full bg-emerald-400"></span> <span class="text-xs font-semibold text-emerald-700">Ready to Test</span>
+         </div>
+         <p class="text-xs text-slate-600 leading-relaxed">Clear audience. Clear problem. Clear action. This can generate real conversations.</p>
         </div>
-
-        <div class="flex gap-3">
-          <button onclick="goToScreen(2)" class="flex-1 bg-white border border-border text-text font-medium py-4 rounded-xl hover:bg-gray-50">Back</button>
-          <button onclick="goToScreen(4)" class="flex-1 btn-primary bg-navy text-white font-medium py-4 rounded-xl hover:bg-navyLight">Continue to Proof</button>
-        </div>
+       </div>
       </div>
-
-      <!-- Screen 4: Proof -->
-      <div id="screen-4" class="screen hidden">
-        <div class="mb-6">
-          <div class="flex items-center gap-2 mb-2">
-            <span class="w-8 h-8 rounded-full bg-navy text-white flex items-center justify-center text-sm font-semibold">P</span>
-            <h2 class="font-serif text-2xl font-bold text-text">Define Proof</h2>
-          </div>
-          <p class="text-muted text-base leading-relaxed">How will you measure success in the next 30 days?</p>
-        </div>
-
-        <div class="bg-card rounded-xl shadow-sm border border-border p-5 mb-6">
-          <div class="space-y-4">
-            <div>
-              <label class="block text-sm font-medium text-text mb-1.5">Target metric</label>
-              <input type="text" id="proof-metric" class="input-field w-full px-4 py-3 border border-border rounded-lg text-text placeholder-slate" placeholder="e.g., 10 booked calls" />
-            </div>
-
-            <!-- FIX: timeframe is now a text value that matches scoring logic -->
-            <div>
-              <label class="block text-sm font-medium text-text mb-1.5">Timeframe</label>
-              <select id="proof-timeframe" class="input-field w-full px-4 py-3 border border-border rounded-lg text-text bg-white">
-                <option value="">Select timeframe</option>
-                <option value="7 days">7 days</option>
-                <option value="14 days">14 days</option>
-                <option value="30 days">30 days</option>
-                <option value="60 days">60 days</option>
-              </select>
-            </div>
-
-            <div>
-              <label class="block text-sm font-medium text-text mb-1.5">Tracking method</label>
-              <select id="proof-tracking" class="input-field w-full px-4 py-3 border border-border rounded-lg text-text bg-white">
-                <option value="">Select method</option>
-                <option value="sheet">Google Sheet</option>
-                <option value="crm">CRM</option>
-                <option value="manual">Manual log</option>
-                <option value="notion">Notion</option>
-              </select>
-            </div>
-          </div>
-        </div>
-
-        <div class="mb-6">
-          <p class="text-sm font-medium text-muted mb-3 uppercase tracking-wide">Feedback Status</p>
-          <div class="grid gap-3">
-            <div class="feedback-card cursor-pointer bg-card border-2 border-border rounded-xl p-4 hover:border-caution" data-feedback="4-1" onclick="selectFeedback('4-1')">
-              <div class="flex items-start gap-3">
-                <div class="w-3 h-3 rounded-full bg-caution mt-1 flex-shrink-0"></div>
-                <div>
-                  <p class="font-medium text-text text-sm">Too Vague</p>
-                  <p class="text-muted text-sm mt-1">"More leads" is not measurable. Use a number and a deadline.</p>
-                </div>
-              </div>
-            </div>
-            <div class="feedback-card cursor-pointer bg-card border-2 border-border rounded-xl p-4 hover:border-warning" data-feedback="4-2" onclick="selectFeedback('4-2')">
-              <div class="flex items-start gap-3">
-                <div class="w-3 h-3 rounded-full bg-warning mt-1 flex-shrink-0"></div>
-                <div>
-                  <p class="font-medium text-text text-sm">Defined</p>
-                  <p class="text-muted text-sm mt-1">The metric is numeric but may not reflect revenue.</p>
-                </div>
-              </div>
-            </div>
-            <div class="feedback-card cursor-pointer bg-card border-2 border-border rounded-xl p-4 hover:border-success" data-feedback="4-3" onclick="selectFeedback('4-3')">
-              <div class="flex items-start gap-3">
-                <div class="w-3 h-3 rounded-full bg-success mt-1 flex-shrink-0"></div>
-                <div>
-                  <p class="font-medium text-text text-sm">Outcome-Focused</p>
-                  <p class="text-muted text-sm mt-1">This metric directly ties to conversations or revenue.</p>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <div class="flex gap-3">
-          <button onclick="goToScreen(3)" class="flex-1 bg-white border border-border text-text font-medium py-4 rounded-xl hover:bg-gray-50">Back</button>
-          <button onclick="goToScreen(5)" class="flex-1 btn-primary bg-navy text-white font-medium py-4 rounded-xl hover:bg-navyLight">View Summary</button>
-        </div>
+     </section><!-- Screen 2: Operational Steps -->
+     <section id="screen-2" class="fade-in hidden">
+      <div class="mb-6">
+       <div class="flex items-center gap-2 mb-2">
+        <span class="text-xs font-mono font-medium text-accent bg-accent/10 px-2 py-0.5 rounded">O</span>
+        <h2 class="text-base font-semibold text-slate-800">Map the Steps</h2>
+       </div>
+       <p class="text-sm text-slate-500">What happens every single time after someone says, "I'm interested"?</p>
       </div>
-
-      <!-- Screen 5: Summary -->
-      <div id="screen-5" class="screen hidden">
-        <div class="mb-6">
-          <div class="flex items-center gap-2 mb-2">
-            <span class="w-8 h-8 rounded-full bg-success text-white flex items-center justify-center">
-              <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
-              </svg>
-            </span>
-            <h2 class="font-serif text-2xl font-bold text-text">Your LOOP System</h2>
-          </div>
-          <p class="text-muted text-base leading-relaxed">Here's your complete lead-to-conversation system.</p>
+      <div class="space-y-3 mb-6">
+       <div class="bg-white rounded-xl p-4 shadow-sm border border-slate-200">
+        <div class="flex items-center gap-3">
+         <span class="flex-shrink-0 w-6 h-6 rounded-full bg-accent/10 text-accent text-xs font-semibold flex items-center justify-center">1</span> <input type="text" id="input-step1" class="flex-1 px-3 py-2 text-sm bg-slate-50 border border-slate-200 rounded-lg focus:border-accent focus:bg-white transition-colors" placeholder="e.g., Send confirmation email within 5 minutes">
         </div>
-
-        <!-- FIX: System Strength block (uses real scoring) -->
-        <div class="bg-card rounded-xl shadow-sm border border-border p-5 mb-4">
-          <div class="flex items-center justify-between gap-4">
-            <div>
-              <p class="text-sm font-medium text-muted uppercase tracking-wide">System Strength</p>
-              <p class="text-3xl font-bold text-text mt-1"><span id="system-score">—</span><span class="text-base font-medium text-muted"> / 100</span></p>
-              <p class="text-sm text-muted mt-1"><span id="system-band">—</span> · <span id="system-note">—</span></p>
-            </div>
-            <div class="text-right">
-              <p class="text-xs text-muted">L</p><p id="score-L" class="text-sm font-semibold text-text">—</p>
-              <p class="text-xs text-muted mt-2">O</p><p id="score-O" class="text-sm font-semibold text-text">—</p>
-              <p class="text-xs text-muted mt-2">Ownership</p><p id="score-Own" class="text-sm font-semibold text-text">—</p>
-              <p class="text-xs text-muted mt-2">P</p><p id="score-P" class="text-sm font-semibold text-text">—</p>
-            </div>
-          </div>
+       </div>
+       <div class="bg-white rounded-xl p-4 shadow-sm border border-slate-200">
+        <div class="flex items-center gap-3">
+         <span class="flex-shrink-0 w-6 h-6 rounded-full bg-accent/10 text-accent text-xs font-semibold flex items-center justify-center">2</span> <input type="text" id="input-step2" class="flex-1 px-3 py-2 text-sm bg-slate-50 border border-slate-200 rounded-lg focus:border-accent focus:bg-white transition-colors" placeholder="e.g., Review lead profile before call">
         </div>
-
-        <!-- Lead Trigger Summary -->
-        <div class="bg-card rounded-xl shadow-sm border border-border p-5 mb-4">
-          <div class="flex items-center gap-2 mb-4">
-            <span class="w-6 h-6 rounded-full bg-navy text-white flex items-center justify-center text-xs font-semibold">L</span>
-            <h3 class="font-semibold text-text">Lead Trigger</h3>
-          </div>
-          <div class="space-y-3 text-sm">
-            <div class="flex justify-between items-start gap-4"><span class="text-muted flex-shrink-0">Audience</span> <span id="summary-audience" class="text-text text-right font-medium">—</span></div>
-            <div class="flex justify-between items-start gap-4"><span class="text-muted flex-shrink-0">Problem</span> <span id="summary-problem" class="text-text text-right font-medium">—</span></div>
-            <div class="flex justify-between items-start gap-4"><span class="text-muted flex-shrink-0">Call to Action</span> <span id="summary-cta" class="text-text text-right font-medium">—</span></div>
-            <div class="flex justify-between items-start gap-4"><span class="text-muted flex-shrink-0">Channel</span> <span id="summary-channel" class="text-text text-right font-medium">—</span></div>
-          </div>
+       </div>
+       <div class="bg-white rounded-xl p-4 shadow-sm border border-slate-200">
+        <div class="flex items-center gap-3">
+         <span class="flex-shrink-0 w-6 h-6 rounded-full bg-accent/10 text-accent text-xs font-semibold flex items-center justify-center">3</span> <input type="text" id="input-step3" class="flex-1 px-3 py-2 text-sm bg-slate-50 border border-slate-200 rounded-lg focus:border-accent focus:bg-white transition-colors" placeholder="e.g., Conduct discovery call (15 min)">
         </div>
-
-        <!-- Operational Steps Summary -->
-        <div class="bg-card rounded-xl shadow-sm border border-border p-5 mb-4">
-          <div class="flex items-center gap-2 mb-4">
-            <span class="w-6 h-6 rounded-full bg-navy text-white flex items-center justify-center text-xs font-semibold">O</span>
-            <h3 class="font-semibold text-text">Operational Steps &amp; Ownership</h3>
-          </div>
-          <div class="space-y-3 text-sm">
-            <div class="flex justify-between items-start gap-4 p-2 bg-surface rounded-lg">
-              <div class="flex gap-2 items-start flex-1 min-w-0"><span class="text-muted flex-shrink-0">1.</span> <span id="summary-step-1" class="text-text font-medium">—</span></div>
-              <span id="summary-owner-1" class="text-xs px-2 py-1 bg-navy text-white rounded-full flex-shrink-0">Human</span>
-            </div>
-            <div class="flex justify-between items-start gap-4 p-2 bg-surface rounded-lg">
-              <div class="flex gap-2 items-start flex-1 min-w-0"><span class="text-muted flex-shrink-0">2.</span> <span id="summary-step-2" class="text-text font-medium">—</span></div>
-              <span id="summary-owner-2" class="text-xs px-2 py-1 bg-navy text-white rounded-full flex-shrink-0">Human</span>
-            </div>
-            <div class="flex justify-between items-start gap-4 p-2 bg-surface rounded-lg">
-              <div class="flex gap-2 items-start flex-1 min-w-0"><span class="text-muted flex-shrink-0">3.</span> <span id="summary-step-3" class="text-text font-medium">—</span></div>
-              <span id="summary-owner-3" class="text-xs px-2 py-1 bg-navy text-white rounded-full flex-shrink-0">Human</span>
-            </div>
-            <div class="flex justify-between items-start gap-4 p-2 bg-surface rounded-lg">
-              <div class="flex gap-2 items-start flex-1 min-w-0"><span class="text-muted flex-shrink-0">4.</span> <span id="summary-step-4" class="text-text font-medium">—</span></div>
-              <span id="summary-owner-4" class="text-xs px-2 py-1 bg-navy text-white rounded-full flex-shrink-0">Human</span>
-            </div>
-          </div>
+       </div>
+       <div class="bg-white rounded-xl p-4 shadow-sm border border-slate-200">
+        <div class="flex items-center gap-3">
+         <span class="flex-shrink-0 w-6 h-6 rounded-full bg-accent/10 text-accent text-xs font-semibold flex items-center justify-center">4</span> <input type="text" id="input-step4" class="flex-1 px-3 py-2 text-sm bg-slate-50 border border-slate-200 rounded-lg focus:border-accent focus:bg-white transition-colors" placeholder="e.g., Send follow-up summary within 24 hours">
         </div>
-
-        <!-- Proof Summary -->
-        <div class="bg-card rounded-xl shadow-sm border border-border p-5 mb-6">
-          <div class="flex items-center gap-2 mb-4">
-            <span class="w-6 h-6 rounded-full bg-navy text-white flex items-center justify-center text-xs font-semibold">P</span>
-            <h3 class="font-semibold text-text">Proof</h3>
-          </div>
-          <div class="space-y-3 text-sm">
-            <div class="flex justify-between items-start gap-4"><span class="text-muted flex-shrink-0">Target</span> <span id="summary-metric" class="text-text text-right font-medium">—</span></div>
-            <div class="flex justify-between items-start gap-4"><span class="text-muted flex-shrink-0">Timeframe</span> <span id="summary-timeframe" class="text-text text-right font-medium">—</span></div>
-            <div class="flex justify-between items-start gap-4"><span class="text-muted flex-shrink-0">Tracking</span> <span id="summary-tracking" class="text-text text-right font-medium">—</span></div>
-          </div>
+       </div>
+      </div><!-- Feedback Panel -->
+      <div class="bg-slate-50 rounded-xl p-4 border border-slate-200">
+       <p class="text-xs font-medium text-slate-500 mb-3 uppercase tracking-wide">Feedback State</p>
+       <div class="space-y-2">
+        <div class="feedback-card cursor-pointer p-3 rounded-lg border-2 border-transparent bg-white hover:border-amber-300 transition-all" onclick="selectFeedback(2, this)">
+         <div class="flex items-center gap-2 mb-1">
+          <span class="w-2 h-2 rounded-full bg-amber-400"></span> <span class="text-xs font-semibold text-amber-700">Needs Structure</span>
+         </div>
+         <p class="text-xs text-slate-600 leading-relaxed">Steps are out of order or incomplete. Every lead must move forward without confusion.</p>
         </div>
-
-        <div class="flex gap-3 mb-6">
-          <button onclick="goToScreen(4)" class="flex-1 bg-white border border-border text-text font-medium py-4 rounded-xl hover:bg-gray-50">Back</button>
-          <button onclick="downloadSummary()" class="flex-1 btn-primary bg-success text-white font-medium py-4 rounded-xl hover:opacity-90 flex items-center justify-center gap-2">
-            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"></path>
-            </svg>
-            Download Your LOOP Summary
-          </button>
+        <div class="feedback-card cursor-pointer p-3 rounded-lg border-2 border-transparent bg-white hover:border-blue-300 transition-all" onclick="selectFeedback(2, this)">
+         <div class="flex items-center gap-2 mb-1">
+          <span class="w-2 h-2 rounded-full bg-blue-400"></span> <span class="text-xs font-semibold text-blue-700">Clear Sequence</span>
+         </div>
+         <p class="text-xs text-slate-600 leading-relaxed">The steps flow logically. Now remove unnecessary friction.</p>
         </div>
-
-        <button onclick="goToScreen(1)" class="w-full bg-white border border-border text-navy font-medium py-3 rounded-xl hover:bg-gray-50 mb-6">
-          Refine My LOOP
-        </button>
-
-        <div class="bg-surface rounded-lg p-4 text-center border border-border">
-          <p class="text-sm text-muted">This system improves each time it runs. Review weekly.</p>
+        <div class="feedback-card cursor-pointer p-3 rounded-lg border-2 border-transparent bg-white hover:border-emerald-300 transition-all" onclick="selectFeedback(2, this)">
+         <div class="flex items-center gap-2 mb-1">
+          <span class="w-2 h-2 rounded-full bg-emerald-400"></span> <span class="text-xs font-semibold text-emerald-700">System Ready</span>
+         </div>
+         <p class="text-xs text-slate-600 leading-relaxed">This sequence can run consistently without relying on memory.</p>
         </div>
+       </div>
       </div>
-    </main>
+     </section><!-- Screen 3: Ownership -->
+     <section id="screen-3" class="fade-in hidden">
+      <div class="mb-6">
+       <div class="flex items-center gap-2 mb-2">
+        <span class="text-xs font-mono font-medium text-accent bg-accent/10 px-2 py-0.5 rounded">O</span>
+        <h2 class="text-base font-semibold text-slate-800">Assign Ownership</h2>
+       </div>
+       <p class="text-sm text-slate-500">Who performs each step?</p>
+      </div>
+      <div class="space-y-3 mb-6">
+       <div class="bg-white rounded-xl p-4 shadow-sm border border-slate-200">
+        <p id="owner-step1-label" class="text-xs text-slate-500 mb-2 truncate">Step 1: <span class="text-slate-700">—</span></p><select id="owner-step1" class="w-full px-3 py-2.5 text-sm bg-slate-50 border border-slate-200 rounded-lg focus:border-accent focus:bg-white transition-colors appearance-none cursor-pointer"> <option value="">Assign owner...</option> <option value="Human">Human</option> <option value="AI">AI</option> <option value="Automation">Automation</option> <option value="Hybrid">Hybrid</option> </select>
+       </div>
+       <div class="bg-white rounded-xl p-4 shadow-sm border border-slate-200">
+        <p id="owner-step2-label" class="text-xs text-slate-500 mb-2 truncate">Step 2: <span class="text-slate-700">—</span></p><select id="owner-step2" class="w-full px-3 py-2.5 text-sm bg-slate-50 border border-slate-200 rounded-lg focus:border-accent focus:bg-white transition-colors appearance-none cursor-pointer"> <option value="">Assign owner...</option> <option value="Human">Human</option> <option value="AI">AI</option> <option value="Automation">Automation</option> <option value="Hybrid">Hybrid</option> </select>
+       </div>
+       <div class="bg-white rounded-xl p-4 shadow-sm border border-slate-200">
+        <p id="owner-step3-label" class="text-xs text-slate-500 mb-2 truncate">Step 3: <span class="text-slate-700">—</span></p><select id="owner-step3" class="w-full px-3 py-2.5 text-sm bg-slate-50 border border-slate-200 rounded-lg focus:border-accent focus:bg-white transition-colors appearance-none cursor-pointer"> <option value="">Assign owner...</option> <option value="Human">Human</option> <option value="AI">AI</option> <option value="Automation">Automation</option> <option value="Hybrid">Hybrid</option> </select>
+       </div>
+       <div class="bg-white rounded-xl p-4 shadow-sm border border-slate-200">
+        <p id="owner-step4-label" class="text-xs text-slate-500 mb-2 truncate">Step 4: <span class="text-slate-700">—</span></p><select id="owner-step4" class="w-full px-3 py-2.5 text-sm bg-slate-50 border border-slate-200 rounded-lg focus:border-accent focus:bg-white transition-colors appearance-none cursor-pointer"> <option value="">Assign owner...</option> <option value="Human">Human</option> <option value="AI">AI</option> <option value="Automation">Automation</option> <option value="Hybrid">Hybrid</option> </select>
+       </div>
+      </div><!-- Feedback Panel -->
+      <div class="bg-slate-50 rounded-xl p-4 border border-slate-200">
+       <p class="text-xs font-medium text-slate-500 mb-3 uppercase tracking-wide">Feedback State</p>
+       <div class="space-y-2">
+        <div class="feedback-card cursor-pointer p-3 rounded-lg border-2 border-transparent bg-white hover:border-amber-300 transition-all" onclick="selectFeedback(3, this)">
+         <div class="flex items-center gap-2 mb-1">
+          <span class="w-2 h-2 rounded-full bg-amber-400"></span> <span class="text-xs font-semibold text-amber-700">Overloaded Founder</span>
+         </div>
+         <p class="text-xs text-slate-600 leading-relaxed">You are performing every step manually. Identify at least one delegation opportunity.</p>
+        </div>
+        <div class="feedback-card cursor-pointer p-3 rounded-lg border-2 border-transparent bg-white hover:border-blue-300 transition-all" onclick="selectFeedback(3, this)">
+         <div class="flex items-center gap-2 mb-1">
+          <span class="w-2 h-2 rounded-full bg-blue-400"></span> <span class="text-xs font-semibold text-blue-700">Balanced</span>
+         </div>
+         <p class="text-xs text-slate-600 leading-relaxed">You have identified automation opportunities, but follow-up timing may still rely on you.</p>
+        </div>
+        <div class="feedback-card cursor-pointer p-3 rounded-lg border-2 border-transparent bg-white hover:border-emerald-300 transition-all" onclick="selectFeedback(3, this)">
+         <div class="flex items-center gap-2 mb-1">
+          <span class="w-2 h-2 rounded-full bg-emerald-400"></span> <span class="text-xs font-semibold text-emerald-700">Leveraged</span>
+         </div>
+         <p class="text-xs text-slate-600 leading-relaxed">Clear division of responsibility. The system does not depend entirely on you.</p>
+        </div>
+       </div>
+      </div>
+     </section><!-- Screen 4: Proof -->
+     <section id="screen-4" class="fade-in hidden">
+      <div class="mb-6">
+       <div class="flex items-center gap-2 mb-2">
+        <span class="text-xs font-mono font-medium text-accent bg-accent/10 px-2 py-0.5 rounded">P</span>
+        <h2 class="text-base font-semibold text-slate-800">Define Proof</h2>
+       </div>
+       <p class="text-sm text-slate-500">How will you measure success in the next 30 days?</p>
+      </div>
+      <div class="space-y-4 mb-6">
+       <div class="bg-white rounded-xl p-4 shadow-sm border border-slate-200">
+        <label class="block text-xs font-medium text-slate-600 mb-2">Target metric</label> <input type="text" id="input-metric" class="w-full px-3 py-2.5 text-sm bg-slate-50 border border-slate-200 rounded-lg focus:border-accent focus:bg-white transition-colors" placeholder="e.g., 10 booked calls">
+       </div>
+       <div class="bg-white rounded-xl p-4 shadow-sm border border-slate-200">
+        <label class="block text-xs font-medium text-slate-600 mb-2">Timeframe</label> <select id="input-timeframe" class="w-full px-3 py-2.5 text-sm bg-slate-50 border border-slate-200 rounded-lg focus:border-accent focus:bg-white transition-colors appearance-none cursor-pointer"> <option value="">Select timeframe...</option> <option value="7 days">7 days</option> <option value="14 days">14 days</option> <option value="21 days">21 days</option> <option value="30 days">30 days</option> </select>
+       </div>
+       <div class="bg-white rounded-xl p-4 shadow-sm border border-slate-200">
+        <label class="block text-xs font-medium text-slate-600 mb-2">Tracking method</label> <select id="input-tracking" class="w-full px-3 py-2.5 text-sm bg-slate-50 border border-slate-200 rounded-lg focus:border-accent focus:bg-white transition-colors appearance-none cursor-pointer"> <option value="">Select method...</option> <option value="Google Sheet">Google Sheet</option> <option value="CRM">CRM</option> <option value="Notion">Notion</option> <option value="Manual log">Manual log</option> </select>
+       </div>
+      </div><!-- Feedback Panel -->
+      <div class="bg-slate-50 rounded-xl p-4 border border-slate-200">
+       <p class="text-xs font-medium text-slate-500 mb-3 uppercase tracking-wide">Feedback State</p>
+       <div class="space-y-2">
+        <div class="feedback-card cursor-pointer p-3 rounded-lg border-2 border-transparent bg-white hover:border-amber-300 transition-all" onclick="selectFeedback(4, this)">
+         <div class="flex items-center gap-2 mb-1">
+          <span class="w-2 h-2 rounded-full bg-amber-400"></span> <span class="text-xs font-semibold text-amber-700">Too Vague</span>
+         </div>
+         <p class="text-xs text-slate-600 leading-relaxed">"More leads" is not measurable. Use a number and a deadline.</p>
+        </div>
+        <div class="feedback-card cursor-pointer p-3 rounded-lg border-2 border-transparent bg-white hover:border-blue-300 transition-all" onclick="selectFeedback(4, this)">
+         <div class="flex items-center gap-2 mb-1">
+          <span class="w-2 h-2 rounded-full bg-blue-400"></span> <span class="text-xs font-semibold text-blue-700">Defined</span>
+         </div>
+         <p class="text-xs text-slate-600 leading-relaxed">The metric is numeric but may not reflect revenue.</p>
+        </div>
+        <div class="feedback-card cursor-pointer p-3 rounded-lg border-2 border-transparent bg-white hover:border-emerald-300 transition-all" onclick="selectFeedback(4, this)">
+         <div class="flex items-center gap-2 mb-1">
+          <span class="w-2 h-2 rounded-full bg-emerald-400"></span> <span class="text-xs font-semibold text-emerald-700">Outcome-Focused</span>
+         </div>
+         <p class="text-xs text-slate-600 leading-relaxed">This metric directly ties to conversations or revenue.</p>
+        </div>
+       </div>
+      </div>
+     </section><!-- Screen 5: Summary -->
+     <section id="screen-5" class="fade-in hidden">
+      <div class="mb-6">
+       <div class="flex items-center gap-2 mb-2">
+        <svg class="w-5 h-5 text-accent" fill="none" stroke="currentColor" viewbox="0 0 24 24">
+         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+        </svg>
+        <h2 class="text-base font-semibold text-slate-800">Your LOOP System</h2>
+       </div>
+       <p class="text-sm text-slate-500">Review your complete lead-to-conversation system.</p>
+      </div><!-- System Strength Score -->
+      <div class="bg-white rounded-xl p-5 shadow-sm border border-slate-200 mb-6">
+       <div class="flex items-end justify-between mb-4 pb-4 border-b border-slate-100">
+        <div>
+         <p class="text-xs font-medium text-slate-500 uppercase tracking-wide mb-1">System Strength</p>
+         <div class="flex items-baseline gap-2"><span id="strength-score" class="text-4xl font-bold text-accent">—</span> <span class="text-sm text-slate-500">/100</span>
+         </div>
+        </div>
+        <div class="text-right">
+         <p id="strength-band" class="text-sm font-semibold text-slate-700">—</p>
+         <p id="strength-desc" class="text-xs text-slate-500 mt-1">—</p>
+        </div>
+       </div><!-- Score Breakdown -->
+       <div class="space-y-3 mb-4">
+        <div>
+         <div class="flex justify-between items-center mb-1.5"><span class="text-xs font-medium text-slate-600">Lead Trigger (L)</span> <span id="score-l" class="text-xs font-semibold text-slate-700">0/25</span>
+         </div>
+         <div class="w-full bg-slate-200 rounded-full h-2">
+          <div id="bar-l" class="bg-accent rounded-full h-2 transition-all duration-500" style="width: 0%"></div>
+         </div>
+        </div>
+        <div>
+         <div class="flex justify-between items-center mb-1.5"><span class="text-xs font-medium text-slate-600">Operational Steps (O)</span> <span id="score-o1" class="text-xs font-semibold text-slate-700">0/30</span>
+         </div>
+         <div class="w-full bg-slate-200 rounded-full h-2">
+          <div id="bar-o1" class="bg-accent rounded-full h-2 transition-all duration-500" style="width: 0%"></div>
+         </div>
+        </div>
+        <div>
+         <div class="flex justify-between items-center mb-1.5"><span class="text-xs font-medium text-slate-600">Ownership (O)</span> <span id="score-o2" class="text-xs font-semibold text-slate-700">0/20</span>
+         </div>
+         <div class="w-full bg-slate-200 rounded-full h-2">
+          <div id="bar-o2" class="bg-accent rounded-full h-2 transition-all duration-500" style="width: 0%"></div>
+         </div>
+        </div>
+        <div>
+         <div class="flex justify-between items-center mb-1.5"><span class="text-xs font-medium text-slate-600">Proof (P)</span> <span id="score-p" class="text-xs font-semibold text-slate-700">0/25</span>
+         </div>
+         <div class="w-full bg-slate-200 rounded-full h-2">
+          <div id="bar-p" class="bg-accent rounded-full h-2 transition-all duration-500" style="width: 0%"></div>
+         </div>
+        </div>
+       </div><!-- Critical Gaps -->
+       <div id="critical-gaps-container" class="hidden pt-4 border-t border-slate-100">
+        <p class="text-xs font-medium text-slate-600 uppercase tracking-wide mb-2">Critical Gaps</p>
+        <div id="critical-gaps-list" class="space-y-1.5"></div>
+       </div><!-- Why This Score --> <button onclick="toggleScoringDetails()" class="w-full mt-4 text-xs font-medium text-accent hover:text-accent-dark transition-colors text-left flex items-center justify-between py-2"> <span>Why this score?</span>
+        <svg id="expand-icon" class="w-4 h-4 transition-transform" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3" />
+        </svg></button>
+       <div id="scoring-details" class="hidden mt-3 pt-3 border-t border-slate-100 space-y-1.5 text-xs text-slate-600">
+        <p id="detail-l" class="leading-relaxed">—</p>
+        <p id="detail-o1" class="leading-relaxed">—</p>
+        <p id="detail-o2" class="leading-relaxed">—</p>
+        <p id="detail-p" class="leading-relaxed">—</p>
+       </div>
+      </div><!-- Summary Cards -->
+      <div class="space-y-4 mb-6">
+       <!-- Lead Trigger Summary -->
+       <div class="bg-white rounded-xl p-5 shadow-sm border border-slate-200">
+        <div class="flex items-center gap-2 mb-3 pb-3 border-b border-slate-100">
+         <span class="text-xs font-mono font-medium text-accent bg-accent/10 px-2 py-0.5 rounded">L</span>
+         <h3 class="text-sm font-semibold text-slate-700">Lead Trigger</h3>
+        </div>
+        <div class="space-y-2 text-sm">
+         <div class="flex">
+          <span class="text-slate-500 w-24 flex-shrink-0">Audience:</span> <span id="summary-audience" class="text-slate-800">—</span>
+         </div>
+         <div class="flex">
+          <span class="text-slate-500 w-24 flex-shrink-0">Problem:</span> <span id="summary-problem" class="text-slate-800">—</span>
+         </div>
+         <div class="flex">
+          <span class="text-slate-500 w-24 flex-shrink-0">CTA:</span> <span id="summary-cta" class="text-slate-800">—</span>
+         </div>
+         <div class="flex">
+          <span class="text-slate-500 w-24 flex-shrink-0">Channel:</span> <span id="summary-channel" class="text-slate-800">—</span>
+         </div>
+        </div>
+       </div><!-- Operational Steps Summary -->
+       <div class="bg-white rounded-xl p-5 shadow-sm border border-slate-200">
+        <div class="flex items-center gap-2 mb-3 pb-3 border-b border-slate-100">
+         <span class="text-xs font-mono font-medium text-accent bg-accent/10 px-2 py-0.5 rounded">O</span>
+         <h3 class="text-sm font-semibold text-slate-700">Operational Steps</h3>
+        </div>
+        <div class="space-y-2 text-sm">
+         <div class="flex gap-3">
+          <span class="text-slate-400 font-mono text-xs">1.</span> <span id="summary-step1" class="text-slate-800">—</span>
+         </div>
+         <div class="flex gap-3">
+          <span class="text-slate-400 font-mono text-xs">2.</span> <span id="summary-step2" class="text-slate-800">—</span>
+         </div>
+         <div class="flex gap-3">
+          <span class="text-slate-400 font-mono text-xs">3.</span> <span id="summary-step3" class="text-slate-800">—</span>
+         </div>
+         <div class="flex gap-3">
+          <span class="text-slate-400 font-mono text-xs">4.</span> <span id="summary-step4" class="text-slate-800">—</span>
+         </div>
+        </div>
+       </div><!-- Ownership Summary -->
+       <div class="bg-white rounded-xl p-5 shadow-sm border border-slate-200">
+        <div class="flex items-center gap-2 mb-3 pb-3 border-b border-slate-100">
+         <span class="text-xs font-mono font-medium text-accent bg-accent/10 px-2 py-0.5 rounded">O</span>
+         <h3 class="text-sm font-semibold text-slate-700">Ownership</h3>
+        </div>
+        <div class="grid grid-cols-2 gap-2 text-sm">
+         <div class="bg-slate-50 rounded-lg p-2.5">
+          <span class="text-slate-500 text-xs">Step 1</span>
+          <p id="summary-owner1" class="text-slate-800 font-medium text-xs mt-0.5">—</p>
+         </div>
+         <div class="bg-slate-50 rounded-lg p-2.5">
+          <span class="text-slate-500 text-xs">Step 2</span>
+          <p id="summary-owner2" class="text-slate-800 font-medium text-xs mt-0.5">—</p>
+         </div>
+         <div class="bg-slate-50 rounded-lg p-2.5">
+          <span class="text-slate-500 text-xs">Step 3</span>
+          <p id="summary-owner3" class="text-slate-800 font-medium text-xs mt-0.5">—</p>
+         </div>
+         <div class="bg-slate-50 rounded-lg p-2.5">
+          <span class="text-slate-500 text-xs">Step 4</span>
+          <p id="summary-owner4" class="text-slate-800 font-medium text-xs mt-0.5">—</p>
+         </div>
+        </div>
+       </div><!-- Proof Summary -->
+       <div class="bg-white rounded-xl p-5 shadow-sm border border-slate-200">
+        <div class="flex items-center gap-2 mb-3 pb-3 border-b border-slate-100">
+         <span class="text-xs font-mono font-medium text-accent bg-accent/10 px-2 py-0.5 rounded">P</span>
+         <h3 class="text-sm font-semibold text-slate-700">Proof</h3>
+        </div>
+        <div class="bg-accent/5 rounded-lg p-4 border border-accent/10">
+         <p class="text-sm text-slate-700"><span id="summary-metric" class="font-semibold text-accent">—</span> <span class="text-slate-500"> within </span> <span id="summary-timeframe" class="font-semibold text-accent">—</span></p>
+         <p class="text-xs text-slate-500 mt-1">Tracked via <span id="summary-tracking" class="text-slate-700">—</span></p>
+        </div>
+       </div>
+      </div><!-- Download Button --> <button id="download-btn" onclick="downloadSummary()" class="w-full bg-accent hover:bg-accent-dark text-white font-medium py-3.5 px-6 rounded-xl transition-colors flex items-center justify-center gap-2 shadow-sm">
+       <svg class="w-4 h-4" fill="none" stroke="currentColor" viewbox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
+       </svg><span id="cta-button-text">Download Your LOOP Summary</span> </button>
+     </section>
+    </div>
+   </main><!-- Navigation Footer -->
+   <footer id="nav-footer" class="fixed bottom-0 left-0 right-0 bg-white border-t border-slate-200 px-4 py-3 md:px-8">
+    <div class="max-w-2xl mx-auto flex gap-3">
+     <button id="btn-back" onclick="navigate(-1)" class="hidden flex-1 bg-slate-100 hover:bg-slate-200 text-slate-700 font-medium py-3 px-4 rounded-xl transition-colors text-sm"> Back </button> <button id="btn-next" onclick="navigate(1)" class="flex-1 bg-accent hover:bg-accent-dark text-white font-medium py-3 px-4 rounded-xl transition-colors text-sm"> Next </button>
+    </div>
+   </footer>
   </div>
-
   <script>
-    // ===== SCORING LOGIC =====
-    function clamp(n, min, max) { return Math.max(min, Math.min(max, n)); }
+    // State
+    let currentStep = 1;
+    const totalSteps = 5;
+    
+    // Default configuration
+    const defaultConfig = {
+      main_title: 'The LOOP Builder',
+      subtitle: 'Build your first working business system.',
+      cta_button_text: 'Download Your LOOP Summary',
+      background_color: '#f1f5f9',
+      surface_color: '#ffffff',
+      text_color: '#1e293b',
+      primary_action_color: '#1e3a5f',
+      secondary_action_color: '#64748b',
+      font_family: 'DM Sans',
+      font_size: 16
+    };
 
-    function includesVagueTerms(text) {
-      if (!text) return true;
-      const t = String(text).toLowerCase();
-      const vague = [
-        "everyone","anyone","business owner","business owners","people","customers","clients",
-        "growth","success","clarity","help","improve","better","more leads","learn more",
-        "info","information","general","various","many"
-      ];
-      return vague.some((term) => t.includes(term));
-    }
-
-    function isSchedulableCTA(cta) {
-      if (!cta) return false;
-      const t = String(cta).toLowerCase();
-      const schedulableSignals = ["book","schedule","call","consult","demo","audit","diagnostic","appointment","meeting","text me","dm me","reply","apply","checkout","buy","pay","purchase"];
-      const weakSignals = ["learn more","follow","subscribe","check it out","see more","visit","browse"];
-      if (weakSignals.some((w) => t.includes(w))) return false;
-      return schedulableSignals.some((s) => t.includes(s));
-    }
-
-    function hasNumber(text) { return !!text && /\d/.test(String(text)); }
-
-    function hasTimeframe(text) {
-      if (!text) return false;
-      const t = String(text).toLowerCase();
-      return (/\d/.test(t) && /(day|days|week|weeks|month|months)/.test(t)) || /(today|this week|this month|in \d+)/.test(t);
-    }
-
-    function isVanityMetric(metric) {
-      if (!metric) return true;
-      const t = String(metric).toLowerCase();
-      return ["likes","impressions","views","followers","reach","engagement"].some((v) => t.includes(v));
-    }
-
-    function tiesToConversationsOrRevenue(metric) {
-      if (!metric) return false;
-      const t = String(metric).toLowerCase();
-      const outcomeSignals = ["booked call","calls","consult","appointments","demo","sales","payments","revenue","closed","contracts","commitments","checkout","purchases","paid"];
-      return outcomeSignals.some((s) => t.includes(s));
-    }
-
-    function norm(text) { return String(text || "").trim(); }
-
-    function scoreLeadTrigger({ audience, problem, cta, channel }) {
-      const maxPer = 6.25;
-
-      let audienceScore = 0;
-      const aud = norm(audience);
-      if (!aud) audienceScore = 0;
-      else if (includesVagueTerms(aud) || aud.split(/\s+/).length < 3) audienceScore = 0;
-      else if (aud.split(/\s+/).length < 6) audienceScore = maxPer * 0.5;
-      else audienceScore = maxPer;
-
-      let problemScore = 0;
-      const prob = norm(problem);
-      if (!prob) problemScore = 0;
-      else if (includesVagueTerms(prob)) problemScore = 0;
-      else if (prob.split(/\s+/).length < 6) problemScore = maxPer * 0.5;
-      else problemScore = maxPer;
-
-      let ctaScore = 0;
-      const c = norm(cta);
-      if (!c) ctaScore = 0;
-      else if (isSchedulableCTA(c)) ctaScore = maxPer;
-      else ctaScore = maxPer * 0.5;
-
-      let channelScore = 0;
-      const ch = norm(channel);
-      if (!ch) channelScore = 0;
-      else if (ch.toLowerCase() === "other") channelScore = maxPer * 0.5;
-      else channelScore = maxPer;
-
-      return clamp(audienceScore + problemScore + ctaScore + channelScore, 0, 25);
-    }
-
-    function scoreOperationalSequence({ steps }) {
-      const maxPer = 6;
-      const s = Array.isArray(steps) ? steps.map(norm) : [];
-      const filledCount = s.filter(Boolean).length;
-
-      let completeFlow = 0;
-      if (filledCount === 0) completeFlow = 0;
-      else if (filledCount < 4) completeFlow = maxPer * 0.5;
-      else completeFlow = maxPer;
-
-      const joined = s.join(" ").toLowerCase();
-      const hasContact = /(reply|respond|call|meeting|dm|email|text|intake)/.test(joined);
-      const hasCommit = /(pay|payment|checkout|purchase|book|schedule|contract|invoice)/.test(joined);
-
-      let logicalOrder = 0;
-      if (filledCount < 2) logicalOrder = 0;
-      else if (hasContact && hasCommit) logicalOrder = maxPer;
-      else logicalOrder = maxPer * 0.5;
-
-      const hasTimeCue = /(within|24|48|72|day|days|hour|hours|week|same day)/.test(joined);
-      let timeBound = 0;
-      if (filledCount === 0) timeBound = 0;
-      else if (hasTimeCue) timeBound = maxPer;
-      else timeBound = maxPer * 0.5;
-
-      const hasFollowUp = /(follow[-\s]?up|remind|nurture|no response|second message|check[-\s]?in)/.test(joined);
-      let followUp = 0;
-      if (filledCount === 0) followUp = 0;
-      else if (hasFollowUp) followUp = maxPer;
-      else followUp = 0;
-
-      let paymentMoment = 0;
-      if (filledCount === 0) paymentMoment = 0;
-      else if (hasCommit) paymentMoment = maxPer;
-      else paymentMoment = 0;
-
-      return clamp(completeFlow + logicalOrder + timeBound + followUp + paymentMoment, 0, 30);
-    }
-
-    function scoreOwnership({ ownershipAssignments }) {
-      const maxPer = 5;
-      const a = Array.isArray(ownershipAssignments) ? ownershipAssignments.map((x) => norm(x).toLowerCase()) : [];
-      const allHuman = a.length > 0 && a.every((x) => x === "human");
-      const hasAutomation = a.some((x) => x === "automation");
-      const hasDelegation = a.some((x) => x === "ai" || x === "automation" || x === "hybrid");
-
-      const s1 = hasAutomation ? maxPer : 0;
-      const s2 = hasDelegation ? maxPer : 0;
-      const s3 = hasDelegation ? maxPer : maxPer * 0.5;
-      const s4 = hasAutomation ? maxPer : maxPer * 0.5;
-
-      let total = s1 + s2 + s3 + s4;
-      if (allHuman) total = Math.min(total, 8);
-      return clamp(total, 0, 20);
-    }
-
-    function scoreProof({ metric, timeframe, trackingMethod }) {
-      const maxPer = 6.25;
-      const m = norm(metric);
-      const tf = norm(timeframe);
-      const tr = norm(trackingMethod);
-
-      const s1 = hasNumber(m) ? maxPer : 0;
-      const s2 = hasTimeframe(tf) ? maxPer : 0;
-      const s3 = tiesToConversationsOrRevenue(m) ? maxPer : maxPer * 0.5;
-      const s4 = tr ? maxPer : 0;
-
-      let total = s1 + s2 + s3 + s4;
-      if (isVanityMetric(m)) total = Math.min(total, 12);
-      return clamp(total, 0, 25);
-    }
-
-    function applyRiskMultiplier(rawScore, { steps, metric, timeframe }) {
-      const joined = (Array.isArray(steps) ? steps : []).join(" ").toLowerCase();
-      const hasFollowUp = /(follow[-\s]?up|remind|nurture|no response|second message|check[-\s]?in)/.test(joined);
-      const hasCommit = /(pay|payment|checkout|purchase|book|schedule|contract|invoice)/.test(joined);
-
-      const missingFollowUp = !hasFollowUp;
-      const missingPayment = !hasCommit;
-      const missingNumericMetric = !hasNumber(metric);
-      const missingTimeframe = !hasTimeframe(timeframe);
-
-      const hasCriticalMissing = missingFollowUp || missingPayment || missingNumericMetric || missingTimeframe;
-      const adjusted = hasCriticalMissing ? rawScore * 0.85 : rawScore;
-
-      return clamp(Math.round(adjusted), 0, 100);
-    }
-
-    function getScoreBand(score) {
-      if (score <= 39) return { label: "Fragile", note: "Depends on effort, not structure." };
-      if (score <= 69) return { label: "Functional but Leaky", note: "Works inconsistently; tighten weak links." };
-      if (score <= 84) return { label: "Operationally Sound", note: "Test-ready with measurable discipline." };
-      return { label: "Structurally Strong", note: "Ready for automation and scale." };
-    }
-
-    function scoreLoopSystem(input) {
-      const L = scoreLeadTrigger(input.leadTrigger || {});
-      const O1 = scoreOperationalSequence(input.operational || {});
-      const O2 = scoreOwnership(input.ownership || {});
-      const P = scoreProof(input.proof || {});
-      const raw = L + O1 + O2 + P;
-
-      const finalScore = applyRiskMultiplier(raw, {
-        steps: (input.operational && input.operational.steps) || [],
-        metric: (input.proof && input.proof.metric) || "",
-        timeframe: (input.proof && input.proof.timeframe) || "",
-      });
-
-      return {
-        score: finalScore,
-        breakdown: {
-          leadTrigger: Math.round(L),
-          operationalSequence: Math.round(O1),
-          ownership: Math.round(O2),
-          proof: Math.round(P),
-          rawTotal: Math.round(raw),
-        },
-        band: getScoreBand(finalScore),
-      };
-    }
-
-    // ===== APP STATE =====
-    const defaultConfig = { main_title: "The LOOP Builder", subtitle: "Build your first working business system." };
-    let currentScreen = 1;
-    const selectedFeedback = {};
-
-    // Element SDK init (safe)
+    // Initialize Element SDK
     if (window.elementSdk) {
       window.elementSdk.init({
         defaultConfig,
         onConfigChange: async (config) => {
-          const title = document.getElementById("main-title");
-          const subtitle = document.getElementById("subtitle");
-          if (title) title.textContent = config.main_title || defaultConfig.main_title;
-          if (subtitle) subtitle.textContent = config.subtitle || defaultConfig.subtitle;
+          // Update title
+          const titleEl = document.getElementById('main-title');
+          if (titleEl) titleEl.textContent = config.main_title || defaultConfig.main_title;
+          
+          // Update subtitle
+          const subtitleEl = document.getElementById('subtitle');
+          if (subtitleEl) subtitleEl.textContent = config.subtitle || defaultConfig.subtitle;
+          
+          // Update CTA button text
+          const ctaEl = document.getElementById('cta-button-text');
+          if (ctaEl) ctaEl.textContent = config.cta_button_text || defaultConfig.cta_button_text;
+          
+          // Apply colors
+          const bgColor = config.background_color || defaultConfig.background_color;
+          const surfaceColor = config.surface_color || defaultConfig.surface_color;
+          const textColor = config.text_color || defaultConfig.text_color;
+          const primaryColor = config.primary_action_color || defaultConfig.primary_action_color;
+          const secondaryColor = config.secondary_action_color || defaultConfig.secondary_action_color;
+          
+          document.body.style.backgroundColor = bgColor;
+          document.querySelectorAll('.bg-white').forEach(el => el.style.backgroundColor = surfaceColor);
+          document.body.style.color = textColor;
+          
+          // Update primary buttons
+          document.querySelectorAll('.bg-accent').forEach(el => {
+            el.style.backgroundColor = primaryColor;
+          });
+          
+          // Update secondary text
+          document.querySelectorAll('.text-slate-500').forEach(el => {
+            el.style.color = secondaryColor;
+          });
+          
+          // Apply font
+          const fontFamily = config.font_family || defaultConfig.font_family;
+          const baseFontStack = 'system-ui, sans-serif';
+          document.body.style.fontFamily = `${fontFamily}, ${baseFontStack}`;
+          
+          // Apply font size scaling
+          const baseSize = config.font_size || defaultConfig.font_size;
+          document.documentElement.style.fontSize = `${baseSize}px`;
         },
-        mapToCapabilities: () => ({ recolorables: [], borderables: [], fontEditable: undefined, fontSizeable: undefined }),
+        mapToCapabilities: (config) => ({
+          recolorables: [
+            {
+              get: () => config.background_color || defaultConfig.background_color,
+              set: (value) => { config.background_color = value; window.elementSdk.setConfig({ background_color: value }); }
+            },
+            {
+              get: () => config.surface_color || defaultConfig.surface_color,
+              set: (value) => { config.surface_color = value; window.elementSdk.setConfig({ surface_color: value }); }
+            },
+            {
+              get: () => config.text_color || defaultConfig.text_color,
+              set: (value) => { config.text_color = value; window.elementSdk.setConfig({ text_color: value }); }
+            },
+            {
+              get: () => config.primary_action_color || defaultConfig.primary_action_color,
+              set: (value) => { config.primary_action_color = value; window.elementSdk.setConfig({ primary_action_color: value }); }
+            },
+            {
+              get: () => config.secondary_action_color || defaultConfig.secondary_action_color,
+              set: (value) => { config.secondary_action_color = value; window.elementSdk.setConfig({ secondary_action_color: value }); }
+            }
+          ],
+          borderables: [],
+          fontEditable: {
+            get: () => config.font_family || defaultConfig.font_family,
+            set: (value) => { config.font_family = value; window.elementSdk.setConfig({ font_family: value }); }
+          },
+          fontSizeable: {
+            get: () => config.font_size || defaultConfig.font_size,
+            set: (value) => { config.font_size = value; window.elementSdk.setConfig({ font_size: value }); }
+          }
+        }),
         mapToEditPanelValues: (config) => new Map([
-          ["main_title", config.main_title || defaultConfig.main_title],
-          ["subtitle", config.subtitle || defaultConfig.subtitle],
-        ]),
+          ['main_title', config.main_title || defaultConfig.main_title],
+          ['subtitle', config.subtitle || defaultConfig.subtitle],
+          ['cta_button_text', config.cta_button_text || defaultConfig.cta_button_text]
+        ])
       });
     }
 
-    // ===== FIX: Missing function referenced in goToScreen =====
-    function updateOwnershipStepText() {
-      const fallback = ["—", "—", "—", "—"];
-      for (let i = 1; i <= 4; i++) {
-        const opVal = norm(document.getElementById(`op-step-${i}`)?.value);
-        const text = opVal || fallback[i - 1];
-        const node = document.getElementById(`owner-step-${i}-text`);
-        if (node) node.textContent = text;
+    // Navigation
+    function navigate(direction) {
+      const newStep = currentStep + direction;
+      if (newStep < 1 || newStep > totalSteps) return;
+      
+      // Update step labels on Screen 3 before showing it
+      if (newStep === 3) {
+        updateOwnershipLabels();
       }
+      
+      // Update summary on Screen 5
+      if (newStep === 5) {
+        updateSummary();
+      }
+      
+      // Hide current screen
+      document.getElementById(`screen-${currentStep}`).classList.add('hidden');
+      
+      // Show new screen
+      currentStep = newStep;
+      const newScreen = document.getElementById(`screen-${currentStep}`);
+      newScreen.classList.remove('hidden');
+      newScreen.classList.add('fade-in');
+      
+      // Update UI
+      updateProgress();
+      updateNavigation();
+      
+      // Scroll to top
+      document.getElementById('app').scrollTop = 0;
     }
 
-    function goToScreen(screen) {
-      if (screen === 3) {
-        updateOwnershipStepText();
-        updateScreen3Feedback();
-      }
-      if (screen === 5) {
-        updateSummary();
-        updateSystemScoreUI();
-      }
-
-      for (let i = 1; i <= 5; i++) {
-        document.getElementById(`screen-${i}`).classList.add("hidden");
-      }
-      document.getElementById(`screen-${screen}`).classList.remove("hidden");
-
-      for (let i = 1; i <= 5; i++) {
-        const bar = document.getElementById(`progress-${i}`);
-        if (i <= screen) {
-          bar.classList.remove("bg-border");
-          bar.classList.add("bg-navy");
+    function updateProgress() {
+      // Update step label
+      document.getElementById('step-label').textContent = `Step ${currentStep} of ${totalSteps}`;
+      
+      // Update progress bars
+      for (let i = 1; i <= totalSteps; i++) {
+        const bar = document.getElementById(`prog-${i}`);
+        if (i <= currentStep) {
+          bar.classList.remove('bg-slate-200');
+          bar.classList.add('bg-accent');
         } else {
-          bar.classList.remove("bg-navy");
-          bar.classList.add("bg-border");
+          bar.classList.remove('bg-accent');
+          bar.classList.add('bg-slate-200');
         }
       }
-
-      document.getElementById("step-label").textContent = `Step ${screen} of 5`;
-      currentScreen = screen;
-
-      document.getElementById("app").scrollTo({ top: 0, behavior: "smooth" });
     }
 
-    function selectFeedback(id) {
-      const screenId = id.split("-")[0];
-
-      document.querySelectorAll(`[data-feedback^="${screenId}-"]`).forEach((card) => {
-        card.classList.remove("selected", "border-caution", "border-warning", "border-success");
-        card.classList.add("border-border");
-      });
-
-      const card = document.querySelector(`[data-feedback="${id}"]`);
-      card.classList.remove("border-border");
-      card.classList.add("selected");
-      if (id.endsWith("-1")) card.classList.add("border-caution");
-      else if (id.endsWith("-2")) card.classList.add("border-warning");
-      else if (id.endsWith("-3")) card.classList.add("border-success");
-
-      selectedFeedback[screenId] = id;
-    }
-
-    function updateScreen3Feedback() {
-      const assignments = [
-        document.getElementById("owner-step-1").value,
-        document.getElementById("owner-step-2").value,
-        document.getElementById("owner-step-3").value,
-        document.getElementById("owner-step-4").value,
-      ];
-
-      const hasAutomation = assignments.some((a) => a === "automation");
-      const hasDelegation = assignments.some((a) => a === "ai" || a === "automation" || a === "hybrid");
-      const allHuman = assignments.every((a) => a === "human");
-
-      const icon = document.getElementById("screen-3-feedback-icon");
-      const title = document.getElementById("screen-3-feedback-title");
-      const note = document.getElementById("screen-3-feedback-note");
-
-      if (allHuman) {
-        icon.className = "w-3 h-3 rounded-full bg-caution mt-1 flex-shrink-0";
-        title.textContent = "Overloaded Founder";
-        note.textContent = "You are performing every step manually. Identify at least one delegation opportunity.";
-      } else if (!hasAutomation && hasDelegation) {
-        icon.className = "w-3 h-3 rounded-full bg-warning mt-1 flex-shrink-0";
-        title.textContent = "Partially Leveraged";
-        note.textContent = "Delegation exists, but follow-ups likely still rely on you. Automate the critical path.";
-      } else if (hasAutomation) {
-        icon.className = "w-3 h-3 rounded-full bg-success mt-1 flex-shrink-0";
-        title.textContent = "Leveraged";
-        note.textContent = "Clear division of responsibility. The system does not depend entirely on you.";
+    function updateNavigation() {
+      const backBtn = document.getElementById('btn-back');
+      const nextBtn = document.getElementById('btn-next');
+      const navFooter = document.getElementById('nav-footer');
+      
+      // Show/hide back button
+      if (currentStep === 1) {
+        backBtn.classList.add('hidden');
       } else {
-        icon.className = "w-3 h-3 rounded-full bg-border mt-1 flex-shrink-0";
-        title.textContent = "Assigning ownership...";
-        note.textContent = "";
+        backBtn.classList.remove('hidden');
+      }
+      
+      // Update next button text
+      if (currentStep === totalSteps - 1) {
+        nextBtn.textContent = 'View Summary';
+      } else if (currentStep < totalSteps) {
+        nextBtn.textContent = 'Next';
+      }
+      
+      // Hide navigation on summary screen
+      if (currentStep === totalSteps) {
+        navFooter.classList.add('hidden');
+      } else {
+        navFooter.classList.remove('hidden');
       }
     }
 
+    // Feedback selection
+    function selectFeedback(screen, element) {
+      // Remove selection from siblings
+      const parent = element.parentElement;
+      parent.querySelectorAll('.feedback-card').forEach(card => {
+        card.classList.remove('selected', 'border-amber-400', 'border-blue-400', 'border-emerald-400');
+        card.classList.add('border-transparent');
+      });
+      
+      // Add selection to clicked card
+      element.classList.add('selected');
+      element.classList.remove('border-transparent');
+      
+      // Add appropriate border color
+      const indicator = element.querySelector('.rounded-full');
+      if (indicator.classList.contains('bg-amber-400')) {
+        element.classList.add('border-amber-400');
+      } else if (indicator.classList.contains('bg-blue-400')) {
+        element.classList.add('border-blue-400');
+      } else if (indicator.classList.contains('bg-emerald-400')) {
+        element.classList.add('border-emerald-400');
+      }
+    }
+
+    // Update ownership labels with step descriptions
+    function updateOwnershipLabels() {
+      const steps = ['input-step1', 'input-step2', 'input-step3', 'input-step4'];
+      const labels = ['owner-step1-label', 'owner-step2-label', 'owner-step3-label', 'owner-step4-label'];
+      
+      steps.forEach((stepId, index) => {
+        const stepValue = document.getElementById(stepId).value || '—';
+        const truncated = stepValue.length > 40 ? stepValue.substring(0, 40) + '...' : stepValue;
+        document.getElementById(labels[index]).innerHTML = `Step ${index + 1}: <span class="text-slate-700">${truncated}</span>`;
+      });
+    }
+
+    // Update summary screen
     function updateSummary() {
-      const audience = document.getElementById("lead-audience").value || "—";
-      const problem = document.getElementById("lead-problem").value || "—";
-      const cta = document.getElementById("lead-cta").value || "—";
-      const channelSelect = document.getElementById("lead-channel");
-      const channelText = channelSelect.options[channelSelect.selectedIndex]?.text || "—";
-
-      document.getElementById("summary-audience").textContent = audience;
-      document.getElementById("summary-problem").textContent = problem;
-      document.getElementById("summary-cta").textContent = cta;
-      document.getElementById("summary-channel").textContent = channelText !== "Select a channel" ? channelText : "—";
-
-      for (let i = 1; i <= 4; i++) {
-        const step = document.getElementById(`op-step-${i}`).value || "—";
-        document.getElementById(`summary-step-${i}`).textContent = step;
-
-        const ownerSelect = document.getElementById(`owner-step-${i}`);
-        const owner = ownerSelect.options[ownerSelect.selectedIndex]?.text || "Human";
-        document.getElementById(`summary-owner-${i}`).textContent = owner;
-      }
-
-      const metric = document.getElementById("proof-metric").value || "—";
-      const timeframeVal = document.getElementById("proof-timeframe").value || "—";
-      const trackingSelect = document.getElementById("proof-tracking");
-      const trackingText = trackingSelect.options[trackingSelect.selectedIndex]?.text || "—";
-
-      document.getElementById("summary-metric").textContent = metric;
-      document.getElementById("summary-timeframe").textContent = timeframeVal !== "" ? timeframeVal : "—";
-      document.getElementById("summary-tracking").textContent = trackingText !== "Select method" ? trackingText : "—";
+      // Lead Trigger
+      document.getElementById('summary-audience').textContent = document.getElementById('input-audience').value || '—';
+      document.getElementById('summary-problem').textContent = document.getElementById('input-problem').value || '—';
+      document.getElementById('summary-cta').textContent = document.getElementById('input-cta').value || '—';
+      document.getElementById('summary-channel').textContent = document.getElementById('input-channel').value || '—';
+      
+      // Operational Steps
+      document.getElementById('summary-step1').textContent = document.getElementById('input-step1').value || '—';
+      document.getElementById('summary-step2').textContent = document.getElementById('input-step2').value || '—';
+      document.getElementById('summary-step3').textContent = document.getElementById('input-step3').value || '—';
+      document.getElementById('summary-step4').textContent = document.getElementById('input-step4').value || '—';
+      
+      // Ownership
+      document.getElementById('summary-owner1').textContent = document.getElementById('owner-step1').value || '—';
+      document.getElementById('summary-owner2').textContent = document.getElementById('owner-step2').value || '—';
+      document.getElementById('summary-owner3').textContent = document.getElementById('owner-step3').value || '—';
+      document.getElementById('summary-owner4').textContent = document.getElementById('owner-step4').value || '—';
+      
+      // Proof
+      document.getElementById('summary-metric').textContent = document.getElementById('input-metric').value || '—';
+      document.getElementById('summary-timeframe').textContent = document.getElementById('input-timeframe').value || '—';
+      document.getElementById('summary-tracking').textContent = document.getElementById('input-tracking').value || '—';
+      
+      // Calculate score
+      calculateSystemStrength();
     }
 
-    // FIX: Actually compute and display System Strength on Summary
-    function updateSystemScoreUI() {
-      const input = {
-        leadTrigger: {
-          audience: document.getElementById("lead-audience").value,
-          problem: document.getElementById("lead-problem").value,
-          cta: document.getElementById("lead-cta").value,
-          channel: document.getElementById("lead-channel").value,
-        },
-        operational: {
-          steps: [
-            document.getElementById("op-step-1").value,
-            document.getElementById("op-step-2").value,
-            document.getElementById("op-step-3").value,
-            document.getElementById("op-step-4").value,
-          ],
-        },
-        ownership: {
-          ownershipAssignments: [
-            document.getElementById("owner-step-1").value,
-            document.getElementById("owner-step-2").value,
-            document.getElementById("owner-step-3").value,
-            document.getElementById("owner-step-4").value,
-          ],
-        },
-        proof: {
-          metric: document.getElementById("proof-metric").value,
-          timeframe: document.getElementById("proof-timeframe").value,
-          trackingMethod: document.getElementById("proof-tracking").value,
-        },
+    // Scoring logic
+    function calculateSystemStrength() {
+      const inputs = {
+        audience: document.getElementById('input-audience').value,
+        problem: document.getElementById('input-problem').value,
+        cta: document.getElementById('input-cta').value,
+        channel: document.getElementById('input-channel').value,
+        step1: document.getElementById('input-step1').value,
+        step2: document.getElementById('input-step2').value,
+        step3: document.getElementById('input-step3').value,
+        step4: document.getElementById('input-step4').value,
+        owner1: document.getElementById('owner-step1').value,
+        owner2: document.getElementById('owner-step2').value,
+        owner3: document.getElementById('owner-step3').value,
+        owner4: document.getElementById('owner-step4').value,
+        metric: document.getElementById('input-metric').value,
+        timeframe: document.getElementById('input-timeframe').value,
+        tracking: document.getElementById('input-tracking').value
       };
 
-      const result = scoreLoopSystem(input);
+      let scores = {
+        l: 0,
+        o1: 0,
+        o2: 0,
+        p: 0
+      };
 
-      document.getElementById("system-score").textContent = String(result.score);
-      document.getElementById("system-band").textContent = result.band.label;
-      document.getElementById("system-note").textContent = result.band.note;
+      let details = [];
+      let gaps = [];
 
-      document.getElementById("score-L").textContent = result.breakdown.leadTrigger;
-      document.getElementById("score-O").textContent = result.breakdown.operationalSequence;
-      document.getElementById("score-Own").textContent = result.breakdown.ownership;
-      document.getElementById("score-P").textContent = result.breakdown.proof;
+      // A) LEAD TRIGGER (0–25)
+      // Audience specificity (0–8)
+      let audienceScore = 0;
+      const broadAudience = !inputs.audience || 
+        /^(everyone|people|business owner|anyone|person)$/i.test(inputs.audience) ||
+        inputs.audience.length < 10;
+      
+      if (inputs.audience && inputs.audience.length >= 15 && !broadAudience) {
+        audienceScore = 8;
+      } else if (inputs.audience && inputs.audience.length >= 10) {
+        audienceScore = 4;
+      }
+
+      // Problem clarity (0–8)
+      let problemScore = 0;
+      const vagueProblems = ['growth', 'success', 'help', 'improve', 'better', 'more'];
+      const isVague = vagueProblems.some(vague => inputs.problem.toLowerCase().includes(vague)) && inputs.problem.length < 20;
+      
+      if (inputs.problem && !isVague && inputs.problem.length >= 20) {
+        problemScore = 8;
+      } else if (inputs.problem && inputs.problem.length >= 10) {
+        problemScore = 4;
+      }
+
+      // CTA actionability (0–7)
+      let ctaScore = 0;
+      const passiveCtas = ['learn', 'follow', 'connect', 'discover'];
+      const isPassive = passiveCtas.some(p => inputs.cta.toLowerCase().includes(p));
+      const isSchedulable = /\b(book|call|apply|checkout|register|schedule|sign up)\b/i.test(inputs.cta);
+      
+      if (isSchedulable) {
+        ctaScore = 7;
+      } else if (inputs.cta && !isPassive) {
+        ctaScore = 3;
+      }
+
+      // Channel defined (0–2)
+      let channelScore = inputs.channel ? 2 : 0;
+
+      scores.l = audienceScore + problemScore + ctaScore + channelScore;
+
+      details.push(
+        `Lead Trigger: Audience (${audienceScore}/8) + Problem (${problemScore}/8) + CTA (${ctaScore}/7) + Channel (${channelScore}/2) = ${scores.l}`
+      );
+
+      if (broadAudience) gaps.push('Audience is too broad to target consistently.');
+      if (isVague) gaps.push('Problem description is vague—describe what pain shows up daily.');
+
+      // B) OPERATIONAL STEPS (0–30)
+      const steps = [inputs.step1, inputs.step2, inputs.step3, inputs.step4].filter(s => s);
+      const allSteps = [inputs.step1, inputs.step2, inputs.step3, inputs.step4];
+
+      // Completeness (0–10)
+      let completenessScore = 0;
+      if (steps.length === 4) completenessScore = 10;
+      else if (steps.length >= 3) completenessScore = 5;
+
+      // Sequence logic (0–10)
+      let sequenceScore = 0;
+      const hasContact = steps.some(s => /contact|reach|call|dm|email|message/i.test(s));
+      const hasBooking = steps.some(s => /book|schedule|calendar|meeting|call\s*\(/i.test(s));
+      const hasFollowUp = steps.some(s => /follow|summary|next|send|proposal/i.test(s));
+      
+      if (hasContact && hasBooking && hasFollowUp) sequenceScore = 10;
+      else if (hasContact && (hasBooking || hasFollowUp)) sequenceScore = 5;
+
+      // Timing discipline (0–6)
+      let timingScore = 0;
+      const timingCount = steps.filter(s => /\b(\d+\s*(min|hour|day|hours|days|minutes)|same day|24|within)\b/i.test(s)).length;
+      if (timingCount >= 2) timingScore = 6;
+      else if (timingCount >= 1) timingScore = 3;
+
+      // Follow-up exists (0–4)
+      const followUpScore = hasFollowUp ? 4 : 0;
+
+      scores.o1 = completenessScore + sequenceScore + timingScore + followUpScore;
+
+      details.push(
+        `Operational Steps: Completeness (${completenessScore}/10) + Sequence (${sequenceScore}/10) + Timing (${timingScore}/6) + Follow-up (${followUpScore}/4) = ${scores.o1}`
+      );
+
+      if (steps.length < 3) gaps.push('Fewer than 3 steps defined—map the full interest-to-conversation path.');
+      if (!hasBooking) gaps.push('No clear conversion moment (booked call or payment).');
+      if (!followUpScore) gaps.push('No follow-up step, so leads can stall.');
+
+      // C) OWNERSHIP (0–20)
+      const owners = [inputs.owner1, inputs.owner2, inputs.owner3, inputs.owner4];
+      const humanCount = owners.filter(o => o === 'Human').length;
+      const aiCount = owners.filter(o => o === 'AI' || o === 'Automation' || o === 'Hybrid').length;
+
+      // Delegation present (0–8)
+      let delegationScore = 0;
+      if (aiCount >= 2) delegationScore = 8;
+      else if (aiCount >= 1) delegationScore = 4;
+
+      // Automation on follow-up (0–6)
+      let automationFollowupScore = 0;
+      const followUpStepIndex = allSteps.findIndex(s => s && /follow|summary|next|send|proposal/i.test(s));
+      if (followUpStepIndex !== -1) {
+        const followUpOwner = owners[followUpStepIndex];
+        if (followUpOwner === 'Automation') automationFollowupScore = 6;
+        else if (followUpOwner === 'Hybrid') automationFollowupScore = 3;
+      }
+
+      // Founder bottleneck penalty (0–6)
+      let bottleneckScore = 6;
+      if (humanCount === 4) bottleneckScore = 0;
+      else if (humanCount === 3) bottleneckScore = 2;
+      else if (humanCount === 2) bottleneckScore = 4;
+
+      scores.o2 = delegationScore + automationFollowupScore + bottleneckScore;
+
+      details.push(
+        `Ownership: Delegation (${delegationScore}/8) + Automation Follow-up (${automationFollowupScore}/6) + Bottleneck (${bottleneckScore}/6) = ${scores.o2}`
+      );
+
+      if (humanCount === 4) gaps.push('Owner bottleneck: system depends on you to run every step.');
+
+      // D) PROOF (0–25)
+      // Numeric metric (0–8)
+      const hasNumber = /\d+/.test(inputs.metric);
+      const numericScore = hasNumber ? 8 : 0;
+
+      // Time-bound (0–7)
+      const timeScore = inputs.timeframe ? 7 : 0;
+
+      // Outcome relevance (0–7)
+      let outcomeScore = 0;
+      const vanityMetrics = inputs.metric && /\b(like|impression|follower|view|engagement|reach|share)\b/i.test(inputs.metric);
+      const activityMetrics = inputs.metric && /\b(lead|message|email|signup|application)\b/i.test(inputs.metric);
+      const outcomeMetrics = inputs.metric && /\b(call|conversation|booked|meeting|deal|payment|revenue|close)\b/i.test(inputs.metric);
+      
+      if (outcomeMetrics) outcomeScore = 7;
+      else if (activityMetrics) outcomeScore = 4;
+      else if (vanityMetrics) outcomeScore = 0;
+
+      // Tracking method (0–3)
+      const trackingScore = inputs.tracking ? 3 : 0;
+
+      scores.p = numericScore + timeScore + outcomeScore + trackingScore;
+
+      details.push(
+        `Proof: Numeric (${numericScore}/8) + Time-bound (${timeScore}/7) + Outcome (${outcomeScore}/7) + Tracking (${trackingScore}/3) = ${scores.p}`
+      );
+
+      if (!hasNumber || !inputs.timeframe) gaps.push('No measurable target (number + timeframe) defined.');
+      if (vanityMetrics) gaps.push('Vanity metric detected—measure conversations or revenue, not engagement.');
+
+      // Calculate total
+      let total = scores.l + scores.o1 + scores.o2 + scores.p;
+
+      // Apply credibility caps
+      if (broadAudience || isVague) {
+        total = Math.min(total, 69);
+      }
+      if (!hasNumber || !inputs.timeframe) {
+        total = Math.min(total, 69);
+      }
+      if (steps.length < 3) {
+        total = Math.min(total, 59);
+      }
+      if (!followUpScore) {
+        total = Math.max(0, total - 10);
+      }
+      if (vanityMetrics) {
+        total = Math.max(0, total - 10);
+      }
+
+      // Determine band
+      let band, description;
+      if (total < 40) {
+        band = 'Fragile';
+        description = 'Depends on effort, not structure.';
+      } else if (total < 70) {
+        band = 'Functional but Leaky';
+        description = 'Works inconsistently; tighten weak links.';
+      } else if (total < 85) {
+        band = 'Operationally Sound';
+        description = 'Test-ready with measurable discipline.';
+      } else {
+        band = 'Structurally Strong';
+        description = 'Ready for automation and scale.';
+      }
+
+      // Update UI
+      document.getElementById('strength-score').textContent = total;
+      document.getElementById('strength-band').textContent = band;
+      document.getElementById('strength-desc').textContent = description;
+
+      // Update bars
+      document.getElementById('score-l').textContent = `${scores.l}/25`;
+      document.getElementById('bar-l').style.width = `${(scores.l / 25) * 100}%`;
+
+      document.getElementById('score-o1').textContent = `${scores.o1}/30`;
+      document.getElementById('bar-o1').style.width = `${(scores.o1 / 30) * 100}%`;
+
+      document.getElementById('score-o2').textContent = `${scores.o2}/20`;
+      document.getElementById('bar-o2').style.width = `${(scores.o2 / 20) * 100}%`;
+
+      document.getElementById('score-p').textContent = `${scores.p}/25`;
+      document.getElementById('bar-p').style.width = `${(scores.p / 25) * 100}%`;
+
+      // Critical gaps
+      if (gaps.length > 0) {
+        document.getElementById('critical-gaps-container').classList.remove('hidden');
+        const gapsList = document.getElementById('critical-gaps-list');
+        gapsList.innerHTML = gaps.map(gap => `
+          <div class="flex gap-2">
+            <span class="text-amber-400 flex-shrink-0 mt-0.5">•</span>
+            <span>${gap}</span>
+          </div>
+        `).join('');
+      } else {
+        document.getElementById('critical-gaps-container').classList.add('hidden');
+      }
+
+      // Scoring details
+      document.getElementById('detail-l').textContent = details[0];
+      document.getElementById('detail-o1').textContent = details[1];
+      document.getElementById('detail-o2').textContent = details[2];
+      document.getElementById('detail-p').textContent = details[3];
     }
 
+    // Toggle scoring details
+    function toggleScoringDetails() {
+      const details = document.getElementById('scoring-details');
+      const icon = document.getElementById('expand-icon');
+      details.classList.toggle('hidden');
+      icon.style.transform = details.classList.contains('hidden') ? 'rotate(0deg)' : 'rotate(180deg)';
+    }
+
+    // Download summary
     function downloadSummary() {
-      const audience = document.getElementById("summary-audience").textContent;
-      const problem = document.getElementById("summary-problem").textContent;
-      const cta = document.getElementById("summary-cta").textContent;
-      const channel = document.getElementById("summary-channel").textContent;
-
-      const score = document.getElementById("system-score").textContent;
-      const band = document.getElementById("system-band").textContent;
-
-      let summary = `THE LOOP SYSTEM SUMMARY
-========================
-
-SYSTEM STRENGTH
----------------
-Score: ${score} / 100
-Band: ${band}
+      const config = window.elementSdk?.config || defaultConfig;
+      const title = config.main_title || defaultConfig.main_title;
+      
+      const summary = `
+${title.toUpperCase()}
+${'='.repeat(title.length)}
 
 LEAD TRIGGER (L)
 ----------------
-Audience: ${audience}
-Problem: ${problem}
-Call to Action: ${cta}
-Channel: ${channel}
+Audience: ${document.getElementById('input-audience').value || '—'}
+Problem: ${document.getElementById('input-problem').value || '—'}
+CTA: ${document.getElementById('input-cta').value || '—'}
+Channel: ${document.getElementById('input-channel').value || '—'}
 
 OPERATIONAL STEPS (O)
----------------------`;
+---------------------
+1. ${document.getElementById('input-step1').value || '—'}
+2. ${document.getElementById('input-step2').value || '—'}
+3. ${document.getElementById('input-step3').value || '—'}
+4. ${document.getElementById('input-step4').value || '—'}
 
-      for (let i = 1; i <= 4; i++) {
-        const step = document.getElementById(`summary-step-${i}`).textContent;
-        const owner = document.getElementById(`summary-owner-${i}`).textContent;
-        summary += `\n${i}. ${step} [${owner}]`;
-      }
-
-      const metric = document.getElementById("summary-metric").textContent;
-      const timeframe = document.getElementById("summary-timeframe").textContent;
-      const tracking = document.getElementById("summary-tracking").textContent;
-
-      summary += `
+OWNERSHIP (O)
+-------------
+Step 1: ${document.getElementById('owner-step1').value || '—'}
+Step 2: ${document.getElementById('owner-step2').value || '—'}
+Step 3: ${document.getElementById('owner-step3').value || '—'}
+Step 4: ${document.getElementById('owner-step4').value || '—'}
 
 PROOF (P)
 ---------
-Target: ${metric}
-Timeframe: ${timeframe}
-Tracking: ${tracking}
+Target: ${document.getElementById('input-metric').value || '—'}
+Timeframe: ${document.getElementById('input-timeframe').value || '—'}
+Tracking: ${document.getElementById('input-tracking').value || '—'}
 
-========================
-Generated by The LOOP Builder`;
-
-      const blob = new Blob([summary], { type: "text/plain" });
+---
+Generated with ${title}
+      `.trim();
+      
+      const blob = new Blob([summary], { type: 'text/plain' });
       const url = URL.createObjectURL(blob);
-      const a = document.createElement("a");
+      const a = document.createElement('a');
       a.href = url;
-      a.download = "LOOP-System-Summary.txt";
+      a.download = 'loop-system-summary.txt';
       document.body.appendChild(a);
       a.click();
       document.body.removeChild(a);
       URL.revokeObjectURL(url);
     }
 
-    // Initial screen-3 feedback defaults are empty until visited; no errors.
+    // Initialize
+    updateProgress();
+    updateNavigation();
   </script>
-</body>
+ <script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'9d42c94df28175fc',t:'MTc3MjE0Mzk3MS4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
 </html>

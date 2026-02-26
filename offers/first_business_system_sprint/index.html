@@ -1,520 +1,969 @@
 <!doctype html>
 <html lang="en" class="h-full">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Regen Creatives | First Business System Sprint</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>The LOOP Builder</title>
+
   <script src="https://cdn.tailwindcss.com/3.4.17"></script>
   <script src="/_sdk/element_sdk.js"></script>
-  <script src="/_sdk/data_sdk.js"></script>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&display=swap" rel="stylesheet">
-  <style>
-  html {
-    font-size: 16px;
-  }
+  <script src="/_sdk/data_sdk.js" type="text/javascript"></script>
 
-  body {
-    height: 100%;
-    margin: 0;
-    box-sizing: border-box;
-    font-family: 'DM Sans', sans-serif;
-    font-size: 1rem; /* 16px base */
-  }
-</style>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Source+Serif+4:wght@600;700&display=swap"
+    rel="stylesheet"
+  />
+
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            surface: "#F8F9FA",
+            card: "#FFFFFF",
+            navy: "#1E3A5F",
+            navyLight: "#2D4A6F",
+            slate: "#64748B",
+            text: "#1F2937",
+            muted: "#6B7280",
+            border: "#E5E7EB",
+            success: "#059669",
+            warning: "#D97706",
+            caution: "#DC2626",
+          },
+          fontFamily: {
+            sans: ["Inter", "system-ui", "sans-serif"],
+            serif: ["Source Serif 4", "Georgia", "serif"],
+          },
+        },
+      },
+    };
+  </script>
+
+  <style>
+    html, body { height: 100%; margin: 0; }
+    body { box-sizing: border-box; }
+    .feedback-card { transition: all 0.2s ease; }
+    .feedback-card.selected { transform: scale(1.02); }
+    .step-indicator { transition: all 0.3s ease; }
+    .input-field:focus {
+      outline: none;
+      border-color: #1E3A5F;
+      box-shadow: 0 0 0 3px rgba(30, 58, 95, 0.1);
+    }
+    .btn-primary { transition: all 0.2s ease; }
+    .btn-primary:hover { transform: translateY(-1px); box-shadow: 0 4px 12px rgba(30, 58, 95, 0.3); }
+    .screen { animation: fadeIn 0.3s ease; }
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+  </style>
 </head>
 
-<body class="h-full">
-  <div id="app-wrapper" class="w-full h-full overflow-auto" style="background-color: #F5F2ED;">
-    <div class="w-full max-w-[700px] mx-auto px-6 py-16 md:py-24">
+<body class="h-full bg-surface font-sans">
+  <div id="app" class="h-full w-full overflow-auto">
+    <!-- Header -->
+    <header class="sticky top-0 bg-white border-b border-border z-10">
+      <div class="max-w-2xl mx-auto px-4 py-4">
+        <div class="flex items-center justify-between">
+          <div>
+            <h1 id="main-title" class="font-serif text-xl font-bold text-navy">The LOOP Builder</h1>
+            <p id="subtitle" class="text-sm text-muted mt-0.5">Build your first working business system.</p>
+          </div>
+          <div class="flex items-center gap-2">
+            <span id="step-label" class="text-sm font-medium text-slate">Step 1 of 5</span>
+          </div>
+        </div>
 
-     <!-- Credibility -->
-<div class="mb-16 flex items-center gap-4">
-
-  <!-- Lorraine Image -->
-  <div class="w-14 h-14 rounded-full overflow-hidden border"
-       style="border-color:#C8C3BC;">
-    <img src="https://raw.githubusercontent.com/RegenCreatives/test-repo/refs/heads/master/profile2.png"
-         alt="Lorraine Dukes"
-         class="w-full h-full object-cover">
-  </div>
-
-  <!-- Credibility Text -->
-  <p id="credibility-line"
-     class="text-sm leading-relaxed"
-     style="color:#3F3F3F;">
-    Built and led by Lorraine Dukes, Founder of Regen Creatives.
-  </p>
-
-</div>
-
-
-         
-      <!-- Hero -->
-      <div class="mb-16">
-        <h1 id="headline" class="text-3xl md:text-4xl font-bold leading-tight mb-6" style="color: #1C1C1C;">
-          Build One Working System That Improves Your Business.
-        </h1>
-        <p id="subheadline" class="text-lg" style="color: #2F2F2F;">
-          The First Business System Sprint is a structured, execution-focused program designed for
-early-stage founders and solopreneurs.</p> &nbsp; <p id="subheadline" class="text-lg" style="color: #2F2F2F;">Participants leave with a defined, working business system
-that improves productivity, revenue clarity, and operational discipline.
-        </p>
-      </div>
-
-      <!-- Body -->
-      <!-- Explainer Video -->
-<div class="mb-16">
-
-  <h2 class="text-lg font-semibold mb-6"
-      style="color:#1C1C1C;">
-    See How the Sprint Works
-  </h2>
-
-  <div class="w-full rounded-md overflow-hidden border"
-       style="border-color:#C8C3BC; background-color:#E6E1DA;">
-
-    <!-- Explainer Video (Regen-style thumbnail + modal player) -->
-<section class="w-full">
-  <div class="rounded-2xl border border-black/10 bg-black/[0.03] p-6 sm:p-8">
-    <div class="grid lg:grid-cols-2 gap-8 items-center">
-      <!-- Left: Copy -->
-      <div class="space-y-4">
-        <p class="text-xs font-semibold tracking-[0.22em] uppercase text-black/60">
-          Explainer Video
-        </p>
-
-      
-
-        <p class="text-base leading-relaxed text-black/70 max-w-prose">
-          Watch a short overview of the First Business System Sprint and how we move from scattered effort to a working
-          system that reliably converts interest into revenue.
-        </p>
-
-        <div class="pt-2 flex flex-wrap gap-3">
-          <button
-            type="button"
-            data-open-video
-            class="inline-flex items-center justify-center rounded-xl px-5 py-3 text-sm font-semibold bg-black text-white hover:bg-black/90 focus:outline-none focus:ring-2 focus:ring-black/20"
-          >
-            Watch the overview
-          </button>
-
-          <span class="inline-flex items-center rounded-xl border border-black/10 bg-white/70 px-4 py-3 text-sm text-black/70">
-            2–4 minutes
-          </span>
+        <!-- Progress Bar -->
+        <div class="mt-4 flex gap-2">
+          <div id="progress-1" class="step-indicator h-1.5 flex-1 rounded-full bg-navy"></div>
+          <div id="progress-2" class="step-indicator h-1.5 flex-1 rounded-full bg-border"></div>
+          <div id="progress-3" class="step-indicator h-1.5 flex-1 rounded-full bg-border"></div>
+          <div id="progress-4" class="step-indicator h-1.5 flex-1 rounded-full bg-border"></div>
+          <div id="progress-5" class="step-indicator h-1.5 flex-1 rounded-full bg-border"></div>
         </div>
       </div>
+    </header>
 
-      <!-- Right: Thumbnail -->
-      <div class="relative">
-        <button
-          type="button"
-          data-open-video
-          class="group relative w-full overflow-hidden rounded-2xl border border-black/10 bg-white shadow-sm focus:outline-none focus:ring-2 focus:ring-black/15"
-          aria-label="Play explainer video"
-        >
-          <div class="relative pb-[56.25%] h-0">
-            <!-- Custom thumbnail (fast). Swap to your own image if you prefer. -->
-            <img
-              src="https://i.ytimg.com/vi/GeMRzttM3BM/maxresdefault.jpg"
-              onerror="this.onerror=null;this.src='https://i.ytimg.com/vi/GeMRzttM3BM/hqdefault.jpg';"
-              alt="First Business System Sprint video thumbnail"
-              class="absolute inset-0 w-full h-full object-cover transition-transform duration-300 group-hover:scale-[1.02]"
-              loading="lazy"
-              decoding="async"
-            />
+    <!-- Main Content -->
+    <main class="max-w-2xl mx-auto px-4 py-6 pb-24">
 
-            <!-- Gentle overlay (matches your subtle palette) -->
-            <div class="absolute inset-0 bg-gradient-to-t from-black/35 via-black/10 to-transparent"></div>
+      <!-- Screen 1: Lead Trigger -->
+      <div id="screen-1" class="screen">
+        <div class="mb-6">
+          <div class="flex items-center gap-2 mb-2">
+            <span class="w-8 h-8 rounded-full bg-navy text-white flex items-center justify-center text-sm font-semibold">L</span>
+            <h2 class="font-serif text-2xl font-bold text-text">Define the Trigger</h2>
+          </div>
+          <p class="text-muted text-base leading-relaxed">What specific action starts your system?</p>
+        </div>
 
-            <!-- Play pill -->
-            <div class="absolute left-4 bottom-4 right-4">
-              <div class="inline-flex w-full items-center gap-3 rounded-2xl border border-black/10 bg-white/85 backdrop-blur px-4 py-3 shadow-sm">
-                <span class="inline-flex items-center justify-center w-11 h-11 rounded-xl bg-black text-white">
-                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-                    <path d="M9 8.5V15.5L16 12L9 8.5Z" fill="currentColor"></path>
-                  </svg>
-                </span>
-                <div class="text-left">
-                  <p class="text-sm font-semibold text-black">Watch the overview</p>
-                  <p class="text-xs text-black/60">First Business System Sprint</p>
+        <div class="bg-card rounded-xl shadow-sm border border-border p-5 mb-6">
+          <div class="space-y-4">
+            <div>
+              <label class="block text-sm font-medium text-text mb-1.5">Who do you serve?</label>
+              <input type="text" id="lead-audience" class="input-field w-full px-4 py-3 border border-border rounded-lg text-text placeholder-slate" placeholder="e.g., Independent HVAC contractors in Cobb County" />
+            </div>
+            <div>
+              <label class="block text-sm font-medium text-text mb-1.5">What problem do they have?</label>
+              <input type="text" id="lead-problem" class="input-field w-full px-4 py-3 border border-border rounded-lg text-text placeholder-slate" placeholder="e.g., Inquiries do not convert into booked calls" />
+            </div>
+            <div>
+              <label class="block text-sm font-medium text-text mb-1.5">What is your first call to action?</label>
+              <input type="text" id="lead-cta" class="input-field w-full px-4 py-3 border border-border rounded-lg text-text placeholder-slate" placeholder="e.g., Book a 15-minute diagnostic call" />
+            </div>
+            <div>
+              <label class="block text-sm font-medium text-text mb-1.5">Primary channel</label>
+              <select id="lead-channel" class="input-field w-full px-4 py-3 border border-border rounded-lg text-text bg-white">
+                <option value="">Select a channel</option>
+                <option value="linkedin">LinkedIn</option>
+                <option value="landing">Landing Page</option>
+                <option value="event">Event</option>
+                <option value="email">Email</option>
+                <option value="other">Other</option>
+              </select>
+            </div>
+          </div>
+        </div>
+
+        <!-- Feedback Panel (manual selection still works; can be replaced with auto-eval later) -->
+        <div class="mb-6">
+          <p class="text-sm font-medium text-muted mb-3 uppercase tracking-wide">Feedback Status</p>
+          <div class="grid gap-3">
+            <div class="feedback-card cursor-pointer bg-card border-2 border-border rounded-xl p-4 hover:border-caution" data-feedback="1-1" onclick="selectFeedback('1-1')">
+              <div class="flex items-start gap-3">
+                <div class="w-3 h-3 rounded-full bg-caution mt-1 flex-shrink-0"></div>
+                <div>
+                  <p class="font-medium text-text text-sm">Needs Focus</p>
+                  <p class="text-muted text-sm mt-1">Your audience is too broad. If you cannot picture a real person, narrow it.</p>
                 </div>
               </div>
             </div>
-
-            <!-- Corner tag -->
-            <div class="absolute top-4 right-4 rounded-xl border border-black/10 bg-white/75 backdrop-blur px-3 py-1.5 text-xs font-semibold text-black/80">
-              See how it works
+            <div class="feedback-card cursor-pointer bg-card border-2 border-border rounded-xl p-4 hover:border-warning" data-feedback="1-2" onclick="selectFeedback('1-2')">
+              <div class="flex items-start gap-3">
+                <div class="w-3 h-3 rounded-full bg-warning mt-1 flex-shrink-0"></div>
+                <div>
+                  <p class="font-medium text-text text-sm">Getting Clear</p>
+                  <p class="text-muted text-sm mt-1">The problem is specific, but the outcome is not measurable. Clarify what changes.</p>
+                </div>
+              </div>
+            </div>
+            <div class="feedback-card cursor-pointer bg-card border-2 border-border rounded-xl p-4 hover:border-success" data-feedback="1-3" onclick="selectFeedback('1-3')">
+              <div class="flex items-start gap-3">
+                <div class="w-3 h-3 rounded-full bg-success mt-1 flex-shrink-0"></div>
+                <div>
+                  <p class="font-medium text-text text-sm">Ready to Test</p>
+                  <p class="text-muted text-sm mt-1">Clear audience. Clear problem. Clear action. This can generate real conversations.</p>
+                </div>
+              </div>
             </div>
           </div>
+        </div>
+
+        <button onclick="goToScreen(2)" class="btn-primary w-full bg-navy text-white font-medium py-4 rounded-xl hover:bg-navyLight">
+          Continue to Operational Steps
         </button>
       </div>
-    </div>
-  </div>
-</section>
 
-<!-- Modal -->
-<div
-  id="regenVideoModal"
-  class="fixed inset-0 z-[9999] hidden items-center justify-center p-4"
-  role="dialog"
-  aria-modal="true"
-  aria-labelledby="regenVideoTitle"
->
-  <!-- Backdrop -->
-  <div class="absolute inset-0 bg-black/60 backdrop-blur-sm" data-close-video></div>
-
-  <!-- Panel -->
-  <div class="relative w-full max-w-4xl overflow-hidden rounded-2xl border border-black/10 bg-[#F7F3EE] shadow-[0_20px_80px_rgba(0,0,0,0.35)]">
-    <div class="flex items-center justify-between px-5 py-4 border-b border-black/10">
-      <p id="regenVideoTitle" class="text-sm font-semibold text-black">
-        First Business System Sprint Overview
-      </p>
-      <button
-        type="button"
-        class="inline-flex items-center justify-center rounded-xl w-10 h-10 text-black/70 hover:bg-black/5 focus:outline-none focus:ring-2 focus:ring-black/15"
-        data-close-video
-        aria-label="Close video"
-      >
-        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-          <path d="M18 6L6 18M6 6l12 12" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
-        </svg>
-      </button>
-    </div>
-
-    <div class="relative pb-[56.25%] h-0 bg-black">
-      <!-- Inject iframe on open (true lazy loading) -->
-      <div id="regenVideoMount" class="absolute inset-0"></div>
-    </div>
-
-    <div class="px-5 py-4 border-t border-black/10">
-      <a
-        href="https://regencreatives.com/offers/frist_business_system_sprint/"
-        class="inline-flex items-center justify-center rounded-xl px-4 py-2.5 text-sm font-semibold bg-black text-white hover:bg-black/90 focus:outline-none focus:ring-2 focus:ring-black/20"
-      >
-        View the sprint
-      </a>
-    </div>
-  </div>
-</div>
-
-<script>
-  (function () {
-    const VIDEO_ID = "GeMRzttM3BM";
-    const modal = document.getElementById("regenVideoModal");
-    const mount = document.getElementById("regenVideoMount");
-
-    function openModal() {
-      // Create iframe only on demand (performance)
-      const iframe = document.createElement("iframe");
-      iframe.className = "w-full h-full";
-      iframe.src = "https://www.youtube.com/embed/" + VIDEO_ID + "?autoplay=1&rel=0";
-      iframe.title = "First Business System Sprint Overview";
-      iframe.allow = "accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share";
-      iframe.allowFullscreen = true;
-      iframe.loading = "lazy";
-      iframe.referrerPolicy = "strict-origin-when-cross-origin";
-
-      mount.innerHTML = "";
-      mount.appendChild(iframe);
-
-      modal.classList.remove("hidden");
-      modal.classList.add("flex");
-      document.documentElement.classList.add("overflow-hidden");
-    }
-
-    function closeModal() {
-      modal.classList.add("hidden");
-      modal.classList.remove("flex");
-      document.documentElement.classList.remove("overflow-hidden");
-      // Stop playback
-      mount.innerHTML = "";
-    }
-
-    document.querySelectorAll("[data-open-video]").forEach((btn) => btn.addEventListener("click", openModal));
-    modal.querySelectorAll("[data-close-video]").forEach((el) => el.addEventListener("click", closeModal));
-
-    document.addEventListener("keydown", (e) => {
-      if (e.key === "Escape" && !modal.classList.contains("hidden")) closeModal();
-    });
-  })();
-</script>
-  
-
-</div>
-
- 
-      <!-- Divider -->
-      <div class="mb-16" style="border-top: 1px solid #D5D0C8;"></div>
-
-
-<!-- Form -->
-<div id="form-section">
-   <h2 class="text-lg font-semibold mb-6"
-      style="color:#1C1C1C;">
-    Reserve your spot.
-  </h2>
-  <!-- Context (kept subtle, matches your palette) -->
-  <div class="mb-6">
-    <p class="text-sm leading-relaxed" style="color:#3F3F3F;">
-      Apply to enroll in the First Business System Sprint. You will be redirected to secure checkout.
-      After enrollment, you will receive a confirmation email with next steps and your implementation packet.
-    </p>
-  </div>
-
-  <form id="application-form" class="space-y-5" novalidate>
-    <!-- Honeypot (anti-bot) -->
-    <div class="hidden" aria-hidden="true">
-      <label for="company">Company</label>
-      <input type="text" id="company" tabindex="-1" autocomplete="off">
-    </div>
-
-    <div>
-      <label for="name" class="block text-sm mb-2" style="color: #1C1C1C;">Your name</label>
-      <input
-        type="text"
-        id="name"
-        required
-        autocomplete="name"
-        class="w-full px-4 py-3 text-base border outline-none transition-all duration-200"
-        style="background-color: #FDFCFA; border-color: #C8C3BC; border-radius: 6px; color: #1C1C1C;"
-      >
-      <p id="name-error" class="mt-2 text-sm hidden" style="color:#B8352E;"></p>
-    </div>
-
-    <div>
-      <label for="email" class="block text-sm mb-2" style="color: #1C1C1C;">Your best email</label>
-      <input
-        type="email"
-        id="email"
-        required
-        autocomplete="email"
-        inputmode="email"
-        class="w-full px-4 py-3 text-base border outline-none transition-all duration-200"
-        style="background-color: #FDFCFA; border-color: #C8C3BC; border-radius: 6px; color: #1C1C1C;"
-      >
-      <p id="email-error" class="mt-2 text-sm hidden" style="color:#B8352E;"></p>
-      <p class="mt-2 text-xs" style="color:#3F3F3F;">
-        Use an email you check. This is where your confirmation and materials will be sent.
-      </p>
-    </div>
-
-    <!-- Optional: business context (minimal friction, high signal) -->
-    <div>
-      <label for="goal" class="block text-sm mb-2" style="color:#1C1C1C;">What are you building?</label>
-      <select
-        id="goal"
-        required
-        class="w-full px-4 py-3 text-base border outline-none transition-all duration-200"
-        style="background-color:#FDFCFA; border-color:#C8C3BC; border-radius:6px; color:#1C1C1C;"
-      >
-        <option value="" selected>Select one</option>
-        <option value="services">Service business (clients)</option>
-        <option value="product">Product or digital offer</option>
-        <option value="content">Content / audience-based business</option>
-        <option value="other">Other</option>
-      </select>
-      <p id="goal-error" class="mt-2 text-sm hidden" style="color:#B8352E;"></p>
-    </div>
-
-    <div class="pt-4">
-      <button
-        id="submit-btn"
-        type="submit"
-        class="w-full py-4 text-base font-medium transition-all duration-200"
-        style="background-color: #B8352E; color: #FFFFFF; border-radius: 6px;"
-      >
-        Reserve Your Seat
-      </button>
-    </div>
-
-    <p id="footer-text" class="text-center text-sm pt-2" style="color: #3F3F3F;">
-      Enrollment confirms your commitment to implement.
-    </p>
-
-    <p id="form-status" class="text-sm pt-3 hidden" style="color:#3F3F3F;"></p>
-  </form>
-</div>
-
-<script>
-  (function () {
-    // Placeholder for now. Replace with the URL you create server-side with Stripe Checkout.
-    const STRIPE_CHECKOUT_PLACEHOLDER_URL = "https://book.stripe.com/eVqcN62x931R8lk3I29oc01";
-
-    const form = document.getElementById("application-form");
-    const btn = document.getElementById("submit-btn");
-    const statusEl = document.getElementById("form-status");
-
-    const nameEl = document.getElementById("name");
-    const emailEl = document.getElementById("email");
-    const goalEl = document.getElementById("goal");
-    const honeypotEl = document.getElementById("company");
-
-    const nameErr = document.getElementById("name-error");
-    const emailErr = document.getElementById("email-error");
-    const goalErr = document.getElementById("goal-error");
-
-    // Lightweight disposable domain blocklist (not perfect, but catches common throwaways)
-    const BLOCKED_EMAIL_DOMAINS = new Set([
-      "mailinator.com", "guerrillamail.com", "10minutemail.com", "temp-mail.org",
-      "yopmail.com", "trashmail.com", "getnada.com"
-    ]);
-
-    function show(el, msg) {
-      el.textContent = msg;
-      el.classList.remove("hidden");
-    }
-
-    function hide(el) {
-      el.textContent = "";
-      el.classList.add("hidden");
-    }
-
-    function setFieldBorder(el, hasError) {
-      el.style.borderColor = hasError ? "#B8352E" : "#C8C3BC";
-    }
-
-    function setBusy(isBusy) {
-      btn.disabled = isBusy;
-      btn.style.opacity = isBusy ? "0.85" : "1";
-      btn.style.cursor = isBusy ? "not-allowed" : "pointer";
-      btn.textContent = isBusy ? "Redirecting to checkout…" : "Apply for the Sprint";
-    }
-
-    function showStatus(msg) {
-      statusEl.textContent = msg;
-      statusEl.classList.remove("hidden");
-    }
-
-    function validName(name) {
-      // Must be 2+ chars, allow letters, spaces, hyphen, apostrophe, period
-      if (name.length < 2) return "Please enter your full name.";
-      if (name.length > 80) return "Name is too long.";
-      if (!/^[A-Za-zÀ-ÖØ-öø-ÿ.' -]+$/.test(name)) return "Name contains invalid characters.";
-      // Avoid single-word names (helps with deliverability + seriousness)
-      if (name.trim().split(/\s+/).length < 2) return "Please enter first and last name.";
-      return "";
-    }
-
-    function validEmail(email) {
-      if (email.length < 6) return "Please enter a valid email address.";
-      if (email.length > 254) return "Email address is too long.";
-      // Basic but strong email format check
-      if (!/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(email)) return "Please enter a valid email address.";
-      const domain = email.split("@")[1].toLowerCase();
-      if (BLOCKED_EMAIL_DOMAINS.has(domain)) return "Please use a non-temporary email address.";
-      return "";
-    }
-
-    function validGoal(val) {
-      if (!val) return "Please select one option.";
-      return "";
-    }
-
-    function validateAll() {
-      let ok = true;
-
-      const name = (nameEl.value || "").trim();
-      const email = (emailEl.value || "").trim();
-      const goal = (goalEl.value || "").trim();
-
-      const nMsg = validName(name);
-      const eMsg = validEmail(email);
-      const gMsg = validGoal(goal);
-
-      if (nMsg) { ok = false; show(nameErr, nMsg); setFieldBorder(nameEl, true); }
-      else { hide(nameErr); setFieldBorder(nameEl, false); }
-
-      if (eMsg) { ok = false; show(emailErr, eMsg); setFieldBorder(emailEl, true); }
-      else { hide(emailErr); setFieldBorder(emailEl, false); }
-
-      if (gMsg) { ok = false; show(goalErr, gMsg); setFieldBorder(goalEl, true); }
-      else { hide(goalErr); setFieldBorder(goalEl, false); }
-
-      return { ok, name, email, goal };
-    }
-
-    // Inline validation on blur (disciplined, not annoying)
-    [nameEl, emailEl, goalEl].forEach((el) => {
-      el.addEventListener("blur", () => validateAll());
-    });
-
-    form.addEventListener("submit", function (e) {
-      e.preventDefault();
-
-      // Bot trap
-      if ((honeypotEl.value || "").trim().length > 0) {
-        // Act like success but do nothing
-        showStatus("Redirecting to checkout…");
-        return;
-      }
-
-      const { ok, name, email, goal } = validateAll();
-      if (!ok) {
-        showStatus("Please correct the highlighted fields.");
-        return;
-      }
-
-      setBusy(true);
-      showStatus("Sending you to secure checkout…");
-
-      // Store locally for later use on success page
-      try {
-        sessionStorage.setItem("sprint_applicant_name", name);
-        sessionStorage.setItem("sprint_applicant_email", email);
-        sessionStorage.setItem("sprint_applicant_goal", goal);
-      } catch (_) {}
-
-      // Build redirect URL with context (placeholder)
-      const url = new URL(STRIPE_CHECKOUT_PLACEHOLDER_URL);
-      url.searchParams.set("name", name);
-      url.searchParams.set("email", email);
-      url.searchParams.set("goal", goal);
-      url.searchParams.set("source", "first_business_system_sprint");
-
-      window.location.href = url.toString();
-    });
-  })();
-</script>
-
- 
-
-        <!-- Loading -->
-        <div id="loading-state" class="hidden text-center py-8">
-          <div class="inline-block w-6 h-6 border-2 border-t-transparent rounded-full animate-spin"
-            style="border-color: #B8352E; border-top-color: transparent;"></div>
-          <p class="mt-3 text-sm" style="color: #2F2F2F;">Submitting your application...</p>
+      <!-- Screen 2: Operational Steps -->
+      <div id="screen-2" class="screen hidden">
+        <div class="mb-6">
+          <div class="flex items-center gap-2 mb-2">
+            <span class="w-8 h-8 rounded-full bg-navy text-white flex items-center justify-center text-sm font-semibold">O</span>
+            <h2 class="font-serif text-2xl font-bold text-text">Map the Steps</h2>
+          </div>
+          <p class="text-muted text-base leading-relaxed">What happens every single time after someone says, "I'm interested"?</p>
         </div>
 
-        <!-- Success -->
-        <div id="success-state" class="hidden text-center py-8">
-          <h3 class="text-xl font-bold mb-2" style="color: #1C1C1C;">Application Received</h3>
-          <p class="text-sm" style="color: #2F2F2F;">We'll be in touch within 48 hours.</p>
+        <div class="bg-card rounded-xl shadow-sm border border-border p-5 mb-6">
+          <div class="space-y-4">
+            <div>
+              <label class="block text-sm font-medium text-text mb-1.5">Step 1</label>
+              <input type="text" id="op-step-1" class="input-field w-full px-4 py-3 border border-border rounded-lg text-text placeholder-slate" placeholder="e.g., Send a DM with calendar link" />
+            </div>
+            <div>
+              <label class="block text-sm font-medium text-text mb-1.5">Step 2</label>
+              <input type="text" id="op-step-2" class="input-field w-full px-4 py-3 border border-border rounded-lg text-text placeholder-slate" placeholder="e.g., Follow up after 24 hours if no response" />
+            </div>
+            <div>
+              <label class="block text-sm font-medium text-text mb-1.5">Step 3</label>
+              <input type="text" id="op-step-3" class="input-field w-full px-4 py-3 border border-border rounded-lg text-text placeholder-slate" placeholder="e.g., Send invoice or confirm booking" />
+            </div>
+            <div>
+              <label class="block text-sm font-medium text-text mb-1.5">Step 4</label>
+              <input type="text" id="op-step-4" class="input-field w-full px-4 py-3 border border-border rounded-lg text-text placeholder-slate" placeholder="e.g., Onboarding email and intake form" />
+            </div>
+          </div>
         </div>
 
-        <!-- Error -->
-        <div id="error-state" class="hidden text-center py-4">
-          <p class="text-sm" style="color: #B8352E;">Something went wrong. Please try again.</p>
+        <div class="mb-6">
+          <p class="text-sm font-medium text-muted mb-3 uppercase tracking-wide">Feedback Status</p>
+          <div class="grid gap-3">
+            <div class="feedback-card cursor-pointer bg-card border-2 border-border rounded-xl p-4 hover:border-caution" data-feedback="2-1" onclick="selectFeedback('2-1')">
+              <div class="flex items-start gap-3">
+                <div class="w-3 h-3 rounded-full bg-caution mt-1 flex-shrink-0"></div>
+                <div>
+                  <p class="font-medium text-text text-sm">Needs Structure</p>
+                  <p class="text-muted text-sm mt-1">Steps are out of order or incomplete. Every lead must move forward without confusion.</p>
+                </div>
+              </div>
+            </div>
+            <div class="feedback-card cursor-pointer bg-card border-2 border-border rounded-xl p-4 hover:border-warning" data-feedback="2-2" onclick="selectFeedback('2-2')">
+              <div class="flex items-start gap-3">
+                <div class="w-3 h-3 rounded-full bg-warning mt-1 flex-shrink-0"></div>
+                <div>
+                  <p class="font-medium text-text text-sm">Clear Sequence</p>
+                  <p class="text-muted text-sm mt-1">The steps flow logically. Now remove unnecessary friction.</p>
+                </div>
+              </div>
+            </div>
+            <div class="feedback-card cursor-pointer bg-card border-2 border-border rounded-xl p-4 hover:border-success" data-feedback="2-3" onclick="selectFeedback('2-3')">
+              <div class="flex items-start gap-3">
+                <div class="w-3 h-3 rounded-full bg-success mt-1 flex-shrink-0"></div>
+                <div>
+                  <p class="font-medium text-text text-sm">System Ready</p>
+                  <p class="text-muted text-sm mt-1">This sequence can run consistently without relying on memory.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="flex gap-3">
+          <button onclick="goToScreen(1)" class="flex-1 bg-white border border-border text-text font-medium py-4 rounded-xl hover:bg-gray-50">Back</button>
+          <button onclick="goToScreen(3)" class="flex-1 btn-primary bg-navy text-white font-medium py-4 rounded-xl hover:bg-navyLight">Continue to Ownership</button>
         </div>
       </div>
-    </div>
+
+      <!-- Screen 3: Ownership -->
+      <div id="screen-3" class="screen hidden">
+        <div class="mb-6">
+          <div class="flex items-center gap-2 mb-2">
+            <span class="w-8 h-8 rounded-full bg-navy text-white flex items-center justify-center text-sm font-semibold">O</span>
+            <h2 class="font-serif text-2xl font-bold text-text">Assign Ownership</h2>
+          </div>
+          <p class="text-muted text-base leading-relaxed">Who performs each step?</p>
+        </div>
+
+        <div class="bg-card rounded-xl shadow-sm border border-border p-5 mb-6">
+          <div class="space-y-4">
+            <div class="flex items-center justify-between gap-4 p-3 bg-surface rounded-lg">
+              <div class="flex-1 min-w-0">
+                <p class="text-sm font-medium text-text">Step 1</p>
+                <p id="owner-step-1-text" class="text-sm text-muted truncate">—</p>
+              </div>
+              <select id="owner-step-1" class="input-field px-3 py-2 border border-border rounded-lg text-sm text-text bg-white min-w-[120px]" onchange="updateScreen3Feedback()">
+                <option value="human">Human</option>
+                <option value="ai">AI</option>
+                <option value="automation">Automation</option>
+                <option value="hybrid">Hybrid</option>
+              </select>
+            </div>
+
+            <div class="flex items-center justify-between gap-4 p-3 bg-surface rounded-lg">
+              <div class="flex-1 min-w-0">
+                <p class="text-sm font-medium text-text">Step 2</p>
+                <p id="owner-step-2-text" class="text-sm text-muted truncate">—</p>
+              </div>
+              <select id="owner-step-2" class="input-field px-3 py-2 border border-border rounded-lg text-sm text-text bg-white min-w-[120px]" onchange="updateScreen3Feedback()">
+                <option value="human">Human</option>
+                <option value="ai">AI</option>
+                <option value="automation">Automation</option>
+                <option value="hybrid">Hybrid</option>
+              </select>
+            </div>
+
+            <div class="flex items-center justify-between gap-4 p-3 bg-surface rounded-lg">
+              <div class="flex-1 min-w-0">
+                <p class="text-sm font-medium text-text">Step 3</p>
+                <p id="owner-step-3-text" class="text-sm text-muted truncate">—</p>
+              </div>
+              <select id="owner-step-3" class="input-field px-3 py-2 border border-border rounded-lg text-sm text-text bg-white min-w-[120px]" onchange="updateScreen3Feedback()">
+                <option value="human">Human</option>
+                <option value="ai">AI</option>
+                <option value="automation">Automation</option>
+                <option value="hybrid">Hybrid</option>
+              </select>
+            </div>
+
+            <div class="flex items-center justify-between gap-4 p-3 bg-surface rounded-lg">
+              <div class="flex-1 min-w-0">
+                <p class="text-sm font-medium text-text">Step 4</p>
+                <p id="owner-step-4-text" class="text-sm text-muted truncate">—</p>
+              </div>
+              <select id="owner-step-4" class="input-field px-3 py-2 border border-border rounded-lg text-sm text-text bg-white min-w-[120px]" onchange="updateScreen3Feedback()">
+                <option value="human">Human</option>
+                <option value="ai">AI</option>
+                <option value="automation">Automation</option>
+                <option value="hybrid">Hybrid</option>
+              </select>
+            </div>
+          </div>
+        </div>
+
+        <div class="mb-6">
+          <p class="text-sm font-medium text-muted mb-3 uppercase tracking-wide">System Strength</p>
+          <div id="screen-3-feedback" class="bg-card border-2 border-border rounded-xl p-4">
+            <div class="flex items-start gap-3">
+              <div id="screen-3-feedback-icon" class="w-3 h-3 rounded-full bg-border mt-1 flex-shrink-0"></div>
+              <div class="flex-1">
+                <p id="screen-3-feedback-title" class="font-medium text-text text-sm">Assigning ownership...</p>
+                <p id="screen-3-feedback-note" class="text-muted text-sm mt-1"></p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="flex gap-3">
+          <button onclick="goToScreen(2)" class="flex-1 bg-white border border-border text-text font-medium py-4 rounded-xl hover:bg-gray-50">Back</button>
+          <button onclick="goToScreen(4)" class="flex-1 btn-primary bg-navy text-white font-medium py-4 rounded-xl hover:bg-navyLight">Continue to Proof</button>
+        </div>
+      </div>
+
+      <!-- Screen 4: Proof -->
+      <div id="screen-4" class="screen hidden">
+        <div class="mb-6">
+          <div class="flex items-center gap-2 mb-2">
+            <span class="w-8 h-8 rounded-full bg-navy text-white flex items-center justify-center text-sm font-semibold">P</span>
+            <h2 class="font-serif text-2xl font-bold text-text">Define Proof</h2>
+          </div>
+          <p class="text-muted text-base leading-relaxed">How will you measure success in the next 30 days?</p>
+        </div>
+
+        <div class="bg-card rounded-xl shadow-sm border border-border p-5 mb-6">
+          <div class="space-y-4">
+            <div>
+              <label class="block text-sm font-medium text-text mb-1.5">Target metric</label>
+              <input type="text" id="proof-metric" class="input-field w-full px-4 py-3 border border-border rounded-lg text-text placeholder-slate" placeholder="e.g., 10 booked calls" />
+            </div>
+
+            <!-- FIX: timeframe is now a text value that matches scoring logic -->
+            <div>
+              <label class="block text-sm font-medium text-text mb-1.5">Timeframe</label>
+              <select id="proof-timeframe" class="input-field w-full px-4 py-3 border border-border rounded-lg text-text bg-white">
+                <option value="">Select timeframe</option>
+                <option value="7 days">7 days</option>
+                <option value="14 days">14 days</option>
+                <option value="30 days">30 days</option>
+                <option value="60 days">60 days</option>
+              </select>
+            </div>
+
+            <div>
+              <label class="block text-sm font-medium text-text mb-1.5">Tracking method</label>
+              <select id="proof-tracking" class="input-field w-full px-4 py-3 border border-border rounded-lg text-text bg-white">
+                <option value="">Select method</option>
+                <option value="sheet">Google Sheet</option>
+                <option value="crm">CRM</option>
+                <option value="manual">Manual log</option>
+                <option value="notion">Notion</option>
+              </select>
+            </div>
+          </div>
+        </div>
+
+        <div class="mb-6">
+          <p class="text-sm font-medium text-muted mb-3 uppercase tracking-wide">Feedback Status</p>
+          <div class="grid gap-3">
+            <div class="feedback-card cursor-pointer bg-card border-2 border-border rounded-xl p-4 hover:border-caution" data-feedback="4-1" onclick="selectFeedback('4-1')">
+              <div class="flex items-start gap-3">
+                <div class="w-3 h-3 rounded-full bg-caution mt-1 flex-shrink-0"></div>
+                <div>
+                  <p class="font-medium text-text text-sm">Too Vague</p>
+                  <p class="text-muted text-sm mt-1">"More leads" is not measurable. Use a number and a deadline.</p>
+                </div>
+              </div>
+            </div>
+            <div class="feedback-card cursor-pointer bg-card border-2 border-border rounded-xl p-4 hover:border-warning" data-feedback="4-2" onclick="selectFeedback('4-2')">
+              <div class="flex items-start gap-3">
+                <div class="w-3 h-3 rounded-full bg-warning mt-1 flex-shrink-0"></div>
+                <div>
+                  <p class="font-medium text-text text-sm">Defined</p>
+                  <p class="text-muted text-sm mt-1">The metric is numeric but may not reflect revenue.</p>
+                </div>
+              </div>
+            </div>
+            <div class="feedback-card cursor-pointer bg-card border-2 border-border rounded-xl p-4 hover:border-success" data-feedback="4-3" onclick="selectFeedback('4-3')">
+              <div class="flex items-start gap-3">
+                <div class="w-3 h-3 rounded-full bg-success mt-1 flex-shrink-0"></div>
+                <div>
+                  <p class="font-medium text-text text-sm">Outcome-Focused</p>
+                  <p class="text-muted text-sm mt-1">This metric directly ties to conversations or revenue.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="flex gap-3">
+          <button onclick="goToScreen(3)" class="flex-1 bg-white border border-border text-text font-medium py-4 rounded-xl hover:bg-gray-50">Back</button>
+          <button onclick="goToScreen(5)" class="flex-1 btn-primary bg-navy text-white font-medium py-4 rounded-xl hover:bg-navyLight">View Summary</button>
+        </div>
+      </div>
+
+      <!-- Screen 5: Summary -->
+      <div id="screen-5" class="screen hidden">
+        <div class="mb-6">
+          <div class="flex items-center gap-2 mb-2">
+            <span class="w-8 h-8 rounded-full bg-success text-white flex items-center justify-center">
+              <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+              </svg>
+            </span>
+            <h2 class="font-serif text-2xl font-bold text-text">Your LOOP System</h2>
+          </div>
+          <p class="text-muted text-base leading-relaxed">Here's your complete lead-to-conversation system.</p>
+        </div>
+
+        <!-- FIX: System Strength block (uses real scoring) -->
+        <div class="bg-card rounded-xl shadow-sm border border-border p-5 mb-4">
+          <div class="flex items-center justify-between gap-4">
+            <div>
+              <p class="text-sm font-medium text-muted uppercase tracking-wide">System Strength</p>
+              <p class="text-3xl font-bold text-text mt-1"><span id="system-score">—</span><span class="text-base font-medium text-muted"> / 100</span></p>
+              <p class="text-sm text-muted mt-1"><span id="system-band">—</span> · <span id="system-note">—</span></p>
+            </div>
+            <div class="text-right">
+              <p class="text-xs text-muted">L</p><p id="score-L" class="text-sm font-semibold text-text">—</p>
+              <p class="text-xs text-muted mt-2">O</p><p id="score-O" class="text-sm font-semibold text-text">—</p>
+              <p class="text-xs text-muted mt-2">Ownership</p><p id="score-Own" class="text-sm font-semibold text-text">—</p>
+              <p class="text-xs text-muted mt-2">P</p><p id="score-P" class="text-sm font-semibold text-text">—</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Lead Trigger Summary -->
+        <div class="bg-card rounded-xl shadow-sm border border-border p-5 mb-4">
+          <div class="flex items-center gap-2 mb-4">
+            <span class="w-6 h-6 rounded-full bg-navy text-white flex items-center justify-center text-xs font-semibold">L</span>
+            <h3 class="font-semibold text-text">Lead Trigger</h3>
+          </div>
+          <div class="space-y-3 text-sm">
+            <div class="flex justify-between items-start gap-4"><span class="text-muted flex-shrink-0">Audience</span> <span id="summary-audience" class="text-text text-right font-medium">—</span></div>
+            <div class="flex justify-between items-start gap-4"><span class="text-muted flex-shrink-0">Problem</span> <span id="summary-problem" class="text-text text-right font-medium">—</span></div>
+            <div class="flex justify-between items-start gap-4"><span class="text-muted flex-shrink-0">Call to Action</span> <span id="summary-cta" class="text-text text-right font-medium">—</span></div>
+            <div class="flex justify-between items-start gap-4"><span class="text-muted flex-shrink-0">Channel</span> <span id="summary-channel" class="text-text text-right font-medium">—</span></div>
+          </div>
+        </div>
+
+        <!-- Operational Steps Summary -->
+        <div class="bg-card rounded-xl shadow-sm border border-border p-5 mb-4">
+          <div class="flex items-center gap-2 mb-4">
+            <span class="w-6 h-6 rounded-full bg-navy text-white flex items-center justify-center text-xs font-semibold">O</span>
+            <h3 class="font-semibold text-text">Operational Steps &amp; Ownership</h3>
+          </div>
+          <div class="space-y-3 text-sm">
+            <div class="flex justify-between items-start gap-4 p-2 bg-surface rounded-lg">
+              <div class="flex gap-2 items-start flex-1 min-w-0"><span class="text-muted flex-shrink-0">1.</span> <span id="summary-step-1" class="text-text font-medium">—</span></div>
+              <span id="summary-owner-1" class="text-xs px-2 py-1 bg-navy text-white rounded-full flex-shrink-0">Human</span>
+            </div>
+            <div class="flex justify-between items-start gap-4 p-2 bg-surface rounded-lg">
+              <div class="flex gap-2 items-start flex-1 min-w-0"><span class="text-muted flex-shrink-0">2.</span> <span id="summary-step-2" class="text-text font-medium">—</span></div>
+              <span id="summary-owner-2" class="text-xs px-2 py-1 bg-navy text-white rounded-full flex-shrink-0">Human</span>
+            </div>
+            <div class="flex justify-between items-start gap-4 p-2 bg-surface rounded-lg">
+              <div class="flex gap-2 items-start flex-1 min-w-0"><span class="text-muted flex-shrink-0">3.</span> <span id="summary-step-3" class="text-text font-medium">—</span></div>
+              <span id="summary-owner-3" class="text-xs px-2 py-1 bg-navy text-white rounded-full flex-shrink-0">Human</span>
+            </div>
+            <div class="flex justify-between items-start gap-4 p-2 bg-surface rounded-lg">
+              <div class="flex gap-2 items-start flex-1 min-w-0"><span class="text-muted flex-shrink-0">4.</span> <span id="summary-step-4" class="text-text font-medium">—</span></div>
+              <span id="summary-owner-4" class="text-xs px-2 py-1 bg-navy text-white rounded-full flex-shrink-0">Human</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Proof Summary -->
+        <div class="bg-card rounded-xl shadow-sm border border-border p-5 mb-6">
+          <div class="flex items-center gap-2 mb-4">
+            <span class="w-6 h-6 rounded-full bg-navy text-white flex items-center justify-center text-xs font-semibold">P</span>
+            <h3 class="font-semibold text-text">Proof</h3>
+          </div>
+          <div class="space-y-3 text-sm">
+            <div class="flex justify-between items-start gap-4"><span class="text-muted flex-shrink-0">Target</span> <span id="summary-metric" class="text-text text-right font-medium">—</span></div>
+            <div class="flex justify-between items-start gap-4"><span class="text-muted flex-shrink-0">Timeframe</span> <span id="summary-timeframe" class="text-text text-right font-medium">—</span></div>
+            <div class="flex justify-between items-start gap-4"><span class="text-muted flex-shrink-0">Tracking</span> <span id="summary-tracking" class="text-text text-right font-medium">—</span></div>
+          </div>
+        </div>
+
+        <div class="flex gap-3 mb-6">
+          <button onclick="goToScreen(4)" class="flex-1 bg-white border border-border text-text font-medium py-4 rounded-xl hover:bg-gray-50">Back</button>
+          <button onclick="downloadSummary()" class="flex-1 btn-primary bg-success text-white font-medium py-4 rounded-xl hover:opacity-90 flex items-center justify-center gap-2">
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"></path>
+            </svg>
+            Download Your LOOP Summary
+          </button>
+        </div>
+
+        <button onclick="goToScreen(1)" class="w-full bg-white border border-border text-navy font-medium py-3 rounded-xl hover:bg-gray-50 mb-6">
+          Refine My LOOP
+        </button>
+
+        <div class="bg-surface rounded-lg p-4 text-center border border-border">
+          <p class="text-sm text-muted">This system improves each time it runs. Review weekly.</p>
+        </div>
+      </div>
+    </main>
   </div>
 
-<script>
-const defaultConfig = {
-  background_color: '#F5F2ED',
-  text_color: '#1C1C1C',
-  secondary_text_color: '#2F2F2F',
-  body_text_color: '#262626',
-  muted_text_color: '#3F3F3F',
-  accent_color: '#B8352E',
-  surface_color: '#FDFCFA',
-  font_family: 'DM Sans',
-  font_size: 16
-};
-</script>
-  <script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'9d2f03c153ec8bb8',t:'MTc3MTkzNjY1MC4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script>
+  <script>
+    // ===== SCORING LOGIC =====
+    function clamp(n, min, max) { return Math.max(min, Math.min(max, n)); }
+
+    function includesVagueTerms(text) {
+      if (!text) return true;
+      const t = String(text).toLowerCase();
+      const vague = [
+        "everyone","anyone","business owner","business owners","people","customers","clients",
+        "growth","success","clarity","help","improve","better","more leads","learn more",
+        "info","information","general","various","many"
+      ];
+      return vague.some((term) => t.includes(term));
+    }
+
+    function isSchedulableCTA(cta) {
+      if (!cta) return false;
+      const t = String(cta).toLowerCase();
+      const schedulableSignals = ["book","schedule","call","consult","demo","audit","diagnostic","appointment","meeting","text me","dm me","reply","apply","checkout","buy","pay","purchase"];
+      const weakSignals = ["learn more","follow","subscribe","check it out","see more","visit","browse"];
+      if (weakSignals.some((w) => t.includes(w))) return false;
+      return schedulableSignals.some((s) => t.includes(s));
+    }
+
+    function hasNumber(text) { return !!text && /\d/.test(String(text)); }
+
+    function hasTimeframe(text) {
+      if (!text) return false;
+      const t = String(text).toLowerCase();
+      return (/\d/.test(t) && /(day|days|week|weeks|month|months)/.test(t)) || /(today|this week|this month|in \d+)/.test(t);
+    }
+
+    function isVanityMetric(metric) {
+      if (!metric) return true;
+      const t = String(metric).toLowerCase();
+      return ["likes","impressions","views","followers","reach","engagement"].some((v) => t.includes(v));
+    }
+
+    function tiesToConversationsOrRevenue(metric) {
+      if (!metric) return false;
+      const t = String(metric).toLowerCase();
+      const outcomeSignals = ["booked call","calls","consult","appointments","demo","sales","payments","revenue","closed","contracts","commitments","checkout","purchases","paid"];
+      return outcomeSignals.some((s) => t.includes(s));
+    }
+
+    function norm(text) { return String(text || "").trim(); }
+
+    function scoreLeadTrigger({ audience, problem, cta, channel }) {
+      const maxPer = 6.25;
+
+      let audienceScore = 0;
+      const aud = norm(audience);
+      if (!aud) audienceScore = 0;
+      else if (includesVagueTerms(aud) || aud.split(/\s+/).length < 3) audienceScore = 0;
+      else if (aud.split(/\s+/).length < 6) audienceScore = maxPer * 0.5;
+      else audienceScore = maxPer;
+
+      let problemScore = 0;
+      const prob = norm(problem);
+      if (!prob) problemScore = 0;
+      else if (includesVagueTerms(prob)) problemScore = 0;
+      else if (prob.split(/\s+/).length < 6) problemScore = maxPer * 0.5;
+      else problemScore = maxPer;
+
+      let ctaScore = 0;
+      const c = norm(cta);
+      if (!c) ctaScore = 0;
+      else if (isSchedulableCTA(c)) ctaScore = maxPer;
+      else ctaScore = maxPer * 0.5;
+
+      let channelScore = 0;
+      const ch = norm(channel);
+      if (!ch) channelScore = 0;
+      else if (ch.toLowerCase() === "other") channelScore = maxPer * 0.5;
+      else channelScore = maxPer;
+
+      return clamp(audienceScore + problemScore + ctaScore + channelScore, 0, 25);
+    }
+
+    function scoreOperationalSequence({ steps }) {
+      const maxPer = 6;
+      const s = Array.isArray(steps) ? steps.map(norm) : [];
+      const filledCount = s.filter(Boolean).length;
+
+      let completeFlow = 0;
+      if (filledCount === 0) completeFlow = 0;
+      else if (filledCount < 4) completeFlow = maxPer * 0.5;
+      else completeFlow = maxPer;
+
+      const joined = s.join(" ").toLowerCase();
+      const hasContact = /(reply|respond|call|meeting|dm|email|text|intake)/.test(joined);
+      const hasCommit = /(pay|payment|checkout|purchase|book|schedule|contract|invoice)/.test(joined);
+
+      let logicalOrder = 0;
+      if (filledCount < 2) logicalOrder = 0;
+      else if (hasContact && hasCommit) logicalOrder = maxPer;
+      else logicalOrder = maxPer * 0.5;
+
+      const hasTimeCue = /(within|24|48|72|day|days|hour|hours|week|same day)/.test(joined);
+      let timeBound = 0;
+      if (filledCount === 0) timeBound = 0;
+      else if (hasTimeCue) timeBound = maxPer;
+      else timeBound = maxPer * 0.5;
+
+      const hasFollowUp = /(follow[-\s]?up|remind|nurture|no response|second message|check[-\s]?in)/.test(joined);
+      let followUp = 0;
+      if (filledCount === 0) followUp = 0;
+      else if (hasFollowUp) followUp = maxPer;
+      else followUp = 0;
+
+      let paymentMoment = 0;
+      if (filledCount === 0) paymentMoment = 0;
+      else if (hasCommit) paymentMoment = maxPer;
+      else paymentMoment = 0;
+
+      return clamp(completeFlow + logicalOrder + timeBound + followUp + paymentMoment, 0, 30);
+    }
+
+    function scoreOwnership({ ownershipAssignments }) {
+      const maxPer = 5;
+      const a = Array.isArray(ownershipAssignments) ? ownershipAssignments.map((x) => norm(x).toLowerCase()) : [];
+      const allHuman = a.length > 0 && a.every((x) => x === "human");
+      const hasAutomation = a.some((x) => x === "automation");
+      const hasDelegation = a.some((x) => x === "ai" || x === "automation" || x === "hybrid");
+
+      const s1 = hasAutomation ? maxPer : 0;
+      const s2 = hasDelegation ? maxPer : 0;
+      const s3 = hasDelegation ? maxPer : maxPer * 0.5;
+      const s4 = hasAutomation ? maxPer : maxPer * 0.5;
+
+      let total = s1 + s2 + s3 + s4;
+      if (allHuman) total = Math.min(total, 8);
+      return clamp(total, 0, 20);
+    }
+
+    function scoreProof({ metric, timeframe, trackingMethod }) {
+      const maxPer = 6.25;
+      const m = norm(metric);
+      const tf = norm(timeframe);
+      const tr = norm(trackingMethod);
+
+      const s1 = hasNumber(m) ? maxPer : 0;
+      const s2 = hasTimeframe(tf) ? maxPer : 0;
+      const s3 = tiesToConversationsOrRevenue(m) ? maxPer : maxPer * 0.5;
+      const s4 = tr ? maxPer : 0;
+
+      let total = s1 + s2 + s3 + s4;
+      if (isVanityMetric(m)) total = Math.min(total, 12);
+      return clamp(total, 0, 25);
+    }
+
+    function applyRiskMultiplier(rawScore, { steps, metric, timeframe }) {
+      const joined = (Array.isArray(steps) ? steps : []).join(" ").toLowerCase();
+      const hasFollowUp = /(follow[-\s]?up|remind|nurture|no response|second message|check[-\s]?in)/.test(joined);
+      const hasCommit = /(pay|payment|checkout|purchase|book|schedule|contract|invoice)/.test(joined);
+
+      const missingFollowUp = !hasFollowUp;
+      const missingPayment = !hasCommit;
+      const missingNumericMetric = !hasNumber(metric);
+      const missingTimeframe = !hasTimeframe(timeframe);
+
+      const hasCriticalMissing = missingFollowUp || missingPayment || missingNumericMetric || missingTimeframe;
+      const adjusted = hasCriticalMissing ? rawScore * 0.85 : rawScore;
+
+      return clamp(Math.round(adjusted), 0, 100);
+    }
+
+    function getScoreBand(score) {
+      if (score <= 39) return { label: "Fragile", note: "Depends on effort, not structure." };
+      if (score <= 69) return { label: "Functional but Leaky", note: "Works inconsistently; tighten weak links." };
+      if (score <= 84) return { label: "Operationally Sound", note: "Test-ready with measurable discipline." };
+      return { label: "Structurally Strong", note: "Ready for automation and scale." };
+    }
+
+    function scoreLoopSystem(input) {
+      const L = scoreLeadTrigger(input.leadTrigger || {});
+      const O1 = scoreOperationalSequence(input.operational || {});
+      const O2 = scoreOwnership(input.ownership || {});
+      const P = scoreProof(input.proof || {});
+      const raw = L + O1 + O2 + P;
+
+      const finalScore = applyRiskMultiplier(raw, {
+        steps: (input.operational && input.operational.steps) || [],
+        metric: (input.proof && input.proof.metric) || "",
+        timeframe: (input.proof && input.proof.timeframe) || "",
+      });
+
+      return {
+        score: finalScore,
+        breakdown: {
+          leadTrigger: Math.round(L),
+          operationalSequence: Math.round(O1),
+          ownership: Math.round(O2),
+          proof: Math.round(P),
+          rawTotal: Math.round(raw),
+        },
+        band: getScoreBand(finalScore),
+      };
+    }
+
+    // ===== APP STATE =====
+    const defaultConfig = { main_title: "The LOOP Builder", subtitle: "Build your first working business system." };
+    let currentScreen = 1;
+    const selectedFeedback = {};
+
+    // Element SDK init (safe)
+    if (window.elementSdk) {
+      window.elementSdk.init({
+        defaultConfig,
+        onConfigChange: async (config) => {
+          const title = document.getElementById("main-title");
+          const subtitle = document.getElementById("subtitle");
+          if (title) title.textContent = config.main_title || defaultConfig.main_title;
+          if (subtitle) subtitle.textContent = config.subtitle || defaultConfig.subtitle;
+        },
+        mapToCapabilities: () => ({ recolorables: [], borderables: [], fontEditable: undefined, fontSizeable: undefined }),
+        mapToEditPanelValues: (config) => new Map([
+          ["main_title", config.main_title || defaultConfig.main_title],
+          ["subtitle", config.subtitle || defaultConfig.subtitle],
+        ]),
+      });
+    }
+
+    // ===== FIX: Missing function referenced in goToScreen =====
+    function updateOwnershipStepText() {
+      const fallback = ["—", "—", "—", "—"];
+      for (let i = 1; i <= 4; i++) {
+        const opVal = norm(document.getElementById(`op-step-${i}`)?.value);
+        const text = opVal || fallback[i - 1];
+        const node = document.getElementById(`owner-step-${i}-text`);
+        if (node) node.textContent = text;
+      }
+    }
+
+    function goToScreen(screen) {
+      if (screen === 3) {
+        updateOwnershipStepText();
+        updateScreen3Feedback();
+      }
+      if (screen === 5) {
+        updateSummary();
+        updateSystemScoreUI();
+      }
+
+      for (let i = 1; i <= 5; i++) {
+        document.getElementById(`screen-${i}`).classList.add("hidden");
+      }
+      document.getElementById(`screen-${screen}`).classList.remove("hidden");
+
+      for (let i = 1; i <= 5; i++) {
+        const bar = document.getElementById(`progress-${i}`);
+        if (i <= screen) {
+          bar.classList.remove("bg-border");
+          bar.classList.add("bg-navy");
+        } else {
+          bar.classList.remove("bg-navy");
+          bar.classList.add("bg-border");
+        }
+      }
+
+      document.getElementById("step-label").textContent = `Step ${screen} of 5`;
+      currentScreen = screen;
+
+      document.getElementById("app").scrollTo({ top: 0, behavior: "smooth" });
+    }
+
+    function selectFeedback(id) {
+      const screenId = id.split("-")[0];
+
+      document.querySelectorAll(`[data-feedback^="${screenId}-"]`).forEach((card) => {
+        card.classList.remove("selected", "border-caution", "border-warning", "border-success");
+        card.classList.add("border-border");
+      });
+
+      const card = document.querySelector(`[data-feedback="${id}"]`);
+      card.classList.remove("border-border");
+      card.classList.add("selected");
+      if (id.endsWith("-1")) card.classList.add("border-caution");
+      else if (id.endsWith("-2")) card.classList.add("border-warning");
+      else if (id.endsWith("-3")) card.classList.add("border-success");
+
+      selectedFeedback[screenId] = id;
+    }
+
+    function updateScreen3Feedback() {
+      const assignments = [
+        document.getElementById("owner-step-1").value,
+        document.getElementById("owner-step-2").value,
+        document.getElementById("owner-step-3").value,
+        document.getElementById("owner-step-4").value,
+      ];
+
+      const hasAutomation = assignments.some((a) => a === "automation");
+      const hasDelegation = assignments.some((a) => a === "ai" || a === "automation" || a === "hybrid");
+      const allHuman = assignments.every((a) => a === "human");
+
+      const icon = document.getElementById("screen-3-feedback-icon");
+      const title = document.getElementById("screen-3-feedback-title");
+      const note = document.getElementById("screen-3-feedback-note");
+
+      if (allHuman) {
+        icon.className = "w-3 h-3 rounded-full bg-caution mt-1 flex-shrink-0";
+        title.textContent = "Overloaded Founder";
+        note.textContent = "You are performing every step manually. Identify at least one delegation opportunity.";
+      } else if (!hasAutomation && hasDelegation) {
+        icon.className = "w-3 h-3 rounded-full bg-warning mt-1 flex-shrink-0";
+        title.textContent = "Partially Leveraged";
+        note.textContent = "Delegation exists, but follow-ups likely still rely on you. Automate the critical path.";
+      } else if (hasAutomation) {
+        icon.className = "w-3 h-3 rounded-full bg-success mt-1 flex-shrink-0";
+        title.textContent = "Leveraged";
+        note.textContent = "Clear division of responsibility. The system does not depend entirely on you.";
+      } else {
+        icon.className = "w-3 h-3 rounded-full bg-border mt-1 flex-shrink-0";
+        title.textContent = "Assigning ownership...";
+        note.textContent = "";
+      }
+    }
+
+    function updateSummary() {
+      const audience = document.getElementById("lead-audience").value || "—";
+      const problem = document.getElementById("lead-problem").value || "—";
+      const cta = document.getElementById("lead-cta").value || "—";
+      const channelSelect = document.getElementById("lead-channel");
+      const channelText = channelSelect.options[channelSelect.selectedIndex]?.text || "—";
+
+      document.getElementById("summary-audience").textContent = audience;
+      document.getElementById("summary-problem").textContent = problem;
+      document.getElementById("summary-cta").textContent = cta;
+      document.getElementById("summary-channel").textContent = channelText !== "Select a channel" ? channelText : "—";
+
+      for (let i = 1; i <= 4; i++) {
+        const step = document.getElementById(`op-step-${i}`).value || "—";
+        document.getElementById(`summary-step-${i}`).textContent = step;
+
+        const ownerSelect = document.getElementById(`owner-step-${i}`);
+        const owner = ownerSelect.options[ownerSelect.selectedIndex]?.text || "Human";
+        document.getElementById(`summary-owner-${i}`).textContent = owner;
+      }
+
+      const metric = document.getElementById("proof-metric").value || "—";
+      const timeframeVal = document.getElementById("proof-timeframe").value || "—";
+      const trackingSelect = document.getElementById("proof-tracking");
+      const trackingText = trackingSelect.options[trackingSelect.selectedIndex]?.text || "—";
+
+      document.getElementById("summary-metric").textContent = metric;
+      document.getElementById("summary-timeframe").textContent = timeframeVal !== "" ? timeframeVal : "—";
+      document.getElementById("summary-tracking").textContent = trackingText !== "Select method" ? trackingText : "—";
+    }
+
+    // FIX: Actually compute and display System Strength on Summary
+    function updateSystemScoreUI() {
+      const input = {
+        leadTrigger: {
+          audience: document.getElementById("lead-audience").value,
+          problem: document.getElementById("lead-problem").value,
+          cta: document.getElementById("lead-cta").value,
+          channel: document.getElementById("lead-channel").value,
+        },
+        operational: {
+          steps: [
+            document.getElementById("op-step-1").value,
+            document.getElementById("op-step-2").value,
+            document.getElementById("op-step-3").value,
+            document.getElementById("op-step-4").value,
+          ],
+        },
+        ownership: {
+          ownershipAssignments: [
+            document.getElementById("owner-step-1").value,
+            document.getElementById("owner-step-2").value,
+            document.getElementById("owner-step-3").value,
+            document.getElementById("owner-step-4").value,
+          ],
+        },
+        proof: {
+          metric: document.getElementById("proof-metric").value,
+          timeframe: document.getElementById("proof-timeframe").value,
+          trackingMethod: document.getElementById("proof-tracking").value,
+        },
+      };
+
+      const result = scoreLoopSystem(input);
+
+      document.getElementById("system-score").textContent = String(result.score);
+      document.getElementById("system-band").textContent = result.band.label;
+      document.getElementById("system-note").textContent = result.band.note;
+
+      document.getElementById("score-L").textContent = result.breakdown.leadTrigger;
+      document.getElementById("score-O").textContent = result.breakdown.operationalSequence;
+      document.getElementById("score-Own").textContent = result.breakdown.ownership;
+      document.getElementById("score-P").textContent = result.breakdown.proof;
+    }
+
+    function downloadSummary() {
+      const audience = document.getElementById("summary-audience").textContent;
+      const problem = document.getElementById("summary-problem").textContent;
+      const cta = document.getElementById("summary-cta").textContent;
+      const channel = document.getElementById("summary-channel").textContent;
+
+      const score = document.getElementById("system-score").textContent;
+      const band = document.getElementById("system-band").textContent;
+
+      let summary = `THE LOOP SYSTEM SUMMARY
+========================
+
+SYSTEM STRENGTH
+---------------
+Score: ${score} / 100
+Band: ${band}
+
+LEAD TRIGGER (L)
+----------------
+Audience: ${audience}
+Problem: ${problem}
+Call to Action: ${cta}
+Channel: ${channel}
+
+OPERATIONAL STEPS (O)
+---------------------`;
+
+      for (let i = 1; i <= 4; i++) {
+        const step = document.getElementById(`summary-step-${i}`).textContent;
+        const owner = document.getElementById(`summary-owner-${i}`).textContent;
+        summary += `\n${i}. ${step} [${owner}]`;
+      }
+
+      const metric = document.getElementById("summary-metric").textContent;
+      const timeframe = document.getElementById("summary-timeframe").textContent;
+      const tracking = document.getElementById("summary-tracking").textContent;
+
+      summary += `
+
+PROOF (P)
+---------
+Target: ${metric}
+Timeframe: ${timeframe}
+Tracking: ${tracking}
+
+========================
+Generated by The LOOP Builder`;
+
+      const blob = new Blob([summary], { type: "text/plain" });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement("a");
+      a.href = url;
+      a.download = "LOOP-System-Summary.txt";
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+      URL.revokeObjectURL(url);
+    }
+
+    // Initial screen-3 feedback defaults are empty until visited; no errors.
+  </script>
 </body>
 </html>

@@ -1,0 +1,1159 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Sapphire Realty | Find Your Gem of a Home</title>
+  <meta
+    name="description"
+    content="Sapphire Realty helps buyers and sellers discover exceptional homes with trusted guidance and a polished real estate experience."
+  />
+
+  <style>
+    :root {
+      --navy: #123b7a;
+      --navy-deep: #0b2a57;
+      --navy-dark: #081a35;
+      --sapphire: #1f73c9;
+      --sky: #67b4ff;
+      --ice: #eaf4ff;
+      --white: #ffffff;
+      --text: #10233f;
+      --muted: #c7d7ee;
+      --footer-text: #d6e6fb;
+      --footer-soft: #a9c5e8;
+      --shadow: 0 18px 50px rgba(10, 28, 58, 0.25);
+      --radius: 16px;
+      --max-width: 1200px;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      margin: 0;
+      font-family: Arial, Helvetica, sans-serif;
+      color: var(--white);
+      background: var(--navy-deep);
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    img {
+      max-width: 100%;
+      display: block;
+    }
+
+    .site-header {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      z-index: 1000;
+      background: rgba(11, 42, 87, 0.72);
+      backdrop-filter: blur(10px);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .nav-wrap {
+      max-width: var(--max-width);
+      margin: 0 auto;
+      padding: 0.95rem 1.25rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 0.8rem;
+      min-width: 0;
+    }
+
+    .brand-mark {
+      width: 42px;
+      height: 42px;
+      border-radius: 12px;
+      background: linear-gradient(145deg, #78c6ff 0%, #1f73c9 45%, #0e4e9f 100%);
+      clip-path: polygon(50% 0%, 84% 28%, 68% 100%, 32% 100%, 16% 28%);
+      position: relative;
+      box-shadow: inset 0 1px 0 rgba(255,255,255,0.35);
+      flex-shrink: 0;
+    }
+
+    .brand-mark::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background:
+        linear-gradient(to bottom right, transparent 48%, rgba(255,255,255,0.55) 49%, rgba(255,255,255,0.55) 51%, transparent 52%),
+        linear-gradient(to bottom left, transparent 48%, rgba(255,255,255,0.45) 49%, rgba(255,255,255,0.45) 51%, transparent 52%);
+      clip-path: polygon(50% 0%, 84% 28%, 68% 100%, 32% 100%, 16% 28%);
+      opacity: 0.9;
+    }
+
+    .brand-text {
+      line-height: 1;
+    }
+
+    .brand-text strong {
+      display: block;
+      font-size: 1rem;
+      letter-spacing: 0.08em;
+      font-weight: 700;
+    }
+
+    .brand-text span {
+      display: block;
+      font-size: 0.8rem;
+      color: var(--muted);
+      margin-top: 0.2rem;
+    }
+
+    .nav-toggle {
+      display: none;
+      appearance: none;
+      border: 0;
+      background: transparent;
+      cursor: pointer;
+      width: 44px;
+      height: 44px;
+      padding: 0;
+    }
+
+    .nav-toggle span,
+    .nav-toggle::before,
+    .nav-toggle::after {
+      content: "";
+      display: block;
+      width: 24px;
+      height: 2px;
+      margin: 6px auto;
+      background: var(--white);
+      border-radius: 999px;
+      transition: 0.25s ease;
+    }
+
+    .nav-menu {
+      display: flex;
+      align-items: center;
+      gap: 1.5rem;
+    }
+
+    .nav-menu a {
+      font-size: 0.95rem;
+      color: rgba(255, 255, 255, 0.9);
+    }
+
+    .nav-menu a:hover {
+      color: var(--sky);
+    }
+
+    .nav-cta {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 0.8rem 1rem;
+      border-radius: 999px;
+      background: var(--sapphire);
+      color: var(--white);
+      font-weight: 700;
+      box-shadow: var(--shadow);
+    }
+
+    .hero {
+      min-height: 100svh;
+      display: grid;
+      align-items: center;
+      position: relative;
+      overflow: hidden;
+      padding: 7rem 1.25rem 3rem;
+      background:
+        linear-gradient(rgba(8, 24, 50, 0.48), rgba(8, 24, 50, 0.58)),
+        radial-gradient(circle at top right, rgba(103, 180, 255, 0.28), transparent 32%),
+        radial-gradient(circle at left center, rgba(31, 115, 201, 0.24), transparent 36%),
+        linear-gradient(135deg, rgba(255,255,255,0.08) 0%, rgba(255,255,255,0) 35%),
+        url("https://luxhouses-experience.com/wp-content/smush-webp/2024/01/VideoINMO-Lux-Houses-Experience_A732769-scaled.jpg.webp?auto=format&fit=crop&w=1800&q=80") center center / cover no-repeat;
+    }
+
+    .hero::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background:
+        linear-gradient(145deg, transparent 0 35%, rgba(255,255,255,0.05) 35% 36%, transparent 36% 100%),
+        linear-gradient(35deg, transparent 0 60%, rgba(255,255,255,0.04) 60% 61%, transparent 61% 100%);
+      pointer-events: none;
+    }
+
+    .hero-inner {
+      position: relative;
+      z-index: 1;
+      max-width: var(--max-width);
+      width: 100%;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 1.2fr 0.8fr;
+      gap: 2rem;
+      align-items: center;
+    }
+
+    .hero-copy {
+      max-width: 720px;
+    }
+
+    .eyebrow {
+      display: inline-block;
+      padding: 0.45rem 0.8rem;
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.12);
+      color: var(--ice);
+      font-size: 0.85rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      margin-bottom: 1rem;
+      border: 1px solid rgba(255, 255, 255, 0.15);
+    }
+
+    h1 {
+      margin: 0;
+      font-size: clamp(2.5rem, 5vw, 5.2rem);
+      line-height: 0.97;
+      letter-spacing: -0.03em;
+      max-width: 10ch;
+    }
+
+    .hero-copy p {
+      margin: 1.2rem 0 0;
+      max-width: 58ch;
+      font-size: 1.08rem;
+      line-height: 1.7;
+      color: rgba(255, 255, 255, 0.9);
+    }
+
+    .hero-actions {
+      margin-top: 2rem;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1rem;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 54px;
+      padding: 0.95rem 1.35rem;
+      border-radius: 999px;
+      font-weight: 700;
+      transition: transform 0.2s ease, background 0.2s ease, color 0.2s ease;
+    }
+
+    .btn:hover {
+      transform: translateY(-1px);
+    }
+
+    .btn-primary {
+      background: linear-gradient(135deg, var(--sky), var(--sapphire));
+      color: var(--white);
+      box-shadow: var(--shadow);
+    }
+
+    .btn-secondary {
+      background: rgba(255, 255, 255, 0.08);
+      color: var(--white);
+      border: 1px solid rgba(255, 255, 255, 0.22);
+      backdrop-filter: blur(8px);
+    }
+
+    .hero-card {
+      justify-self: end;
+      width: min(100%, 390px);
+      border-radius: 28px;
+      padding: 1.5rem;
+      background: linear-gradient(180deg, rgba(255,255,255,0.18), rgba(255,255,255,0.08));
+      border: 1px solid rgba(255, 255, 255, 0.18);
+      box-shadow: var(--shadow);
+      backdrop-filter: blur(12px);
+    }
+
+    .hero-card .card-mark {
+      width: 74px;
+      height: 74px;
+      margin-bottom: 1rem;
+      border-radius: 20px;
+      background: linear-gradient(145deg, #8fd4ff 0%, #2e87e1 48%, #0f4f9d 100%);
+      clip-path: polygon(50% 0%, 87% 25%, 68% 100%, 32% 100%, 13% 25%);
+      position: relative;
+    }
+
+    .hero-card .card-mark::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background:
+        linear-gradient(to bottom right, transparent 48%, rgba(255,255,255,0.55) 49%, rgba(255,255,255,0.55) 51%, transparent 52%),
+        linear-gradient(to bottom left, transparent 48%, rgba(255,255,255,0.4) 49%, rgba(255,255,255,0.4) 51%, transparent 52%);
+      clip-path: polygon(50% 0%, 87% 25%, 68% 100%, 32% 100%, 13% 25%);
+    }
+
+    .hero-card h2 {
+      margin: 0 0 0.75rem;
+      font-size: 1.4rem;
+      color: var(--white);
+    }
+
+    .hero-card p {
+      margin: 0;
+      color: rgba(255,255,255,0.88);
+      line-height: 1.65;
+      font-size: 0.98rem;
+    }
+
+    .site-footer {
+      background: var(--navy-dark);
+      color: var(--white);
+      padding: 4rem 1.25rem 2rem;
+      border-top: 1px solid rgba(255,255,255,0.08);
+    }
+
+    .footer-inner {
+      max-width: var(--max-width);
+      margin: 0 auto;
+    }
+
+    .footer-grid {
+      display: grid;
+      grid-template-columns: 2fr 1fr 1fr;
+      gap: 3rem;
+    }
+
+    .footer-brand {
+      max-width: 420px;
+    }
+
+    .footer-brand-head {
+      display: flex;
+      align-items: center;
+      gap: 0.9rem;
+      margin-bottom: 1rem;
+    }
+
+    .footer-logo-wrap {
+      width: 52px;
+      height: 52px;
+      border-radius: 999px;
+      background: #bfdcff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+      flex-shrink: 0;
+    }
+
+    .footer-logo-wrap img {
+      max-height: 28px;
+      width: auto;
+    }
+
+    .footer-brand-head strong {
+      display: block;
+      font-size: 1.1rem;
+      font-weight: 700;
+      color: var(--white);
+    }
+
+    .footer-brand-head span {
+      display: block;
+      font-size: 0.95rem;
+      color: var(--footer-soft);
+      margin-top: 0.2rem;
+    }
+
+    .footer-brand p {
+      color: var(--footer-text);
+      line-height: 1.7;
+      margin: 0 0 1.5rem;
+    }
+
+    .footer-socials {
+      display: flex;
+      gap: 0.75rem;
+      flex-wrap: wrap;
+    }
+
+    .social-link {
+      width: 40px;
+      height: 40px;
+      border-radius: 999px;
+      background: #163768;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      transition: background 0.2s ease, transform 0.2s ease;
+    }
+
+    .social-link:hover {
+      background: #21508f;
+      transform: translateY(-1px);
+    }
+
+    .social-link svg {
+      width: 18px;
+      height: 18px;
+      fill: currentColor;
+    }
+
+    .footer-col h4 {
+      margin: 0 0 1rem;
+      font-size: 1.1rem;
+      color: var(--white);
+    }
+
+    .footer-col p,
+    .footer-col li,
+    .footer-col a {
+      color: var(--footer-text);
+      line-height: 1.7;
+      font-size: 0.98rem;
+    }
+
+    .footer-col a:hover {
+      color: var(--white);
+    }
+
+    .footer-contact-item {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      margin-bottom: 1rem;
+    }
+
+    .footer-contact-item svg {
+      width: 20px;
+      height: 20px;
+      stroke: #9fc6f2;
+      flex-shrink: 0;
+    }
+
+    .service-areas {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+    }
+
+    .footer-bottom {
+      border-top: 1px solid rgba(255,255,255,0.08);
+      margin-top: 3rem;
+      padding-top: 1.5rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 1rem;
+      flex-wrap: wrap;
+    }
+
+    .footer-bottom p {
+      margin: 0;
+      color: var(--footer-soft);
+      font-size: 0.92rem;
+      line-height: 1.6;
+    }
+
+    .footer-bottom a {
+      color: var(--footer-text);
+      font-weight: 700;
+      text-decoration: underline;
+    }
+
+    .footer-bottom a:hover {
+      color: var(--white);
+    }
+
+    @media (max-width: 900px) {
+      .hero-inner {
+        grid-template-columns: 1fr;
+      }
+
+      .hero-card {
+        justify-self: start;
+      }
+
+      .footer-grid {
+        grid-template-columns: 1fr 1fr;
+      }
+
+      .footer-brand {
+        grid-column: 1 / -1;
+      }
+    }
+
+    @media (max-width: 760px) {
+      .nav-toggle {
+        display: inline-block;
+      }
+
+      .nav-menu {
+        position: absolute;
+        top: calc(100% + 1px);
+        left: 0;
+        right: 0;
+        display: none;
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 1rem;
+        padding: 1rem 1.25rem 1.25rem;
+        background: rgba(11, 42, 87, 0.96);
+        border-bottom: 1px solid rgba(255,255,255,0.1);
+      }
+
+      .nav-menu.open {
+        display: flex;
+      }
+
+      h1 {
+        max-width: 12ch;
+      }
+
+      .hero {
+        padding-top: 6.5rem;
+      }
+
+      .hero-actions {
+        flex-direction: column;
+        align-items: stretch;
+      }
+
+      .btn {
+        width: 100%;
+      }
+
+      .footer-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .footer-bottom {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+    }
+
+      .team-section {
+  background:
+    linear-gradient(180deg, #f5f9ff 0%, #e9f2ff 100%);
+  padding: 5rem 1.25rem;
+}
+
+.team-inner {
+  max-width: var(--max-width);
+  margin: 0 auto;
+}
+
+.team-header {
+  max-width: 720px;
+  margin: 0 auto 3rem;
+  text-align: center;
+}
+
+.team-eyebrow {
+  display: inline-block;
+  padding: 0.45rem 0.8rem;
+  border-radius: 999px;
+  background: rgba(31, 115, 201, 0.08);
+  color: var(--sapphire);
+  font-size: 0.85rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  margin-bottom: 1rem;
+  border: 1px solid rgba(31, 115, 201, 0.12);
+}
+
+.team-header h2 {
+  margin: 0;
+  color: var(--navy-deep);
+  font-size: clamp(2rem, 4vw, 3rem);
+  line-height: 1.05;
+}
+
+.team-header p {
+  margin: 1rem auto 0;
+  max-width: 60ch;
+  color: #335277;
+  font-size: 1.05rem;
+  line-height: 1.7;
+}
+
+.team-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 2rem;
+}
+
+.team-card {
+  background: #ffffff;
+  border: 1px solid rgba(17, 59, 122, 0.08);
+  border-radius: 24px;
+  overflow: hidden;
+  box-shadow: 0 18px 45px rgba(10, 28, 58, 0.08);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.team-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 22px 50px rgba(10, 28, 58, 0.12);
+}
+
+.team-card-image-wrap {
+  aspect-ratio: 4 / 3;
+  overflow: hidden;
+  background: linear-gradient(135deg, #d8ebff, #b7d7fb);
+}
+
+.team-card-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.team-card-content {
+  padding: 1.5rem;
+}
+
+.team-card-content h3 {
+  margin: 0;
+  color: var(--navy-deep);
+  font-size: 1.4rem;
+  line-height: 1.2;
+}
+
+.team-role {
+  margin: 0.45rem 0 0;
+  color: var(--sapphire);
+  font-weight: 700;
+  font-size: 0.95rem;
+}
+
+.team-copy {
+  margin: 1rem 0 1.5rem;
+  color: #3b5677;
+  line-height: 1.7;
+  font-size: 0.98rem;
+}
+
+.team-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 48px;
+  padding: 0.9rem 1.2rem;
+  border-radius: 999px;
+  background: linear-gradient(135deg, var(--sky), var(--sapphire));
+  color: #ffffff;
+  font-weight: 700;
+  text-decoration: none;
+  box-shadow: 0 12px 28px rgba(31, 115, 201, 0.22);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.team-btn:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 16px 34px rgba(31, 115, 201, 0.28);
+}
+
+@media (max-width: 760px) {
+  .team-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.logo-wrap{
+  width:42px;
+  height:42px;
+  border-radius:12px;
+  overflow:hidden;
+  box-shadow:0 4px 12px rgba(0,0,0,0.15);
+}
+
+.logo-img{
+  width:100%;
+  height:100%;
+  object-fit:cover;
+}
+
+      .live-updates-section {
+  padding: 5rem 1.25rem;
+  background: linear-gradient(180deg, #ffffff 0%, #f4f8ff 100%);
+}
+
+.live-updates-inner {
+  max-width: var(--max-width);
+  margin: 0 auto;
+}
+
+.live-updates-header {
+  max-width: 760px;
+  margin: 0 auto 3rem;
+  text-align: center;
+}
+
+.live-updates-eyebrow {
+  display: inline-block;
+  padding: 0.45rem 0.8rem;
+  border-radius: 999px;
+  background: rgba(31, 115, 201, 0.08);
+  color: var(--sapphire);
+  font-size: 0.85rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  margin-bottom: 1rem;
+  border: 1px solid rgba(31, 115, 201, 0.12);
+}
+
+.live-updates-header h2 {
+  margin: 0;
+  color: var(--navy-deep);
+  font-size: clamp(2rem, 4vw, 3rem);
+  line-height: 1.05;
+}
+
+.live-updates-header p {
+  margin: 1rem auto 0;
+  max-width: 60ch;
+  color: #3b5677;
+  font-size: 1.05rem;
+  line-height: 1.7;
+}
+
+.live-updates-grid {
+  display: grid;
+  grid-template-columns: 1.35fr 0.95fr;
+  gap: 2rem;
+  align-items: stretch;
+}
+
+.live-feature-card {
+  background: #ffffff;
+  border: 1px solid rgba(17, 59, 122, 0.08);
+  border-radius: 28px;
+  overflow: hidden;
+  box-shadow: 0 18px 45px rgba(10, 28, 58, 0.08);
+}
+
+.live-feature-media {
+  aspect-ratio: 16 / 9;
+  overflow: hidden;
+  background: linear-gradient(135deg, #d8ebff, #b7d7fb);
+}
+
+.live-feature-media img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.live-feature-content {
+  padding: 1.5rem;
+}
+
+.live-badge {
+  display: inline-block;
+  margin-bottom: 0.9rem;
+  padding: 0.4rem 0.75rem;
+  border-radius: 999px;
+  background: rgba(31, 115, 201, 0.1);
+  color: var(--sapphire);
+  font-size: 0.82rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.live-feature-content h3,
+.live-side-card h4 {
+  margin: 0;
+  color: var(--navy-deep);
+}
+
+.live-feature-content h3 {
+  font-size: 1.7rem;
+  line-height: 1.2;
+}
+
+.live-feature-content p,
+.live-side-card p {
+  color: #3b5677;
+  line-height: 1.7;
+}
+
+.live-feature-meta {
+  margin-top: 1.25rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1rem;
+  flex-wrap: wrap;
+  color: #55749b;
+  font-size: 0.95rem;
+}
+
+.live-side-cards {
+  display: grid;
+  gap: 1.25rem;
+}
+
+.live-side-card {
+  background: #ffffff;
+  border: 1px solid rgba(17, 59, 122, 0.08);
+  border-radius: 22px;
+  padding: 1.35rem;
+  box-shadow: 0 14px 35px rgba(10, 28, 58, 0.06);
+}
+
+.live-link {
+  display: inline-block;
+  margin-top: 1rem;
+  color: var(--sapphire);
+  font-weight: 700;
+  text-decoration: none;
+}
+
+.live-link:hover {
+  text-decoration: underline;
+}
+
+.live-status-card {
+  background: linear-gradient(135deg, #123b7a, #0b2a57);
+  border: 0;
+}
+
+.live-status-card .live-status-label {
+  margin: 0 0 0.5rem;
+  color: #a9c5e8;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  font-size: 0.8rem;
+  font-weight: 700;
+}
+
+.live-status-card .live-status-value {
+  margin: 0 0 0.75rem;
+  color: #ffffff;
+  font-size: 1.2rem;
+  font-weight: 700;
+}
+
+.live-status-card .live-status-time {
+  margin: 0;
+  color: #d6e6fb;
+}
+
+@media (max-width: 900px) {
+  .live-updates-grid {
+    grid-template-columns: 1fr;
+  }
+}
+  </style>
+</head>
+<body>
+  <header class="site-header">
+    <div class="nav-wrap">
+      <a href="../Sapphire-Realty-Website/index.htm" class="brand" aria-label="Sapphire Realty home">
+
+  <div class="logo-wrap">
+    <img
+      src="./img/sm_logo.png"
+      alt="Sapphire Realty Logo"
+      class="logo-img"
+    />
+  </div>
+
+  <div class="brand-text">
+    <strong>SAPPHIRE</strong>
+    <span>Realty</span>
+  </div>
+
+</a>
+
+      <button
+        class="nav-toggle"
+        aria-expanded="false"
+        aria-controls="mobile-nav"
+        aria-label="Open navigation"
+      ></button>
+
+      <nav class="nav-menu" id="mobile-nav">
+      <!--  <a href="#">Home</a>
+        <a href="#">Listings</a>
+        <a href="#">About</a>
+        <a href="#">Contact</a>
+        <a href="#" class="nav-cta">Schedule a Consultation</a> -->
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <section class="hero">
+      <div class="hero-inner">
+        <div class="hero-copy">
+          <span class="eyebrow">Trusted local agents who know the market.</span>
+          <h1>Find Your Gem of a Home</h1>
+          <p>
+            Thoughtful guidance, polished service, and homes worth discovering.
+            Sapphire Realty helps clients navigate the market with clarity and confidence.
+          </p>
+
+          <div class="hero-actions">
+            <a href="#team" class="btn btn-primary">Meet the Team</a>
+           <!-- <a href="#" class="btn btn-secondary">Schedule a Consultation</a> -->
+          </div>
+        </div>
+
+        
+      </div>
+    </section>
+
+      <!-- Auto-Updating Insights Section -->
+<section id="live-updates" class="live-updates-section">
+  <div class="live-updates-inner">
+    <div class="live-updates-header">
+      <span class="live-updates-eyebrow"> Fresh Updates From Sapphire Realty</span>
+      <h2>Real Estate Market Updates</h2>
+      <p>
+        This section can be automatically updated with new real estate insights,
+        community highlights, and buyer or seller guidance as new content is published.
+      </p>
+    </div>
+
+    <div class="live-updates-grid">
+      <!-- Main Featured Update -->
+      <article class="live-feature-card" id="autosite-featured-card">
+        <div class="live-feature-media">
+          <img
+            id="autosite-featured-image"
+            src="./img/cobb-county-placeholder.jpg"
+            alt="Featured real estate update"
+          />
+        </div>
+
+        <div class="live-feature-content">
+          <span class="live-badge" id="autosite-featured-tag">Market Update</span>
+          <h3 id="autosite-featured-title">
+            What Buyers Should Know About This Month’s Cobb County Market
+          </h3>
+          <p id="autosite-featured-excerpt">
+            Inventory, pricing, and local demand continue to shape how buyers and sellers
+            approach the market. Here is a quick look at what matters most right now.
+          </p>
+
+          <div class="live-feature-meta">
+            <span id="autosite-featured-date">Updated March 2026</span>
+            <a id="autosite-featured-link" href="#" class="live-link">Read More</a>
+          </div>
+        </div>
+      </article>
+
+      <!-- Supporting Updates -->
+      <div class="live-side-cards">
+        <article class="live-side-card">
+          <span class="live-badge" id="autosite-side1-tag">Community Spotlight</span>
+          <h4 id="autosite-side1-title">Why Powder Springs Continues to Attract Buyers</h4>
+          <p id="autosite-side1-excerpt">
+            Schools, convenience, and neighborhood character continue to make this area one to watch.
+          </p>
+          <a id="autosite-side1-link" href="#" class="live-link">Read More</a>
+        </article>
+
+        <article class="live-side-card">
+          <span class="live-badge" id="autosite-side2-tag">Seller Tip</span>
+          <h4 id="autosite-side2-title">Three Small Updates That Can Strengthen Listing Appeal</h4>
+          <p id="autosite-side2-excerpt">
+            A few smart improvements can help a property show better and create a stronger first impression.
+          </p>
+          <a id="autosite-side2-link" href="#" class="live-link">Read More</a>
+        </article>
+
+        <article class="live-side-card live-status-card">
+          <p class="live-status-label">AutoSite AI Status</p>
+          <p class="live-status-value">Live and Ready to Update</p>
+          <p class="live-status-time">
+            Last synced:
+            <span id="autosite-last-synced">March 10, 2026 at 2:15 PM</span>
+          </p>
+        </article>
+      </div>
+    </div>
+  </div>
+</section>
+      <!-- Meet the Team -->
+<section id="team" class="team-section">
+  <div class="team-inner">
+    <div class="team-header">
+      <span class="team-eyebrow">Our Agents</span>
+      <h2>Meet the Team</h2>
+      <p>
+        Work with trusted local agents who know the market, understand the process,
+        and are ready to help you move with confidence.
+      </p>
+    </div>
+
+    <div class="team-grid">
+      <!-- Agent 1 -->
+      <article class="team-card">
+        <div class="team-card-image-wrap">
+          <img
+            src="https://media.georgiamls.com/images/agents/8C0D63D0-E80D-789D-2D96050ACDBD571B.jpg"
+            alt="Stephanie C Bettis"
+            class="team-card-image"
+          />
+        </div>
+
+        <div class="team-card-content">
+          <h3>Stephanie C Bettis</h3>
+          <p class="team-role">Broker & Real Estate Agent</p>
+          <p class="team-copy">
+            Supporting buyers and sellers with thoughtful service, market knowledge, and a steady hand throughout the home journey.
+          </p>
+          </p>
+          <a href="./Stephaine-C-Bettis/index.html" class="team-btn">View Agent Page</a>
+        </div>
+      </article>
+
+      <!-- Agent 2 -->
+      <article class="team-card">
+        <div class="team-card-image-wrap">
+          <img
+            src="./Tatyana-Renee-Molina/img/Tatyana_Renee_Molina.png"
+            alt="Tatyana Renee Molina"
+            class="team-card-image"
+          />
+        </div>
+
+        <div class="team-card-content">
+          <h3>Tatyana Renee Molina</h3>
+          <p class="team-role">Real Estate Agent</p>
+          <p class="team-copy">
+            Helping first-time buyers and move-up sellers find the right home in Cobb County with clear guidance and local expertise.
+          <a href="Tatyana-Renee-Molina/index.html" class="team-btn">View Agent Page</a>
+        </div>
+      </article>
+    </div>
+  </div>
+</section>
+  </main>
+
+  <!-- Footer -->
+  <footer id="contact" class="site-footer">
+    <div class="footer-inner">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <div class="footer-brand-head">
+            <div class="logo-wrap">
+              <a href="../Sapphire-Realty-Website/index.htm" class="brand" aria-label="Sapphire Realty home">
+
+  <div class="logo-wrap">
+    <img
+      src="./img/sm_logo.png"
+      alt="Sapphire Realty Logo"
+      class="logo-img"
+    />
+  </div>
+
+
+            </div>
+            <div>
+              <strong>Sapphire Realty</strong>
+              <span>Find Your Gem of a Home</span>
+            </div>
+          </div>
+
+          <p>
+            Helping buyers and sellers across Cobb County discover exceptional homes with
+            trusted local guidance and a polished real estate experience.
+          </p>
+
+          <div class="footer-socials">
+           <!-- <a href="#" class="social-link" aria-label="Facebook" target="_blank" rel="noopener noreferrer">
+              <svg viewBox="0 0 24 24">
+                <path d="M24 12.073c0-6.627-5.373-12-12-12S0 5.446 0 12.073c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/>
+              </svg>
+            </a>
+
+            <a href="#" class="social-link" aria-label="Instagram" target="_blank" rel="noopener noreferrer">
+              <svg viewBox="0 0 24 24">
+                <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98C.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838A6.162 6.162 0 1 0 12 18a6.162 6.162 0 0 0 0-12.162zm0 10.162a4 4 0 1 1 0-8 4 4 0 0 1 0 8zm6.406-11.845a1.44 1.44 0 1 0 0 2.88 1.44 1.44 0 0 0 0-2.88z"/>
+              </svg>
+            </a>
+
+            <a href="#" class="social-link" aria-label="LinkedIn" target="_blank" rel="noopener noreferrer">
+              <svg viewBox="0 0 24 24">
+                <path d="M19 0H5C2.239 0 0 2.239 0 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5V5c0-2.761-2.238-5-5-5zM8 19H5V8h3v11zM6.5 6.732c-.966 0-1.75-.79-1.75-1.764S5.534 3.204 6.5 3.204s1.75.79 1.75 1.764-.783 1.764-1.75 1.764zM20 19h-3v-5.604c0-3.368-4-3.113-4 0V19h-3V8h3v1.765c1.396-2.586 7-2.777 7 2.476V19z"/>
+              </svg>-->
+            
+            </a>
+          </div>
+        </div>
+
+        <div class="footer-col">
+          <h4>Contact</h4>
+
+          <div class="footer-contact-item">
+            <svg fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+            </svg>
+            <a href="mailto:stephaniebettis80@yahoo.com">info@sapphirerealty.com</a>
+          </div>
+
+          <div class="footer-contact-item">
+            <svg fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
+            </svg>
+            <a href="tel:+14048290714">(404) 829-0714</a>
+          </div>
+        </div>
+
+        <div class="footer-col">
+          <h4>Service Areas</h4>
+          <ul class="service-areas">
+            <li>Powder Springs</li>
+            <li>Marietta</li>
+            <li>Kennesaw</li>
+            <li>Smyrna</li>
+            <li>Acworth</li>
+            <li>All of Cobb County</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="footer-bottom">
+        <p>© 2026 Sapphire Realty. All rights reserved.</p>
+        <p>
+          Website Updates | Powered By
+          <a href="autositeai.com" target="_blank" rel="noopener noreferrer">AutoSite AI</a>
+        </p>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    const toggle = document.querySelector(".nav-toggle");
+    const menu = document.querySelector(".nav-menu");
+
+    toggle.addEventListener("click", () => {
+      const isOpen = menu.classList.toggle("open");
+      toggle.setAttribute("aria-expanded", isOpen ? "true" : "false");
+    });
+  </script>
+</body>
+</html>

@@ -1,0 +1,1282 @@
+<!doctype html>
+<html lang="en" class="h-full">
+ <head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Tatyana Renee Molina | Real Estate Agent | Sapphire Realty</title>
+  <script src="https://cdn.tailwindcss.com/3.4.17"></script>
+  <script src="/_sdk/element_sdk.js"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&amp;family=Source+Sans+3:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet">
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            'display': ['Playfair Display', 'serif'],
+            'body': ['Source Sans 3', 'sans-serif']
+          },
+          colors: {
+            'sapphire': {
+              50: '#f0f5ff',
+              100: '#e0eaff',
+              200: '#c7d7fe',
+              300: '#a4bcfc',
+              400: '#7b96f8',
+              500: '#5a70f1',
+              600: '#3d4de5',
+              700: '#2d3acb',
+              800: '#1e2a8f',
+              900: '#0f1a5c'
+            },
+            'warm': {
+              50: '#fdfcfb',
+              100: '#f9f6f3',
+              200: '#f3ede6',
+              300: '#e8ddd0',
+              400: '#d4c4ad',
+              500: '#b8a48a'
+            }
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    html, body {
+      height: 100%;
+      margin: 0;
+      padding: 0;
+    }
+    .scroll-smooth {
+      scroll-behavior: smooth;
+    }
+    .hero-gradient {
+      background: linear-gradient(135deg, rgba(15, 26, 92, 0.85) 0%, rgba(45, 58, 203, 0.7) 100%);
+    }
+    .testimonial-slide {
+      transition: opacity 0.5s ease-in-out;
+    }
+    .faq-content {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.3s ease-out;
+    }
+    .faq-content.open {
+      max-height: 500px;
+    }
+    .form-modal {
+      opacity: 0;
+      visibility: hidden;
+      transition: opacity 0.3s ease, visibility 0.3s ease;
+    }
+    .form-modal.active {
+      opacity: 1;
+      visibility: visible;
+    }
+      .logo-wrap{
+  width:42px;
+  height:42px;
+  border-radius:12px;
+  overflow:hidden;
+  box-shadow:0 4px 12px rgba(0,0,0,0.15);
+}
+  </style>
+  <style>body { box-sizing: border-box; }</style>
+  <script src="/_sdk/data_sdk.js" type="text/javascript"></script>
+ </head>
+ <body class="h-full font-body text-gray-800 bg-warm-50 scroll-smooth overflow-auto">
+  <div class="w-full min-h-full"><!-- Navigation -->
+   <nav class="fixed top-0 left-0 right-0 bg-white/95 backdrop-blur-sm shadow-sm z-50">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+     <div class="flex justify-between items-center h-16 md:h-20">
+      <div class="flex items-center"><a href="../index.htm" class="flex items-center space-x-2">
+        <div class="logo-wrap rounded-full flex items-center justify-center">
+            <img src="./img/sm_logo.png" alt=" Sapphire Realty Logo" class="h-6 w-auto inline-block align-middle"/>
+        </div>
+        <div class="hidden sm:block">
+         <p class="font-display font-semibold text-sapphire-900 text-sm leading-tight">Tatyana Renee Molina</p>
+         <p class="text-xs text-gray-500">Real Estate Agent</p>
+        </div></a>
+      </div><!-- Desktop Navigation -->
+      <div class="hidden md:flex items-center space-x-8"> <a href="#about" class="text-gray-600 hover:text-sapphire-700 font-medium transition-colors">About Tatyana</a> <a href="#how-it-works" class="text-gray-600 hover:text-sapphire-700 font-medium transition-colors">Our Home Buying Process</a> <a href="#contact" class="text-gray-600 hover:text-sapphire-700 font-medium transition-colors">Get In Touch </a> <a href="https://tatyanawilson.georgiamls.com/real-estate/?styp=sale&typ=sd" target="_blank" class="bg-sapphire-800 text-white px-5 py-2.5 rounded-lg font-semibold hover:bg-sapphire-700 transition-colors">Browse Homes</a>
+      </div><!-- Mobile Menu Button --> <button id="mobile-menu-btn" class="md:hidden p-2 rounded-lg hover:bg-gray-100 transition-colors">
+       <svg class="w-6 h-6 text-gray-600" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+       </svg></button>
+     </div><!-- Mobile Menu -->
+     <div id="mobile-menu" class="hidden md:hidden pb-4">
+      <div class="flex flex-col space-y-3"> <a href="#about" class="text-gray-600 hover:text-sapphire-700 font-medium py-2">About Tatyana</a> <a href="#how-it-works" class="text-gray-600 hover:text-sapphire-700 font-medium py-2">Our Home Buying Process</a> <a href="#contact" class="text-gray-600 hover:text-sapphire-700 font-medium py-2">Get In Touch </a> <a href="https://tatyanawilson.georgiamls.com/real-estate/?styp=sale&typ=sd" target="_blank" class="bg-sapphire-800 text-white px-5 py-3 rounded-lg font-semibold text-center hover:bg-sapphire-700 transition-colors">Browse Homes</a>
+      </div>
+     </div>
+    </div>
+   </nav>
+      
+      <!-- Hero Section 
+   <section class="relative min-h-[600px] md:min-h-[700px] flex items-center pt-20"><!-- Background 
+    <div class="absolute inset-0 bg-gradient-to-br from-sapphire-900 via-sapphire-800 to-sapphire-700">
+     <div class="absolute inset-0 opacity-20">
+      <svg class="w-full h-full" viewbox="0 0 100 100" preserveaspectratio="none"><defs>
+        <pattern id="grid" width="10" height="10" patternunits="userSpaceOnUse">
+         <path d="M 10 0 L 0 0 0 10" fill="none" stroke="rgba(255,255,255,0.1)" stroke-width="0.5" />
+        </pattern>
+       </defs> <rect width="100" height="100" fill="url(#grid)" />
+      </svg>
+     </div><!-- House silhouette decoration 
+     <div class="absolute bottom-0 right-0 w-full md:w-2/3 h-64 md:h-96 opacity-10">
+      <svg viewbox="0 0 400 200" class="w-full h-full" preserveaspectratio="xMaxYMax slice"><path d="M0 200 L0 120 L60 120 L60 80 L100 80 L100 120 L120 120 L120 60 L200 60 L200 120 L280 120 L280 40 L320 10 L360 40 L360 120 L400 120 L400 200 Z" fill="white" /> <rect x="30" y="140" width="30" height="40" fill="rgba(0,0,0,0.3)" /> <rect x="140" y="100" width="40" height="30" fill="rgba(0,0,0,0.3)" /> <rect x="300" y="80" width="25" height="25" fill="rgba(0,0,0,0.3)" />
+      </svg>
+     </div>
+    </div>
+    <div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 md:py-24">
+     <div class="max-w-2xl">
+      <div class="mb-6"><span class="inline-block px-4 py-1.5 bg-white/10 backdrop-blur-sm rounded-full text-warm-200 text-sm font-medium tracking-wide"> Sapphire Realty </span>
+      </div>
+      <h1 id="hero-headline" class="font-display text-4xl sm:text-5xl md:text-6xl font-bold text-white mb-4 leading-tight">Tatyana Renee Molina</h1>
+      <p class="text-warm-200 text-lg md:text-xl mb-2 font-medium">Real Estate Agent | Sapphire Realty</p>
+      <p class="text-warm-300 text-base md:text-lg mb-4">Serving Powder Springs &amp; Cobb County, Georgia</p>
+      <p id="hero-tagline" class="text-white/90 text-lg md:text-xl mb-10 leading-relaxed max-w-xl">Helping first-time buyers and move-up sellers navigate Cobb County real estate with clarity, confidence, and local expertise.</p>
+      <div class="flex flex-col sm:flex-row gap-4"><a href="#browse" class="inline-flex items-center justify-center bg-white text-sapphire-900 px-8 py-4 rounded-lg font-bold text-lg hover:bg-warm-100 transition-all transform hover:scale-105 shadow-lg">
+        <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+        </svg> Browse Homes in Cobb County </a> <a href="#showing-request" class="inline-flex items-center justify-center border-2 border-white text-white px-8 py-4 rounded-lg font-bold text-lg hover:bg-white/10 transition-all">
+        <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+        </svg> Request a Showing </a>
+      </div>
+     </div>
+    </div>
+   </section>
+      
+      <!-- About Section -->
+   <section id="about" class="py-20 md:py-28 bg-white">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+     <div class="grid md:grid-cols-2 gap-12 md:gap-16 items-center">
+         
+         <!-- Headshot Placeholder -->
+      <div class="relative">
+       <div class="aspect-[4/5] bg-gradient-to-br from-warm-200 to-warm-300 rounded-2xl overflow-hidden shadow-xl">
+        <div class="absolute inset-0 flex items-center justify-center">
+         <div class="text-center">
+          <div class="w-320 h-320 mx-auto bg-sapphire-100 rounded-full flex items-center justify-center mb-4">
+            <!-- Image -->
+    <img 
+      src="./img/Tatyana_Renee_Molina.png" 
+      alt="Professional Headshot"
+      class="w-full h-full object-cover"
+    />
+          </div>
+          <p class="text-sapphire-600 font-medium">Tatyana Renee Molina</p>
+         </div>
+        </div>
+       </div><!-- Decorative elements -->
+       <div class="absolute -bottom-4 -right-4 w-24 h-24 bg-sapphire-100 rounded-2xl -z-10"></div>
+       <div class="absolute -top-4 -left-4 w-16 h-16 bg-warm-300 rounded-xl -z-10"></div>
+      </div><!-- Content -->
+      <div><span class="inline-block px-3 py-1 bg-sapphire-100 text-sapphire-800 text-sm font-semibold rounded-full mb-4">About Tatyana</span>
+       <h2 class="font-display text-3xl md:text-4xl font-bold text-sapphire-900 mb-6">Your Local Cobb County Real Estate Expert</h2>
+       <p id="about-text" class="text-gray-600 text-lg leading-relaxed mb-6">As a real estate professional, I understand that buying or selling a home is more than just a transaction: it’s a life-changing experience. That’s why I am dedicated to providing exceptional, personalized service for all of my clients. I take great pride in the relationships I build and always work relentlessly on the client’s behalf to help them achieve their real estate goals. <strong>My philosophy is simple: clients come first.</strong></p>  <p class="text-gray-600 text-lg leading-relaxed mb-6">I pledge to be in constant communication with my clients, keeping them fully informed throughout the entire buying or selling process. I believe that if you’re not left with an amazing experience, I haven’t done my job. I don’t measure success through achievements or awards but through the satisfaction of my clients.</p>
+       <div class="flex items-center gap-6 mb-8">
+        <div class="flex items-center">
+         <div class="flex text-yellow-400">
+          <svg class="w-5 h-5" fill="currentColor" viewbox="0 0 20 20">
+           <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+          </svg>
+          <svg class="w-5 h-5" fill="currentColor" viewbox="0 0 20 20">
+           <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+          </svg>
+          <svg class="w-5 h-5" fill="currentColor" viewbox="0 0 20 20">
+           <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+          </svg>
+          <svg class="w-5 h-5" fill="currentColor" viewbox="0 0 20 20">
+           <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+          </svg>
+          <svg class="w-5 h-5" fill="currentColor" viewbox="0 0 20 20">
+           <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+          </svg>
+         </div><span class="ml-2 text-gray-600 font-medium">5.0 on Google</span>
+        </div>
+       </div>
+       <div class="grid grid-cols-2 gap-4">
+        <div class="bg-warm-50 rounded-xl p-4 text-center">
+         <p class="font-display text-2xl font-bold text-sapphire-800">Cobb County</p>
+         <p class="text-gray-500 text-sm">Local Expert</p>
+        </div>
+        <div class="bg-warm-50 rounded-xl p-4 text-center">
+         <p class="font-display text-2xl font-bold text-sapphire-800">100%</p>
+         <p class="text-gray-500 text-sm">Client Focused</p>
+        </div>
+       </div>
+      </div>
+     </div>
+    </div>
+   </section><!-- How It Works -->
+   <section id="how-it-works" class="py-20 md:py-28 bg-warm-100">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+     <div class="text-center mb-16"><span class="inline-block px-3 py-1 bg-sapphire-100 text-sapphire-800 text-sm font-semibold rounded-full mb-4">Our Home Buying Process</span>
+      <h2 class="font-display text-3xl md:text-4xl font-bold text-sapphire-900 mb-4">How It Works</h2>
+      <p class="text-gray-600 text-lg max-w-2xl mx-auto">From browsing to touring, here's your path to finding the perfect home in Cobb County.</p>
+     </div>
+     <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-6 md:gap-8"><!-- Step 1 -->
+      <div class="bg-white rounded-2xl p-8 shadow-sm hover:shadow-lg transition-shadow text-center relative">
+       <div class="absolute -top-3 -left-3 w-8 h-8 bg-sapphire-800 rounded-full flex items-center justify-center text-white font-bold text-sm">
+        1
+       </div>
+       <div class="w-16 h-16 bg-sapphire-100 rounded-2xl flex items-center justify-center mx-auto mb-6">
+        <svg class="w-8 h-8 text-sapphire-700" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+        </svg>
+       </div>
+       <h3 class="font-display text-xl font-bold text-sapphire-900 mb-3">Browse Available Homes</h3>
+       <p class="text-gray-600">Search listings in Powder Springs and Cobb County using our easy filters.</p>
+      </div><!-- Step 2 -->
+      <div class="bg-white rounded-2xl p-8 shadow-sm hover:shadow-lg transition-shadow text-center relative">
+       <div class="absolute -top-3 -left-3 w-8 h-8 bg-sapphire-800 rounded-full flex items-center justify-center text-white font-bold text-sm">
+        2
+       </div>
+       <div class="w-16 h-16 bg-sapphire-100 rounded-2xl flex items-center justify-center mx-auto mb-6">
+        <svg class="w-8 h-8 text-sapphire-700" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4" />
+        </svg>
+       </div>
+       <h3 class="font-display text-xl font-bold text-sapphire-900 mb-3">Submit Showing Request</h3>
+       <p class="text-gray-600">Found something you like? Let me know which properties interest you.</p>
+      </div><!-- Step 3 -->
+      <div class="bg-white rounded-2xl p-8 shadow-sm hover:shadow-lg transition-shadow text-center relative">
+       <div class="absolute -top-3 -left-3 w-8 h-8 bg-sapphire-800 rounded-full flex items-center justify-center text-white font-bold text-sm">
+        3
+       </div>
+       <div class="w-16 h-16 bg-sapphire-100 rounded-2xl flex items-center justify-center mx-auto mb-6">
+        <svg class="w-8 h-8 text-sapphire-700" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+        </svg>
+       </div>
+       <h3 class="font-display text-xl font-bold text-sapphire-900 mb-3">Upload Pre-Approval Letter</h3>
+       <p class="text-gray-600">Share your pre-approval to confirm you're ready to tour homes.</p>
+      </div><!-- Step 4 -->
+      <div class="bg-white rounded-2xl p-8 shadow-sm hover:shadow-lg transition-shadow text-center relative">
+       <div class="absolute -top-3 -left-3 w-8 h-8 bg-sapphire-800 rounded-full flex items-center justify-center text-white font-bold text-sm">
+        4
+       </div>
+       <div class="w-16 h-16 bg-sapphire-100 rounded-2xl flex items-center justify-center mx-auto mb-6">
+        <svg class="w-8 h-8 text-sapphire-700" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+        </svg>
+       </div>
+       <h3 class="font-display text-xl font-bold text-sapphire-900 mb-3">Confirm Showing Time</h3>
+       <p class="text-gray-600">Pick a date and time that works for you, and let's go see your future home!</p>
+      </div>
+     </div>
+    </div>
+   </section>
+      
+      <!-- Browse Homes Section 
+   <section id="browse" class="py-20 md:py-28 bg-white">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+     <div class="text-center mb-12"><span class="inline-block px-3 py-1 bg-sapphire-100 text-sapphire-800 text-sm font-semibold rounded-full mb-4">Search Listings</span>
+      <h2 class="font-display text-3xl md:text-4xl font-bold text-sapphire-900 mb-4">Browse Homes in Cobb County</h2>
+      <p class="text-gray-600 text-lg max-w-2xl mx-auto">Explore available properties in Powder Springs and surrounding Cobb County areas.</p>
+     </div><!-- IDX Search Placeholder
+     <div class="bg-warm-50 rounded-2xl p-6 md:p-8 mb-8">
+      <div class="grid sm:grid-cols-2 lg:grid-cols-5 gap-4 mb-6"><!-- Location 
+       <div class="lg:col-span-1"><label class="block text-sm font-medium text-gray-700 mb-2">Location</label> <select class="w-full px-4 py-3 bg-white border border-gray-200 rounded-xl focus:ring-2 focus:ring-sapphire-500 focus:border-transparent"> <option>All Cobb County</option> <option>Powder Springs</option> <option>Marietta</option> <option>Kennesaw</option> <option>Smyrna</option> <option>Acworth</option> </select>
+       </div><!-- Price Range 
+       <div class="lg:col-span-1"><label class="block text-sm font-medium text-gray-700 mb-2">Price Range</label> <select class="w-full px-4 py-3 bg-white border border-gray-200 rounded-xl focus:ring-2 focus:ring-sapphire-500 focus:border-transparent"> <option>Any Price</option> <option>$200k - $300k</option> <option>$300k - $400k</option> <option>$400k - $500k</option> <option>$500k - $600k</option> <option>$600k+</option> </select>
+       </div><!-- Bedrooms 
+       <div class="lg:col-span-1"><label class="block text-sm font-medium text-gray-700 mb-2">Bedrooms</label> <select class="w-full px-4 py-3 bg-white border border-gray-200 rounded-xl focus:ring-2 focus:ring-sapphire-500 focus:border-transparent"> <option>Any</option> <option>1+</option> <option>2+</option> <option>3+</option> <option>4+</option> <option>5+</option> </select>
+       </div><!-- Bathrooms 
+       <div class="lg:col-span-1"><label class="block text-sm font-medium text-gray-700 mb-2">Bathrooms</label> <select class="w-full px-4 py-3 bg-white border border-gray-200 rounded-xl focus:ring-2 focus:ring-sapphire-500 focus:border-transparent"> <option>Any</option> <option>1+</option> <option>2+</option> <option>3+</option> <option>4+</option> </select>
+       </div><!-- Search Button 
+       <div class="lg:col-span-1 flex items-end"><button class="w-full bg-sapphire-800 text-white px-6 py-3 rounded-xl font-semibold hover:bg-sapphire-700 transition-colors flex items-center justify-center">
+         <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+         </svg> Search </button>
+       </div>
+      </div><!-- Sample Listings Grid 
+      <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-6"><!-- Listing 1 
+       <div class="bg-white rounded-xl overflow-hidden shadow-sm hover:shadow-md transition-shadow">
+        <div class="aspect-[4/3] bg-gradient-to-br from-warm-200 to-warm-300 relative">
+         <div class="absolute inset-0 flex items-center justify-center">
+          <svg class="w-16 h-16 text-warm-400" fill="currentColor" viewbox="0 0 24 24"><path d="M10.707 2.293a1 1 0 00-1.414 0l-7 7a1 1 0 001.414 1.414L4 10.414V17a1 1 0 001 1h2a1 1 0 001-1v-2a1 1 0 011-1h2a1 1 0 011 1v2a1 1 0 001 1h2a1 1 0 001-1v-6.586l.293.293a1 1 0 001.414-1.414l-7-7z" />
+          </svg>
+         </div><span class="absolute top-3 left-3 bg-sapphire-800 text-white text-xs font-bold px-2 py-1 rounded">NEW</span>
+        </div>
+        <div class="p-4">
+         <p class="font-display text-xl font-bold text-sapphire-900">$385,000</p>
+         <p class="text-gray-600 text-sm mb-2">123 Maple Street, Powder Springs</p>
+         <div class="flex items-center text-gray-500 text-sm"><span class="mr-3">4 bed</span> <span class="mr-3">2.5 bath</span> <span>2,450 sqft</span>
+         </div>
+        </div>
+       </div><!-- Listing 2 
+       <div class="bg-white rounded-xl overflow-hidden shadow-sm hover:shadow-md transition-shadow">
+        <div class="aspect-[4/3] bg-gradient-to-br from-warm-200 to-warm-300 relative">
+         <div class="absolute inset-0 flex items-center justify-center">
+          <svg class="w-16 h-16 text-warm-400" fill="currentColor" viewbox="0 0 24 24"><path d="M10.707 2.293a1 1 0 00-1.414 0l-7 7a1 1 0 001.414 1.414L4 10.414V17a1 1 0 001 1h2a1 1 0 001-1v-2a1 1 0 011-1h2a1 1 0 011 1v2a1 1 0 001 1h2a1 1 0 001-1v-6.586l.293.293a1 1 0 001.414-1.414l-7-7z" />
+          </svg>
+         </div>
+        </div>
+        <div class="p-4">
+         <p class="font-display text-xl font-bold text-sapphire-900">$425,000</p>
+         <p class="text-gray-600 text-sm mb-2">456 Oak Lane, Marietta</p>
+         <div class="flex items-center text-gray-500 text-sm"><span class="mr-3">5 bed</span> <span class="mr-3">3 bath</span> <span>3,100 sqft</span>
+         </div>
+        </div>
+       </div><!-- Listing 3 
+       <div class="bg-white rounded-xl overflow-hidden shadow-sm hover:shadow-md transition-shadow">
+        <div class="aspect-[4/3] bg-gradient-to-br from-warm-200 to-warm-300 relative">
+         <div class="absolute inset-0 flex items-center justify-center">
+          <svg class="w-16 h-16 text-warm-400" fill="currentColor" viewbox="0 0 24 24"><path d="M10.707 2.293a1 1 0 00-1.414 0l-7 7a1 1 0 001.414 1.414L4 10.414V17a1 1 0 001 1h2a1 1 0 001-1v-2a1 1 0 011-1h2a1 1 0 011 1v2a1 1 0 001 1h2a1 1 0 001-1v-6.586l.293.293a1 1 0 001.414-1.414l-7-7z" />
+          </svg>
+         </div><span class="absolute top-3 left-3 bg-green-600 text-white text-xs font-bold px-2 py-1 rounded">OPEN HOUSE</span>
+        </div>
+        <div class="p-4">
+         <p class="font-display text-xl font-bold text-sapphire-900">$299,000</p>
+         <p class="text-gray-600 text-sm mb-2">789 Pine Court, Kennesaw</p>
+         <div class="flex items-center text-gray-500 text-sm"><span class="mr-3">3 bed</span> <span class="mr-3">2 bath</span> <span>1,875 sqft</span>
+         </div>
+        </div>
+       </div>
+      </div>
+      <p class="text-center text-gray-500 text-sm mt-6"><em>IDX Integration Placeholder — Connect your MLS feed for live listings</em></p>
+     </div>
+     <div class="text-center"><a href="#showing-request" class="inline-flex items-center justify-center bg-sapphire-800 text-white px-8 py-4 rounded-xl font-bold text-lg hover:bg-sapphire-700 transition-colors shadow-lg">
+       <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+       </svg> Request a Showing </a>
+     </div>
+    </div>
+   </section>
+      
+      <!-- Showing Request Gate -->
+   <section id="showing-request" class="py-20 md:py-28 bg-gradient-to-br from-sapphire-900 via-sapphire-800 to-sapphire-700">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+     <div class="text-center mb-12"><span class="inline-block px-3 py-1 bg-white/10 text-warm-200 text-sm font-semibold rounded-full mb-4">Schedule Your Tour</span>
+      <h2 class="font-display text-3xl md:text-4xl font-bold text-white mb-4">Ready to See a Home?</h2>
+      <p class="text-warm-200 text-lg max-w-2xl mx-auto">To schedule a showing, please confirm your financing status below.</p>
+     </div>
+     <div class="grid md:grid-cols-2 gap-8 max-w-4xl mx-auto"><!-- Option A - Pre-Approved -->
+      <div class="bg-white rounded-2xl p-8 text-center shadow-xl">
+       <div class="w-16 h-16 bg-green-100 rounded-2xl flex items-center justify-center mx-auto mb-6">
+        <svg class="w-8 h-8 text-green-600" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+        </svg>
+       </div>
+       <h3 class="font-display text-2xl font-bold text-sapphire-900 mb-3">I Am Pre-Approved</h3>
+       <p class="text-gray-600 mb-6">I have a pre-approval letter from a lender and I'm ready to tour homes.</p><button id="open-preapproved-form" class="w-full bg-green-600 text-white px-6 py-4 rounded-xl font-bold text-lg hover:bg-green-500 transition-colors"> Schedule My Showing </button>
+      </div><!-- Option B - Not Pre-Approved -->
+      <div class="bg-white rounded-2xl p-8 text-center shadow-xl">
+       <div class="w-16 h-16 bg-amber-100 rounded-2xl flex items-center justify-center mx-auto mb-6">
+        <svg class="w-8 h-8 text-amber-600" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+        </svg>
+       </div>
+       <h3 class="font-display text-2xl font-bold text-sapphire-900 mb-3">I Am Not Pre-Approved</h3>
+       <p class="text-gray-600 mb-6">I need to connect with a lender to get pre-approved before scheduling showings.</p><a href="#lenders" class="block w-full bg-amber-500 text-white px-6 py-4 rounded-xl font-bold text-lg hover:bg-amber-400 transition-colors"> Connect With a Lender </a>
+      </div>
+     </div>
+    </div>
+   </section>
+      
+     <!-- Pre-Approved Form Modal (Branded) — Apps Script Scheduling Backend -->
+<div id="preapproved-modal" class="form-modal fixed inset-0 z-50 flex items-center justify-center p-4">
+  <div class="absolute inset-0 bg-black/60 backdrop-blur-sm" id="modal-backdrop"></div>
+
+  <div class="relative bg-white rounded-2xl w-full max-w-xl max-h-[90%] overflow-y-auto shadow-2xl">
+    <button id="close-modal" class="absolute top-4 right-4 p-2 hover:bg-gray-100 rounded-lg transition-colors" type="button" aria-label="Close">
+      <svg class="w-6 h-6 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+      </svg>
+    </button>
+
+    <div class="p-6 md:p-8">
+      <h3 class="font-display text-2xl font-bold text-sapphire-900 mb-2">Request a Showing</h3>
+      <p class="text-gray-600 mb-6">Fill out the form below and I'll contact you to confirm your showing.</p>
+
+      <!-- FORM -->
+      <form id="showing-form" class="space-y-4" novalidate>
+        <!-- Required for multi-client routing -->
+        <input type="hidden" name="clientKey" value="tatyana">
+
+        <div>
+          <label class="block text-sm font-medium text-gray-700 mb-1">Full Name *</label>
+          <input
+            type="text"
+            name="fullName"
+            required
+            autocomplete="name"
+            class="w-full px-4 py-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-sapphire-500 focus:border-transparent"
+            placeholder="Your full name"
+          >
+        </div>
+
+        <div class="grid sm:grid-cols-2 gap-4">
+          <div>
+            <label class="block text-sm font-medium text-gray-700 mb-1">Email *</label>
+            <input
+              type="email"
+              name="email"
+              required
+              autocomplete="email"
+              class="w-full px-4 py-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-sapphire-500 focus:border-transparent"
+              placeholder="you@email.com"
+            >
+          </div>
+
+          <div>
+            <label class="block text-sm font-medium text-gray-700 mb-1">Phone *</label>
+            <input
+              type="tel"
+              name="phone"
+              required
+              autocomplete="tel"
+              class="w-full px-4 py-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-sapphire-500 focus:border-transparent"
+              placeholder="(555) 123-4567"
+            >
+          </div>
+        </div>
+
+        <div>
+          <label class="block text-sm font-medium text-gray-700 mb-1">Property Address or MLS ID *</label>
+          <input
+            type="text"
+            name="property"
+            required
+            class="w-full px-4 py-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-sapphire-500 focus:border-transparent"
+            placeholder="123 Main St or MLS# 12345678"
+          >
+        </div>
+
+        <div>
+          <label class="block text-sm font-medium text-gray-700 mb-1">Upload Pre-Approval Letter *</label>
+          <div
+            class="border-2 border-dashed border-gray-200 rounded-xl p-6 text-center hover:border-sapphire-300 transition-colors cursor-pointer"
+            id="file-upload-area"
+            role="button"
+            tabindex="0"
+            aria-label="Upload pre-approval letter"
+          >
+            <svg class="w-10 h-10 text-gray-400 mx-auto mb-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12" />
+            </svg>
+            <p class="text-gray-600 text-sm">Click to upload or drag and drop</p>
+            <p class="text-gray-400 text-xs mt-1">PDF, JPG, PNG (Max 10MB)</p>
+
+            <input
+              type="file"
+              name="preapproval"
+              class="hidden"
+              id="file-input"
+              accept=".pdf,.jpg,.jpeg,.png"
+              required
+            >
+            <p id="file-name" class="text-sapphire-600 text-sm mt-2 hidden"></p>
+            <p id="file-error" class="text-red-600 text-sm mt-2 hidden"></p>
+          </div>
+        </div>
+
+        <div class="grid sm:grid-cols-2 gap-4">
+          <div>
+            <label class="block text-sm font-medium text-gray-700 mb-1">Preferred Date *</label>
+            <input
+              type="date"
+              name="preferredDate"
+              required
+              class="w-full px-4 py-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-sapphire-500 focus:border-transparent"
+            >
+          </div>
+
+          <div>
+            <label class="block text-sm font-medium text-gray-700 mb-1">Preferred Time *</label>
+            <select
+              name="preferredTime"
+              required
+              class="w-full px-4 py-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-sapphire-500 focus:border-transparent"
+            >
+              <option value="">Select time</option>
+              <option>9:00 AM</option>
+              <option>10:00 AM</option>
+              <option>11:00 AM</option>
+              <option>12:00 PM</option>
+              <option>1:00 PM</option>
+              <option>2:00 PM</option>
+              <option>3:00 PM</option>
+              <option>4:00 PM</option>
+              <option>5:00 PM</option>
+            </select>
+          </div>
+        </div>
+
+        <!-- Availability + errors -->
+        <div id="form-alert" class="hidden rounded-xl border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-800"></div>
+
+        <!-- Suggestions -->
+        <div id="slot-suggestions" class="hidden rounded-xl border border-sapphire-200 bg-sapphire-50 px-4 py-3">
+          <p class="text-sm font-semibold text-sapphire-900 mb-2">Next available options</p>
+          <div id="suggestion-buttons" class="flex flex-col gap-2"></div>
+        </div>
+
+        <button
+          id="submit-btn"
+          type="submit"
+          class="w-full bg-sapphire-800 text-white px-6 py-4 rounded-xl font-bold text-lg hover:bg-sapphire-700 transition-colors mt-4"
+        >
+          Submit Showing Request
+        </button>
+
+        <p id="submit-status" class="hidden text-sm text-gray-600 text-center"></p>
+      </form>
+
+      <!-- SUCCESS -->
+      <div id="form-success" class="hidden text-center py-8">
+        <div class="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
+          <svg class="w-8 h-8 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+          </svg>
+        </div>
+        <h4 class="font-display text-xl font-bold text-sapphire-900 mb-2">Request Submitted!</h4>
+        <p class="text-gray-600">I will review your request and contact you shortly to confirm your showing.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+/**
+ * CONFIG
+ * - Paste your deployed Apps Script Web App URL here.
+ * - This endpoint must support: validation, free/busy conflict checks, manual approval holds, and suggestions.
+ */
+const SHOWING_WEBHOOK_URL = "PASTE_YOUR_APPS_SCRIPT_WEB_APP_URL";
+
+// Max upload size (10MB)
+const MAX_FILE_BYTES = 10 * 1024 * 1024;
+const ALLOWED_MIME = new Set([
+  "application/pdf",
+  "image/jpeg",
+  "image/png"
+]);
+
+(function () {
+  const modal = document.getElementById("preapproved-modal");
+  const backdrop = document.getElementById("modal-backdrop");
+  const closeBtn = document.getElementById("close-modal");
+
+  const form = document.getElementById("showing-form");
+  const submitBtn = document.getElementById("submit-btn");
+  const submitStatus = document.getElementById("submit-status");
+  const alertBox = document.getElementById("form-alert");
+
+  const uploadArea = document.getElementById("file-upload-area");
+  const fileInput = document.getElementById("file-input");
+  const fileNameEl = document.getElementById("file-name");
+  const fileErrorEl = document.getElementById("file-error");
+
+  const suggestionsWrap = document.getElementById("slot-suggestions");
+  const suggestionsBtns = document.getElementById("suggestion-buttons");
+
+  // ---------- Modal close ----------
+  function closeModal() {
+    modal.classList.add("hidden");
+  }
+  backdrop?.addEventListener("click", closeModal);
+  closeBtn?.addEventListener("click", closeModal);
+
+  // ---------- Upload UI ----------
+  function setFileUI(file) {
+    fileErrorEl.classList.add("hidden");
+    fileErrorEl.textContent = "";
+
+    if (!file) {
+      fileNameEl.classList.add("hidden");
+      fileNameEl.textContent = "";
+      return;
+    }
+
+    fileNameEl.textContent = file.name;
+    fileNameEl.classList.remove("hidden");
+  }
+
+  function setFileError(msg) {
+    fileErrorEl.textContent = msg;
+    fileErrorEl.classList.remove("hidden");
+  }
+
+  function validateFile(file) {
+    if (!file) return { ok: false, msg: "Please upload your pre-approval letter." };
+    if (!ALLOWED_MIME.has(file.type)) return { ok: false, msg: "File type not supported. Upload PDF, JPG, or PNG." };
+    if (file.size > MAX_FILE_BYTES) return { ok: false, msg: "File is too large. Max size is 10MB." };
+    return { ok: true };
+  }
+
+  uploadArea?.addEventListener("click", () => fileInput.click());
+  uploadArea?.addEventListener("keydown", (e) => {
+    if (e.key === "Enter" || e.key === " ") {
+      e.preventDefault();
+      fileInput.click();
+    }
+  });
+
+  uploadArea?.addEventListener("dragover", (e) => {
+    e.preventDefault();
+    uploadArea.classList.add("border-sapphire-300");
+  });
+  uploadArea?.addEventListener("dragleave", () => {
+    uploadArea.classList.remove("border-sapphire-300");
+  });
+  uploadArea?.addEventListener("drop", (e) => {
+    e.preventDefault();
+    uploadArea.classList.remove("border-sapphire-300");
+    const f = e.dataTransfer.files && e.dataTransfer.files[0];
+    if (f) {
+      fileInput.files = e.dataTransfer.files;
+      setFileUI(f);
+      const v = validateFile(f);
+      if (!v.ok) setFileError(v.msg);
+    }
+  });
+
+  fileInput?.addEventListener("change", () => {
+    const f = fileInput.files && fileInput.files[0];
+    setFileUI(f);
+    const v = validateFile(f);
+    if (!v.ok) setFileError(v.msg);
+  });
+
+  // ---------- Alerts ----------
+  function showAlert(msg) {
+    alertBox.textContent = msg;
+    alertBox.classList.remove("hidden");
+  }
+  function clearAlert() {
+    alertBox.textContent = "";
+    alertBox.classList.add("hidden");
+  }
+
+  // ---------- Suggestions ----------
+  function clearSuggestions() {
+    suggestionsBtns.innerHTML = "";
+    suggestionsWrap.classList.add("hidden");
+  }
+
+  function showSuggestions(suggestions) {
+    suggestionsBtns.innerHTML = "";
+    if (!Array.isArray(suggestions) || !suggestions.length) {
+      suggestionsWrap.classList.add("hidden");
+      return;
+    }
+
+    suggestions.forEach((s) => {
+      const btn = document.createElement("button");
+      btn.type = "button";
+      btn.className =
+        "w-full text-left rounded-lg border border-sapphire-200 bg-white px-3 py-2 text-sm text-sapphire-900 hover:bg-sapphire-50 transition-colors";
+
+      btn.textContent = `${s.date} at ${s.time}`;
+      btn.addEventListener("click", () => {
+        // Fill form date/time with suggested slot
+        form.preferredDate.value = s.date;
+        form.preferredTime.value = s.time;
+        clearAlert();
+        clearSuggestions();
+      });
+
+      suggestionsBtns.appendChild(btn);
+    });
+
+    suggestionsWrap.classList.remove("hidden");
+  }
+
+  // ---------- Submit ----------
+  function setSubmitting(isSubmitting, msg) {
+    submitBtn.disabled = isSubmitting;
+    submitBtn.classList.toggle("opacity-60", isSubmitting);
+    submitBtn.classList.toggle("cursor-not-allowed", isSubmitting);
+
+    if (msg) {
+      submitStatus.textContent = msg;
+      submitStatus.classList.remove("hidden");
+    } else {
+      submitStatus.textContent = "";
+      submitStatus.classList.add("hidden");
+    }
+  }
+
+  function toBase64(file) {
+    return new Promise((resolve, reject) => {
+      const reader = new FileReader();
+      reader.onerror = () => reject(new Error("Failed to read file."));
+      reader.onload = () => {
+        const result = String(reader.result || "");
+        const parts = result.split(",");
+        if (parts.length < 2) return reject(new Error("Invalid file encoding."));
+        resolve(parts[1]);
+      };
+      reader.readAsDataURL(file);
+    });
+  }
+
+  function normalizeTimeForApi(raw) {
+    // Script accepts "9:00 AM" or "09:00". Your dropdown is "9:00 AM", etc.
+    return String(raw || "").trim();
+  }
+
+  form?.addEventListener("submit", async (e) => {
+    e.preventDefault();
+    clearAlert();
+    clearSuggestions();
+
+    // Browser-native validation first
+    if (!form.checkValidity()) {
+      showAlert("Please complete all required fields.");
+      form.reportValidity();
+      return;
+    }
+
+    const file = fileInput.files && fileInput.files[0];
+    const fv = validateFile(file);
+    if (!fv.ok) {
+      setFileError(fv.msg);
+      showAlert(fv.msg);
+      return;
+    }
+
+    if (!SHOWING_WEBHOOK_URL || SHOWING_WEBHOOK_URL.includes("PASTE_YOUR")) {
+      showAlert("Configuration error: missing scheduling endpoint.");
+      return;
+    }
+
+    setSubmitting(true, "Submitting request…");
+
+    try {
+      const fileData = await toBase64(file);
+
+      const payload = {
+        clientKey: form.clientKey.value,
+        fullName: form.fullName.value.trim(),
+        email: form.email.value.trim(),
+        phone: form.phone.value.trim(),
+        property: form.property.value.trim(),
+        preferredDate: form.preferredDate.value, // YYYY-MM-DD
+        preferredTime: normalizeTimeForApi(form.preferredTime.value),
+        fileName: file.name,
+        fileType: file.type,
+        fileData
+      };
+
+      const res = await fetch(SHOWING_WEBHOOK_URL, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(payload)
+      });
+
+      // Apps Script sometimes returns 200 with HTML on failure; be defensive.
+      const text = await res.text();
+      let out;
+      try {
+        out = JSON.parse(text);
+      } catch {
+        throw new Error("Unexpected server response.");
+      }
+
+      if (out.success) {
+        form.classList.add("hidden");
+        document.getElementById("form-success").classList.remove("hidden");
+        setSubmitting(false);
+        return;
+      }
+
+      // If backend supplies slot suggestions, render them
+      if (out.suggestions && Array.isArray(out.suggestions)) {
+        showAlert(out.error || "That time is not available.");
+        showSuggestions(out.suggestions);
+      } else {
+        showAlert(out.error || "Something went wrong. Please try again.");
+      }
+
+      setSubmitting(false);
+
+    } catch (err) {
+      setSubmitting(false);
+      showAlert("Could not submit your request. Please try again.");
+      console.error(err);
+    }
+  });
+})();
+</script>
+      
+      <!-- Lender Referral Section -->
+   <section id="lenders" class="py-20 md:py-28 bg-warm-50">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+     <div class="text-center mb-12"><span class="inline-block px-3 py-1 bg-sapphire-100 text-sapphire-800 text-sm font-semibold rounded-full mb-4">Get Pre-Approved</span>
+      <h2 class="font-display text-3xl md:text-4xl font-bold text-sapphire-900 mb-4">Connect With a Trusted Lender</h2>
+      <p class="text-gray-600 text-lg max-w-2xl mx-auto">Before scheduling a showing, you'll need a pre-approval letter from a lender. Here are some trusted partners I recommend.</p>
+     </div>
+     <div class="grid md:grid-cols-3 gap-6 max-w-5xl mx-auto">
+         <!-- Lender 1 -->
+    <div class="bg-white rounded-2xl p-6 shadow-sm hover:shadow-md transition-shadow">
+
+  <!-- Image instead of initials -->
+  <div class="w-16 h-16 rounded-xl overflow-hidden mb-4">
+    <img 
+      src="./img/tiffany-washington.png" 
+      alt="Tiffany Washington"
+      class="w-full h-full object-cover"
+    />
+  </div>
+
+  <h3 class="font-display text-xl font-bold text-sapphire-900 mb-1">
+    Tiffany Washington
+  </h3>
+
+  <p class="text-gray-500 text-sm mb-4">
+    Sr. Loan Officer NMLS# 1496500
+  </p>
+
+  <!-- Working Button -->
+  <a href="tel:+6786082946"class="block w-full text-center border-2 border-sapphire-800 text-sapphire-800 px-4 py-3 rounded-xl font-semibold hover:bg-sapphire-800 hover:text-white transition-colors">
+    Contact Lender
+  </a>
+
+</div>
+         <!-- Lender 2 -->
+     <div class="bg-white rounded-2xl p-6 shadow-sm hover:shadow-md transition-shadow">
+
+  <!-- Image instead of initials -->
+  <div class="w-16 h-16 rounded-xl overflow-hidden mb-4">
+    <img 
+      src="./img/kim-schoning.png" 
+      alt="Kim Schoning"
+      class="w-full h-full object-cover"
+    />
+  </div>
+
+  <h3 class="font-display text-xl font-bold text-sapphire-900 mb-1">
+    Kim Schoning
+  </h3>
+
+  <p class="text-gray-500 text-sm mb-4">
+    Mortgage Consultant NMLS# 216573
+  </p>
+
+  <!-- Working Button -->
+  <a href="tel:+4048496086 "class="block w-full text-center border-2 border-sapphire-800 text-sapphire-800 px-4 py-3 rounded-xl font-semibold hover:bg-sapphire-800 hover:text-white transition-colors">
+    Contact Lender
+  </a>
+
+</div>
+         <!-- Lender 3 -->
+      <div class="bg-white rounded-2xl p-6 shadow-sm hover:shadow-md transition-shadow">
+
+  <!-- Image instead of initials -->
+  <div class="w-16 h-16 rounded-xl overflow-hidden mb-4">
+    <img 
+      src="./img/jay-alexander.png" 
+      alt="Jay Alexander"
+      class="w-full h-full object-cover"
+    />
+  </div>
+
+  <h3 class="font-display text-xl font-bold text-sapphire-900 mb-1">
+    Jay Alexander
+  </h3>
+
+  <p class="text-gray-500 text-sm mb-4">
+   Loan Officer NMLS# 223779
+  </p>
+
+  <!-- Working Button -->
+  <a href="tel:+4044095784"class="block w-full text-center border-2 border-sapphire-800 text-sapphire-800 px-4 py-3 rounded-xl font-semibold hover:bg-sapphire-800 hover:text-white transition-colors">
+    Contact Lender
+  </a>
+
+</div>
+     </div>
+     <p class="text-center text-gray-500 text-sm mt-8 max-w-xl mx-auto"><em>Note: I'm happy to recommend lenders, but the choice is entirely yours. Feel free to work with any lender you prefer.</em></p>
+    </div>
+   </section>
+      
+      <!-- Testimonials -->
+   <section class="py-20 md:py-28 bg-white">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+     <div class="text-center mb-12"><span class="inline-block px-3 py-1 bg-sapphire-100 text-sapphire-800 text-sm font-semibold rounded-full mb-4">Client Reviews</span>
+      <h2 class="font-display text-3xl md:text-4xl font-bold text-sapphire-900 mb-4">What Clients Are Saying</h2>
+     </div>
+     <div class="max-w-3xl mx-auto">
+      <div class="relative bg-warm-50 rounded-2xl p-8 md:p-12"><!-- Quote icon -->
+       <div class="absolute top-6 left-6 text-sapphire-200">
+        <svg class="w-12 h-12" fill="currentColor" viewbox="0 0 24 24"><path d="M14.017 21v-7.391c0-5.704 3.731-9.57 8.983-10.609l.995 2.151c-2.432.917-3.995 3.638-3.995 5.849h4v10h-9.983zm-14.017 0v-7.391c0-5.704 3.748-9.57 9-10.609l.996 2.151c-2.433.917-3.996 3.638-3.996 5.849h3.983v10h-9.983z" />
+        </svg>
+       </div>
+       <div id="testimonial-container" class="text-center pt-8">
+        <div class="flex justify-center mb-4">
+         <svg class="w-6 h-6 text-yellow-400" fill="currentColor" viewbox="0 0 20 20">
+          <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+         </svg>
+         <svg class="w-6 h-6 text-yellow-400" fill="currentColor" viewbox="0 0 20 20">
+          <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+         </svg>
+         <svg class="w-6 h-6 text-yellow-400" fill="currentColor" viewbox="0 0 20 20">
+          <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+         </svg>
+         <svg class="w-6 h-6 text-yellow-400" fill="currentColor" viewbox="0 0 20 20">
+          <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+         </svg>
+         <svg class="w-6 h-6 text-yellow-400" fill="currentColor" viewbox="0 0 20 20">
+          <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+         </svg>
+        </div>
+        <p id="testimonial-text" class="text-gray-700 text-lg md:text-xl leading-relaxed mb-6">"Tatyana made our first home buying experience so smooth. She was patient, knowledgeable, and always available to answer our questions. We couldn't have asked for a better realtor!"</p>
+        <p id="testimonial-author" class="font-display font-semibold text-sapphire-900">— Sarah &amp; Michael T.</p>
+        <p id="testimonial-location" class="text-gray-500 text-sm">First-time buyers in Powder Springs</p>
+       </div><!-- Slider dots -->
+       <div class="flex justify-center gap-2 mt-8"><button class="testimonial-dot w-3 h-3 rounded-full bg-sapphire-800 transition-colors" data-index="0"></button> <button class="testimonial-dot w-3 h-3 rounded-full bg-sapphire-200 hover:bg-sapphire-400 transition-colors" data-index="1"></button> <button class="testimonial-dot w-3 h-3 rounded-full bg-sapphire-200 hover:bg-sapphire-400 transition-colors" data-index="2"></button>
+       </div>
+      </div>
+     </div>
+    </div>
+   </section><!-- FAQ Section -->
+   <section class="py-20 md:py-28 bg-warm-100">
+    <div class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
+     <div class="text-center mb-12"><span class="inline-block px-3 py-1 bg-sapphire-100 text-sapphire-800 text-sm font-semibold rounded-full mb-4">FAQ</span>
+      <h2 class="font-display text-3xl md:text-4xl font-bold text-sapphire-900 mb-4">Frequently Asked Questions</h2>
+     </div>
+     <div class="space-y-4"><!-- FAQ 1 -->
+      <div class="bg-white rounded-xl overflow-hidden shadow-sm"><button class="faq-trigger w-full px-6 py-5 text-left flex items-center justify-between hover:bg-gray-50 transition-colors"> <span class="font-semibold text-sapphire-900">Do I need pre-approval to schedule a showing?</span>
+        <svg class="faq-icon w-5 h-5 text-sapphire-600 transform transition-transform" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+        </svg></button>
+       <div class="faq-content">
+        <p class="px-6 pb-5 text-gray-600">Yes, I require a pre-approval letter before scheduling private showings. This ensures you're financially prepared and protects your time by focusing on homes within your budget. Pre-approval also makes you a stronger candidate when you're ready to make an offer.</p>
+       </div>
+      </div><!-- FAQ 2 -->
+      <div class="bg-white rounded-xl overflow-hidden shadow-sm"><button class="faq-trigger w-full px-6 py-5 text-left flex items-center justify-between hover:bg-gray-50 transition-colors"> <span class="font-semibold text-sapphire-900">Can I browse homes without pre-approval?</span>
+        <svg class="faq-icon w-5 h-5 text-sapphire-600 transform transition-transform" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+        </svg></button>
+       <div class="faq-content">
+        <p class="px-6 pb-5 text-gray-600">Absolutely! You're welcome to browse all available listings on this site and at open houses. Pre-approval is only required when you're ready to schedule a private showing. I encourage you to explore listings while working with a lender to get pre-approved.</p>
+       </div>
+      </div><!-- FAQ 3 -->
+      <div class="bg-white rounded-xl overflow-hidden shadow-sm"><button class="faq-trigger w-full px-6 py-5 text-left flex items-center justify-between hover:bg-gray-50 transition-colors"> <span class="font-semibold text-sapphire-900">How do I connect with a lender?</span>
+        <svg class="faq-icon w-5 h-5 text-sapphire-600 transform transition-transform" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+        </svg></button>
+       <div class="faq-content">
+        <p class="px-6 pb-5 text-gray-600">I've partnered with several trusted local lenders who can help you through the pre-approval process. You can find their contact information in the <a href="#lenders" class="text-sapphire-600 hover:underline">Lender Referral section</a> above. Of course, you're also welcome to work with any lender you prefer.</p>
+       </div>
+      </div>
+     </div>
+    </div>
+   </section>
+      
+      <!-- Final CTA -->
+      
+  <section class="py-20 md:py-28 bg-gradient-to-br from-sapphire-900 via-sapphire-800 to-sapphire-700">
+  <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+
+    <h2 id="final-cta" class="font-display text-3xl md:text-4xl lg:text-5xl font-bold text-white mb-6">
+      Ready to Tour Homes in Cobb County?
+    </h2>
+
+    <p class="text-warm-200 text-lg md:text-xl mb-10 max-w-2xl mx-auto">
+      Whether you're a first-time buyer or ready to move up, I'm here to help you find your perfect home in Powder Springs and beyond.
+    </p>
+
+    <div class="flex flex-col sm:flex-row gap-4 justify-center">
+
+      <!-- Browse Homes Button -->
+      <a 
+        href="https://tatyanawilson.georgiamls.com/real-estate/?styp=sale&typ=sd"
+        target="_blank"
+        rel="noopener noreferrer"
+        class="inline-flex items-center justify-center bg-white text-sapphire-900 px-8 py-4 rounded-xl font-bold text-lg hover:bg-warm-100 transition-all transform hover:scale-105 shadow-lg"
+      >
+        <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+            d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+        </svg>
+        Browse Homes
+      </a>
+
+      <!-- Request Showing Button -->
+      <a 
+        href="#showing-request"
+        class="inline-flex items-center justify-center border-2 border-white text-white px-8 py-4 rounded-xl font-bold text-lg hover:bg-white/10 transition-all"
+      >
+        <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+            d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 002 2z" />
+        </svg>
+        Request a Showing
+      </a>
+
+    </div>
+  </div>
+</section>
+      
+      <!-- Footer -->
+   <footer id="contact" class="bg-sapphire-950 text-white py-16">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+     <div class="grid md:grid-cols-4 gap-12"><!-- Brand -->
+      <div class="md:col-span-2">
+       <div class="flex items-center space-x-3 mb-4">
+        <div class="logo-wrap rounded-full flex items-center justify-center">
+             <img src="./img/sm_logo.png" alt=" Sapphire Realty Logo" class="h-6 w-auto inline-block align-middle"/>
+        </div>
+        <div>
+         <p class="font-display font-semibold text-lg">Tatyana Renee Molina</p>
+         <p class="text-sapphire-900 text-sm">Real Estate Agent | Sapphire Realty</p>
+        </div>
+       </div>
+       <p class="text-sapphire-900 mb-6 max-w-sm">Helping first-time buyers and move-up sellers find their perfect home in Powder Springs and Cobb County, Georgia.</p>
+       <div class="flex space-x-4"><a href="https://www.facebook.com/tatyana.wilson.18" target="_blank" class="w-10 h-10 bg-sapphire-800 rounded-full flex items-center justify-center hover:bg-sapphire-700 transition-colors">
+         <svg class="w-5 h-5" fill="currentColor" viewbox="0 0 24 24">
+          <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z" />
+         </svg></a> <a href="https://www.instagram.com/tatyanatherealtor" target="_blank" class="w-10 h-10 bg-sapphire-800 rounded-full flex items-center justify-center hover:bg-sapphire-700 transition-colors">
+         <svg class="w-5 h-5" fill="currentColor" viewbox="0 0 24 24">
+          <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z" />
+         </svg></a> <<a href="https://www.linkedin.com/in/tatyana-molina-53b813165/" target="_blank" class="w-10 h-10 bg-sapphire-800 rounded-full flex items-center justify-center hover:bg-sapphire-700 transition-colors">
+         <svg class="w-5 h-5" fill="currentColor" viewbox="0 0 24 24">
+          <path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z" />
+         </svg></a>
+       </div>
+      </div><!-- Contact Info -->
+      <div>
+       <h4 class="font-display font-semibold text-lg mb-4">Contact</h4>
+       <div class="space-y-3 text-sapphire-900">
+       <p class="flex items-center">
+  <svg class="w-5 h-5 mr-3 text-sapphire-900" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+      d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 002 2z" />
+  </svg>
+
+  <a href="mailto:contact@tatyanarenee.com" target="_blank"class="text-sapphire-900 hover:text-sapphire-700 underline">
+    tatyana@sapphirerealty.com</a></p>
+           
+        <p class="flex items-center">
+  <svg class="w-5 h-5 mr-3 text-sapphire-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+      d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
+  </svg>
+
+  <a 
+    href="tel:+14704473131"
+    class="text-sapphire-500 hover:text-sapphire-700"
+  >
+    (470) 447-3131
+  </a>
+</p>
+       </div>
+      </div>
+         
+         <!-- Service Areas -->
+      <div>
+       <h4 class="font-display font-semibold text-lg mb-4">Service Areas</h4>
+       <ul class="space-y-2 text-sapphire-900">
+        <li>Powder Springs</li>
+        <li>Marietta</li>
+        <li>Kennesaw</li>
+        <li>Smyrna</li>
+        <li>Acworth</li>
+        <li>All of Cobb County</li>
+       </ul>
+      </div>
+     </div>
+     <div class="border-t border-sapphire-800 mt-12 pt-8">
+      <div class="flex flex-col md:flex-row justify-between items-center text-sapphire-900 text-sm">
+       <p>© 2024 Tatyana Renee Molina. All rights reserved.</p>
+       <p class="mt-2 md:mt-0">
+  Sapphire Realty | Powered By 
+  <a 
+    href="https://regencreatives.com/reva" 
+    target="_blank" 
+    rel="noopener noreferrer"
+    class="text-sapphire-800 hover:text-sapphire-600 font-semibold underline"
+  >
+    REVA
+  </a>
+</p>
+      </div>
+     </div>
+    </div>
+   </footer>
+  </div>
+  <script>
+  // Default configuration
+  const defaultConfig = {
+    hero_headline: 'Tatyana Renee Molina',
+    hero_tagline: 'Helping first-time buyers and move-up sellers navigate Cobb County real estate with clarity, confidence, and local expertise.',
+    about_text: 'Tatyana Molina is a REALTOR dedicated to delivering great service to all who are looking to Buy, Sell, Rent to own or even Build. She ensures that you will be well- educated and well-equipped throughout your entire real estate transaction. She looks forward to working with you!',
+    final_cta_text: 'Ready to Tour Homes in Cobb County?',
+    primary_color: '#1e2a8f',
+    secondary_color: '#f9f6f3',
+    text_color: '#1f2937',
+    accent_color: '#2d3acb',
+    button_color: '#1e2a8f'
+  };
+
+  // Initialize Element SDK
+  if (window.elementSdk) {
+    window.elementSdk.init({
+      defaultConfig,
+      onConfigChange: async (config) => {
+        document.getElementById('hero-headline').textContent = config.hero_headline || defaultConfig.hero_headline;
+        document.getElementById('hero-tagline').textContent = config.hero_tagline || defaultConfig.hero_tagline;
+        document.getElementById('about-text').textContent = config.about_text || defaultConfig.about_text;
+        document.getElementById('final-cta').textContent = config.final_cta_text || defaultConfig.final_cta_text;
+      },
+      mapToCapabilities: (config) => ({
+        recolorables: [
+          {
+            get: () => config.primary_color || defaultConfig.primary_color,
+            set: (value) => { config.primary_color = value; window.elementSdk.setConfig({ primary_color: value }); }
+          },
+          {
+            get: () => config.secondary_color || defaultConfig.secondary_color,
+            set: (value) => { config.secondary_color = value; window.elementSdk.setConfig({ secondary_color: value }); }
+          },
+          {
+            get: () => config.text_color || defaultConfig.text_color,
+            set: (value) => { config.text_color = value; window.elementSdk.setConfig({ text_color: value }); }
+          },
+          {
+            get: () => config.accent_color || defaultConfig.accent_color,
+            set: (value) => { config.accent_color = value; window.elementSdk.setConfig({ accent_color: value }); }
+          },
+          {
+            get: () => config.button_color || defaultConfig.button_color,
+            set: (value) => { config.button_color = value; window.elementSdk.setConfig({ button_color: value }); }
+          }
+        ],
+        borderables: [],
+        fontEditable: undefined,
+        fontSizeable: undefined
+      }),
+      mapToEditPanelValues: (config) => new Map([
+        ['hero_headline', config.hero_headline || defaultConfig.hero_headline],
+        ['hero_tagline', config.hero_tagline || defaultConfig.hero_tagline],
+        ['about_text', config.about_text || defaultConfig.about_text],
+        ['final_cta_text', config.final_cta_text || defaultConfig.final_cta_text]
+      ])
+    });
+  }
+
+  // Mobile menu toggle
+  const mobileMenuBtn = document.getElementById('mobile-menu-btn');
+  const mobileMenu = document.getElementById('mobile-menu');
+
+  if (mobileMenuBtn && mobileMenu) {
+    mobileMenuBtn.addEventListener('click', () => {
+      mobileMenu.classList.toggle('hidden');
+    });
+
+    // Close mobile menu when clicking a link
+    mobileMenu.querySelectorAll('a').forEach(link => {
+      link.addEventListener('click', () => {
+        mobileMenu.classList.add('hidden');
+      });
+    });
+  }
+
+  // Modal functionality (open/close only)
+  const modal = document.getElementById('preapproved-modal');
+  const openModalBtn = document.getElementById('open-preapproved-form');
+  const closeModalBtn = document.getElementById('close-modal');
+  const modalBackdrop = document.getElementById('modal-backdrop');
+
+  const closeModal = () => {
+    if (!modal) return;
+    modal.classList.remove('active');
+    document.body.style.overflow = '';
+  };
+
+  if (openModalBtn && modal) {
+    openModalBtn.addEventListener('click', () => {
+      modal.classList.add('active');
+      document.body.style.overflow = 'hidden';
+    });
+  }
+
+  if (closeModalBtn) closeModalBtn.addEventListener('click', closeModal);
+  if (modalBackdrop) modalBackdrop.addEventListener('click', closeModal);
+
+  // NOTE:
+  // File upload handlers and form submission handlers have been removed from this script.
+  // They are now handled by the upgraded modal/form script you pasted with the Apps Script integration.
+
+  // Testimonials slider
+  const testimonials = [
+    {
+      text: "Working with Tatyana was a great experience from start to finish. She communicated exceptionally, was patient throughout the entire process, and consistently went the extra mile to make sure everything went smoothly. On top of that, her knowledge and professionalism gave me full confidence every step of the way. She truly cares about her clients and it shows in the way she handles every detail. I highly recommend her to anyone looking for a dedicated and reliable realtor.",
+      author: "Joseph Santiago",
+      location: "First-time buyers in Powder Springs"
+    },
+    {
+      text: "Tatyana is a great agent and does a phenomenal job in educating her clients through their real estate process! I recommend her, and will be using her service again in the future! Get you an agent who, listens to your wants and needs and delivers good service.",
+      author: "Tim Nelson",
+      location: "Moved from Marietta to Kennesaw"
+    },
+    {
+      text: "Tatyana is a conscious, personable, and very passionate agent to work with. I highly recommend her to anyone and everyone in the real estate or commercial markets as a top priority agent who will exemplify extreme due diligence to get you closed timely!",
+      author: "Jerald Ellis",
+      location: "New homeowner in Smyrna"
+    }
+  ];
+
+  let currentTestimonial = 0;
+  const testimonialText = document.getElementById('testimonial-text');
+  const testimonialAuthor = document.getElementById('testimonial-author');
+  const testimonialLocation = document.getElementById('testimonial-location');
+  const dots = document.querySelectorAll('.testimonial-dot');
+
+  const updateTestimonial = (index) => {
+    if (!testimonialText || !testimonialAuthor || !testimonialLocation || !dots.length) return;
+
+    currentTestimonial = index;
+    testimonialText.textContent = `"${testimonials[index].text}"`;
+    testimonialAuthor.textContent = `— ${testimonials[index].author}`;
+    testimonialLocation.textContent = testimonials[index].location;
+
+    dots.forEach((dot, i) => {
+      dot.classList.toggle('bg-sapphire-800', i === index);
+      dot.classList.toggle('bg-sapphire-200', i !== index);
+    });
+  };
+
+  if (dots.length) {
+    dots.forEach(dot => {
+      dot.addEventListener('click', () => {
+        updateTestimonial(parseInt(dot.dataset.index, 10));
+      });
+    });
+
+    setInterval(() => {
+      updateTestimonial((currentTestimonial + 1) % testimonials.length);
+    }, 6000);
+  }
+
+  // FAQ accordion
+  const faqTriggers = document.querySelectorAll('.faq-trigger');
+
+  faqTriggers.forEach(trigger => {
+    trigger.addEventListener('click', () => {
+      const content = trigger.nextElementSibling;
+      const icon = trigger.querySelector('.faq-icon');
+
+      faqTriggers.forEach(other => {
+        if (other !== trigger) {
+          other.nextElementSibling.classList.remove('open');
+          other.querySelector('.faq-icon').classList.remove('rotate-180');
+        }
+      });
+
+      content.classList.toggle('open');
+      icon.classList.toggle('rotate-180');
+    });
+  });
+
+  // Smooth scroll for anchor links
+  document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+    anchor.addEventListener('click', function(e) {
+      e.preventDefault();
+      const target = document.querySelector(this.getAttribute('href'));
+      if (target) {
+        const navHeight = 80;
+        const targetPosition = target.getBoundingClientRect().top + window.pageYOffset - navHeight;
+        window.scrollTo({
+          top: targetPosition,
+          behavior: 'smooth'
+        });
+      }
+    });
+  });
+</script>
+ 
+ </body>
+</html>

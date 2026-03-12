@@ -685,12 +685,12 @@
           <div class="bg-gradient-to-br from-[#F59E0B]/20 to-[#D97706]/20 rounded-xl p-6 border border-[#F59E0B]/30 text-center">
             <h3 class="font-display text-xl mb-2">Ready to Create Your Complete Revenue Map?</h3>
             <p class="text-[#94A3B8] text-sm mb-4">In a 60-minute Done-With-You session, we'll turn these insights into an actionable plan specific to your business.</p>
-            <a href="https://calendly.com" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-2 gold-gradient px-6 py-3 rounded-xl font-bold text-[#0F172A] hover:opacity-90 transition-all">
+            <button onclick="openBookingModal()" class="inline-flex items-center gap-2 gold-gradient px-6 py-3 rounded-xl font-bold text-[#0F172A] hover:opacity-90 transition-all">
               <span>Book Your Hidden Revenue Map Session</span>
               <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/>
               </svg>
-            </a>
+            </button>
             <p class="text-xs text-[#64748B] mt-3">Limited spots available each month</p>
           </div>
           
@@ -763,8 +763,41 @@
       // Calculate scores
       const scores = calculateScores();
       
-      // Simulate processing delay
-      await new Promise(resolve => setTimeout(resolve, 800));
+      // Prepare webhook payload
+      const payload = {
+        email: userEmail,
+        timestamp: new Date().toISOString(),
+        score: {
+          total_percentage: scores.percentScore,
+          tier: scores.tier.name,
+          category_breakdown: {
+            lead_handling: scores.categoryScores.lead_handling,
+            follow_up: scores.categoryScores.follow_up,
+            offer_flow: scores.categoryScores.offer_flow,
+            delivery: scores.categoryScores.delivery
+          }
+        },
+        answers: answers
+      };
+      
+      try {
+        // Send to webhook
+        const webhookUrl = 'https://your-webhook-url.com/assessment-results'; // Replace with actual webhook URL
+        const response = await fetch(webhookUrl, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify(payload)
+        });
+        
+        if (!response.ok) {
+          throw new Error(`Webhook error: ${response.status}`);
+        }
+      } catch (error) {
+        console.error('Error sending to webhook:', error);
+        // Continue to show results even if webhook fails
+      }
       
       isSubmitting = false;
       
@@ -780,8 +813,189 @@
       renderAssessment();
     }
 
+    // Booking modal
+    function openBookingModal() {
+      const scores = calculateScores();
+      const modal = document.createElement('div');
+      modal.id = 'booking-modal';
+      modal.className = 'fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4';
+      modal.innerHTML = `
+        <div class="bg-[#1E293B] rounded-2xl border border-[#334155] max-w-md w-full max-h-96 overflow-y-auto">
+          <div class="p-6 border-b border-[#334155] flex justify-between items-center sticky top-0 bg-[#1E293B]">
+            <h3 class="font-display text-xl">Book Your Session</h3>
+            <button onclick="closeBookingModal()" class="text-[#94A3B8] hover:text-[#F59E0B]">
+              <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+              </svg>
+            </button>
+          </div>
+          
+          <div class="p-6">
+            <form onsubmit="submitBooking(event)" class="space-y-4">
+              <div>
+                <label class="block text-sm font-medium mb-1">Your Name *</label>
+                <input type="text" id="booking-name" required class="w-full px-3 py-2 rounded-lg bg-[#0F172A] border border-[#475569] text-[#F8FAFC] placeholder-[#64748B] focus:border-[#F59E0B] focus:outline-none" placeholder="Your name">
+              </div>
+              
+              <div>
+                <label class="block text-sm font-medium mb-1">Email *</label>
+                <input type="email" id="booking-email" value="${userEmail}" required class="w-full px-3 py-2 rounded-lg bg-[#0F172A] border border-[#475569] text-[#F8FAFC] placeholder-[#64748B] focus:border-[#F59E0B] focus:outline-none" placeholder="your@email.com">
+              </div>
+              
+              <div>
+                <label class="block text-sm font-medium mb-1">Phone Number *</label>
+                <input type="tel" id="booking-phone" required class="w-full px-3 py-2 rounded-lg bg-[#0F172A] border border-[#475569] text-[#F8FAFC] placeholder-[#64748B] focus:border-[#F59E0B] focus:outline-none" placeholder="(555) 123-4567">
+              </div>
+              
+              <div>
+                <label class="block text-sm font-medium mb-1">Business Type</label>
+                <input type="text" id="booking-business" class="w-full px-3 py-2 rounded-lg bg-[#0F172A] border border-[#475569] text-[#F8FAFC] placeholder-[#64748B] focus:border-[#F59E0B] focus:outline-none" placeholder="e.g., Consulting, Coaching">
+              </div>
+              
+              <div>
+                <label class="block text-sm font-medium mb-1">Best Day & Time</label>
+                <select id="booking-time" class="w-full px-3 py-2 rounded-lg bg-[#0F172A] border border-[#475569] text-[#F8FAFC] focus:border-[#F59E0B] focus:outline-none">
+                  <option value="">Select preferred time</option>
+                  <option value="monday-morning">Monday Morning</option>
+                  <option value="monday-afternoon">Monday Afternoon</option>
+                  <option value="tuesday-morning">Tuesday Morning</option>
+                  <option value="tuesday-afternoon">Tuesday Afternoon</option>
+                  <option value="wednesday-morning">Wednesday Morning</option>
+                  <option value="wednesday-afternoon">Wednesday Afternoon</option>
+                  <option value="thursday-morning">Thursday Morning</option>
+                  <option value="thursday-afternoon">Thursday Afternoon</option>
+                  <option value="friday-morning">Friday Morning</option>
+                  <option value="friday-afternoon">Friday Afternoon</option>
+                </select>
+              </div>
+              
+              <button type="submit" id="booking-submit-btn" class="w-full gold-gradient px-4 py-3 rounded-xl font-bold text-[#0F172A] hover:opacity-90 transition-all disabled:opacity-50 flex items-center justify-center gap-2">
+                <span id="booking-submit-text">Send My Session Request</span>
+                <span id="booking-submit-loading" class="hidden">
+                  <svg class="animate-spin h-5 w-5" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                    <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                    <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                  </svg>
+                </span>
+              </button>
+              
+              <p class="text-xs text-[#64748B] text-center">We'll confirm your session time within 24 hours</p>
+            </form>
+          </div>
+        </div>
+      `;
+      document.body.appendChild(modal);
+      modal.addEventListener('click', (e) => {
+        if (e.target === modal) closeBookingModal();
+      });
+    }
+
+    function closeBookingModal() {
+      const modal = document.getElementById('booking-modal');
+      if (modal) modal.remove();
+    }
+
+    async function submitBooking(e) {
+      e.preventDefault();
+      
+      const name = document.getElementById('booking-name').value;
+      const email = document.getElementById('booking-email').value;
+      const phone = document.getElementById('booking-phone').value;
+      const business = document.getElementById('booking-business').value;
+      const time = document.getElementById('booking-time').value;
+      const submitBtn = document.getElementById('booking-submit-btn');
+      const btnText = document.getElementById('booking-submit-text');
+      const btnLoading = document.getElementById('booking-submit-loading');
+      
+      if (!time) {
+        alert('Please select a preferred time');
+        return;
+      }
+      
+      // Show loading state
+      submitBtn.disabled = true;
+      btnText.classList.add('hidden');
+      btnLoading.classList.remove('hidden');
+      
+      const scores = calculateScores();
+      const payload = {
+        name: name,
+        email: email,
+        phone: phone,
+        business_type: business,
+        preferred_time: time,
+        timestamp: new Date().toISOString(),
+        assessment_score: {
+          total_percentage: scores.percentScore,
+          tier: scores.tier.name,
+          category_breakdown: {
+            lead_handling: scores.categoryScores.lead_handling,
+            follow_up: scores.categoryScores.follow_up,
+            offer_flow: scores.categoryScores.offer_flow,
+            delivery: scores.categoryScores.delivery
+          }
+        }
+      };
+      
+      try {
+        // Send to webhook
+        const webhookUrl = 'https://your-webhook-url.com/booking-request'; // Replace with actual webhook URL
+        const response = await fetch(webhookUrl, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify(payload)
+        });
+        
+        if (!response.ok) {
+          throw new Error(`Webhook error: ${response.status}`);
+        }
+        
+        // Show success message
+        closeBookingModal();
+        showSuccessMessage('Session request sent! We\'ll confirm your booking within 24 hours.');
+      } catch (error) {
+        console.error('Error sending booking request:', error);
+        submitBtn.disabled = false;
+        btnText.classList.remove('hidden');
+        btnLoading.classList.add('hidden');
+        showErrorMessage('There was an error sending your request. Please try again.');
+      }
+    }
+
+    function showSuccessMessage(message) {
+      const toast = document.createElement('div');
+      toast.className = 'fixed bottom-4 right-4 bg-[#10B981] text-white px-6 py-4 rounded-xl shadow-lg z-50 max-w-sm';
+      toast.innerHTML = `
+        <div class="flex items-center gap-3">
+          <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 20 20">
+            <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/>
+          </svg>
+          <span>${message}</span>
+        </div>
+      `;
+      document.body.appendChild(toast);
+      setTimeout(() => toast.remove(), 5000);
+    }
+
+    function showErrorMessage(message) {
+      const toast = document.createElement('div');
+      toast.className = 'fixed bottom-4 right-4 bg-[#EF4444] text-white px-6 py-4 rounded-xl shadow-lg z-50 max-w-sm';
+      toast.innerHTML = `
+        <div class="flex items-center gap-3">
+          <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 20 20">
+            <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clip-rule="evenodd"/>
+          </svg>
+          <span>${message}</span>
+        </div>
+      `;
+      document.body.appendChild(toast);
+      setTimeout(() => toast.remove(), 5000);
+    }
+
     // Initialize
     renderAssessment();
   </script>
- <script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'9db45a71839db628',t:'MTc3MzMzNDgwNy4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+ <script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'9db49bcd35774554',t:'MTc3MzMzNzQ4NC4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
 </html>

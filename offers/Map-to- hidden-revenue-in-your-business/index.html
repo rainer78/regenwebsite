@@ -291,608 +291,497 @@
    </div>
   </footer>
   <script>
-  // Assessment Questions Data
-  const assessmentQuestions = [
-    {
-      id: 1,
-      category: "lead_handling",
-      prompt: "When someone inquires about your services, do they receive a response within 4 hours (during business hours)?",
-      options: [
-        { text: "No — it often takes a day or more", score: 0 },
-        { text: "Sometimes — depends on how busy I am", score: 1 },
-        { text: "Yes — I have a system for quick responses", score: 2 }
-      ]
-    },
-    {
-      id: 2,
-      category: "lead_handling",
-      prompt: "Do you have a clear, documented process for what happens when a new lead comes in?",
-      options: [
-        { text: "No — I handle each one differently", score: 0 },
-        { text: "Sometimes — I have a rough idea but it's not written down", score: 1 },
-        { text: "Yes — there's a step-by-step process anyone could follow", score: 2 }
-      ]
-    },
-    {
-      id: 3,
-      category: "lead_handling",
-      prompt: "Do you track where your leads come from and which sources convert best?",
-      options: [
-        { text: "No — I have no idea where most leads originate", score: 0 },
-        { text: "Sometimes — I have a general sense but don't track formally", score: 1 },
-        { text: "Yes — I know my numbers and can see which channels perform", score: 2 }
-      ]
-    },
-    {
-      id: 4,
-      category: "follow_up",
-      prompt: "Do you have an automated system to nurture leads who aren't ready to buy immediately?",
-      options: [
-        { text: "No — if they don't buy, they're gone", score: 0 },
-        { text: "Sometimes — I manually follow up when I remember", score: 1 },
-        { text: "Yes — there's an automated sequence that keeps me top of mind", score: 2 }
-      ]
-    },
-    {
-      id: 5,
-      category: "follow_up",
-      prompt: "Do you systematically reach out to past clients for referrals or repeat business?",
-      options: [
-        { text: "No — I hope they remember me if they need something", score: 0 },
-        { text: "Sometimes — I reach out occasionally but not consistently", score: 1 },
-        { text: "Yes — I have a regular touchpoint system with past clients", score: 2 }
-      ]
-    },
-    {
-      id: 6,
-      category: "offer_flow",
-      prompt: "Can a client go from 'I want this' to 'payment complete' in under 10 minutes without your direct involvement?",
-      options: [
-        { text: "No — it requires back-and-forth, invoicing, waiting", score: 0 },
-        { text: "Sometimes — for some offers but not all", score: 1 },
-        { text: "Yes — they can book and pay immediately online", score: 2 }
-      ]
-    },
-    {
-      id: 7,
-      category: "offer_flow",
-      prompt: "Do you have clear, easy-to-understand pricing that clients can access without asking?",
-      options: [
-        { text: "No — I create custom quotes for everyone", score: 0 },
-        { text: "Sometimes — I have ranges but nothing concrete", score: 1 },
-        { text: "Yes — my pricing is clear and available", score: 2 }
-      ]
-    },
-    {
-      id: 8,
-      category: "offer_flow",
-      prompt: "After someone says 'yes,' do they receive immediate confirmation and know exactly what happens next?",
-      options: [
-        { text: "No — I manually send next steps when I get to it", score: 0 },
-        { text: "Sometimes — depends on the service they bought", score: 1 },
-        { text: "Yes — automatic confirmation with clear next steps", score: 2 }
-      ]
-    },
-    {
-      id: 9,
-      category: "delivery",
-      prompt: "Do you have a documented onboarding process that creates a consistent 'wow' experience?",
-      options: [
-        { text: "No — I wing it each time", score: 0 },
-        { text: "Sometimes — I have pieces but it's not systematic", score: 1 },
-        { text: "Yes — every client gets the same great start", score: 2 }
-      ]
-    },
-    {
-      id: 10,
-      category: "delivery",
-      prompt: "Do you systematically ask for testimonials, reviews, or referrals at the right moment in your delivery?",
-      options: [
-        { text: "No — I rarely ask and don't have a system", score: 0 },
-        { text: "Sometimes — I ask occasionally when I remember", score: 1 },
-        { text: "Yes — it's built into my delivery process automatically", score: 2 }
-      ]
-    }
-  ];
-
-  // Tier definitions
-  const tiers = [
-    { min: 0, max: 25, name: "Revenue Leak Zone", color: "#EF4444", emoji: "🚨" },
-    { min: 26, max: 50, name: "Operational Friction", color: "#F59E0B", emoji: "⚠️" },
-    { min: 51, max: 75, name: "Growth Opportunity", color: "#3B82F6", emoji: "📈" },
-    { min: 76, max: 100, name: "Strong Systems", color: "#10B981", emoji: "✨" }
-  ];
-
-  // IMPORTANT: Replace with your webhook or API endpoint
-  const WAITLIST_ENDPOINT = "YOUR_WEBHOOK_OR_API_ENDPOINT_HERE";
-  const WAITLIST_LIMIT = 15;
-
-  // Assessment state
-  let currentQuestion = 0;
-  let answers = {};
-  let userEmail = "";
-  let userName = "";
-  let isSubmitting = false;
-  let submissionResult = null;
-
-  // Scoring logic
-  function calculateScores() {
-    const categoryScores = {
-      lead_handling: 0,
-      follow_up: 0,
-      offer_flow: 0,
-      delivery: 0
-    };
-
-    Object.entries(answers).forEach(([questionId, score]) => {
-      const question = assessmentQuestions.find(q => q.id === parseInt(questionId, 10));
-      if (question) {
-        categoryScores[question.category] += score;
-      }
-    });
-
-    const totalScore = Object.values(categoryScores).reduce((a, b) => a + b, 0);
-    const percentScore = Math.round((totalScore / 20) * 100);
-    const tier = tiers.find(t => percentScore >= t.min && percentScore <= t.max);
-
-    return {
-      categoryScores,
-      totalScore,
-      percentScore,
-      tier
-    };
-  }
-
-  function getRecommendations(categoryScores) {
-    const recommendations = [];
-
-    if (categoryScores.lead_handling <= 3) {
-      recommendations.push({
-        icon: "🎣",
-        title: "Speed Up Lead Response",
-        description: "Implement a same-day response system. Even a simple acknowledgement process can reduce missed opportunities."
-      });
-    }
-
-    if (categoryScores.follow_up <= 2) {
-      recommendations.push({
-        icon: "🔄",
-        title: "Build a Follow-Up Sequence",
-        description: "Create a structured follow-up rhythm for leads who do not buy immediately. Revenue often hides in consistent follow-up."
-      });
-    }
-
-    if (categoryScores.offer_flow <= 3) {
-      recommendations.push({
-        icon: "💳",
-        title: "Streamline Your Sales Process",
-        description: "Reduce friction between agreement and payment. The easier it is to say yes, the faster revenue moves."
-      });
-    }
-
-    if (categoryScores.delivery <= 2) {
-      recommendations.push({
-        icon: "⚙️",
-        title: "Systematize Your Delivery",
-        description: "Document onboarding and delivery steps so the client experience is consistent and easier to improve."
-      });
-    }
-
-    const additionalRecs = [
+    // Assessment Questions Data
+    const assessmentQuestions = [
       {
-        icon: "📊",
-        title: "Track Your Numbers",
-        description: "Measure lead sources, response times, and conversion rates. Guesswork is not a strategy, however comforting it may feel."
+        id: 1,
+        category: "lead_handling",
+        prompt: "When someone inquires about your services, do they receive a response within 4 hours (during business hours)?",
+        options: [
+          { text: "No — it often takes a day or more", score: 0 },
+          { text: "Sometimes — depends on how busy I am", score: 1 },
+          { text: "Yes — I have a system for quick responses", score: 2 }
+        ]
       },
       {
-        icon: "🤝",
-        title: "Activate Past Clients",
-        description: "Reconnect with previous clients and ask for referrals, repeat work, or introductions."
+        id: 2,
+        category: "lead_handling",
+        prompt: "Do you have a clear, documented process for what happens when a new lead comes in?",
+        options: [
+          { text: "No — I handle each one differently", score: 0 },
+          { text: "Sometimes — I have a rough idea but it's not written down", score: 1 },
+          { text: "Yes — there's a step-by-step process anyone could follow", score: 2 }
+        ]
       },
       {
-        icon: "📝",
-        title: "Document One Process",
-        description: "Choose one repeated workflow and write it down step by step. That is how operations maturity begins."
+        id: 3,
+        category: "lead_handling",
+        prompt: "Do you track where your leads come from and which sources convert best?",
+        options: [
+          { text: "No — I have no idea where most leads originate", score: 0 },
+          { text: "Sometimes — I have a general sense but don't track formally", score: 1 },
+          { text: "Yes — I know my numbers and can see which channels perform", score: 2 }
+        ]
+      },
+      {
+        id: 4,
+        category: "follow_up",
+        prompt: "Do you have an automated system to nurture leads who aren't ready to buy immediately?",
+        options: [
+          { text: "No — if they don't buy, they're gone", score: 0 },
+          { text: "Sometimes — I manually follow up when I remember", score: 1 },
+          { text: "Yes — there's an automated sequence that keeps me top of mind", score: 2 }
+        ]
+      },
+      {
+        id: 5,
+        category: "follow_up",
+        prompt: "Do you systematically reach out to past clients for referrals or repeat business?",
+        options: [
+          { text: "No — I hope they remember me if they need something", score: 0 },
+          { text: "Sometimes — I reach out occasionally but not consistently", score: 1 },
+          { text: "Yes — I have a regular touchpoint system with past clients", score: 2 }
+        ]
+      },
+      {
+        id: 6,
+        category: "offer_flow",
+        prompt: "Can a client go from 'I want this' to 'payment complete' in under 10 minutes without your direct involvement?",
+        options: [
+          { text: "No — it requires back-and-forth, invoicing, waiting", score: 0 },
+          { text: "Sometimes — for some offers but not all", score: 1 },
+          { text: "Yes — they can book and pay immediately online", score: 2 }
+        ]
+      },
+      {
+        id: 7,
+        category: "offer_flow",
+        prompt: "Do you have clear, easy-to-understand pricing that clients can access without asking?",
+        options: [
+          { text: "No — I create custom quotes for everyone", score: 0 },
+          { text: "Sometimes — I have ranges but nothing concrete", score: 1 },
+          { text: "Yes — my pricing is clear and available", score: 2 }
+        ]
+      },
+      {
+        id: 8,
+        category: "offer_flow",
+        prompt: "After someone says 'yes,' do they receive immediate confirmation and know exactly what happens next?",
+        options: [
+          { text: "No — I manually send next steps when I get to it", score: 0 },
+          { text: "Sometimes — depends on the service they bought", score: 1 },
+          { text: "Yes — automatic confirmation with clear next steps", score: 2 }
+        ]
+      },
+      {
+        id: 9,
+        category: "delivery",
+        prompt: "Do you have a documented onboarding process that creates a consistent 'wow' experience?",
+        options: [
+          { text: "No — I wing it each time", score: 0 },
+          { text: "Sometimes — I have pieces but it's not systematic", score: 1 },
+          { text: "Yes — every client gets the same great start", score: 2 }
+        ]
+      },
+      {
+        id: 10,
+        category: "delivery",
+        prompt: "Do you systematically ask for testimonials, reviews, or referrals at the right moment in your delivery?",
+        options: [
+          { text: "No — I rarely ask and don't have a system", score: 0 },
+          { text: "Sometimes — I ask occasionally when I remember", score: 1 },
+          { text: "Yes — it's built into my delivery process automatically", score: 2 }
+        ]
       }
     ];
 
-    while (recommendations.length < 3) {
-      recommendations.push(additionalRecs[recommendations.length]);
+    // Tier definitions
+    const tiers = [
+      { min: 0, max: 25, name: "Revenue Leak Zone", color: "#EF4444", emoji: "🚨" },
+      { min: 26, max: 50, name: "Operational Friction", color: "#F59E0B", emoji: "⚠️" },
+      { min: 51, max: 75, name: "Growth Opportunity", color: "#3B82F6", emoji: "📈" },
+      { min: 76, max: 100, name: "Strong Systems", color: "#10B981", emoji: "✨" }
+    ];
+
+    // Assessment state
+    let currentQuestion = 0;
+    let answers = {};
+    let userEmail = "";
+    let isSubmitting = false;
+
+
+
+
+
+    // Scoring logic
+    function calculateScores() {
+      const categoryScores = {
+        lead_handling: 0,
+        follow_up: 0,
+        offer_flow: 0,
+        delivery: 0
+      };
+      
+      // Calculate category scores
+      Object.entries(answers).forEach(([questionId, score]) => {
+        const question = assessmentQuestions.find(q => q.id === parseInt(questionId));
+        if (question) {
+          categoryScores[question.category] += score;
+        }
+      });
+      
+      // Calculate total and percentage
+      const totalScore = Object.values(categoryScores).reduce((a, b) => a + b, 0);
+      const percentScore = Math.round((totalScore / 20) * 100);
+      
+      // Determine tier
+      const tier = tiers.find(t => percentScore >= t.min && percentScore <= t.max);
+      
+      return {
+        categoryScores,
+        totalScore,
+        percentScore,
+        tier
+      };
     }
 
-    return recommendations.slice(0, 3);
-  }
-
-  function getCategoryLabel(category) {
-    const categoryLabels = {
-      lead_handling: "Lead Handling",
-      follow_up: "Follow-Up Systems",
-      offer_flow: "Offer to Payment",
-      delivery: "Delivery & Operations"
-    };
-    return categoryLabels[category] || category;
-  }
-
-  function buildSubmissionPayload(scores) {
-    return {
-      submittedAt: new Date().toISOString(),
-      name: userName,
-      email: userEmail,
-      answers,
-      score: {
-        totalScore: scores.totalScore,
-        percentScore: scores.percentScore,
-        tierName: scores.tier?.name || "",
-        categoryScores: scores.categoryScores
-      },
-      recommendations: getRecommendations(scores.categoryScores),
-      metadata: {
-        assessmentName: "Hidden Revenue Assessment",
-        waitlistLimit: WAITLIST_LIMIT,
-        emailFrom: "l.dukes@regencreatives.com"
+    // Get recommendations based on scores
+    function getRecommendations(categoryScores) {
+      const recommendations = [];
+      
+      if (categoryScores.lead_handling <= 3) {
+        recommendations.push({
+          icon: "🎣",
+          title: "Speed Up Lead Response",
+          description: "Implement a same-day response system. Even a simple auto-responder acknowledging inquiries can increase conversion by 30%."
+        });
       }
-    };
-  }
-
-  async function submitToWaitlist(payload) {
-    const response = await fetch(WAITLIST_ENDPOINT, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json"
-      },
-      body: JSON.stringify(payload)
-    });
-
-    if (!response.ok) {
-      throw new Error(`Submission failed with status ${response.status}`);
+      
+      if (categoryScores.follow_up <= 2) {
+        recommendations.push({
+          icon: "🔄",
+          title: "Build a Follow-Up Sequence",
+          description: "Create a simple 5-email nurture sequence for leads who don't buy immediately. Most of your revenue is in the follow-up."
+        });
+      }
+      
+      if (categoryScores.offer_flow <= 3) {
+        recommendations.push({
+          icon: "💳",
+          title: "Streamline Your Sales Process",
+          description: "Remove friction between 'yes' and payment. Set up online booking and payment so clients can complete purchases without waiting for you."
+        });
+      }
+      
+      if (categoryScores.delivery <= 2) {
+        recommendations.push({
+          icon: "⚙️",
+          title: "Systematize Your Delivery",
+          description: "Document your onboarding process and add automatic touchpoints for testimonials. Consistency creates referrals."
+        });
+      }
+      
+      // Always show at least 3 recommendations
+      const additionalRecs = [
+        { icon: "📊", title: "Track Your Numbers", description: "Start measuring lead sources, response times, and conversion rates. You can't improve what you don't measure." },
+        { icon: "🤝", title: "Activate Past Clients", description: "Reach out to your last 10 happy clients. Ask for referrals or if they need anything else. This is the fastest path to revenue." },
+        { icon: "📝", title: "Document One Process", description: "Pick your most repeated task and write it down step-by-step. This is the start of building systems that scale." }
+      ];
+      
+      while (recommendations.length < 3) {
+        recommendations.push(additionalRecs[recommendations.length]);
+      }
+      
+      return recommendations.slice(0, 3);
     }
 
-    return response.json();
-  }
+    // Render functions
+    function renderAssessment() {
+      const container = document.getElementById('assessment-container');
+      container.innerHTML = renderWelcomeScreen();
+    }
 
-  // Render functions
-  function renderAssessment() {
-    const container = document.getElementById("assessment-container");
-    container.innerHTML = renderWelcomeScreen();
-  }
-
-  function renderWelcomeScreen() {
-    return `
-      <div class="p-8 text-center">
-        <div class="text-6xl mb-6">🗺️</div>
-        <h2 class="font-display text-2xl md:text-3xl mb-4">Hidden Revenue Assessment</h2>
-        <p class="text-[#94A3B8] mb-4">10 questions • 3 minutes • Results sent by email</p>
-        <p class="text-[#F59E0B] text-sm font-medium mb-6">Waitlist for the Done-With-You session is limited to ${WAITLIST_LIMIT} spots.</p>
-        <p class="text-[#94A3B8] mb-8 max-w-md mx-auto">
-          Answer honestly about where your business is today, not where you wish it were.
-          You will receive your result by email and, if spots remain, the option to join the first 15 on the Done-With-You waitlist.
-        </p>
-        <button onclick="startAssessment()" class="gold-gradient px-8 py-4 rounded-xl font-bold text-[#0F172A] hover:opacity-90 transition-all w-full max-w-xs">
-          Start the Assessment
-        </button>
-      </div>
-    `;
-  }
-
-  function renderQuestion(index) {
-    const question = assessmentQuestions[index];
-    const progress = Math.round(((index + 1) / assessmentQuestions.length) * 100);
-
-    return `
-      <div class="p-6 md:p-8">
-        <div class="mb-6">
-          <div class="flex justify-between text-sm text-[#94A3B8] mb-2">
-            <span>Question ${index + 1} of ${assessmentQuestions.length}</span>
-            <span class="text-[#F59E0B]">${getCategoryLabel(question.category)}</span>
-          </div>
-          <div class="h-2 bg-[#0F172A] rounded-full overflow-hidden">
-            <div class="h-full gold-gradient transition-all duration-500" style="width: ${progress}%"></div>
-          </div>
-        </div>
-
-        <div class="mb-8">
-          <h3 class="text-lg md:text-xl font-medium leading-relaxed">${question.prompt}</h3>
-        </div>
-
-        <div class="space-y-3">
-          ${question.options.map(option => `
-            <button
-              onclick="selectAnswer(${question.id}, ${option.score}, ${index})"
-              class="w-full text-left p-4 rounded-xl border-2 transition-all hover:border-[#F59E0B] hover:bg-[#F59E0B]/10 ${answers[question.id] === option.score ? 'border-[#F59E0B] bg-[#F59E0B]/10' : 'border-[#334155] bg-[#0F172A]'}"
-            >
-              <div class="flex items-center gap-3">
-                <div class="w-6 h-6 rounded-full border-2 flex items-center justify-center flex-shrink-0 ${answers[question.id] === option.score ? 'border-[#F59E0B] bg-[#F59E0B]' : 'border-[#475569]'}">
-                  ${answers[question.id] === option.score ? '<svg class="w-4 h-4 text-[#0F172A]" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/></svg>' : ''}
-                </div>
-                <span class="text-sm md:text-base">${option.text}</span>
-              </div>
-            </button>
-          `).join("")}
-        </div>
-
-        <div class="flex gap-4 mt-8">
-          ${index > 0 ? `
-            <button onclick="prevQuestion(${index})" class="px-6 py-3 rounded-xl border border-[#475569] text-[#94A3B8] hover:border-[#F59E0B] hover:text-[#F59E0B] transition-all">
-              ← Back
-            </button>
-          ` : ""}
-          <div class="flex-1"></div>
-        </div>
-      </div>
-    `;
-  }
-
-  function renderEmailCapture() {
-    return `
-      <div class="p-6 md:p-8 text-center">
-        <div class="text-5xl mb-6">📧</div>
-        <h3 class="font-display text-2xl mb-4">Get Your Result by Email</h3>
-        <p class="text-[#94A3B8] mb-3">
-          Enter your details to receive your Hidden Revenue Score and recommendations.
-        </p>
-        <p class="text-[#F59E0B] text-sm font-medium mb-6">
-          The Done-With-You session waitlist is capped at ${WAITLIST_LIMIT} spots.
-        </p>
-
-        <form onsubmit="submitEmail(event)" class="max-w-sm mx-auto">
-          <input
-            type="text"
-            id="name-input"
-            placeholder="Your name"
-            required
-            class="w-full px-4 py-3 rounded-xl bg-[#0F172A] border border-[#475569] text-[#F8FAFC] placeholder-[#64748B] focus:border-[#F59E0B] focus:outline-none mb-4"
-          >
-
-          <input
-            type="email"
-            id="email-input"
-            placeholder="you@yourbusiness.com"
-            required
-            class="w-full px-4 py-3 rounded-xl bg-[#0F172A] border border-[#475569] text-[#F8FAFC] placeholder-[#64748B] focus:border-[#F59E0B] focus:outline-none mb-4"
-          >
-
-          <button
-            type="submit"
-            id="submit-email-btn"
-            class="gold-gradient px-8 py-3 rounded-xl font-bold text-[#0F172A] hover:opacity-90 transition-all w-full disabled:opacity-50"
-          >
-            <span id="submit-btn-text">Email My Result + Check Waitlist</span>
-            <span id="submit-btn-loading" class="hidden">
-              <svg class="animate-spin h-5 w-5 mx-auto" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-                <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
-                <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
-              </svg>
-            </span>
+    function renderWelcomeScreen() {
+      return `
+        <div class="p-8 text-center">
+          <div class="text-6xl mb-6">🗺️</div>
+          <h2 class="font-display text-2xl md:text-3xl mb-4">Hidden Revenue Assessment</h2>
+          <p class="text-[#94A3B8] mb-6">10 questions • 3 minutes • Instant results</p>
+          <p class="text-[#94A3B8] mb-8 max-w-md mx-auto">Answer honestly about where your business is today—not where you want it to be. The more honest you are, the more useful your results.</p>
+          <button onclick="startAssessment()" class="gold-gradient px-8 py-4 rounded-xl font-bold text-[#0F172A] hover:opacity-90 transition-all w-full max-w-xs">
+            Let's Find Your Hidden Revenue
           </button>
-
-          <p class="text-xs text-[#64748B] mt-4">
-            Your result will be sent by email. If a session spot is available, your waitlist request will be recorded.
-          </p>
-        </form>
-
-        <button onclick="goBackToLastQuestion()" class="mt-6 text-[#94A3B8] hover:text-[#F59E0B] text-sm transition-colors">
-          ← Review my answers
-        </button>
-      </div>
-    `;
-  }
-
-  function renderResults(scores, submitStatus = null) {
-    const { categoryScores, percentScore, tier } = scores;
-    const recommendations = getRecommendations(categoryScores);
-
-    const categoryLabels = {
-      lead_handling: { name: "Lead Handling", max: 6, icon: "🎣" },
-      follow_up: { name: "Follow-Up Systems", max: 4, icon: "🔄" },
-      offer_flow: { name: "Offer to Payment", max: 6, icon: "💳" },
-      delivery: { name: "Delivery & Operations", max: 4, icon: "⚙️" }
-    };
-
-    const tierExplanations = {
-      "Revenue Leak Zone": "Your operations have significant gaps that are likely costing you revenue. The upside is obvious: there is room to recover value quickly.",
-      "Operational Friction": "You have pieces in place, but inconsistency is creating drag. Growth becomes harder when the business depends on memory instead of structure.",
-      "Growth Opportunity": "Your foundation is reasonably solid. The next step is tightening weak spots so the business becomes easier to run and easier to scale.",
-      "Strong Systems": "Your systems are doing real work for you. Focus on refinement, measurement, and selective optimization."
-    };
-
-    const waitlistBanner = submitStatus
-      ? submitStatus.accepted
-        ? `
-          <div class="bg-[#052e1a] border border-[#10B981]/40 rounded-xl p-4 mb-6 text-left">
-            <p class="font-semibold text-[#10B981] mb-1">You secured a waitlist spot.</p>
-            <p class="text-sm text-[#cbd5e1]">Your assessment result has been sent to <strong>${escapeHtml(userEmail)}</strong>. You are within the first ${WAITLIST_LIMIT} submissions for the Done-With-You session.</p>
-          </div>
-        `
-        : `
-          <div class="bg-[#3b0a0a] border border-[#EF4444]/40 rounded-xl p-4 mb-6 text-left">
-            <p class="font-semibold text-[#EF4444] mb-1">The first ${WAITLIST_LIMIT} spots are full.</p>
-            <p class="text-sm text-[#cbd5e1]">Your assessment result has still been sent to <strong>${escapeHtml(userEmail)}</strong>. You can keep the page live for a general interest list or direct them to a later round.</p>
-          </div>
-        `
-      : `
-        <div class="bg-[#0F172A] border border-[#334155] rounded-xl p-4 mb-6 text-left">
-          <p class="text-sm text-[#cbd5e1]">Your assessment result should arrive by email after successful submission.</p>
         </div>
       `;
+    }
 
-    return `
-      <div class="p-6 md:p-8">
-        ${waitlistBanner}
-
-        <div class="text-center mb-8">
-          <div class="text-5xl mb-4">${tier.emoji}</div>
-          <div class="inline-flex items-center justify-center w-32 h-32 rounded-full border-4 mb-4" style="border-color: ${tier.color}">
-            <span class="text-4xl font-bold">${percentScore}%</span>
+    function renderQuestion(index) {
+      const question = assessmentQuestions[index];
+      const progress = Math.round(((index + 1) / assessmentQuestions.length) * 100);
+      const categoryLabels = {
+        lead_handling: "Lead Handling",
+        follow_up: "Follow-Up Systems",
+        offer_flow: "Offer to Payment",
+        delivery: "Delivery & Operations"
+      };
+      
+      return `
+        <div class="p-6 md:p-8">
+          <!-- Progress bar -->
+          <div class="mb-6">
+            <div class="flex justify-between text-sm text-[#94A3B8] mb-2">
+              <span>Question ${index + 1} of ${assessmentQuestions.length}</span>
+              <span class="text-[#F59E0B]">${categoryLabels[question.category]}</span>
+            </div>
+            <div class="h-2 bg-[#0F172A] rounded-full overflow-hidden">
+              <div class="h-full gold-gradient transition-all duration-500" style="width: ${progress}%"></div>
+            </div>
           </div>
-          <h2 class="font-display text-2xl md:text-3xl mb-2" style="color: ${tier.color}">${tier.name}</h2>
-          <p class="text-[#94A3B8] max-w-md mx-auto">${tierExplanations[tier.name]}</p>
-        </div>
-
-        <div class="bg-[#0F172A] rounded-xl p-6 mb-8">
-          <h3 class="font-semibold mb-4">Your Score Breakdown</h3>
-          <div class="space-y-4">
-            ${Object.entries(categoryScores).map(([cat, score]) => {
-              const catInfo = categoryLabels[cat];
-              const percentage = Math.round((score / catInfo.max) * 100);
-              return `
-                <div>
-                  <div class="flex justify-between text-sm mb-1">
-                    <span class="flex items-center gap-2">${catInfo.icon} ${catInfo.name}</span>
-                    <span class="text-[#F59E0B]">${score}/${catInfo.max}</span>
+          
+          <!-- Question -->
+          <div class="mb-8">
+            <h3 class="text-lg md:text-xl font-medium leading-relaxed">${question.prompt}</h3>
+          </div>
+          
+          <!-- Options -->
+          <div class="space-y-3">
+            ${question.options.map((option, optIndex) => `
+              <button 
+                onclick="selectAnswer(${question.id}, ${option.score}, ${index})"
+                class="w-full text-left p-4 rounded-xl border-2 transition-all hover:border-[#F59E0B] hover:bg-[#F59E0B]/10 ${answers[question.id] === option.score ? 'border-[#F59E0B] bg-[#F59E0B]/10' : 'border-[#334155] bg-[#0F172A]'}"
+              >
+                <div class="flex items-center gap-3">
+                  <div class="w-6 h-6 rounded-full border-2 flex items-center justify-center flex-shrink-0 ${answers[question.id] === option.score ? 'border-[#F59E0B] bg-[#F59E0B]' : 'border-[#475569]'}">
+                    ${answers[question.id] === option.score ? '<svg class="w-4 h-4 text-[#0F172A]" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/></svg>' : ''}
                   </div>
-                  <div class="h-2 bg-[#334155] rounded-full overflow-hidden">
-                    <div class="h-full transition-all duration-1000" style="width: ${percentage}%; background: ${percentage >= 66 ? '#10B981' : percentage >= 33 ? '#F59E0B' : '#EF4444'}"></div>
-                  </div>
+                  <span class="text-sm md:text-base">${option.text}</span>
                 </div>
-              `;
-            }).join("")}
+              </button>
+            `).join('')}
+          </div>
+          
+          <!-- Navigation -->
+          <div class="flex gap-4 mt-8">
+            ${index > 0 ? `
+              <button onclick="prevQuestion(${index})" class="px-6 py-3 rounded-xl border border-[#475569] text-[#94A3B8] hover:border-[#F59E0B] hover:text-[#F59E0B] transition-all">
+                ← Back
+              </button>
+            ` : ''}
+            <div class="flex-1"></div>
           </div>
         </div>
+      `;
+    }
 
-        <div class="mb-8">
-          <h3 class="font-semibold mb-4">Your Top 3 Opportunities</h3>
-          <div class="space-y-4">
-            ${recommendations.map((rec, i) => `
-              <div class="bg-[#0F172A] rounded-xl p-4 border border-[#334155]">
-                <div class="flex items-start gap-3">
-                  <div class="text-2xl">${rec.icon}</div>
-                  <div>
-                    <h4 class="font-medium text-[#F59E0B] mb-1">${i + 1}. ${rec.title}</h4>
-                    <p class="text-sm text-[#94A3B8]">${rec.description}</p>
-                  </div>
-                </div>
-              </div>
-            `).join("")}
-          </div>
-        </div>
-
-        <div class="bg-gradient-to-br from-[#F59E0B]/20 to-[#D97706]/20 rounded-xl p-6 border border-[#F59E0B]/30 text-center">
-          <h3 class="font-display text-xl mb-2">Done-With-You Session Waitlist</h3>
-          <p class="text-[#94A3B8] text-sm mb-4">
-            This session is reserved for a limited first round of ${WAITLIST_LIMIT} business owners. Your assessment has already done the heavy lifting. Good systems appreciate a head start.
-          </p>
-          <p class="text-xs text-[#64748B]">Results delivered by email from l.dukes@regencreatives.com</p>
-        </div>
-
-        <div class="text-center mt-6">
-          <button onclick="resetAssessment()" class="text-[#94A3B8] hover:text-[#F59E0B] text-sm transition-colors">
-            Take the assessment again
+    function renderEmailCapture() {
+      return `
+        <div class="p-6 md:p-8 text-center">
+          <div class="text-5xl mb-6">📧</div>
+          <h3 class="font-display text-2xl mb-4">See Your Results!</h3>
+          <p class="text-[#94A3B8] mb-6">Enter your email to receive your Hidden Revenue Score and personalized recommendations.</p>
+          
+          <form onsubmit="submitEmail(event)" class="max-w-sm mx-auto">
+            <input 
+              type="email" 
+              id="email-input"
+              placeholder="you@yourbusiness.com" 
+              required
+              class="w-full px-4 py-3 rounded-xl bg-[#0F172A] border border-[#475569] text-[#F8FAFC] placeholder-[#64748B] focus:border-[#F59E0B] focus:outline-none mb-4"
+            >
+            <button 
+              type="submit" 
+              id="submit-email-btn"
+              class="gold-gradient px-8 py-3 rounded-xl font-bold text-[#0F172A] hover:opacity-90 transition-all w-full disabled:opacity-50"
+            >
+              <span id="submit-btn-text">Unlock My Results</span>
+              <span id="submit-btn-loading" class="hidden">
+                <svg class="animate-spin h-5 w-5 mx-auto" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                  <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                  <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                </svg>
+              </span>
+            </button>
+            <p class="text-xs text-[#64748B] mt-4">We'll send your complete assessment to this email.</p>
+          </form>
+          
+          <button onclick="goBackToLastQuestion()" class="mt-6 text-[#94A3B8] hover:text-[#F59E0B] text-sm transition-colors">
+            ← Review my answers
           </button>
         </div>
-      </div>
-    `;
-  }
+      `;
+    }
 
-  function renderSubmissionError(message) {
-    return `
-      <div class="p-6 md:p-8 text-center">
-        <div class="text-5xl mb-6">⚠️</div>
-        <h3 class="font-display text-2xl mb-4">Something went wrong</h3>
-        <p class="text-[#94A3B8] mb-6 max-w-md mx-auto">${message}</p>
-        <button onclick="renderAssessment()" class="gold-gradient px-8 py-3 rounded-xl font-bold text-[#0F172A] hover:opacity-90 transition-all">
-          Start Over
-        </button>
-      </div>
-    `;
-  }
+    function renderResults(scores) {
+      const { categoryScores, percentScore, tier } = scores;
+      const recommendations = getRecommendations(categoryScores);
+      
+      const categoryLabels = {
+        lead_handling: { name: "Lead Handling", max: 6, icon: "🎣" },
+        follow_up: { name: "Follow-Up Systems", max: 4, icon: "🔄" },
+        offer_flow: { name: "Offer to Payment", max: 6, icon: "💳" },
+        delivery: { name: "Delivery & Operations", max: 4, icon: "⚙️" }
+      };
 
-  function escapeHtml(value) {
-    return String(value)
-      .replace(/&/g, "&amp;")
-      .replace(/</g, "&lt;")
-      .replace(/>/g, "&gt;")
-      .replace(/"/g, "&quot;")
-      .replace(/'/g, "&#039;");
-  }
+      const tierExplanations = {
+        "Revenue Leak Zone": "Your operations have significant gaps that are actively costing you money. The good news? This means there's substantial hidden revenue waiting to be recovered. Small fixes can create big wins quickly.",
+        "Operational Friction": "You have some systems in place, but inconsistency is creating friction that slows growth and loses leads. You're leaving money on the table, but you're not far from turning this around.",
+        "Growth Opportunity": "Your foundation is solid, but there are clear opportunities to optimize and capture more revenue. You're positioned well—now it's about fine-tuning for maximum impact.",
+        "Strong Systems": "Your operations are working for you, not against you. Focus on optimization and scaling what's already working. You're ahead of most small businesses."
+      };
+      
+      return `
+        <div class="p-6 md:p-8">
+          <!-- Score Display -->
+          <div class="text-center mb-8">
+            <div class="text-5xl mb-4">${tier.emoji}</div>
+            <div class="inline-flex items-center justify-center w-32 h-32 rounded-full border-4 mb-4" style="border-color: ${tier.color}">
+              <span class="text-4xl font-bold">${percentScore}%</span>
+            </div>
+            <h2 class="font-display text-2xl md:text-3xl mb-2" style="color: ${tier.color}">${tier.name}</h2>
+            <p class="text-[#94A3B8] max-w-md mx-auto">${tierExplanations[tier.name]}</p>
+          </div>
+          
+          <!-- Category Breakdown -->
+          <div class="bg-[#0F172A] rounded-xl p-6 mb-8">
+            <h3 class="font-semibold mb-4">Your Score Breakdown</h3>
+            <div class="space-y-4">
+              ${Object.entries(categoryScores).map(([cat, score]) => {
+                const catInfo = categoryLabels[cat];
+                const percentage = Math.round((score / catInfo.max) * 100);
+                return `
+                  <div>
+                    <div class="flex justify-between text-sm mb-1">
+                      <span class="flex items-center gap-2">${catInfo.icon} ${catInfo.name}</span>
+                      <span class="text-[#F59E0B]">${score}/${catInfo.max}</span>
+                    </div>
+                    <div class="h-2 bg-[#334155] rounded-full overflow-hidden">
+                      <div class="h-full transition-all duration-1000" style="width: ${percentage}%; background: ${percentage >= 66 ? '#10B981' : percentage >= 33 ? '#F59E0B' : '#EF4444'}"></div>
+                    </div>
+                  </div>
+                `;
+              }).join('')}
+            </div>
+          </div>
+          
+          <!-- Recommendations -->
+          <div class="mb-8">
+            <h3 class="font-semibold mb-4">Your Top 3 Opportunities</h3>
+            <div class="space-y-4">
+              ${recommendations.map((rec, i) => `
+                <div class="bg-[#0F172A] rounded-xl p-4 border border-[#334155]">
+                  <div class="flex items-start gap-3">
+                    <div class="text-2xl">${rec.icon}</div>
+                    <div>
+                      <h4 class="font-medium text-[#F59E0B] mb-1">${i + 1}. ${rec.title}</h4>
+                      <p class="text-sm text-[#94A3B8]">${rec.description}</p>
+                    </div>
+                  </div>
+                </div>
+              `).join('')}
+            </div>
+          </div>
+          
+          <!-- CTA -->
+          <div class="bg-gradient-to-br from-[#F59E0B]/20 to-[#D97706]/20 rounded-xl p-6 border border-[#F59E0B]/30 text-center">
+            <h3 class="font-display text-xl mb-2">Ready to Create Your Complete Revenue Map?</h3>
+            <p class="text-[#94A3B8] text-sm mb-4">In a 60-minute Done-With-You session, we'll turn these insights into an actionable plan specific to your business.</p>
+            <a href="https://calendly.com" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-2 gold-gradient px-6 py-3 rounded-xl font-bold text-[#0F172A] hover:opacity-90 transition-all">
+              <span>Book Your Hidden Revenue Map Session</span>
+              <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/>
+              </svg>
+            </a>
+            <p class="text-xs text-[#64748B] mt-3">Limited spots available each month</p>
+          </div>
+          
+          <!-- Retake -->
+          <div class="text-center mt-6">
+            <button onclick="resetAssessment()" class="text-[#94A3B8] hover:text-[#F59E0B] text-sm transition-colors">
+              Take the assessment again
+            </button>
+          </div>
+        </div>
+      `;
+    }
 
-  // Event handlers
-  function startAssessment() {
-    currentQuestion = 0;
-    answers = {};
-    submissionResult = null;
-    const container = document.getElementById("assessment-container");
-    container.innerHTML = renderQuestion(0);
-  }
+    // Event handlers
+    function startAssessment() {
+      currentQuestion = 0;
+      answers = {};
+      const container = document.getElementById('assessment-container');
+      container.innerHTML = renderQuestion(0);
+    }
 
-  function selectAnswer(questionId, score, questionIndex) {
-    answers[questionId] = score;
+    function selectAnswer(questionId, score, questionIndex) {
+      answers[questionId] = score;
+      
+      // Brief delay to show selection, then auto-advance
+      setTimeout(() => {
+        if (questionIndex < assessmentQuestions.length - 1) {
+          currentQuestion = questionIndex + 1;
+          const container = document.getElementById('assessment-container');
+          container.innerHTML = renderQuestion(currentQuestion);
+        } else {
+          // Show email capture
+          const container = document.getElementById('assessment-container');
+          container.innerHTML = renderEmailCapture();
+        }
+      }, 300);
+    }
 
-    setTimeout(() => {
-      if (questionIndex < assessmentQuestions.length - 1) {
-        currentQuestion = questionIndex + 1;
-        const container = document.getElementById("assessment-container");
+    function prevQuestion(currentIndex) {
+      if (currentIndex > 0) {
+        currentQuestion = currentIndex - 1;
+        const container = document.getElementById('assessment-container');
         container.innerHTML = renderQuestion(currentQuestion);
-      } else {
-        const container = document.getElementById("assessment-container");
-        container.innerHTML = renderEmailCapture();
       }
-    }, 300);
-  }
-
-  function prevQuestion(currentIndex) {
-    if (currentIndex > 0) {
-      currentQuestion = currentIndex - 1;
-      const container = document.getElementById("assessment-container");
-      container.innerHTML = renderQuestion(currentQuestion);
-    }
-  }
-
-  function goBackToLastQuestion() {
-    const container = document.getElementById("assessment-container");
-    container.innerHTML = renderQuestion(assessmentQuestions.length - 1);
-  }
-
-  async function submitEmail(e) {
-    e.preventDefault();
-
-    if (isSubmitting) return;
-
-    const nameInput = document.getElementById("name-input");
-    const emailInput = document.getElementById("email-input");
-    const submitBtn = document.getElementById("submit-email-btn");
-    const btnText = document.getElementById("submit-btn-text");
-    const btnLoading = document.getElementById("submit-btn-loading");
-
-    userName = nameInput.value.trim();
-    userEmail = emailInput.value.trim();
-
-    if (!userName || !userEmail) {
-      return;
     }
 
-    isSubmitting = true;
-    submitBtn.disabled = true;
-    btnText.classList.add("hidden");
-    btnLoading.classList.remove("hidden");
+    function goBackToLastQuestion() {
+      const container = document.getElementById('assessment-container');
+      container.innerHTML = renderQuestion(assessmentQuestions.length - 1);
+    }
 
-    const scores = calculateScores();
-    const payload = buildSubmissionPayload(scores);
-
-    try {
-      const result = await submitToWaitlist(payload);
-      submissionResult = result;
-
-      const container = document.getElementById("assessment-container");
-      container.innerHTML = renderResults(scores, submissionResult);
-    } catch (error) {
-      console.error("Assessment submission error:", error);
-      const container = document.getElementById("assessment-container");
-      container.innerHTML = renderSubmissionError("Your result could not be submitted just now. Please try again in a moment.");
-    } finally {
+    async function submitEmail(e) {
+      e.preventDefault();
+      
+      if (isSubmitting) return;
+      
+      const emailInput = document.getElementById('email-input');
+      const submitBtn = document.getElementById('submit-email-btn');
+      const btnText = document.getElementById('submit-btn-text');
+      const btnLoading = document.getElementById('submit-btn-loading');
+      
+      userEmail = emailInput.value;
+      
+      // Show loading state
+      isSubmitting = true;
+      submitBtn.disabled = true;
+      btnText.classList.add('hidden');
+      btnLoading.classList.remove('hidden');
+      
+      // Calculate scores
+      const scores = calculateScores();
+      
+      // Simulate processing delay
+      await new Promise(resolve => setTimeout(resolve, 800));
+      
       isSubmitting = false;
+      
+      // Show results
+      const container = document.getElementById('assessment-container');
+      container.innerHTML = renderResults(scores);
     }
-  }
 
-  function resetAssessment() {
-    currentQuestion = 0;
-    answers = {};
-    userEmail = "";
-    userName = "";
-    submissionResult = null;
+    function resetAssessment() {
+      currentQuestion = 0;
+      answers = {};
+      userEmail = "";
+      renderAssessment();
+    }
+
+    // Initialize
     renderAssessment();
-  }
-
-  renderAssessment();
-</script>
+  </script>
  <script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'9db45a71839db628',t:'MTc3MzMzNDgwNy4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
 </html>

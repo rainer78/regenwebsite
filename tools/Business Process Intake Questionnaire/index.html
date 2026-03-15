@@ -6,7 +6,6 @@
   <title>Business Process Intake Questionnaire</title>
   <script src="https://cdn.tailwindcss.com/3.4.17"></script>
   <script src="https://cdn.jsdelivr.net/npm/lucide@0.263.0/dist/umd/lucide.min.js"></script>
-  <script src="/_sdk/element_sdk.js"></script>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&amp;family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&amp;display=swap" rel="stylesheet">
   <style>
@@ -148,10 +147,13 @@
     @keyframes spin { to { transform: rotate(360deg); } }
   </style>
   <style>body { box-sizing: border-box; }</style>
+  <script type="text/javascript"></script>
   <script src="/_sdk/data_sdk.js" type="text/javascript"></script>
+  <script src="/_sdk/element_sdk.js" type="text/javascript"></script>
  </head>
  <body class="h-full">
-  <div id="app-wrapper" class="h-full w-full overflow-auto" style="background: var(--bg-color);"><!-- Header -->
+  <div id="app-wrapper" class="h-full w-full overflow-auto" style="background: var(--bg-color);">
+   <!-- Header -->
    <header class="w-full" style="background: var(--surface-color); border-bottom: 1px solid #E8E4DD;">
     <div class="max-w-2xl mx-auto px-5 py-5">
      <p class="text-xs font-semibold tracking-widest uppercase mb-1" style="color: var(--primary-color);">Consulting Intake</p>
@@ -164,17 +166,20 @@
     <p class="text-xs font-medium" style="color: #8A857D;" id="progress-label">Step 1 of 7</p>
    </div><!-- Form Container -->
    <main class="max-w-2xl mx-auto px-5 pb-32">
-    <form id="intake-form" novalidate><input type="hidden" name="submission_source" value="CCBB Intake">
+    <form id="intake-form" novalidate>
+     <input type="hidden" name="submission_source" value="CCBB Intake">
      <div id="step-container"></div>
     </form>
    </main><!-- Navigation Footer -->
    <div id="nav-footer" class="fixed bottom-0 left-0 right-0" style="background: var(--surface-color); border-top: 1px solid #E8E4DD;">
-    <div class="max-w-2xl mx-auto px-5 py-4 flex justify-between items-center"><button type="button" id="btn-back" class="btn-secondary" style="visibility: hidden;"> <span class="flex items-center gap-2"><i data-lucide="arrow-left" style="width:16px;height:16px;"></i> Back</span> </button> <button type="button" id="btn-next" class="btn-primary"> <span id="btn-next-label" class="flex items-center gap-2">Continue <i data-lucide="arrow-right" style="width:16px;height:16px;"></i></span> </button>
+    <div class="max-w-2xl mx-auto px-5 py-4 flex justify-between items-center">
+     <button type="button" id="btn-back" class="btn-secondary" style="visibility: hidden;"> <span class="flex items-center gap-2"><i data-lucide="arrow-left" style="width:16px;height:16px;"></i> Back</span> </button> <button type="button" id="btn-next" class="btn-primary"> <span id="btn-next-label" class="flex items-center gap-2">Continue <i data-lucide="arrow-right" style="width:16px;height:16px;"></i></span> </button>
     </div>
    </div><!-- Success Screen (hidden) -->
    <div id="success-screen" class="hidden" style="position: fixed; inset: 0; background: var(--bg-color); z-index: 50; display: none; align-items: center; justify-content: center;">
     <div class="success-screen text-center px-6 max-w-md">
-     <div class="mx-auto mb-6 flex items-center justify-center" style="width:72px;height:72px;border-radius:50%;background:#F0F5F3;"><i data-lucide="check-circle" style="width:36px;height:36px;color:var(--primary-color);"></i>
+     <div class="mx-auto mb-6 flex items-center justify-center" style="width:72px;height:72px;border-radius:50%;background:#F0F5F3;">
+      <i data-lucide="check-circle" style="width:36px;height:36px;color:var(--primary-color);"></i>
      </div>
      <h2 class="font-display text-2xl font-600 mb-3" style="color:var(--text-color);">Questionnaire Submitted</h2>
      <p class="text-sm mb-6" style="color:#8A857D;line-height:1.6;">Thank you for completing the intake questionnaire. We'll review your responses and prepare tailored recommendations for your consulting session.</p><button type="button" class="btn-primary" onclick="resetForm()">Start New Submission</button>
@@ -309,33 +314,36 @@
       }
     }
 
-    window.elementSdk.init({
-      defaultConfig,
-      onConfigChange: async (config) => { applyConfig(config); },
-      mapToCapabilities: (config) => ({
-        recolorables: [
-          { get: () => config.background_color || defaultConfig.background_color, set: (v) => { config.background_color = v; window.elementSdk.setConfig({ background_color: v }); } },
-          { get: () => config.surface_color || defaultConfig.surface_color, set: (v) => { config.surface_color = v; window.elementSdk.setConfig({ surface_color: v }); } },
-          { get: () => config.text_color || defaultConfig.text_color, set: (v) => { config.text_color = v; window.elementSdk.setConfig({ text_color: v }); } },
-          { get: () => config.primary_color || defaultConfig.primary_color, set: (v) => { config.primary_color = v; window.elementSdk.setConfig({ primary_color: v }); } },
-          { get: () => config.secondary_color || defaultConfig.secondary_color, set: (v) => { config.secondary_color = v; window.elementSdk.setConfig({ secondary_color: v }); } }
-        ],
-        borderables: [],
-        fontEditable: {
-          get: () => config.font_family || defaultConfig.font_family,
-          set: (v) => { config.font_family = v; window.elementSdk.setConfig({ font_family: v }); }
-        },
-        fontSizeable: {
-          get: () => config.font_size || defaultConfig.font_size,
-          set: (v) => { config.font_size = v; window.elementSdk.setConfig({ font_size: v }); }
-        }
-      }),
-      mapToEditPanelValues: (config) => new Map([
-        ['form_title', config.form_title || defaultConfig.form_title],
-        ['form_subtitle', config.form_subtitle || defaultConfig.form_subtitle],
-        ['submit_button_text', config.submit_button_text || defaultConfig.submit_button_text]
-      ])
-    });
+    // Initialize SDK if available (Canva environment)
+    if (window.elementSdk) {
+      window.elementSdk.init({
+        defaultConfig,
+        onConfigChange: async (config) => { applyConfig(config); },
+        mapToCapabilities: (config) => ({
+          recolorables: [
+            { get: () => config.background_color || defaultConfig.background_color, set: (v) => { config.background_color = v; window.elementSdk.setConfig({ background_color: v }); } },
+            { get: () => config.surface_color || defaultConfig.surface_color, set: (v) => { config.surface_color = v; window.elementSdk.setConfig({ surface_color: v }); } },
+            { get: () => config.text_color || defaultConfig.text_color, set: (v) => { config.text_color = v; window.elementSdk.setConfig({ text_color: v }); } },
+            { get: () => config.primary_color || defaultConfig.primary_color, set: (v) => { config.primary_color = v; window.elementSdk.setConfig({ primary_color: v }); } },
+            { get: () => config.secondary_color || defaultConfig.secondary_color, set: (v) => { config.secondary_color = v; window.elementSdk.setConfig({ secondary_color: v }); } }
+          ],
+          borderables: [],
+          fontEditable: {
+            get: () => config.font_family || defaultConfig.font_family,
+            set: (v) => { config.font_family = v; window.elementSdk.setConfig({ font_family: v }); }
+          },
+          fontSizeable: {
+            get: () => config.font_size || defaultConfig.font_size,
+            set: (v) => { config.font_size = v; window.elementSdk.setConfig({ font_size: v }); }
+          }
+        }),
+        mapToEditPanelValues: (config) => new Map([
+          ['form_title', config.form_title || defaultConfig.form_title],
+          ['form_subtitle', config.form_subtitle || defaultConfig.form_subtitle],
+          ['submit_button_text', config.submit_button_text || defaultConfig.submit_button_text]
+        ])
+      });
+    }
 
     // ============ RENDER ============
     function buildProgressBar() {
@@ -586,5 +594,5 @@
     renderStep();
     lucide.createIcons();
   </script>
- <script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'9dc8273271015193',t:'MTc3MzU0MjQyMy4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+ <script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'9dc8381f633244dc',t:'MTc3MzU0MzExNi4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
 </html>

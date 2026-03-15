@@ -1,13 +1,14 @@
 <!doctype html>
 <html lang="en" class="h-full">
- <head>
+<head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Business Process Intake Questionnaire</title>
   <script src="https://cdn.tailwindcss.com/3.4.17"></script>
   <script src="https://cdn.jsdelivr.net/npm/lucide@0.263.0/dist/umd/lucide.min.js"></script>
   <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&amp;family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&amp;display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&display=swap" rel="stylesheet">
+
   <style>
     :root {
       --bg-color: #F7F5F0;
@@ -16,78 +17,61 @@
       --primary-color: #3D6B5E;
       --secondary-color: #B8A88A;
     }
+
     html, body { height: 100%; margin: 0; }
-    body { font-family: 'DM Sans', sans-serif; background: var(--bg-color); color: var(--text-color); }
+    body {
+      font-family: 'DM Sans', sans-serif;
+      background: var(--bg-color);
+      color: var(--text-color);
+      box-sizing: border-box;
+      -webkit-text-size-adjust: 100%;
+    }
+
+    *, *:before, *:after { box-sizing: inherit; }
+
     .font-display { font-family: 'Fraunces', serif; }
 
-    .step-enter { animation: stepIn 0.4s cubic-bezier(0.22, 1, 0.36, 1) forwards; }
     @keyframes stepIn {
       from { opacity: 0; transform: translateY(16px); }
       to { opacity: 1; transform: translateY(0); }
     }
-/* Older Safari / Chrome flex-gap fallback */
-.question-options > * + * { margin-top: 12px; }
-.action-buttons > * + * { margin-left: 12px; }
-#nav-buttons-container > * + * { margin-left: 12px; }
-#progress-bar > * + * { margin-left: 8px; }
 
-/* Better button behavior on older iPads */
-button {
-  -webkit-appearance: none;
-  appearance: none;
-}
-
-/* Prevent zoom weirdness on iOS inputs */
-input, textarea, select {
-  font-size: 16px;
-}
-    .radio-option {
-      transition: all 0.2s ease;
-      border: 2px solid #E8E4DD;
-      cursor: pointer;
-    }
-    .radio-option:hover { border-color: var(--secondary-color); background: #FDFCFA; }
-    .radio-option.selected {
-      border-color: var(--primary-color);
-      background: #F0F5F3;
-    }
-    .radio-option.selected .radio-dot {
-      background: var(--primary-color);
-      box-shadow: 0 0 0 3px #F0F5F3, 0 0 0 5px var(--primary-color);
-    }
-    .radio-dot {
-      width: 18px; height: 18px; border-radius: 50%;
-      border: 2px solid #C9C4BC; transition: all 0.2s ease;
-      flex-shrink: 0;
+    @keyframes toastIn {
+      from { opacity: 0; transform: translateX(-50%) translateY(12px); }
+      to { opacity: 1; transform: translateX(-50%) translateY(0); }
     }
 
-    .checkbox-option {
-      transition: all 0.2s ease;
-      border: 2px solid #E8E4DD;
-      cursor: pointer;
+    @keyframes toastOut {
+      to { opacity: 0; transform: translateX(-50%) translateY(12px); }
     }
-    .checkbox-option:hover { border-color: var(--secondary-color); background: #FDFCFA; }
-    .checkbox-option.selected {
-      border-color: var(--primary-color);
-      background: #F0F5F3;
-    }
-    .checkbox-option.selected .check-box {
-      background: var(--primary-color);
-      border-color: var(--primary-color);
-    }
-    .check-box {
-      width: 18px; height: 18px; border-radius: 4px;
-      border: 2px solid #C9C4BC; transition: all 0.2s ease;
-      flex-shrink: 0; display: flex; align-items: center; justify-content: center;
-    }
-    .check-box svg { opacity: 0; transition: opacity 0.15s; }
-    .checkbox-option.selected .check-box svg { opacity: 1; }
 
-    input[type="text"], input[type="number"], textarea, select {
+    @keyframes successIn {
+      from { opacity: 0; transform: scale(0.95); }
+      to { opacity: 1; transform: scale(1); }
+    }
+
+    @keyframes spin {
+      to { transform: rotate(360deg); }
+    }
+
+    @keyframes pulse-mic {
+      0%, 100% { transform: scale(1); opacity: 1; }
+      50% { transform: scale(1.15); opacity: 0.7; }
+    }
+
+    @keyframes slideIn {
+      from { opacity: 0; transform: translateY(16px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    input[type="text"],
+    input[type="number"],
+    textarea,
+    select {
       border: 2px solid #E8E4DD;
       border-radius: 10px;
       padding: 12px 16px;
-      font-size: 15px;
+      font-size: 16px;
       font-family: 'DM Sans', sans-serif;
       color: var(--text-color);
       background: var(--surface-color);
@@ -95,30 +79,50 @@ input, textarea, select {
       transition: border-color 0.2s, box-shadow 0.2s;
       outline: none;
       box-sizing: border-box;
+      -webkit-appearance: none;
+      appearance: none;
     }
-    input:focus, textarea:focus, select:focus {
+
+    input:focus,
+    textarea:focus,
+    select:focus {
       border-color: var(--primary-color);
       box-shadow: 0 0 0 3px rgba(61,107,94,0.1);
     }
-    textarea { resize: vertical; min-height: 80px; }
+
+    textarea {
+      resize: vertical;
+      min-height: 80px;
+    }
 
     .progress-segment {
-      height: 4px; border-radius: 2px; background: #E8E4DD;
-      flex: 1; transition: background 0.4s ease;
+      height: 4px;
+      border-radius: 2px;
+      background: #E8E4DD;
+      flex: 1;
+      transition: background 0.4s ease;
     }
-    .progress-segment.active { background: var(--primary-color); }
-    .progress-segment.done { background: var(--primary-color); }
+
+    .progress-segment.active,
+    .progress-segment.done {
+      background: var(--primary-color);
+    }
 
     .btn-primary {
       background: var(--primary-color);
       color: #fff;
-      border: none; border-radius: 10px;
+      border: none;
+      border-radius: 10px;
       padding: 14px 28px;
-      font-size: 15px; font-weight: 600;
+      font-size: 15px;
+      font-weight: 600;
       font-family: 'DM Sans', sans-serif;
       cursor: pointer;
       transition: all 0.2s ease;
+      -webkit-appearance: none;
+      appearance: none;
     }
+
     .btn-primary:hover { filter: brightness(1.1); transform: translateY(-1px); }
     .btn-primary:disabled { opacity: 0.5; cursor: not-allowed; transform: none; filter: none; }
 
@@ -128,128 +132,234 @@ input, textarea, select {
       border: 2px solid #E8E4DD;
       border-radius: 10px;
       padding: 12px 24px;
-      font-size: 15px; font-weight: 500;
+      font-size: 15px;
+      font-weight: 500;
       font-family: 'DM Sans', sans-serif;
       cursor: pointer;
       transition: all 0.2s ease;
+      -webkit-appearance: none;
+      appearance: none;
     }
-    .btn-secondary:hover { border-color: var(--secondary-color); background: #FDFCFA; }
+
+    .btn-secondary:hover {
+      border-color: var(--secondary-color);
+      background: #FDFCFA;
+    }
 
     .toast-msg {
-      position: fixed; bottom: 24px; left: 50%; transform: translateX(-50%);
-      padding: 14px 24px; border-radius: 10px;
-      font-size: 14px; font-weight: 500; z-index: 100;
+      position: fixed;
+      bottom: 24px;
+      left: 50%;
+      transform: translateX(-50%);
+      padding: 14px 24px;
+      border-radius: 10px;
+      font-size: 14px;
+      font-weight: 500;
+      z-index: 100;
       animation: toastIn 0.3s ease forwards;
       max-width: 90%;
     }
+
     .toast-msg.success { background: var(--primary-color); color: #fff; }
     .toast-msg.error { background: #C2453D; color: #fff; }
-    @keyframes toastIn {
-      from { opacity: 0; transform: translateX(-50%) translateY(12px); }
-      to { opacity: 1; transform: translateX(-50%) translateY(0); }
-    }
-    @keyframes toastOut {
-      to { opacity: 0; transform: translateX(-50%) translateY(12px); }
+
+    .success-screen {
+      animation: successIn 0.5s cubic-bezier(0.22,1,0.36,1) forwards;
     }
 
-    .success-screen { animation: successIn 0.5s cubic-bezier(0.22,1,0.36,1) forwards; }
-    @keyframes successIn {
-      from { opacity: 0; transform: scale(0.95); }
-      to { opacity: 1; transform: scale(1); }
+    .spinner {
+      display: inline-block;
+      width: 18px;
+      height: 18px;
+      border: 2px solid rgba(255,255,255,0.3);
+      border-top-color: #fff;
+      border-radius: 50%;
+      animation: spin 0.6s linear infinite;
+      vertical-align: middle;
     }
 
-    .spinner { display: inline-block; width: 18px; height: 18px; border: 2px solid rgba(255,255,255,0.3); border-top-color: #fff; border-radius: 50%; animation: spin 0.6s linear infinite; }
-    @keyframes spin { to { transform: rotate(360deg); } }
+    .voice-input-wrapper {
+      position: relative;
+      display: flex;
+      align-items: center;
+    }
 
-    .voice-input-wrapper { position: relative; display: flex; align-items: center; }
-    .voice-input-wrapper input, .voice-input-wrapper textarea { padding-right: 42px; }
+    .voice-input-wrapper input,
+    .voice-input-wrapper textarea {
+      padding-right: 42px;
+    }
+
     .voice-input-btn {
-      background: transparent; border: none; cursor: pointer;
-      padding: 8px; display: flex; align-items: center; justify-content: center;
-      color: var(--primary-color); transition: all 0.2s ease;
-      font-size: 0; line-height: 0;
+      background: transparent;
+      border: none;
+      cursor: pointer;
+      padding: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--primary-color);
+      transition: all 0.2s ease;
+      font-size: 0;
+      line-height: 0;
+      -webkit-appearance: none;
+      appearance: none;
     }
+
     .voice-input-btn:hover { color: var(--secondary-color); }
     .voice-input-btn.recording { animation: pulse-mic 0.6s ease-in-out infinite; }
-    @keyframes pulse-mic { 0%, 100% { transform: scale(1); opacity: 1; } 50% { transform: scale(1.15); opacity: 0.7; } }
-    .voice-input-wrapper .voice-input-btn { position: absolute; right: 6px; top: 50%; transform: translateY(-50%); }
-    .voice-input-wrapper textarea ~ .voice-input-btn { top: 8px; transform: translateY(0); }
 
-    @keyframes slideIn { from { opacity: 0; transform: translateY(16px); } to { opacity: 1; transform: translateY(0); } }
+    .voice-input-wrapper .voice-input-btn {
+      position: absolute;
+      right: 6px;
+      top: 50%;
+      transform: translateY(-50%);
+    }
 
-    .question-label { display: block; font-size: 16px; font-weight: 500; margin-bottom: 16px; color: var(--text-color); }
-    .question-options { display: flex; flex-direction: column; gap: 12px; }
+    .voice-input-wrapper textarea ~ .voice-input-btn {
+      top: 8px;
+      transform: translateY(0);
+    }
 
-    .option-btn { background: var(--surface-color); border: 2px solid #E8E4DD; border-radius: 12px; padding: 14px 16px; text-align: left; cursor: pointer; transition: all 0.2s ease; font-size: 15px; color: var(--text-color); font-family: 'DM Sans', sans-serif; }
-    .option-btn:hover { border-color: var(--secondary-color); background: #FDFCFA; }
-    .option-btn.selected { border-color: var(--primary-color); background: #F0F5F3; }
+    .question-label {
+      display: block;
+      font-size: 16px;
+      font-weight: 500;
+      margin-bottom: 16px;
+      color: var(--text-color);
+    }
 
-    .action-buttons { display: flex; gap: 12px; margin-top: 24px; justify-content: flex-end; }
+    .question-options {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .question-options > * + * { margin-top: 12px; }
+
+    .option-btn {
+      background: var(--surface-color);
+      border: 2px solid #E8E4DD;
+      border-radius: 12px;
+      padding: 14px 16px;
+      text-align: left;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      font-size: 15px;
+      color: var(--text-color);
+      font-family: 'DM Sans', sans-serif;
+      -webkit-appearance: none;
+      appearance: none;
+    }
+
+    .option-btn:hover {
+      border-color: var(--secondary-color);
+      background: #FDFCFA;
+    }
+
+    .option-btn.selected {
+      border-color: var(--primary-color);
+      background: #F0F5F3;
+    }
+
+    .action-buttons {
+      display: flex;
+      margin-top: 24px;
+      justify-content: flex-end;
+    }
+
+    .action-buttons > * + * { margin-left: 12px; }
+    #nav-buttons-container > * + * { margin-left: 12px; }
+    #progress-bar > * + * { margin-left: 8px; }
+
+    @media (max-width: 640px) {
+      .btn-primary,
+      .btn-secondary {
+        min-height: 48px;
+      }
+    }
   </style>
-  <style>body { box-sizing: border-box; }</style>
-  <script type="text/javascript"></script>
+
   <script src="/_sdk/data_sdk.js" type="text/javascript"></script>
   <script src="/_sdk/element_sdk.js" type="text/javascript"></script>
- </head>
- <body class="h-full">
-  <div id="app-wrapper" class="h-full w-full overflow-auto" style="background: var(--bg-color);"><!-- Header -->
-   <header class="w-full" style="background: var(--surface-color); border-bottom: 1px solid #E8E4DD; position: sticky; top: 0; z-index: 10;">
-    <div class="max-w-2xl mx-auto px-5 py-5">
-     <p class="text-xs font-semibold tracking-widest uppercase mb-1" style="color: var(--primary-color);">Consulting Intake</p>
-     <h1 id="form-title" class="font-display text-xl sm:text-2xl font-600" style="color: var(--text-color); line-height: 1.3;">Business Process Intake Questionnaire</h1>
-    </div>
-   </header><!-- Welcome Screen -->
-   <div id="welcome-screen" class="max-w-2xl mx-auto px-5 py-8">
-    <div style="background: var(--surface-color); border-radius: 16px; border: 1px solid #E8E4DD; padding: 48px 32px; text-align: center; animation: slideIn 0.5s cubic-bezier(0.22, 1, 0.36, 1) forwards;">
-     <div class="mb-6 flex items-center justify-center" style="width:80px;height:80px;border-radius:16px;background:linear-gradient(135deg, #F0F5F3 0%, #F9F7F3 100%);margin:0 auto;">
-      <i data-lucide="clipboard-list" style="width:40px;height:40px;color:var(--primary-color);"></i>
-     </div>
-     <h2 class="font-display text-2xl font-600 mb-3" style="color:var(--text-color);">Let's Get Started</h2>
-     <p id="form-subtitle" class="text-sm mb-8" style="color:#8A857D;line-height:1.6;">Help us understand your business so we can prepare for your consulting session.</p>
-     <p class="text-xs mb-8" style="color:#C9C4BC;">~10 minutes • 7 sections • One question at a time</p><button type="button" id="btn-start" class="btn-primary" style="width: 100%; max-width: 200px; margin: 0 auto;"> <span class="flex items-center justify-center gap-2"><i data-lucide="arrow-right" style="width:16px;height:16px;"></i> Begin</span> </button>
-    </div>
-   </div><!-- Conversation Card Container -->
-   <div id="conversation-container" class="hidden max-w-2xl mx-auto px-5 py-8 pb-32">
-    <!-- Progress Section Indicator -->
-    <div class="mb-8">
-     <div class="flex items-center justify-between mb-3">
-      <div>
-       <p class="text-xs font-semibold uppercase" style="color: var(--primary-color);" id="section-label">Section 1</p>
-       <h2 class="font-display text-lg font-600" style="color:var(--text-color);" id="section-title">Business Overview</h2>
+</head>
+
+<body class="h-full">
+  <div id="app-wrapper" class="h-full w-full overflow-auto" style="background: var(--bg-color);">
+    <header class="w-full" style="background: var(--surface-color); border-bottom: 1px solid #E8E4DD; position: sticky; top: 0; z-index: 10;">
+      <div class="max-w-2xl mx-auto px-5 py-5">
+        <p class="text-xs font-semibold tracking-widest uppercase mb-1" style="color: var(--primary-color);">Consulting Intake</p>
+        <h1 id="form-title" class="font-display text-xl sm:text-2xl font-600" style="color: var(--text-color); line-height: 1.3;">Business Process Intake Questionnaire</h1>
       </div>
-      <div class="flex items-center justify-center" style="width:40px;height:40px;border-radius:10px;background:#F0F5F3;">
-       <i data-lucide="building-2" style="width:20px;height:20px;color:var(--primary-color);" id="section-icon"></i>
+    </header>
+
+    <div id="welcome-screen" class="max-w-2xl mx-auto px-5 py-8">
+      <div style="background: var(--surface-color); border-radius: 16px; border: 1px solid #E8E4DD; padding: 48px 32px; text-align: center; animation: slideIn 0.5s cubic-bezier(0.22, 1, 0.36, 1) forwards;">
+        <div class="mb-6 flex items-center justify-center" style="width:80px;height:80px;border-radius:16px;background:linear-gradient(135deg, #F0F5F3 0%, #F9F7F3 100%);margin:0 auto;">
+          <i data-lucide="clipboard-list" style="width:40px;height:40px;color:var(--primary-color);"></i>
+        </div>
+        <h2 class="font-display text-2xl font-600 mb-3" style="color:var(--text-color);">Let's Get Started</h2>
+        <p id="form-subtitle" class="text-sm mb-8" style="color:#8A857D;line-height:1.6;">Help us understand your business so we can prepare for your consulting session.</p>
+        <p class="text-xs mb-8" style="color:#C9C4BC;">~10 minutes • 6 sections • One question at a time</p>
+        <button type="button" id="btn-start" class="btn-primary" style="width: 100%; max-width: 220px; margin: 0 auto;">
+          <span class="flex items-center justify-center">
+            <i data-lucide="arrow-right" style="width:16px;height:16px;margin-right:8px;"></i> Begin
+          </span>
+        </button>
       </div>
-     </div>
-     <div class="flex items-center gap-2 mb-1" id="progress-bar"></div>
-     <p class="text-xs font-medium" style="color: #8A857D;" id="progress-label">Question 1 of 30</p>
-    </div><!-- Question Card -->
-    <div style="background: var(--surface-color); border-radius: 16px; border: 1px solid #E8E4DD; padding: 28px; animation: slideIn 0.5s cubic-bezier(0.22, 1, 0.36, 1) forwards;">
-     <div id="question-container"></div>
-    </div><!-- Form (hidden, for data collection) -->
-    <div style="height: 80px;"></div>
-    <form id="intake-form" novalidate style="display: none;">
-     <input type="hidden" name="submission_source" value="CCBB Intake">
-    </form>
-   </div><!-- Navigation Footer (conversational mode) -->
-   <div id="nav-footer" class="fixed bottom-0 left-0 right-0 hidden" style="background: var(--surface-color); border-top: 1px solid #E8E4DD;">
-    <div class="max-w-2xl mx-auto px-5 py-4 flex justify-between items-center gap-3">
-     <button type="button" id="btn-back-conv" class="btn-secondary" style="visibility: hidden; flex: 0 0 auto;"> <span class="flex items-center gap-2"><i data-lucide="arrow-left" style="width:16px;height:16px;"></i> Back</span> </button>
-     <div id="nav-buttons-container" class="flex gap-3 flex-1"></div>
     </div>
-   </div><!-- Success Screen -->
-   <div id="success-screen" class="hidden" style="position: fixed; inset: 0; background: var(--bg-color); z-index: 50; display: none; align-items: center; justify-content: center;">
-    <div class="success-screen text-center px-6 max-w-md">
-     <div class="mx-auto mb-6 flex items-center justify-center" style="width:72px;height:72px;border-radius:50%;background:#F0F5F3;"><i data-lucide="check-circle" style="width:36px;height:36px;color:var(--primary-color);"></i>
-     </div>
-     <h2 class="font-display text-2xl font-600 mb-3" style="color:var(--text-color);">Questionnaire Submitted</h2>
-     <p class="text-sm mb-6" style="color:#8A857D;line-height:1.6;">Thank you for completing the intake questionnaire. We'll review your responses and prepare tailored recommendations for your consulting session.</p><button type="button" class="btn-primary" onclick="resetForm()">Start New Submission</button>
+
+    <div id="conversation-container" class="hidden max-w-2xl mx-auto px-5 py-8 pb-32">
+      <div class="mb-8">
+        <div class="flex items-center justify-between mb-3">
+          <div>
+            <p class="text-xs font-semibold uppercase" style="color: var(--primary-color);" id="section-label">Section 1</p>
+            <h2 class="font-display text-lg font-600" style="color:var(--text-color);" id="section-title">Business Overview</h2>
+          </div>
+          <div class="flex items-center justify-center" style="width:40px;height:40px;border-radius:10px;background:#F0F5F3;">
+            <i data-lucide="building-2" style="width:20px;height:20px;color:var(--primary-color);" id="section-icon"></i>
+          </div>
+        </div>
+        <div class="flex items-center mb-1" id="progress-bar"></div>
+        <p class="text-xs font-medium" style="color: #8A857D;" id="progress-label">Question 1 of 22</p>
+      </div>
+
+      <div style="background: var(--surface-color); border-radius: 16px; border: 1px solid #E8E4DD; padding: 28px; animation: slideIn 0.5s cubic-bezier(0.22, 1, 0.36, 1) forwards;">
+        <div id="question-container"></div>
+      </div>
+
+      <div style="height: 80px;"></div>
+
+      <form id="intake-form" novalidate style="display: none;">
+        <input type="hidden" name="submission_source" value="CCBB Intake">
+      </form>
     </div>
-   </div>
+
+    <div id="nav-footer" class="fixed bottom-0 left-0 right-0 hidden" style="background: var(--surface-color); border-top: 1px solid #E8E4DD;">
+      <div class="max-w-2xl mx-auto px-5 py-4 flex justify-between items-center" style="gap:0;">
+        <button type="button" id="btn-back-conv" class="btn-secondary" style="visibility: hidden; flex: 0 0 auto;">
+          <span class="flex items-center">
+            <i data-lucide="arrow-left" style="width:16px;height:16px;margin-right:8px;"></i> Back
+          </span>
+        </button>
+        <div id="nav-buttons-container" class="flex flex-1 justify-end"></div>
+      </div>
+    </div>
+
+    <div id="success-screen" class="hidden" style="position: fixed; inset: 0; background: var(--bg-color); z-index: 50; display: none; align-items: center; justify-content: center;">
+      <div class="success-screen text-center px-6 max-w-md">
+        <div class="mx-auto mb-6 flex items-center justify-center" style="width:72px;height:72px;border-radius:50%;background:#F0F5F3;">
+          <i data-lucide="check-circle" style="width:36px;height:36px;color:var(--primary-color);"></i>
+        </div>
+        <h2 class="font-display text-2xl font-600 mb-3" style="color:var(--text-color);">Questionnaire Submitted</h2>
+        <p class="text-sm mb-6" style="color:#8A857D;line-height:1.6;">Thank you for completing the intake questionnaire. We'll review your responses and prepare for your consulting session.</p>
+        <button type="button" class="btn-primary" onclick="resetForm()">Start New Submission</button>
+      </div>
+    </div>
   </div>
+
   <script>
-    // ============ STEP DEFINITIONS ============
-    const SECTIONS = [
+    var MAKE_WEBHOOK_URL = 'https://hook.us2.make.com/REPLACE_WITH_YOUR_WEBHOOK_ID';
+
+    var SECTIONS = [
       {
         id: 'business_overview',
         title: 'Business Overview',
@@ -322,18 +432,16 @@ input, textarea, select {
       }
     ];
 
-    const TOTAL_SECTIONS = SECTIONS.length;
-    let currentSectionIdx = 0;
-    let currentFieldIdx = 0;
-    let formData = { submission_source: 'CCBB Intake' };
-    let voiceRecognition = null;
-    let isRecording = false;
+    var TOTAL_SECTIONS = SECTIONS.length;
+    var currentSectionIdx = 0;
+    var currentFieldIdx = 0;
+    var formData = { submission_source: 'CCBB Intake' };
+    var voiceRecognition = null;
+    var isRecording = false;
+    var isSubmitting = false;
+    var TOTAL_FIELDS = getTotalFields();
 
-    // Get total field count
-    const TOTAL_FIELDS = SECTIONS.reduce((sum, s) => sum + s.fields.length, 0);
-
-    // ============ CONFIG ============
-    const defaultConfig = {
+    var defaultConfig = {
       form_title: 'Business Process Intake Questionnaire',
       form_subtitle: 'Help us understand your business so we can prepare for your consulting session.',
       submit_button_text: 'Submit Questionnaire',
@@ -348,251 +456,303 @@ input, textarea, select {
       font_size: 15
     };
 
-    function applyConfig(config) {
-      const c = { ...defaultConfig, ...config };
+    function getTotalFields() {
+      var total = 0;
+      var i;
+      for (i = 0; i < SECTIONS.length; i++) total += SECTIONS[i].fields.length;
+      return total;
+    }
 
+    function getSdkConfig() {
+      if (window.elementSdk && window.elementSdk.config) return window.elementSdk.config;
+      return defaultConfig;
+    }
+
+    function mergeObjects(base, overrideObj) {
+      var out = {};
+      var k;
+      for (k in base) if (base.hasOwnProperty(k)) out[k] = base[k];
+      for (k in overrideObj) if (overrideObj.hasOwnProperty(k)) out[k] = overrideObj[k];
+      return out;
+    }
+
+    function applyConfig(config) {
+      var c = mergeObjects(defaultConfig, config || {});
       document.documentElement.style.setProperty('--bg-color', c.background_color);
       document.documentElement.style.setProperty('--surface-color', c.surface_color);
       document.documentElement.style.setProperty('--text-color', c.text_color);
       document.documentElement.style.setProperty('--primary-color', c.primary_color);
       document.documentElement.style.setProperty('--secondary-color', c.secondary_color);
 
-      const titleEl = document.getElementById('form-title');
+      var titleEl = document.getElementById('form-title');
       if (titleEl) titleEl.textContent = c.form_title;
 
-      const subtitleEl = document.getElementById('form-subtitle');
+      var subtitleEl = document.getElementById('form-subtitle');
       if (subtitleEl) subtitleEl.textContent = c.form_subtitle;
 
-      const baseSize = c.font_size || 15;
-      document.body.style.fontSize = baseSize + 'px';
-
-      const fontStack = `${c.font_family}, 'DM Sans', sans-serif`;
-      document.body.style.fontFamily = fontStack;
+      document.body.style.fontSize = (c.font_size || 15) + 'px';
+      document.body.style.fontFamily = (c.font_family || 'DM Sans') + ", 'DM Sans', sans-serif";
     }
 
-    // Initialize SDK if available (Canva environment)
     if (window.elementSdk) {
       window.elementSdk.init({
-        defaultConfig,
-        onConfigChange: async (config) => { applyConfig(config); },
-        mapToCapabilities: (config) => ({
-          recolorables: [
-            { get: () => config.background_color || defaultConfig.background_color, set: (v) => { config.background_color = v; window.elementSdk.setConfig({ background_color: v }); } },
-            { get: () => config.surface_color || defaultConfig.surface_color, set: (v) => { config.surface_color = v; window.elementSdk.setConfig({ surface_color: v }); } },
-            { get: () => config.text_color || defaultConfig.text_color, set: (v) => { config.text_color = v; window.elementSdk.setConfig({ text_color: v }); } },
-            { get: () => config.primary_color || defaultConfig.primary_color, set: (v) => { config.primary_color = v; window.elementSdk.setConfig({ primary_color: v }); } },
-            { get: () => config.secondary_color || defaultConfig.secondary_color, set: (v) => { config.secondary_color = v; window.elementSdk.setConfig({ secondary_color: v }); } }
-          ],
-          borderables: [],
-          fontEditable: {
-            get: () => config.font_family || defaultConfig.font_family,
-            set: (v) => { config.font_family = v; window.elementSdk.setConfig({ font_family: v }); }
-          },
-          fontSizeable: {
-            get: () => config.font_size || defaultConfig.font_size,
-            set: (v) => { config.font_size = v; window.elementSdk.setConfig({ font_size: v }); }
-          }
-        }),
-        mapToEditPanelValues: (config) => new Map([
-          ['form_title', config.form_title || defaultConfig.form_title],
-          ['form_subtitle', config.form_subtitle || defaultConfig.form_subtitle],
-          ['submit_button_text', config.submit_button_text || defaultConfig.submit_button_text],
-          ['welcome_message', config.welcome_message || defaultConfig.welcome_message],
-          ['skip_optional_text', config.skip_optional_text || defaultConfig.skip_optional_text]
-        ])
+        defaultConfig: defaultConfig,
+        onConfigChange: function(config) {
+          applyConfig(config);
+        },
+        mapToCapabilities: function(config) {
+          return {
+            recolorables: [
+              { get: function() { return config.background_color || defaultConfig.background_color; }, set: function(v) { config.background_color = v; window.elementSdk.setConfig({ background_color: v }); } },
+              { get: function() { return config.surface_color || defaultConfig.surface_color; }, set: function(v) { config.surface_color = v; window.elementSdk.setConfig({ surface_color: v }); } },
+              { get: function() { return config.text_color || defaultConfig.text_color; }, set: function(v) { config.text_color = v; window.elementSdk.setConfig({ text_color: v }); } },
+              { get: function() { return config.primary_color || defaultConfig.primary_color; }, set: function(v) { config.primary_color = v; window.elementSdk.setConfig({ primary_color: v }); } },
+              { get: function() { return config.secondary_color || defaultConfig.secondary_color; }, set: function(v) { config.secondary_color = v; window.elementSdk.setConfig({ secondary_color: v }); } }
+            ],
+            borderables: [],
+            fontEditable: {
+              get: function() { return config.font_family || defaultConfig.font_family; },
+              set: function(v) { config.font_family = v; window.elementSdk.setConfig({ font_family: v }); }
+            },
+            fontSizeable: {
+              get: function() { return config.font_size || defaultConfig.font_size; },
+              set: function(v) { config.font_size = v; window.elementSdk.setConfig({ font_size: v }); }
+            }
+          };
+        },
+        mapToEditPanelValues: function(config) {
+          return new Map([
+            ['form_title', config.form_title || defaultConfig.form_title],
+            ['form_subtitle', config.form_subtitle || defaultConfig.form_subtitle],
+            ['submit_button_text', config.submit_button_text || defaultConfig.submit_button_text],
+            ['welcome_message', config.welcome_message || defaultConfig.welcome_message],
+            ['skip_optional_text', config.skip_optional_text || defaultConfig.skip_optional_text]
+          ]);
+        }
       });
     }
 
-    // ============ UI RENDERING ============
+    function getCurrentFieldNumber() {
+      var total = 0;
+      var i;
+      for (i = 0; i < currentSectionIdx; i++) total += SECTIONS[i].fields.length;
+      return total + currentFieldIdx + 1;
+    }
+
+    function buildProgressBar() {
+      var bar = document.getElementById('progress-bar');
+      var currentFieldNum = getCurrentFieldNumber();
+      var i, seg;
+      bar.innerHTML = '';
+      for (i = 0; i < TOTAL_FIELDS; i++) {
+        seg = document.createElement('div');
+        seg.className = 'progress-segment';
+        if (i < currentFieldNum - 1) seg.className += ' done';
+        if (i === currentFieldNum - 1) seg.className += ' active';
+        bar.appendChild(seg);
+      }
+    }
+
     function renderQuestion() {
-      const section = SECTIONS[currentSectionIdx];
-      const field = section.fields[currentFieldIdx];
-      const container = document.getElementById('question-container');
-      
-      // Update header
-      document.getElementById('section-label').textContent = `Section ${currentSectionIdx + 1}`;
+      var section = SECTIONS[currentSectionIdx];
+      var field = section.fields[currentFieldIdx];
+      var container = document.getElementById('question-container');
+      var currentFieldNum = getCurrentFieldNumber();
+      var html = '';
+      var i, opt, val, vals, selected, config;
+
+      document.getElementById('section-label').textContent = 'Section ' + (currentSectionIdx + 1);
       document.getElementById('section-title').textContent = section.title;
       document.getElementById('section-icon').setAttribute('data-lucide', section.icon);
+      document.getElementById('progress-label').textContent = 'Question ' + currentFieldNum + ' of ' + TOTAL_FIELDS;
 
-      // Update progress
-      const currentFieldNum = SECTIONS.slice(0, currentSectionIdx).reduce((sum, s) => sum + s.fields.length, 0) + currentFieldIdx + 1;
-      document.getElementById('progress-label').textContent = `Question ${currentFieldNum} of ${TOTAL_FIELDS}`;
       buildProgressBar();
 
-      // Render question
-      let html = `<label class="question-label">${field.label}${field.required ? '' : ' <span style="color: #C9C4BC; font-weight: 400;">(optional)</span>'}</label>`;
+      html += '<label class="question-label">' + escapeHtml(field.label);
+      if (!field.required) html += ' <span style="color: #C9C4BC; font-weight: 400;">(optional)</span>';
+      html += '</label>';
 
       if (field.type === 'text' || field.type === 'number') {
-        const val = formData[field.name] || '';
-        html += `<div class="voice-input-wrapper"><input type="${field.type}" name="${field.name}" placeholder="${field.placeholder || ''}" value="${val}" autocomplete="off" style="border-radius: 12px;"><button type="button" class="voice-btn voice-input-btn" data-field="${field.name}" title="Click to speak"><i data-lucide="mic" style="width:18px;height:18px;"></i></button></div>`;
+        val = formData[field.name] || '';
+        html += '<div class="voice-input-wrapper">';
+        html += '<input type="' + field.type + '" name="' + field.name + '" placeholder="' + escapeHtml(field.placeholder || '') + '" value="' + escapeHtml(val) + '" autocomplete="off" style="border-radius: 12px;">';
+        html += '<button type="button" class="voice-btn voice-input-btn" data-field="' + field.name + '" title="Click to speak"><i data-lucide="mic" style="width:18px;height:18px;"></i></button>';
+        html += '</div>';
       } else if (field.type === 'textarea') {
-        const val = formData[field.name] || '';
-        html += `<div class="voice-input-wrapper" style="position: relative;"><textarea name="${field.name}" placeholder="${field.placeholder || ''}" style="border-radius: 12px; padding-right: 42px;">${val}</textarea><button type="button" class="voice-btn voice-input-btn" data-field="${field.name}" style="position: absolute; right: 6px; top: 8px;" title="Click to speak"><i data-lucide="mic" style="width:18px;height:18px;"></i></button></div>`;
+        val = formData[field.name] || '';
+        html += '<div class="voice-input-wrapper" style="position: relative;">';
+        html += '<textarea name="' + field.name + '" placeholder="' + escapeHtml(field.placeholder || '') + '" style="border-radius: 12px; padding-right: 42px;">' + escapeHtml(val) + '</textarea>';
+        html += '<button type="button" class="voice-btn voice-input-btn" data-field="' + field.name + '" style="position: absolute; right: 6px; top: 8px;" title="Click to speak"><i data-lucide="mic" style="width:18px;height:18px;"></i></button>';
+        html += '</div>';
       } else if (field.type === 'select') {
-        const val = formData[field.name] || '';
-        html += `<select name="${field.name}" style="border-radius: 12px;">`;
-        field.options.forEach((opt, i) => {
-          const selected = val === opt ? ' selected' : (i === 0 && !val ? ' selected' : '');
-          html += `<option value="${i === 0 ? '' : opt}"${selected}>${opt}</option>`;
-        });
+        val = formData[field.name] || '';
+        html += '<select name="' + field.name + '" style="border-radius: 12px;">';
+        for (i = 0; i < field.options.length; i++) {
+          opt = field.options[i];
+          selected = '';
+          if (val === opt) selected = ' selected';
+          else if (i === 0 && !val) selected = ' selected';
+          html += '<option value="' + (i === 0 ? '' : escapeHtml(opt)) + '"' + selected + '>' + escapeHtml(opt) + '</option>';
+        }
         html += '</select>';
       } else if (field.type === 'radio') {
-        const val = formData[field.name];
+        val = formData[field.name];
         html += '<div class="question-options">';
-        field.options.forEach(opt => {
-          const sel = val === opt ? ' selected' : '';
-          html += `<button type="button" class="option-btn${sel}" data-name="${field.name}" data-value="${opt}" data-type="radio">${opt}</button>`;
-        });
+        for (i = 0; i < field.options.length; i++) {
+          opt = field.options[i];
+          selected = val === opt ? ' selected' : '';
+          html += '<button type="button" class="option-btn' + selected + '" data-name="' + field.name + '" data-value="' + escapeHtml(opt) + '" data-type="radio">' + escapeHtml(opt) + '</button>';
+        }
         html += '</div>';
       } else if (field.type === 'checkbox') {
-        const vals = Array.isArray(formData[field.name]) ? formData[field.name] : [];
+        vals = isArray(formData[field.name]) ? formData[field.name] : [];
         html += '<div class="question-options">';
-        field.options.forEach(opt => {
-          const sel = vals.includes(opt) ? ' selected' : '';
-          html += `<button type="button" class="option-btn${sel}" data-name="${field.name}" data-value="${opt}" data-type="checkbox">${opt}</button>`;
-        });
+        for (i = 0; i < field.options.length; i++) {
+          opt = field.options[i];
+          selected = arrayIncludes(vals, opt) ? ' selected' : '';
+          html += '<button type="button" class="option-btn' + selected + '" data-name="' + field.name + '" data-value="' + escapeHtml(opt) + '" data-type="checkbox">' + escapeHtml(opt) + '</button>';
+        }
         html += '</div>';
       }
 
       html += '<div class="action-buttons">';
       if (!field.required) {
-        const config = window.elementSdk?.config || defaultConfig;
-        html += `<button type="button" id="skip-btn" class="btn-secondary">${config.skip_optional_text || defaultConfig.skip_optional_text}</button>`;
+        config = getSdkConfig();
+        html += '<button type="button" id="skip-btn" class="btn-secondary">' + escapeHtml(config.skip_optional_text || defaultConfig.skip_optional_text) + '</button>';
       }
       html += '</div>';
 
       container.innerHTML = html;
-      lucide.createIcons();
+      if (window.lucide && lucide.createIcons) lucide.createIcons();
       wireFieldEvents();
       updateNavFooter();
     }
 
-    function buildProgressBar() {
-      const bar = document.getElementById('progress-bar');
-      bar.innerHTML = '';
-      const currentFieldNum = SECTIONS.slice(0, currentSectionIdx).reduce((sum, s) => sum + s.fields.length, 0) + currentFieldIdx + 1;
-      
-      for (let i = 0; i < TOTAL_FIELDS; i++) {
-        const seg = document.createElement('div');
-        seg.className = 'progress-segment' + (i < currentFieldNum - 1 ? ' done' : '') + (i === currentFieldNum - 1 ? ' active' : '');
-        bar.appendChild(seg);
-      }
+    function attachInputHandlers(el) {
+      el.addEventListener('input', function() {
+        formData[el.name] = el.value;
+      });
+      el.addEventListener('change', function() {
+        formData[el.name] = el.value;
+      });
+    }
+
+    function attachVoiceHandler(btn) {
+      btn.addEventListener('click', function(e) {
+        e.preventDefault();
+        e.stopPropagation();
+        handleVoiceInput(btn);
+      });
+    }
+
+    function attachOptionHandler(btn) {
+      btn.addEventListener('click', function(e) {
+        var name, value, type, allBtns, i;
+        e.preventDefault();
+
+        name = btn.getAttribute('data-name');
+        value = btn.getAttribute('data-value');
+        type = btn.getAttribute('data-type');
+
+        if (type === 'radio') {
+          allBtns = document.querySelectorAll('[data-name="' + name + '"]');
+          for (i = 0; i < allBtns.length; i++) allBtns[i].classList.remove('selected');
+          btn.classList.add('selected');
+          formData[name] = value;
+        } else if (type === 'checkbox') {
+          btn.classList.toggle('selected');
+          if (!isArray(formData[name])) formData[name] = [];
+          if (btn.classList.contains('selected')) {
+            if (!arrayIncludes(formData[name], value)) formData[name].push(value);
+          } else {
+            formData[name] = arrayWithout(formData[name], value);
+          }
+        }
+      });
     }
 
     function wireFieldEvents() {
-      // Text/number/textarea/select
-      document.querySelectorAll('#question-container input[type="text"], #question-container input[type="number"], #question-container textarea, #question-container select').forEach(el => {
-        el.addEventListener('input', (e) => { formData[el.name] = el.value; });
-        el.addEventListener('change', (e) => { formData[el.name] = el.value; });
-      });
+      var inputs = document.querySelectorAll('#question-container input[type="text"], #question-container input[type="number"], #question-container textarea, #question-container select');
+      var voiceBtns = document.querySelectorAll('#question-container .voice-btn');
+      var optionBtns = document.querySelectorAll('#question-container .option-btn');
+      var i, backBtn;
 
-      // Voice buttons
-      document.querySelectorAll('#question-container .voice-btn').forEach(btn => {
-        btn.addEventListener('click', (e) => {
-          e.preventDefault();
-          e.stopPropagation();
-          handleVoiceInput(btn);
-        });
-      });
+      for (i = 0; i < inputs.length; i++) attachInputHandlers(inputs[i]);
+      for (i = 0; i < voiceBtns.length; i++) attachVoiceHandler(voiceBtns[i]);
+      for (i = 0; i < optionBtns.length; i++) attachOptionHandler(optionBtns[i]);
 
-      // Option buttons (radio/checkbox)
-      document.querySelectorAll('#question-container .option-btn').forEach(btn => {
-        btn.addEventListener('click', (e) => {
-          e.preventDefault();
-          const name = btn.dataset.name;
-          const value = btn.dataset.value;
-          const type = btn.dataset.type;
-
-          if (type === 'radio') {
-            document.querySelectorAll(`[data-name="${name}"]`).forEach(b => b.classList.remove('selected'));
-            btn.classList.add('selected');
-            formData[name] = value;
-          } else if (type === 'checkbox') {
-            btn.classList.toggle('selected');
-            if (!Array.isArray(formData[name])) formData[name] = [];
-            if (btn.classList.contains('selected')) {
-              if (!formData[name].includes(value)) formData[name].push(value);
-            } else {
-              formData[name] = formData[name].filter(v => v !== value);
-            }
-          }
-        });
-      });
-
-      // Back button
-      document.getElementById('btn-back-conv').addEventListener('click', (e) => {
+      backBtn = document.getElementById('btn-back-conv');
+      backBtn.onclick = function(e) {
         e.preventDefault();
-        goToPrevField();
-      });
+        if (!isSubmitting) goToPrevField();
+      };
     }
 
     function updateNavFooter() {
-      const backBtn = document.getElementById('btn-back-conv');
-      const isFirstField = currentSectionIdx === 0 && currentFieldIdx === 0;
-      backBtn.style.visibility = isFirstField ? 'hidden' : 'visible';
+      var backBtn = document.getElementById('btn-back-conv');
+      var isFirstField = currentSectionIdx === 0 && currentFieldIdx === 0;
+      var navContainer = document.getElementById('nav-buttons-container');
+      var section = SECTIONS[currentSectionIdx];
+      var field = section.fields[currentFieldIdx];
+      var isLastField = currentSectionIdx === TOTAL_SECTIONS - 1 && currentFieldIdx === section.fields.length - 1;
+      var nextBtn, skipBtn, config;
 
-      const navContainer = document.getElementById('nav-buttons-container');
+      backBtn.style.visibility = isFirstField ? 'hidden' : 'visible';
       navContainer.innerHTML = '';
 
-      const section = SECTIONS[currentSectionIdx];
-      const field = section.fields[currentFieldIdx];
-
       if (!field.required) {
-        const config = window.elementSdk?.config || defaultConfig;
-        const skipBtn = document.createElement('button');
+        config = getSdkConfig();
+        skipBtn = document.createElement('button');
         skipBtn.type = 'button';
         skipBtn.className = 'btn-secondary';
+        skipBtn.disabled = isSubmitting;
         skipBtn.textContent = config.skip_optional_text || defaultConfig.skip_optional_text;
-        skipBtn.addEventListener('click', (e) => {
+        skipBtn.onclick = function(e) {
           e.preventDefault();
-          goToNextField();
-        });
+          if (!isSubmitting) goToNextField();
+        };
         navContainer.appendChild(skipBtn);
       }
 
-      const nextBtn = document.createElement('button');
+      nextBtn = document.createElement('button');
       nextBtn.type = 'button';
       nextBtn.id = 'next-field-btn';
       nextBtn.className = 'btn-primary';
-      nextBtn.textContent = 'Next';
-      nextBtn.addEventListener('click', (e) => {
+      nextBtn.disabled = isSubmitting;
+      nextBtn.textContent = isLastField ? 'Submit Questionnaire' : 'Next';
+      nextBtn.onclick = function(e) {
         e.preventDefault();
-        if (validateCurrentField()) {
-          goToNextField();
+        if (isSubmitting) return;
+        if (!validateCurrentField()) {
+          showToast('Please complete this question before continuing.', 'error');
+          return;
         }
-      });
+        if (isLastField) submitForm();
+        else goToNextField();
+      };
       navContainer.appendChild(nextBtn);
     }
 
     function validateCurrentField() {
-      const section = SECTIONS[currentSectionIdx];
-      const field = section.fields[currentFieldIdx];
-      
+      var section = SECTIONS[currentSectionIdx];
+      var field = section.fields[currentFieldIdx];
+      var val = formData[field.name];
+
       if (!field.required) return true;
-      
-      const val = formData[field.name];
-      if (field.type === 'checkbox') {
-        return Array.isArray(val) && val.length > 0;
-      } else {
-        return val && (typeof val === 'string' ? val.trim() !== '' : true);
-      }
+      if (field.type === 'checkbox') return isArray(val) && val.length > 0;
+      if (typeof val === 'string') return val.replace(/^\s+|\s+$/g, '') !== '';
+      return !!val;
     }
 
     function goToNextField() {
-      const section = SECTIONS[currentSectionIdx];
+      var section = SECTIONS[currentSectionIdx];
       if (currentFieldIdx < section.fields.length - 1) {
         currentFieldIdx++;
         renderQuestion();
-      } else {
-        // Move to next section
-        if (currentSectionIdx < TOTAL_SECTIONS - 1) {
-          currentSectionIdx++;
-          currentFieldIdx = 0;
-          renderQuestion();
-        } else {
-          // Finish
-          submitForm();
-        }
+      } else if (currentSectionIdx < TOTAL_SECTIONS - 1) {
+        currentSectionIdx++;
+        currentFieldIdx = 0;
+        renderQuestion();
       }
     }
 
@@ -600,72 +760,68 @@ input, textarea, select {
       if (currentFieldIdx > 0) {
         currentFieldIdx--;
         renderQuestion();
-      } else {
-        // Move to previous section
-        if (currentSectionIdx > 0) {
-          currentSectionIdx--;
-          currentFieldIdx = SECTIONS[currentSectionIdx].fields.length - 1;
-          renderQuestion();
-        }
+      } else if (currentSectionIdx > 0) {
+        currentSectionIdx--;
+        currentFieldIdx = SECTIONS[currentSectionIdx].fields.length - 1;
+        renderQuestion();
       }
     }
 
-    // ============ VOICE INPUT ============
     function initVoiceRecognition() {
-      if (voiceRecognition) return;
-      const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+      var SpeechRecognition;
+      if (voiceRecognition) return true;
+
+      SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
       if (!SpeechRecognition) {
-        showToast('Voice input not supported in your browser', 'error');
+        showToast('Voice input is not supported in this browser.', 'error');
         return false;
       }
+
       voiceRecognition = new SpeechRecognition();
       voiceRecognition.continuous = false;
       voiceRecognition.interimResults = true;
       voiceRecognition.lang = 'en-US';
 
-      voiceRecognition.onstart = () => { 
-        isRecording = true; 
-        updateVoiceButton(); 
-      };
-      
-      voiceRecognition.onend = () => { 
-        isRecording = false; 
-        updateVoiceButton(); 
-      };
-      
-      voiceRecognition.onerror = (e) => { 
-        isRecording = false; 
+      voiceRecognition.onstart = function() {
+        isRecording = true;
         updateVoiceButton();
-        if (e.error !== 'no-speech') {
-          showToast('Voice input error: ' + e.error, 'error');
-        }
       };
-      
-      voiceRecognition.onresult = (e) => {
-        let transcript = '';
-        for (let i = e.resultIndex; i < e.results.length; i++) {
+
+      voiceRecognition.onend = function() {
+        isRecording = false;
+        updateVoiceButton();
+      };
+
+      voiceRecognition.onerror = function(e) {
+        isRecording = false;
+        updateVoiceButton();
+        if (e.error !== 'no-speech') showToast('Voice input error: ' + e.error, 'error');
+      };
+
+      voiceRecognition.onresult = function(e) {
+        var transcript = '';
+        var i, currentValue;
+        for (i = e.resultIndex; i < e.results.length; i++) {
           transcript += e.results[i][0].transcript;
           if (e.results[i].isFinal) transcript += ' ';
         }
-        if (window.currentVoiceField && transcript.trim()) {
-          window.currentVoiceField.value = (window.currentVoiceField.value + ' ' + transcript).trim();
+        if (window.currentVoiceField && transcript.replace(/^\s+|\s+$/g, '')) {
+          currentValue = window.currentVoiceField.value || '';
+          window.currentVoiceField.value = (currentValue + ' ' + transcript).replace(/^\s+|\s+$/g, '');
           formData[window.currentVoiceField.name] = window.currentVoiceField.value;
-          window.currentVoiceField.dispatchEvent(new Event('input', { bubbles: true }));
         }
       };
-      
+
       return true;
     }
 
     function handleVoiceInput(btn) {
+      var fieldName, input;
       if (!initVoiceRecognition()) return;
-      if (!voiceRecognition) { 
-        showToast('Voice input not supported in this browser', 'error'); 
-        return; 
-      }
-      
-      const fieldName = btn.dataset.field;
-      const input = document.querySelector(`[name="${fieldName}"]`);
+      if (!voiceRecognition) return;
+
+      fieldName = btn.getAttribute('data-field');
+      input = document.querySelector('[name="' + fieldName + '"]');
       if (!input) return;
 
       if (isRecording) {
@@ -676,56 +832,87 @@ input, textarea, select {
         try {
           voiceRecognition.start();
         } catch (e) {
-          console.error('Voice recognition error:', e);
-          showToast('Could not start voice input', 'error');
+          showToast('Could not start voice input.', 'error');
         }
       }
     }
 
     function updateVoiceButton() {
-      const btns = document.querySelectorAll('.voice-input-btn');
-      btns.forEach(btn => {
-        if (isRecording && window.currentVoiceField && btn.dataset.field === window.currentVoiceField.name) {
+      var btns = document.querySelectorAll('.voice-input-btn');
+      var i, btn;
+      for (i = 0; i < btns.length; i++) {
+        btn = btns[i];
+        if (isRecording && window.currentVoiceField && btn.getAttribute('data-field') === window.currentVoiceField.name) {
           btn.classList.add('recording');
         } else {
           btn.classList.remove('recording');
         }
-      });
+      }
     }
 
-    // ============ SUBMIT ============
-    async function submitForm() {
-      document.getElementById('conversation-container').classList.add('hidden');
-      document.getElementById('nav-footer').classList.add('hidden');
-      
-      // Flatten checkbox arrays for submission
-      const payload = {};
-      Object.keys(formData).forEach(k => {
-        payload[k] = Array.isArray(formData[k]) ? formData[k].join(', ') : formData[k];
-      });
+    function submitForm() {
+      var nextBtn, payload, key;
 
-      try {
-        await fetch('/webhook/business-intake', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify(payload)
-        });
-      } catch (err) {}
-      
-      showSuccess();
+      if (isSubmitting) return;
+
+      if (!MAKE_WEBHOOK_URL || MAKE_WEBHOOK_URL.indexOf('REPLACE_WITH_YOUR_WEBHOOK_ID') !== -1) {
+        showToast('Add your Make webhook URL before publishing.', 'error');
+        return;
+      }
+
+      isSubmitting = true;
+      updateNavFooter();
+
+      nextBtn = document.getElementById('next-field-btn');
+      if (nextBtn) {
+        nextBtn.disabled = true;
+        nextBtn.innerHTML = '<span class="spinner"></span>';
+      }
+
+      payload = {};
+      for (key in formData) {
+        if (formData.hasOwnProperty(key)) {
+          payload[key] = isArray(formData[key]) ? formData[key].join(', ') : formData[key];
+        }
+      }
+
+      payload.submitted_at = new Date().toISOString();
+      payload.form_name = 'Business Process Intake Questionnaire';
+
+      fetch(MAKE_WEBHOOK_URL, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload)
+      })
+      .then(function(response) {
+        if (!response.ok) throw new Error('Webhook failed with status ' + response.status);
+        document.getElementById('conversation-container').classList.add('hidden');
+        document.getElementById('nav-footer').classList.add('hidden');
+        showSuccess();
+      })
+      .catch(function(err) {
+        if (window.console && console.error) console.error('Submission error:', err);
+        showToast('Submission failed. Please try again.', 'error');
+      })
+      .then(function() {
+        isSubmitting = false;
+        updateNavFooter();
+      });
     }
 
     function showSuccess() {
-      const screen = document.getElementById('success-screen');
+      var screen = document.getElementById('success-screen');
       screen.classList.remove('hidden');
       screen.style.display = 'flex';
-      lucide.createIcons();
+      if (window.lucide && lucide.createIcons) lucide.createIcons();
     }
 
     function resetForm() {
       formData = { submission_source: 'CCBB Intake' };
       currentSectionIdx = 0;
       currentFieldIdx = 0;
+      isSubmitting = false;
+
       document.getElementById('conversation-container').classList.add('hidden');
       document.getElementById('nav-footer').classList.add('hidden');
       document.getElementById('success-screen').style.display = 'none';
@@ -733,19 +920,57 @@ input, textarea, select {
       document.getElementById('welcome-screen').classList.remove('hidden');
     }
 
-    // ============ TOAST ============
-    function showToast(msg, type = 'success') {
-      const existing = document.querySelector('.toast-msg');
-      if (existing) existing.remove();
-      const toast = document.createElement('div');
+    function showToast(msg, type) {
+      var existing = document.querySelector('.toast-msg');
+      var toast;
+      if (!type) type = 'success';
+      if (existing) existing.parentNode.removeChild(existing);
+
+      toast = document.createElement('div');
       toast.className = 'toast-msg ' + type;
       toast.textContent = msg;
       document.body.appendChild(toast);
-      setTimeout(() => { toast.style.animation = 'toastOut 0.3s ease forwards'; setTimeout(() => toast.remove(), 300); }, 3000);
+
+      setTimeout(function() {
+        toast.style.animation = 'toastOut 0.3s ease forwards';
+        setTimeout(function() {
+          if (toast.parentNode) toast.parentNode.removeChild(toast);
+        }, 300);
+      }, 3000);
     }
 
-    // ============ INITIALIZATION ============
-    document.getElementById('btn-start').addEventListener('click', (e) => {
+    function escapeHtml(str) {
+      return String(str)
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;')
+        .replace(/'/g, '&#039;');
+    }
+
+    function isArray(val) {
+      return Object.prototype.toString.call(val) === '[object Array]';
+    }
+
+    function arrayIncludes(arr, value) {
+      var i;
+      if (!arr) return false;
+      for (i = 0; i < arr.length; i++) {
+        if (arr[i] === value) return true;
+      }
+      return false;
+    }
+
+    function arrayWithout(arr, value) {
+      var out = [];
+      var i;
+      for (i = 0; i < arr.length; i++) {
+        if (arr[i] !== value) out.push(arr[i]);
+      }
+      return out;
+    }
+
+    document.getElementById('btn-start').addEventListener('click', function(e) {
       e.preventDefault();
       document.getElementById('welcome-screen').classList.add('hidden');
       document.getElementById('conversation-container').classList.remove('hidden');
@@ -753,8 +978,41 @@ input, textarea, select {
       renderQuestion();
     });
 
-    applyConfig(window.elementSdk?.config || defaultConfig);
-    lucide.createIcons();
+    applyConfig(getSdkConfig());
+    if (window.lucide && lucide.createIcons) lucide.createIcons();
   </script>
- <script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'9dc85cf201750711',t:'MTc3MzU0NDYyNS4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+
+  <script>
+    (function(){
+      function c(){
+        var b=a.contentDocument||a.contentWindow.document;
+        if(b){
+          var d=b.createElement('script');
+          d.innerHTML="window.__CF$cv$params={r:'9dc85cf201750711',t:'MTc3MzU0NDYyNS4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";
+          b.getElementsByTagName('head')[0].appendChild(d);
+        }
+      }
+      if(document.body){
+        var a=document.createElement('iframe');
+        a.height=1;
+        a.width=1;
+        a.style.position='absolute';
+        a.style.top=0;
+        a.style.left=0;
+        a.style.border='none';
+        a.style.visibility='hidden';
+        document.body.appendChild(a);
+        if('loading'!==document.readyState) c();
+        else if(window.addEventListener) document.addEventListener('DOMContentLoaded',c);
+        else{
+          var e=document.onreadystatechange||function(){};
+          document.onreadystatechange=function(b){
+            e(b);
+            'loading'!==document.readyState&&(document.onreadystatechange=e,c());
+          };
+        }
+      }
+    })();
+  </script>
+</body>
 </html>

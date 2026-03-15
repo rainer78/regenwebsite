@@ -212,6 +212,7 @@
     <div style="background: var(--surface-color); border-radius: 16px; border: 1px solid #E8E4DD; padding: 28px; animation: slideIn 0.5s cubic-bezier(0.22, 1, 0.36, 1) forwards;">
      <div id="question-container"></div>
     </div><!-- Form (hidden, for data collection) -->
+    <div style="height: 80px;"></div>
     <form id="intake-form" novalidate style="display: none;">
      <input type="hidden" name="submission_source" value="CCBB Intake">
     </form>
@@ -443,7 +444,6 @@
         const config = window.elementSdk?.config || defaultConfig;
         html += `<button type="button" id="skip-btn" class="btn-secondary">${config.skip_optional_text || defaultConfig.skip_optional_text}</button>`;
       }
-      html += '<button type="button" id="next-field-btn" class="btn-primary">Next</button>';
       html += '</div>';
 
       container.innerHTML = html;
@@ -472,9 +472,10 @@
       });
 
       // Voice buttons
-      document.querySelectorAll('#question-container .voice-input-btn').forEach(btn => {
+      document.querySelectorAll('#question-container .voice-btn').forEach(btn => {
         btn.addEventListener('click', (e) => {
           e.preventDefault();
+          e.stopPropagation();
           handleVoiceInput(btn);
         });
       });
@@ -503,26 +504,6 @@
         });
       });
 
-      // Skip button (if optional)
-      const skipBtn = document.getElementById('skip-btn');
-      if (skipBtn) {
-        skipBtn.addEventListener('click', (e) => {
-          e.preventDefault();
-          goToNextField();
-        });
-      }
-
-      // Next field button
-      const nextBtn = document.getElementById('next-field-btn');
-      if (nextBtn) {
-        nextBtn.addEventListener('click', (e) => {
-          e.preventDefault();
-          if (validateCurrentField()) {
-            goToNextField();
-          }
-        });
-      }
-
       // Back button
       document.getElementById('btn-back-conv').addEventListener('click', (e) => {
         e.preventDefault();
@@ -534,6 +515,38 @@
       const backBtn = document.getElementById('btn-back-conv');
       const isFirstField = currentSectionIdx === 0 && currentFieldIdx === 0;
       backBtn.style.visibility = isFirstField ? 'hidden' : 'visible';
+
+      const navContainer = document.getElementById('nav-buttons-container');
+      navContainer.innerHTML = '';
+
+      const section = SECTIONS[currentSectionIdx];
+      const field = section.fields[currentFieldIdx];
+
+      if (!field.required) {
+        const config = window.elementSdk?.config || defaultConfig;
+        const skipBtn = document.createElement('button');
+        skipBtn.type = 'button';
+        skipBtn.className = 'btn-secondary';
+        skipBtn.textContent = config.skip_optional_text || defaultConfig.skip_optional_text;
+        skipBtn.addEventListener('click', (e) => {
+          e.preventDefault();
+          goToNextField();
+        });
+        navContainer.appendChild(skipBtn);
+      }
+
+      const nextBtn = document.createElement('button');
+      nextBtn.type = 'button';
+      nextBtn.id = 'next-field-btn';
+      nextBtn.className = 'btn-primary';
+      nextBtn.textContent = 'Next';
+      nextBtn.addEventListener('click', (e) => {
+        e.preventDefault();
+        if (validateCurrentField()) {
+          goToNextField();
+        }
+      });
+      navContainer.appendChild(nextBtn);
     }
 
     function validateCurrentField() {
@@ -728,5 +741,5 @@
     applyConfig(window.elementSdk?.config || defaultConfig);
     lucide.createIcons();
   </script>
- <script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'9dc84ccc540c0711',t:'MTc3MzU0Mzk2My4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+ <script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'9dc85cf201750711',t:'MTc3MzU0NDYyNS4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
 </html>

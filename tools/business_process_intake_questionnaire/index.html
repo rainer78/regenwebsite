@@ -146,14 +146,30 @@
     .spinner { display: inline-block; width: 18px; height: 18px; border: 2px solid rgba(255,255,255,0.3); border-top-color: #fff; border-radius: 50%; animation: spin 0.6s linear infinite; }
     @keyframes spin { to { transform: rotate(360deg); } }
 
-    .voice-btn { background: none; border: none; cursor: pointer; padding: 8px; display: flex; align-items: center; justify-content: center; color: var(--primary-color); transition: all 0.2s ease; border-radius: 6px; }
-    .voice-btn:hover { background: #F0F5F3; }
-    .voice-btn.recording { color: #C2453D; background: #FEF0ED; animation: pulse 1.5s ease-in-out infinite; }
-    @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.6; } }
-
     .voice-input-wrapper { position: relative; display: flex; align-items: center; }
-    .voice-input-wrapper input { padding-right: 42px; }
-    .voice-input-wrapper .voice-btn { position: absolute; right: 6px; top: 50%; transform: translateY(-50%); }
+    .voice-input-wrapper input, .voice-input-wrapper textarea { padding-right: 42px; }
+    .voice-input-btn {
+      background: transparent; border: none; cursor: pointer;
+      padding: 8px; display: flex; align-items: center; justify-content: center;
+      color: var(--primary-color); transition: all 0.2s ease;
+      font-size: 0; line-height: 0;
+    }
+    .voice-input-btn:hover { color: var(--secondary-color); }
+    .voice-input-btn.recording { animation: pulse-mic 0.6s ease-in-out infinite; }
+    @keyframes pulse-mic { 0%, 100% { transform: scale(1); opacity: 1; } 50% { transform: scale(1.15); opacity: 0.7; } }
+    .voice-input-wrapper .voice-input-btn { position: absolute; right: 6px; top: 50%; transform: translateY(-50%); }
+    .voice-input-wrapper textarea ~ .voice-input-btn { top: 8px; transform: translateY(0); }
+
+    @keyframes slideIn { from { opacity: 0; transform: translateY(16px); } to { opacity: 1; transform: translateY(0); } }
+
+    .question-label { display: block; font-size: 16px; font-weight: 500; margin-bottom: 16px; color: var(--text-color); }
+    .question-options { display: flex; flex-direction: column; gap: 12px; }
+
+    .option-btn { background: var(--surface-color); border: 2px solid #E8E4DD; border-radius: 12px; padding: 14px 16px; text-align: left; cursor: pointer; transition: all 0.2s ease; font-size: 15px; color: var(--text-color); font-family: 'DM Sans', sans-serif; }
+    .option-btn:hover { border-color: var(--secondary-color); background: #FDFCFA; }
+    .option-btn.selected { border-color: var(--primary-color); background: #F0F5F3; }
+
+    .action-buttons { display: flex; gap: 12px; margin-top: 24px; justify-content: flex-end; }
   </style>
   <style>body { box-sizing: border-box; }</style>
   <script type="text/javascript"></script>
@@ -162,26 +178,50 @@
  </head>
  <body class="h-full">
   <div id="app-wrapper" class="h-full w-full overflow-auto" style="background: var(--bg-color);"><!-- Header -->
-   <header class="w-full" style="background: var(--surface-color); border-bottom: 1px solid #E8E4DD;">
+   <header class="w-full" style="background: var(--surface-color); border-bottom: 1px solid #E8E4DD; position: sticky; top: 0; z-index: 10;">
     <div class="max-w-2xl mx-auto px-5 py-5">
      <p class="text-xs font-semibold tracking-widest uppercase mb-1" style="color: var(--primary-color);">Consulting Intake</p>
      <h1 id="form-title" class="font-display text-xl sm:text-2xl font-600" style="color: var(--text-color); line-height: 1.3;">Business Process Intake Questionnaire</h1>
-     <p id="form-subtitle" class="text-sm mt-1" style="color: #8A857D;">Help us understand your business so we can prepare for your consulting session.</p>
     </div>
-   </header><!-- Progress -->
-   <div class="max-w-2xl mx-auto px-5 pt-5 pb-2">
-    <div class="flex items-center gap-2 mb-1" id="progress-bar"></div>
-    <p class="text-xs font-medium" style="color: #8A857D;" id="progress-label">Step 1 of 7</p>
-   </div><!-- Form Container -->
-   <main class="max-w-2xl mx-auto px-5 pb-32">
-    <form id="intake-form" novalidate><input type="hidden" name="submission_source" value="CCBB Intake">
-     <div id="step-container"></div>
+   </header><!-- Welcome Screen -->
+   <div id="welcome-screen" class="max-w-2xl mx-auto px-5 py-8">
+    <div style="background: var(--surface-color); border-radius: 16px; border: 1px solid #E8E4DD; padding: 48px 32px; text-align: center; animation: slideIn 0.5s cubic-bezier(0.22, 1, 0.36, 1) forwards;">
+     <div class="mb-6 flex items-center justify-center" style="width:80px;height:80px;border-radius:16px;background:linear-gradient(135deg, #F0F5F3 0%, #F9F7F3 100%);margin:0 auto;">
+      <i data-lucide="clipboard-list" style="width:40px;height:40px;color:var(--primary-color);"></i>
+     </div>
+     <h2 class="font-display text-2xl font-600 mb-3" style="color:var(--text-color);">Let's Get Started</h2>
+     <p id="form-subtitle" class="text-sm mb-8" style="color:#8A857D;line-height:1.6;">Help us understand your business so we can prepare for your consulting session.</p>
+     <p class="text-xs mb-8" style="color:#C9C4BC;">~10 minutes • 7 sections • One question at a time</p><button type="button" id="btn-start" class="btn-primary" style="width: 100%; max-width: 200px; margin: 0 auto;"> <span class="flex items-center justify-center gap-2"><i data-lucide="arrow-right" style="width:16px;height:16px;"></i> Begin</span> </button>
+    </div>
+   </div><!-- Conversation Card Container -->
+   <div id="conversation-container" class="hidden max-w-2xl mx-auto px-5 py-8 pb-32">
+    <!-- Progress Section Indicator -->
+    <div class="mb-8">
+     <div class="flex items-center justify-between mb-3">
+      <div>
+       <p class="text-xs font-semibold uppercase" style="color: var(--primary-color);" id="section-label">Section 1</p>
+       <h2 class="font-display text-lg font-600" style="color:var(--text-color);" id="section-title">Business Overview</h2>
+      </div>
+      <div class="flex items-center justify-center" style="width:40px;height:40px;border-radius:10px;background:#F0F5F3;">
+       <i data-lucide="building-2" style="width:20px;height:20px;color:var(--primary-color);" id="section-icon"></i>
+      </div>
+     </div>
+     <div class="flex items-center gap-2 mb-1" id="progress-bar"></div>
+     <p class="text-xs font-medium" style="color: #8A857D;" id="progress-label">Question 1 of 30</p>
+    </div><!-- Question Card -->
+    <div style="background: var(--surface-color); border-radius: 16px; border: 1px solid #E8E4DD; padding: 28px; animation: slideIn 0.5s cubic-bezier(0.22, 1, 0.36, 1) forwards;">
+     <div id="question-container"></div>
+    </div><!-- Form (hidden, for data collection) -->
+    <form id="intake-form" novalidate style="display: none;">
+     <input type="hidden" name="submission_source" value="CCBB Intake">
     </form>
-   </main><!-- Navigation Footer -->
-   <div id="nav-footer" class="fixed bottom-0 left-0 right-0" style="background: var(--surface-color); border-top: 1px solid #E8E4DD;">
-    <div class="max-w-2xl mx-auto px-5 py-4 flex justify-between items-center"><button type="button" id="btn-back" class="btn-secondary" style="visibility: hidden;"> <span class="flex items-center gap-2"><i data-lucide="arrow-left" style="width:16px;height:16px;"></i> Back</span> </button> <button type="button" id="btn-next" class="btn-primary"> <span id="btn-next-label" class="flex items-center gap-2">Continue <i data-lucide="arrow-right" style="width:16px;height:16px;"></i></span> </button>
+   </div><!-- Navigation Footer (conversational mode) -->
+   <div id="nav-footer" class="fixed bottom-0 left-0 right-0 hidden" style="background: var(--surface-color); border-top: 1px solid #E8E4DD;">
+    <div class="max-w-2xl mx-auto px-5 py-4 flex justify-between items-center gap-3">
+     <button type="button" id="btn-back-conv" class="btn-secondary" style="visibility: hidden; flex: 0 0 auto;"> <span class="flex items-center gap-2"><i data-lucide="arrow-left" style="width:16px;height:16px;"></i> Back</span> </button>
+     <div id="nav-buttons-container" class="flex gap-3 flex-1"></div>
     </div>
-   </div><!-- Success Screen (hidden) -->
+   </div><!-- Success Screen -->
    <div id="success-screen" class="hidden" style="position: fixed; inset: 0; background: var(--bg-color); z-index: 50; display: none; align-items: center; justify-content: center;">
     <div class="success-screen text-center px-6 max-w-md">
      <div class="mx-auto mb-6 flex items-center justify-center" style="width:72px;height:72px;border-radius:50%;background:#F0F5F3;"><i data-lucide="check-circle" style="width:36px;height:36px;color:var(--primary-color);"></i>
@@ -193,17 +233,17 @@
   </div>
   <script>
     // ============ STEP DEFINITIONS ============
-    const STEPS = [
+    const SECTIONS = [
       {
         id: 'business_overview',
         title: 'Business Overview',
         description: 'Tell us about your business basics.',
         icon: 'building-2',
         fields: [
-          { name: 'business_name', label: 'Business Name', type: 'text', placeholder: 'e.g., Sunrise Bakery', required: true },
-          { name: 'industry', label: 'Industry', type: 'select', options: ['Select an industry','Retail','Food & Beverage','Professional Services','Health & Wellness','Construction & Trades','Education','Technology','Real Estate','Beauty & Personal Care','Other'], required: true },
-          { name: 'primary_product_service', label: 'Primary Product or Service', type: 'text', placeholder: 'e.g., Custom wedding cakes', required: true },
-          { name: 'num_employees', label: 'Number of Employees', type: 'radio', options: ['Just me','2–5','6–15','16–50','50+'], required: true },
+          { name: 'business_name', label: 'What is your business name?', type: 'text', placeholder: 'e.g., Sunrise Bakery', required: true },
+          { name: 'industry', label: 'What industry are you in?', type: 'select', options: ['Select an industry','Retail','Food & Beverage','Professional Services','Health & Wellness','Construction & Trades','Education','Technology','Real Estate','Beauty & Personal Care','Other'], required: true },
+          { name: 'primary_product_service', label: 'What is your primary product or service?', type: 'text', placeholder: 'e.g., Custom wedding cakes', required: true },
+          { name: 'num_employees', label: 'How many employees do you have?', type: 'radio', options: ['Just me','2–5','6–15','16–50','50+'], required: true },
           { name: 'customer_discovery', label: 'How do customers primarily discover your business?', type: 'radio', options: ['Word of mouth','Social media','Google / Search','Advertising','Referrals','Other'], required: true }
         ]
       },
@@ -263,25 +303,26 @@
           { name: 'disorganized_process', label: 'What is your most disorganized process?', type: 'textarea', placeholder: 'e.g., Client onboarding, inventory tracking...', required: true },
           { name: 'simplify_task', label: 'If you could simplify one task, what would it be?', type: 'textarea', placeholder: 'Describe the one thing you wish was easier...', required: true }
         ]
-      },
-      {
-        id: 'review_submit',
-        title: 'Review & Submit',
-        description: 'Take a final look before submitting.',
-        icon: 'clipboard-check',
-        fields: [] // Dynamically built
       }
     ];
 
-    const TOTAL_STEPS = STEPS.length;
-    let currentStep = 0;
+    const TOTAL_SECTIONS = SECTIONS.length;
+    let currentSectionIdx = 0;
+    let currentFieldIdx = 0;
     let formData = { submission_source: 'CCBB Intake' };
+    let voiceRecognition = null;
+    let isRecording = false;
+
+    // Get total field count
+    const TOTAL_FIELDS = SECTIONS.reduce((sum, s) => sum + s.fields.length, 0);
 
     // ============ CONFIG ============
     const defaultConfig = {
       form_title: 'Business Process Intake Questionnaire',
       form_subtitle: 'Help us understand your business so we can prepare for your consulting session.',
       submit_button_text: 'Submit Questionnaire',
+      welcome_message: 'Let\'s learn about your business...',
+      skip_optional_text: 'Skip this question',
       background_color: '#F7F5F0',
       surface_color: '#FFFFFF',
       text_color: '#2D2A26',
@@ -301,8 +342,9 @@
       document.documentElement.style.setProperty('--secondary-color', c.secondary_color);
 
       const titleEl = document.getElementById('form-title');
-      const subtitleEl = document.getElementById('form-subtitle');
       if (titleEl) titleEl.textContent = c.form_title;
+
+      const subtitleEl = document.getElementById('form-subtitle');
       if (subtitleEl) subtitleEl.textContent = c.form_subtitle;
 
       const baseSize = c.font_size || 15;
@@ -310,13 +352,6 @@
 
       const fontStack = `${c.font_family}, 'DM Sans', sans-serif`;
       document.body.style.fontFamily = fontStack;
-
-      // Update submit button if on last step
-      const submitBtn = document.getElementById('btn-next-label');
-      if (submitBtn && currentStep === TOTAL_STEPS - 1) {
-        submitBtn.innerHTML = `${c.submit_button_text} <i data-lucide="send" style="width:16px;height:16px;"></i>`;
-        lucide.createIcons();
-      }
     }
 
     // Initialize SDK if available (Canva environment)
@@ -345,203 +380,261 @@
         mapToEditPanelValues: (config) => new Map([
           ['form_title', config.form_title || defaultConfig.form_title],
           ['form_subtitle', config.form_subtitle || defaultConfig.form_subtitle],
-          ['submit_button_text', config.submit_button_text || defaultConfig.submit_button_text]
+          ['submit_button_text', config.submit_button_text || defaultConfig.submit_button_text],
+          ['welcome_message', config.welcome_message || defaultConfig.welcome_message],
+          ['skip_optional_text', config.skip_optional_text || defaultConfig.skip_optional_text]
         ])
       });
     }
 
-    // ============ RENDER ============
-    function buildProgressBar() {
-      const bar = document.getElementById('progress-bar');
-      bar.innerHTML = '';
-      for (let i = 0; i < TOTAL_STEPS; i++) {
-        const seg = document.createElement('div');
-        seg.className = 'progress-segment' + (i < currentStep ? ' done' : '') + (i === currentStep ? ' active' : '');
-        bar.appendChild(seg);
-      }
-      document.getElementById('progress-label').textContent = `Step ${currentStep + 1} of ${TOTAL_STEPS}`;
-    }
+    // ============ UI RENDERING ============
+    function renderQuestion() {
+      const section = SECTIONS[currentSectionIdx];
+      const field = section.fields[currentFieldIdx];
+      const container = document.getElementById('question-container');
+      
+      // Update header
+      document.getElementById('section-label').textContent = `Section ${currentSectionIdx + 1}`;
+      document.getElementById('section-title').textContent = section.title;
+      document.getElementById('section-icon').setAttribute('data-lucide', section.icon);
 
-    function renderStep() {
-      const step = STEPS[currentStep];
-      const container = document.getElementById('step-container');
-
-      if (currentStep === TOTAL_STEPS - 1) {
-        container.innerHTML = buildReviewHTML();
-      } else {
-        let html = `<div class="step-enter"><div class="flex items-center gap-3 mb-4 mt-2"><div class="flex items-center justify-center" style="width:40px;height:40px;border-radius:10px;background:#F0F5F3;"><i data-lucide="${step.icon}" style="width:20px;height:20px;color:var(--primary-color);"></i></div><div><h2 class="font-display text-lg font-600" style="color:var(--text-color);">${step.title}</h2><p class="text-xs" style="color:#8A857D;">${step.description}</p></div></div><div class="flex flex-col gap-5">`;
-        step.fields.forEach(f => { html += renderField(f); });
-        html += '</div></div>';
-        container.innerHTML = html;
-      }
-
-      // Wire up interactions
-      wireFieldEvents();
-      lucide.createIcons();
+      // Update progress
+      const currentFieldNum = SECTIONS.slice(0, currentSectionIdx).reduce((sum, s) => sum + s.fields.length, 0) + currentFieldIdx + 1;
+      document.getElementById('progress-label').textContent = `Question ${currentFieldNum} of ${TOTAL_FIELDS}`;
       buildProgressBar();
-      updateNav();
-      container.scrollTop = 0;
-      document.getElementById('app-wrapper').scrollTo({ top: 0, behavior: 'smooth' });
-    }
 
-    function renderField(f) {
-      const val = formData[f.name];
-      let html = `<div class="field-group"><label class="block text-sm font-medium mb-2" style="color:var(--text-color);">${f.label}${f.required ? '<span style="color:#C2453D;"> *</span>' : ''}</label>`;
+      // Render question
+      let html = `<label class="question-label">${field.label}${field.required ? '' : ' <span style="color: #C9C4BC; font-weight: 400;">(optional)</span>'}</label>`;
 
-      if (f.type === 'text' || f.type === 'number') {
-        const isVoiceEnabled = f.type === 'text';
-        if (isVoiceEnabled) {
-          html += `<div class="voice-input-wrapper"><input type="text" name="${f.name}" placeholder="${f.placeholder || ''}" value="${val || ''}" autocomplete="off"><button type="button" class="voice-btn voice-input-btn" data-field="${f.name}" title="Click to speak"><i data-lucide="mic" style="width:18px;height:18px;"></i></button></div>`;
-        } else {
-          html += `<input type="${f.type}" name="${f.name}" placeholder="${f.placeholder || ''}" value="${val || ''}" autocomplete="off">`;
-        }
-      } else if (f.type === 'textarea') {
-        html += `<div class="voice-input-wrapper" style="position: relative;"><textarea name="${f.name}" placeholder="${f.placeholder || ''}" rows="3" style="padding-right: 42px;">${val || ''}</textarea><button type="button" class="voice-btn voice-input-btn" data-field="${f.name}" style="position: absolute; right: 6px; top: 6px;" title="Click to speak"><i data-lucide="mic" style="width:18px;height:18px;"></i></button></div>`;
-      } else if (f.type === 'select') {
-        html += `<select name="${f.name}">`;
-        f.options.forEach((opt, i) => {
+      if (field.type === 'text' || field.type === 'number') {
+        const val = formData[field.name] || '';
+        html += `<div class="voice-input-wrapper"><input type="${field.type}" name="${field.name}" placeholder="${field.placeholder || ''}" value="${val}" autocomplete="off" style="border-radius: 12px;"><button type="button" class="voice-btn voice-input-btn" data-field="${field.name}" title="Click to speak"><i data-lucide="mic" style="width:18px;height:18px;"></i></button></div>`;
+      } else if (field.type === 'textarea') {
+        const val = formData[field.name] || '';
+        html += `<div class="voice-input-wrapper" style="position: relative;"><textarea name="${field.name}" placeholder="${field.placeholder || ''}" style="border-radius: 12px; padding-right: 42px;">${val}</textarea><button type="button" class="voice-btn voice-input-btn" data-field="${field.name}" style="position: absolute; right: 6px; top: 8px;" title="Click to speak"><i data-lucide="mic" style="width:18px;height:18px;"></i></button></div>`;
+      } else if (field.type === 'select') {
+        const val = formData[field.name] || '';
+        html += `<select name="${field.name}" style="border-radius: 12px;">`;
+        field.options.forEach((opt, i) => {
           const selected = val === opt ? ' selected' : (i === 0 && !val ? ' selected' : '');
           html += `<option value="${i === 0 ? '' : opt}"${selected}>${opt}</option>`;
         });
         html += '</select>';
-      } else if (f.type === 'radio') {
-        html += '<div class="flex flex-col gap-2">';
-        f.options.forEach(opt => {
+      } else if (field.type === 'radio') {
+        const val = formData[field.name];
+        html += '<div class="question-options">';
+        field.options.forEach(opt => {
           const sel = val === opt ? ' selected' : '';
-          html += `<div class="radio-option${sel}" data-name="${f.name}" data-value="${opt}" role="radio" aria-checked="${val === opt}" tabindex="0" style="border-radius:10px;padding:12px 14px;"><div class="flex items-center gap-3"><div class="radio-dot"></div><span class="text-sm">${opt}</span></div></div>`;
+          html += `<button type="button" class="option-btn${sel}" data-name="${field.name}" data-value="${opt}" data-type="radio">${opt}</button>`;
         });
         html += '</div>';
-      } else if (f.type === 'checkbox') {
-        const vals = Array.isArray(val) ? val : [];
-        html += '<div class="flex flex-col gap-2">';
-        f.options.forEach(opt => {
+      } else if (field.type === 'checkbox') {
+        const vals = Array.isArray(formData[field.name]) ? formData[field.name] : [];
+        html += '<div class="question-options">';
+        field.options.forEach(opt => {
           const sel = vals.includes(opt) ? ' selected' : '';
-          html += `<div class="checkbox-option${sel}" data-name="${f.name}" data-value="${opt}" role="checkbox" aria-checked="${vals.includes(opt)}" tabindex="0" style="border-radius:10px;padding:12px 14px;"><div class="flex items-center gap-3"><div class="check-box"><svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M2 6L5 9L10 3" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div><span class="text-sm">${opt}</span></div></div>`;
+          html += `<button type="button" class="option-btn${sel}" data-name="${field.name}" data-value="${opt}" data-type="checkbox">${opt}</button>`;
         });
         html += '</div>';
       }
+
+      html += '<div class="action-buttons">';
+      if (!field.required) {
+        const config = window.elementSdk?.config || defaultConfig;
+        html += `<button type="button" id="skip-btn" class="btn-secondary">${config.skip_optional_text || defaultConfig.skip_optional_text}</button>`;
+      }
+      html += '<button type="button" id="next-field-btn" class="btn-primary">Next</button>';
       html += '</div>';
-      return html;
+
+      container.innerHTML = html;
+      lucide.createIcons();
+      wireFieldEvents();
+      updateNavFooter();
+    }
+
+    function buildProgressBar() {
+      const bar = document.getElementById('progress-bar');
+      bar.innerHTML = '';
+      const currentFieldNum = SECTIONS.slice(0, currentSectionIdx).reduce((sum, s) => sum + s.fields.length, 0) + currentFieldIdx + 1;
+      
+      for (let i = 0; i < TOTAL_FIELDS; i++) {
+        const seg = document.createElement('div');
+        seg.className = 'progress-segment' + (i < currentFieldNum - 1 ? ' done' : '') + (i === currentFieldNum - 1 ? ' active' : '');
+        bar.appendChild(seg);
+      }
     }
 
     function wireFieldEvents() {
-      // Text / textarea / select
-      document.querySelectorAll('#step-container input[type="text"], #step-container input[type="number"], #step-container textarea, #step-container select').forEach(el => {
-        el.addEventListener('input', () => { formData[el.name] = el.value; });
-        el.addEventListener('change', () => { formData[el.name] = el.value; });
+      // Text/number/textarea/select
+      document.querySelectorAll('#question-container input[type="text"], #question-container input[type="number"], #question-container textarea, #question-container select').forEach(el => {
+        el.addEventListener('input', (e) => { formData[el.name] = el.value; });
+        el.addEventListener('change', (e) => { formData[el.name] = el.value; });
       });
 
-      // Voice input buttons
-      document.querySelectorAll('#step-container .voice-input-btn').forEach(btn => {
+      // Voice buttons
+      document.querySelectorAll('#question-container .voice-input-btn').forEach(btn => {
         btn.addEventListener('click', (e) => {
           e.preventDefault();
           handleVoiceInput(btn);
         });
       });
 
-      // Radio
-      document.querySelectorAll('#step-container .radio-option').forEach(el => {
-        const handler = () => {
-          const name = el.dataset.name;
-          document.querySelectorAll(`.radio-option[data-name="${name}"]`).forEach(r => {
-            r.classList.remove('selected');
-            r.setAttribute('aria-checked', 'false');
-          });
-          el.classList.add('selected');
-          el.setAttribute('aria-checked', 'true');
-          formData[name] = el.dataset.value;
-        };
-        el.addEventListener('click', handler);
-        el.addEventListener('keydown', (e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); handler(); } });
-      });
+      // Option buttons (radio/checkbox)
+      document.querySelectorAll('#question-container .option-btn').forEach(btn => {
+        btn.addEventListener('click', (e) => {
+          e.preventDefault();
+          const name = btn.dataset.name;
+          const value = btn.dataset.value;
+          const type = btn.dataset.type;
 
-      // Checkbox
-      document.querySelectorAll('#step-container .checkbox-option').forEach(el => {
-        const handler = () => {
-          const name = el.dataset.name;
-          el.classList.toggle('selected');
-          const isSelected = el.classList.contains('selected');
-          el.setAttribute('aria-checked', isSelected.toString());
-          if (!Array.isArray(formData[name])) formData[name] = [];
-          if (isSelected) {
-            formData[name].push(el.dataset.value);
-          } else {
-            formData[name] = formData[name].filter(v => v !== el.dataset.value);
+          if (type === 'radio') {
+            document.querySelectorAll(`[data-name="${name}"]`).forEach(b => b.classList.remove('selected'));
+            btn.classList.add('selected');
+            formData[name] = value;
+          } else if (type === 'checkbox') {
+            btn.classList.toggle('selected');
+            if (!Array.isArray(formData[name])) formData[name] = [];
+            if (btn.classList.contains('selected')) {
+              if (!formData[name].includes(value)) formData[name].push(value);
+            } else {
+              formData[name] = formData[name].filter(v => v !== value);
+            }
           }
-        };
-        el.addEventListener('click', handler);
-        el.addEventListener('keydown', (e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); handler(); } });
-      });
-    }
-
-    function buildReviewHTML() {
-      let html = `<div class="step-enter"><div class="flex items-center gap-3 mb-4 mt-2"><div class="flex items-center justify-center" style="width:40px;height:40px;border-radius:10px;background:#F0F5F3;"><i data-lucide="clipboard-check" style="width:20px;height:20px;color:var(--primary-color);"></i></div><div><h2 class="font-display text-lg font-600" style="color:var(--text-color);">Review & Submit</h2><p class="text-xs" style="color:#8A857D;">Confirm your responses before submitting.</p></div></div>`;
-
-      STEPS.slice(0, -1).forEach((step, si) => {
-        html += `<div style="background:var(--surface-color);border-radius:12px;border:1px solid #E8E4DD;padding:16px 18px;margin-bottom:12px;"><div class="flex items-center justify-between mb-3"><h3 class="font-display text-sm font-600" style="color:var(--text-color);">${step.title}</h3><button type="button" class="text-xs font-medium edit-step-btn" data-step="${si}" style="color:var(--primary-color);background:none;border:none;cursor:pointer;">Edit</button></div>`;
-        step.fields.forEach(f => {
-          let val = formData[f.name];
-          if (Array.isArray(val)) val = val.join(', ');
-          if (!val) val = '<span style="color:#C9C4BC;">Not provided</span>';
-          html += `<div class="mb-2"><p class="text-xs font-medium" style="color:#8A857D;">${f.label}</p><p class="text-sm" style="color:var(--text-color);">${val}</p></div>`;
         });
-        html += '</div>';
       });
 
-      html += '</div>';
-      return html;
+      // Skip button (if optional)
+      const skipBtn = document.getElementById('skip-btn');
+      if (skipBtn) {
+        skipBtn.addEventListener('click', (e) => {
+          e.preventDefault();
+          goToNextField();
+        });
+      }
+
+      // Next field button
+      const nextBtn = document.getElementById('next-field-btn');
+      if (nextBtn) {
+        nextBtn.addEventListener('click', (e) => {
+          e.preventDefault();
+          if (validateCurrentField()) {
+            goToNextField();
+          }
+        });
+      }
+
+      // Back button
+      document.getElementById('btn-back-conv').addEventListener('click', (e) => {
+        e.preventDefault();
+        goToPrevField();
+      });
     }
 
-    function updateNav() {
-      const backBtn = document.getElementById('btn-back');
-      const nextBtn = document.getElementById('btn-next');
-      const nextLabel = document.getElementById('btn-next-label');
+    function updateNavFooter() {
+      const backBtn = document.getElementById('btn-back-conv');
+      const isFirstField = currentSectionIdx === 0 && currentFieldIdx === 0;
+      backBtn.style.visibility = isFirstField ? 'hidden' : 'visible';
+    }
 
-      backBtn.style.visibility = currentStep === 0 ? 'hidden' : 'visible';
-
-      const config = window.elementSdk.config || defaultConfig;
-      if (currentStep === TOTAL_STEPS - 1) {
-        const submitText = config.submit_button_text || defaultConfig.submit_button_text;
-        nextLabel.innerHTML = `${submitText} <i data-lucide="send" style="width:16px;height:16px;"></i>`;
+    function validateCurrentField() {
+      const section = SECTIONS[currentSectionIdx];
+      const field = section.fields[currentFieldIdx];
+      
+      if (!field.required) return true;
+      
+      const val = formData[field.name];
+      if (field.type === 'checkbox') {
+        return Array.isArray(val) && val.length > 0;
       } else {
-        nextLabel.innerHTML = 'Continue <i data-lucide="arrow-right" style="width:16px;height:16px;"></i>';
+        return val && (typeof val === 'string' ? val.trim() !== '' : true);
       }
-      lucide.createIcons();
+    }
+
+    function goToNextField() {
+      const section = SECTIONS[currentSectionIdx];
+      if (currentFieldIdx < section.fields.length - 1) {
+        currentFieldIdx++;
+        renderQuestion();
+      } else {
+        // Move to next section
+        if (currentSectionIdx < TOTAL_SECTIONS - 1) {
+          currentSectionIdx++;
+          currentFieldIdx = 0;
+          renderQuestion();
+        } else {
+          // Finish
+          submitForm();
+        }
+      }
+    }
+
+    function goToPrevField() {
+      if (currentFieldIdx > 0) {
+        currentFieldIdx--;
+        renderQuestion();
+      } else {
+        // Move to previous section
+        if (currentSectionIdx > 0) {
+          currentSectionIdx--;
+          currentFieldIdx = SECTIONS[currentSectionIdx].fields.length - 1;
+          renderQuestion();
+        }
+      }
     }
 
     // ============ VOICE INPUT ============
-    let voiceRecognition = null;
-    let isRecording = false;
-
     function initVoiceRecognition() {
       if (voiceRecognition) return;
       const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
-      if (!SpeechRecognition) return;
+      if (!SpeechRecognition) {
+        showToast('Voice input not supported in your browser', 'error');
+        return false;
+      }
       voiceRecognition = new SpeechRecognition();
       voiceRecognition.continuous = false;
       voiceRecognition.interimResults = true;
       voiceRecognition.lang = 'en-US';
 
-      voiceRecognition.onstart = () => { isRecording = true; updateVoiceButton(); };
-      voiceRecognition.onend = () => { isRecording = false; updateVoiceButton(); };
-      voiceRecognition.onerror = (e) => { showToast('Voice input error: ' + e.error, 'error'); isRecording = false; updateVoiceButton(); };
+      voiceRecognition.onstart = () => { 
+        isRecording = true; 
+        updateVoiceButton(); 
+      };
+      
+      voiceRecognition.onend = () => { 
+        isRecording = false; 
+        updateVoiceButton(); 
+      };
+      
+      voiceRecognition.onerror = (e) => { 
+        isRecording = false; 
+        updateVoiceButton();
+        if (e.error !== 'no-speech') {
+          showToast('Voice input error: ' + e.error, 'error');
+        }
+      };
+      
       voiceRecognition.onresult = (e) => {
         let transcript = '';
         for (let i = e.resultIndex; i < e.results.length; i++) {
           transcript += e.results[i][0].transcript;
           if (e.results[i].isFinal) transcript += ' ';
         }
-        if (window.currentVoiceField) {
-          window.currentVoiceField.value = transcript;
-          formData[window.currentVoiceField.name] = transcript;
+        if (window.currentVoiceField && transcript.trim()) {
+          window.currentVoiceField.value = (window.currentVoiceField.value + ' ' + transcript).trim();
+          formData[window.currentVoiceField.name] = window.currentVoiceField.value;
           window.currentVoiceField.dispatchEvent(new Event('input', { bubbles: true }));
         }
       };
+      
+      return true;
     }
 
     function handleVoiceInput(btn) {
-      initVoiceRecognition();
-      if (!voiceRecognition) { showToast('Voice input not supported in this browser', 'error'); return; }
+      if (!initVoiceRecognition()) return;
+      if (!voiceRecognition) { 
+        showToast('Voice input not supported in this browser', 'error'); 
+        return; 
+      }
       
       const fieldName = btn.dataset.field;
       const input = document.querySelector(`[name="${fieldName}"]`);
@@ -549,13 +642,16 @@
 
       if (isRecording) {
         voiceRecognition.stop();
-        isRecording = false;
       } else {
         window.currentVoiceField = input;
         input.focus();
-        voiceRecognition.start();
+        try {
+          voiceRecognition.start();
+        } catch (e) {
+          console.error('Voice recognition error:', e);
+          showToast('Could not start voice input', 'error');
+        }
       }
-      updateVoiceButton();
     }
 
     function updateVoiceButton() {
@@ -569,55 +665,11 @@
       });
     }
 
-    // ============ VALIDATION ============
-    function validateCurrentStep() {
-      if (currentStep === TOTAL_STEPS - 1) return true;
-      const step = STEPS[currentStep];
-      const missing = [];
-      step.fields.forEach(f => {
-        if (!f.required) return;
-        const val = formData[f.name];
-        if (f.type === 'checkbox') {
-          if (!Array.isArray(val) || val.length === 0) missing.push(f.label);
-        } else {
-          if (!val || (typeof val === 'string' && val.trim() === '')) missing.push(f.label);
-        }
-      });
-      if (missing.length > 0) {
-        showToast('Please complete: ' + missing[0], 'error');
-        return false;
-      }
-      return true;
-    }
-
-    // ============ NAVIGATION ============
-    document.getElementById('btn-next').addEventListener('click', async () => {
-      if (currentStep < TOTAL_STEPS - 1) {
-        if (!validateCurrentStep()) return;
-        currentStep++;
-        renderStep();
-      } else {
-        await submitForm();
-      }
-    });
-
-    document.getElementById('btn-back').addEventListener('click', () => {
-      if (currentStep > 0) { currentStep--; renderStep(); }
-    });
-
-    // Edit step button delegation
-    document.getElementById('step-container').addEventListener('click', (e) => {
-      const btn = e.target.closest('.edit-step-btn');
-      if (btn) { currentStep = parseInt(btn.dataset.step); renderStep(); }
-    });
-
     // ============ SUBMIT ============
     async function submitForm() {
-      const nextBtn = document.getElementById('btn-next');
-      const nextLabel = document.getElementById('btn-next-label');
-      nextBtn.disabled = true;
-      nextLabel.innerHTML = '<span class="spinner"></span> Submitting...';
-
+      document.getElementById('conversation-container').classList.add('hidden');
+      document.getElementById('nav-footer').classList.add('hidden');
+      
       // Flatten checkbox arrays for submission
       const payload = {};
       Object.keys(formData).forEach(k => {
@@ -625,21 +677,17 @@
       });
 
       try {
-        const response = await fetch('/webhook/business-intake', {
+        await fetch('/webhook/business-intake', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify(payload)
         });
-        // Show success regardless (webhook is a placeholder)
-        showSuccess();
-      } catch (err) {
-        // Since the webhook is a placeholder, show success anyway
-        showSuccess();
-      }
+      } catch (err) {}
+      
+      showSuccess();
     }
 
     function showSuccess() {
-      document.getElementById('nav-footer').style.display = 'none';
       const screen = document.getElementById('success-screen');
       screen.classList.remove('hidden');
       screen.style.display = 'flex';
@@ -648,13 +696,13 @@
 
     function resetForm() {
       formData = { submission_source: 'CCBB Intake' };
-      currentStep = 0;
-      document.getElementById('nav-footer').style.display = '';
+      currentSectionIdx = 0;
+      currentFieldIdx = 0;
+      document.getElementById('conversation-container').classList.add('hidden');
+      document.getElementById('nav-footer').classList.add('hidden');
       document.getElementById('success-screen').style.display = 'none';
       document.getElementById('success-screen').classList.add('hidden');
-      const nextBtn = document.getElementById('btn-next');
-      nextBtn.disabled = false;
-      renderStep();
+      document.getElementById('welcome-screen').classList.remove('hidden');
     }
 
     // ============ TOAST ============
@@ -668,9 +716,17 @@
       setTimeout(() => { toast.style.animation = 'toastOut 0.3s ease forwards'; setTimeout(() => toast.remove(), 300); }, 3000);
     }
 
-    // ============ INIT ============
-    renderStep();
+    // ============ INITIALIZATION ============
+    document.getElementById('btn-start').addEventListener('click', (e) => {
+      e.preventDefault();
+      document.getElementById('welcome-screen').classList.add('hidden');
+      document.getElementById('conversation-container').classList.remove('hidden');
+      document.getElementById('nav-footer').classList.remove('hidden');
+      renderQuestion();
+    });
+
+    applyConfig(window.elementSdk?.config || defaultConfig);
     lucide.createIcons();
   </script>
- <script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'9dc842c183d80711',t:'MTc3MzU0MzU1Mi4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+ <script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'9dc84ccc540c0711',t:'MTc3MzU0Mzk2My4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
 </html>

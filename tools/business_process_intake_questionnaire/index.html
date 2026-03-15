@@ -356,663 +356,808 @@
     </div>
   </div>
 
-  <script>
-    var MAKE_WEBHOOK_URL = 'https://hook.us2.make.com/95eb4haubwts1fad6rrvys7elhgfsrqe';
+<script>
+  var MAKE_WEBHOOK_URL = 'https://hook.us2.make.com/95eb4haubwts1fad6rrvys7elhgfsrqe';
 
-    var SECTIONS = [
-      {
-        id: 'business_overview',
-        title: 'Business Overview',
-        description: 'Tell us about your business basics.',
-        icon: 'building-2',
-        fields: [
-          { name: 'business_name', label: 'What is your business name?', type: 'text', placeholder: 'e.g., Sunrise Bakery', required: true },
-          { name: 'industry', label: 'What industry are you in?', type: 'select', options: ['Select an industry','Retail','Food & Beverage','Professional Services','Health & Wellness','Construction & Trades','Education','Technology','Real Estate','Beauty & Personal Care','Other'], required: true },
-          { name: 'primary_product_service', label: 'What is your primary product or service?', type: 'text', placeholder: 'e.g., Custom wedding cakes', required: true },
-          { name: 'num_employees', label: 'How many employees do you have?', type: 'radio', options: ['Just me','2–5','6–15','16–50','50+'], required: true },
-          { name: 'customer_discovery', label: 'How do customers primarily discover your business?', type: 'radio', options: ['Word of mouth','Social media','Google / Search','Advertising','Referrals','Other'], required: true }
-        ]
-      },
-      {
-        id: 'customer_inquiries',
-        title: 'Customer Inquiries',
-        description: 'How do new customers reach you?',
-        icon: 'message-square',
-        fields: [
-          { name: 'contact_methods', label: 'How do customers contact your business?', type: 'checkbox', options: ['Website form','Email','Phone call','Social media DM','Walk-in','Other'], required: true },
-          { name: 'inquiry_tracking', label: 'Where are inquiries recorded?', type: 'radio', options: ['Email inbox','CRM software','Spreadsheet','Paper / Notebook','Not tracked'], required: true },
-          { name: 'after_contact', label: 'What happens after someone contacts your business?', type: 'textarea', placeholder: 'Describe your typical process...', required: false },
-          { name: 'who_responds', label: 'Who responds to inquiries?', type: 'radio', options: ['Me (the owner)','A specific team member','Whoever is available','No consistent person'], required: true }
-        ]
-      },
-      {
-        id: 'client_communication',
-        title: 'Client Communication',
-        description: 'How do you stay in touch with clients?',
-        icon: 'mail',
-        fields: [
-          { name: 'followup_method', label: 'How are follow-ups handled?', type: 'checkbox', options: ['Email','Phone call','Text message','Not currently done'], required: true },
-          { name: 'communication_tracked', label: 'Is client communication tracked?', type: 'radio', options: ['Yes, in a CRM','Yes, in a spreadsheet','Somewhat, in my email','No, not really'], required: true },
-          { name: 'followup_challenges', label: 'What challenges do you face with follow-up?', type: 'textarea', placeholder: 'e.g., I forget to follow up, it takes too long...', required: false }
-        ]
-      },
-      {
-        id: 'scheduling',
-        title: 'Scheduling',
-        description: 'How do you manage appointments?',
-        icon: 'calendar',
-        fields: [
-          { name: 'scheduling_method', label: 'How are appointments scheduled?', type: 'radio', options: ['Online booking tool','Phone / email back-and-forth','Walk-in only','Social media messages','No appointments needed'], required: true },
-          { name: 'confirmations_sent', label: 'Are appointment confirmations sent?', type: 'radio', options: ['Yes, automatically','Yes, manually','Sometimes','No'], required: true },
-          { name: 'reminders_sent', label: 'Are appointment reminders sent?', type: 'radio', options: ['Yes, automatically','Yes, manually','Sometimes','No'], required: true },
-          { name: 'scheduling_challenges', label: 'Any scheduling challenges?', type: 'textarea', placeholder: 'e.g., Double bookings, no-shows...', required: false }
-        ]
-      },
-      {
-        id: 'content_activity',
-        title: 'Content Activity',
-        description: 'Tell us about your content efforts.',
-        icon: 'pen-tool',
-        fields: [
-          { name: 'content_types', label: 'What types of content do you produce?', type: 'checkbox', options: ['Social media posts','Blog articles','Email newsletters','Videos','None currently'], required: true },
-          { name: 'publishing_frequency', label: 'How often do you publish content?', type: 'radio', options: ['Daily','A few times a week','Weekly','Monthly','Rarely / Never'], required: true },
-          { name: 'content_organization', label: 'How is content organized or planned?', type: 'radio', options: ['Content calendar','Notes app or document','I wing it','Not organized at all'], required: true }
-        ]
-      },
-      {
-        id: 'operational_challenges',
-        title: 'Operational Challenges',
-        description: 'Help us understand where you need the most support.',
-        icon: 'target',
-        fields: [
-          { name: 'time_consuming_task', label: 'What is your most time-consuming task?', type: 'textarea', placeholder: 'e.g., Responding to emails, creating invoices...', required: true },
-          { name: 'disorganized_process', label: 'What is your most disorganized process?', type: 'textarea', placeholder: 'e.g., Client onboarding, inventory tracking...', required: true },
-          { name: 'simplify_task', label: 'If you could simplify one task, what would it be?', type: 'textarea', placeholder: 'Describe the one thing you wish was easier...', required: true }
-        ]
-      }
-    ];
+  var SECTIONS = [
+    {
+      id: 'business_overview',
+      title: 'Business Overview',
+      description: 'Tell us about your business basics.',
+      icon: 'building-2',
+      fields: [
+        { name: 'business_name', label: 'What is your business name?', type: 'text', placeholder: 'e.g., Sunrise Bakery', required: true },
+        { name: 'industry', label: 'What industry are you in?', type: 'select', options: ['Select an industry','Retail','Food & Beverage','Professional Services','Health & Wellness','Construction & Trades','Education','Technology','Real Estate','Beauty & Personal Care','Other'], required: true },
+        { name: 'primary_product_service', label: 'What is your primary product or service?', type: 'text', placeholder: 'e.g., Custom wedding cakes', required: true },
+        { name: 'num_employees', label: 'How many employees do you have?', type: 'radio', options: ['Just me','2–5','6–15','16–50','50+'], required: true },
+        { name: 'customer_discovery', label: 'How do customers primarily discover your business?', type: 'radio', options: ['Word of mouth','Social media','Google / Search','Advertising','Referrals','Other'], required: true }
+      ]
+    },
+    {
+      id: 'customer_inquiries',
+      title: 'Customer Inquiries',
+      description: 'How do new customers reach you?',
+      icon: 'message-square',
+      fields: [
+        { name: 'contact_methods', label: 'How do customers contact your business?', type: 'checkbox', options: ['Website form','Email','Phone call','Social media DM','Walk-in','Other'], required: true },
+        { name: 'inquiry_tracking', label: 'Where are inquiries recorded?', type: 'radio', options: ['Email inbox','CRM software','Spreadsheet','Paper / Notebook','Not tracked'], required: true },
+        { name: 'after_contact', label: 'What happens after someone contacts your business?', type: 'textarea', placeholder: 'Describe your typical process...', required: false },
+        { name: 'who_responds', label: 'Who responds to inquiries?', type: 'radio', options: ['Me (the owner)','A specific team member','Whoever is available','No consistent person'], required: true }
+      ]
+    },
+    {
+      id: 'client_communication',
+      title: 'Client Communication',
+      description: 'How do you stay in touch with clients?',
+      icon: 'mail',
+      fields: [
+        { name: 'followup_method', label: 'How are follow-ups handled?', type: 'checkbox', options: ['Email','Phone call','Text message','Not currently done'], required: true },
+        { name: 'communication_tracked', label: 'Is client communication tracked?', type: 'radio', options: ['Yes, in a CRM','Yes, in a spreadsheet','Somewhat, in my email','No, not really'], required: true },
+        { name: 'followup_challenges', label: 'What challenges do you face with follow-up?', type: 'textarea', placeholder: 'e.g., I forget to follow up, it takes too long...', required: false }
+      ]
+    },
+    {
+      id: 'scheduling',
+      title: 'Scheduling',
+      description: 'How do you manage appointments?',
+      icon: 'calendar',
+      fields: [
+        { name: 'scheduling_method', label: 'How are appointments scheduled?', type: 'radio', options: ['Online booking tool','Phone / email back-and-forth','Walk-in only','Social media messages','No appointments needed'], required: true },
+        { name: 'confirmations_sent', label: 'Are appointment confirmations sent?', type: 'radio', options: ['Yes, automatically','Yes, manually','Sometimes','No'], required: true },
+        { name: 'reminders_sent', label: 'Are appointment reminders sent?', type: 'radio', options: ['Yes, automatically','Yes, manually','Sometimes','No'], required: true },
+        { name: 'scheduling_challenges', label: 'Any scheduling challenges?', type: 'textarea', placeholder: 'e.g., Double bookings, no-shows...', required: false }
+      ]
+    },
+    {
+      id: 'content_activity',
+      title: 'Content Activity',
+      description: 'Tell us about your content efforts.',
+      icon: 'pen-tool',
+      fields: [
+        { name: 'content_types', label: 'What types of content do you produce?', type: 'checkbox', options: ['Social media posts','Blog articles','Email newsletters','Videos','None currently'], required: true },
+        { name: 'publishing_frequency', label: 'How often do you publish content?', type: 'radio', options: ['Daily','A few times a week','Weekly','Monthly','Rarely / Never'], required: true },
+        { name: 'content_organization', label: 'How is content organized or planned?', type: 'radio', options: ['Content calendar','Notes app or document','I wing it','Not organized at all'], required: true }
+      ]
+    },
+    {
+      id: 'operational_challenges',
+      title: 'Operational Challenges',
+      description: 'Help us understand where you need the most support.',
+      icon: 'target',
+      fields: [
+        { name: 'time_consuming_task', label: 'What is your most time-consuming task?', type: 'textarea', placeholder: 'e.g., Responding to emails, creating invoices...', required: true },
+        { name: 'disorganized_process', label: 'What is your most disorganized process?', type: 'textarea', placeholder: 'e.g., Client onboarding, inventory tracking...', required: true },
+        { name: 'simplify_task', label: 'If you could simplify one task, what would it be?', type: 'textarea', placeholder: 'Describe the one thing you wish was easier...', required: true }
+      ]
+    },
+    {
+      id: 'current_workflow',
+      title: 'Current Workflow',
+      description: 'This helps us generate a simple workflow snapshot for your session.',
+      icon: 'git-branch',
+      fields: [
+        { name: 'primary_lead_source', label: 'Where do most new customer inquiries originate?', type: 'radio', options: ['Website form','Phone calls','Instagram / Social media','Email','Referral','Multiple sources'], required: true },
+        { name: 'initial_response_owner', label: 'Who typically responds to new inquiries?', type: 'radio', options: ['I respond personally','A staff member responds','CRM / automation responds','It varies'], required: true },
+        { name: 'response_timing', label: 'How quickly are inquiries usually answered?', type: 'radio', options: ['Within 1 hour','Same day','Within 24 hours','More than 24 hours','It varies'], required: true },
+        { name: 'post_scheduling_step', label: 'After scheduling, what normally happens next?', type: 'radio', options: ['Consultation call','In-person appointment','Quote or proposal','Immediate service','It varies'], required: true },
+        { name: 'post_interaction_followup', label: 'After a client interaction, what follow-up normally happens?', type: 'radio', options: ['Automated follow-up','Manual follow-up','Occasional follow-up','No formal follow-up'], required: true }
+      ]
+    }
+  ];
 
-    var TOTAL_SECTIONS = SECTIONS.length;
-    var currentSectionIdx = 0;
-    var currentFieldIdx = 0;
-    var formData = { submission_source: 'CCBB Intake' };
-    var voiceRecognition = null;
-    var isRecording = false;
-    var isSubmitting = false;
-    var TOTAL_FIELDS = getTotalFields();
+  var TOTAL_SECTIONS = SECTIONS.length;
+  var currentSectionIdx = 0;
+  var currentFieldIdx = 0;
+  var formData = getInitialFormData();
+  var voiceRecognition = null;
+  var isRecording = false;
+  var isSubmitting = false;
+  var TOTAL_FIELDS = getTotalFields();
 
-    var defaultConfig = {
-      form_title: 'Business Process Intake Questionnaire',
-      form_subtitle: 'Help us understand your business so we can prepare for your consulting session.',
-      submit_button_text: 'Submit Questionnaire',
-      welcome_message: 'Let\'s learn about your business...',
-      skip_optional_text: 'Skip this question',
-      background_color: '#F7F5F0',
-      surface_color: '#FFFFFF',
-      text_color: '#2D2A26',
-      primary_color: '#3D6B5E',
-      secondary_color: '#B8A88A',
-      font_family: 'DM Sans',
-      font_size: 15
+  var defaultConfig = {
+    form_title: 'Business Process Intake Questionnaire',
+    form_subtitle: 'Help us understand your business so we can prepare for your consulting session.',
+    submit_button_text: 'Submit Questionnaire',
+    welcome_message: 'Let\'s learn about your business...',
+    skip_optional_text: 'Skip this question',
+    background_color: '#F7F5F0',
+    surface_color: '#FFFFFF',
+    text_color: '#2D2A26',
+    primary_color: '#3D6B5E',
+    secondary_color: '#B8A88A',
+    font_family: 'DM Sans',
+    font_size: 15
+  };
+
+  function getInitialFormData() {
+    return {
+      submission_source: 'CCBB Intake',
+      consulting_context: 'Business Growth Path intake',
+      consulting_program: 'Business Growth Path',
+      consultant_name: 'Lorraine Dukes'
     };
+  }
 
-    function getTotalFields() {
-      var total = 0;
-      var i;
-      for (i = 0; i < SECTIONS.length; i++) total += SECTIONS[i].fields.length;
-      return total;
+  function getTotalFields() {
+    var total = 0;
+    var i;
+    for (i = 0; i < SECTIONS.length; i++) {
+      total += SECTIONS[i].fields.length;
     }
+    return total;
+  }
 
-    function getSdkConfig() {
-      if (window.elementSdk && window.elementSdk.config) return window.elementSdk.config;
-      return defaultConfig;
+  function getSdkConfig() {
+    if (window.elementSdk && window.elementSdk.config) {
+      return window.elementSdk.config;
     }
+    return defaultConfig;
+  }
 
-    function mergeObjects(base, overrideObj) {
-      var out = {};
-      var k;
-      for (k in base) if (base.hasOwnProperty(k)) out[k] = base[k];
-      for (k in overrideObj) if (overrideObj.hasOwnProperty(k)) out[k] = overrideObj[k];
-      return out;
+  function mergeObjects(base, overrideObj) {
+    var out = {};
+    var k;
+
+    for (k in base) {
+      if (base.hasOwnProperty(k)) out[k] = base[k];
     }
-
-    function applyConfig(config) {
-      var c = mergeObjects(defaultConfig, config || {});
-      document.documentElement.style.setProperty('--bg-color', c.background_color);
-      document.documentElement.style.setProperty('--surface-color', c.surface_color);
-      document.documentElement.style.setProperty('--text-color', c.text_color);
-      document.documentElement.style.setProperty('--primary-color', c.primary_color);
-      document.documentElement.style.setProperty('--secondary-color', c.secondary_color);
-
-      var titleEl = document.getElementById('form-title');
-      if (titleEl) titleEl.textContent = c.form_title;
-
-      var subtitleEl = document.getElementById('form-subtitle');
-      if (subtitleEl) subtitleEl.textContent = c.form_subtitle;
-
-      document.body.style.fontSize = (c.font_size || 15) + 'px';
-      document.body.style.fontFamily = (c.font_family || 'DM Sans') + ", 'DM Sans', sans-serif";
+    for (k in overrideObj) {
+      if (overrideObj.hasOwnProperty(k)) out[k] = overrideObj[k];
     }
+    return out;
+  }
 
-    if (window.elementSdk) {
-      window.elementSdk.init({
-        defaultConfig: defaultConfig,
-        onConfigChange: function(config) {
-          applyConfig(config);
-        },
-        mapToCapabilities: function(config) {
-          return {
-            recolorables: [
-              { get: function() { return config.background_color || defaultConfig.background_color; }, set: function(v) { config.background_color = v; window.elementSdk.setConfig({ background_color: v }); } },
-              { get: function() { return config.surface_color || defaultConfig.surface_color; }, set: function(v) { config.surface_color = v; window.elementSdk.setConfig({ surface_color: v }); } },
-              { get: function() { return config.text_color || defaultConfig.text_color; }, set: function(v) { config.text_color = v; window.elementSdk.setConfig({ text_color: v }); } },
-              { get: function() { return config.primary_color || defaultConfig.primary_color; }, set: function(v) { config.primary_color = v; window.elementSdk.setConfig({ primary_color: v }); } },
-              { get: function() { return config.secondary_color || defaultConfig.secondary_color; }, set: function(v) { config.secondary_color = v; window.elementSdk.setConfig({ secondary_color: v }); } }
-            ],
-            borderables: [],
-            fontEditable: {
-              get: function() { return config.font_family || defaultConfig.font_family; },
-              set: function(v) { config.font_family = v; window.elementSdk.setConfig({ font_family: v }); }
+  function applyConfig(config) {
+    var c = mergeObjects(defaultConfig, config || {});
+    var titleEl = document.getElementById('form-title');
+    var subtitleEl = document.getElementById('form-subtitle');
+
+    document.documentElement.style.setProperty('--bg-color', c.background_color);
+    document.documentElement.style.setProperty('--surface-color', c.surface_color);
+    document.documentElement.style.setProperty('--text-color', c.text_color);
+    document.documentElement.style.setProperty('--primary-color', c.primary_color);
+    document.documentElement.style.setProperty('--secondary-color', c.secondary_color);
+
+    if (titleEl) titleEl.textContent = c.form_title;
+    if (subtitleEl) subtitleEl.textContent = c.form_subtitle;
+
+    document.body.style.fontSize = (c.font_size || 15) + 'px';
+    document.body.style.fontFamily = (c.font_family || 'DM Sans') + ", 'DM Sans', sans-serif";
+  }
+
+  if (window.elementSdk) {
+    window.elementSdk.init({
+      defaultConfig: defaultConfig,
+      onConfigChange: function(config) {
+        applyConfig(config);
+      },
+      mapToCapabilities: function(config) {
+        return {
+          recolorables: [
+            {
+              get: function() { return config.background_color || defaultConfig.background_color; },
+              set: function(v) { config.background_color = v; window.elementSdk.setConfig({ background_color: v }); }
             },
-            fontSizeable: {
-              get: function() { return config.font_size || defaultConfig.font_size; },
-              set: function(v) { config.font_size = v; window.elementSdk.setConfig({ font_size: v }); }
+            {
+              get: function() { return config.surface_color || defaultConfig.surface_color; },
+              set: function(v) { config.surface_color = v; window.elementSdk.setConfig({ surface_color: v }); }
+            },
+            {
+              get: function() { return config.text_color || defaultConfig.text_color; },
+              set: function(v) { config.text_color = v; window.elementSdk.setConfig({ text_color: v }); }
+            },
+            {
+              get: function() { return config.primary_color || defaultConfig.primary_color; },
+              set: function(v) { config.primary_color = v; window.elementSdk.setConfig({ primary_color: v }); }
+            },
+            {
+              get: function() { return config.secondary_color || defaultConfig.secondary_color; },
+              set: function(v) { config.secondary_color = v; window.elementSdk.setConfig({ secondary_color: v }); }
             }
-          };
-        },
-        mapToEditPanelValues: function(config) {
-          return new Map([
-            ['form_title', config.form_title || defaultConfig.form_title],
-            ['form_subtitle', config.form_subtitle || defaultConfig.form_subtitle],
-            ['submit_button_text', config.submit_button_text || defaultConfig.submit_button_text],
-            ['welcome_message', config.welcome_message || defaultConfig.welcome_message],
-            ['skip_optional_text', config.skip_optional_text || defaultConfig.skip_optional_text]
-          ]);
-        }
-      });
-    }
-
-    function getCurrentFieldNumber() {
-      var total = 0;
-      var i;
-      for (i = 0; i < currentSectionIdx; i++) total += SECTIONS[i].fields.length;
-      return total + currentFieldIdx + 1;
-    }
-
-    function buildProgressBar() {
-      var bar = document.getElementById('progress-bar');
-      var currentFieldNum = getCurrentFieldNumber();
-      var i, seg;
-      bar.innerHTML = '';
-      for (i = 0; i < TOTAL_FIELDS; i++) {
-        seg = document.createElement('div');
-        seg.className = 'progress-segment';
-        if (i < currentFieldNum - 1) seg.className += ' done';
-        if (i === currentFieldNum - 1) seg.className += ' active';
-        bar.appendChild(seg);
+          ],
+          borderables: [],
+          fontEditable: {
+            get: function() { return config.font_family || defaultConfig.font_family; },
+            set: function(v) { config.font_family = v; window.elementSdk.setConfig({ font_family: v }); }
+          },
+          fontSizeable: {
+            get: function() { return config.font_size || defaultConfig.font_size; },
+            set: function(v) { config.font_size = v; window.elementSdk.setConfig({ font_size: v }); }
+          }
+        };
+      },
+      mapToEditPanelValues: function(config) {
+        return new Map([
+          ['form_title', config.form_title || defaultConfig.form_title],
+          ['form_subtitle', config.form_subtitle || defaultConfig.form_subtitle],
+          ['submit_button_text', config.submit_button_text || defaultConfig.submit_button_text],
+          ['welcome_message', config.welcome_message || defaultConfig.welcome_message],
+          ['skip_optional_text', config.skip_optional_text || defaultConfig.skip_optional_text]
+        ]);
       }
+    });
+  }
+
+  function getCurrentFieldNumber() {
+    var total = 0;
+    var i;
+    for (i = 0; i < currentSectionIdx; i++) {
+      total += SECTIONS[i].fields.length;
     }
+    return total + currentFieldIdx + 1;
+  }
 
-    function renderQuestion() {
-      var section = SECTIONS[currentSectionIdx];
-      var field = section.fields[currentFieldIdx];
-      var container = document.getElementById('question-container');
-      var currentFieldNum = getCurrentFieldNumber();
-      var html = '';
-      var i, opt, val, vals, selected, config;
+  function buildProgressBar() {
+    var bar = document.getElementById('progress-bar');
+    var currentFieldNum = getCurrentFieldNumber();
+    var i;
+    var seg;
 
-      document.getElementById('section-label').textContent = 'Section ' + (currentSectionIdx + 1);
-      document.getElementById('section-title').textContent = section.title;
-      document.getElementById('section-icon').setAttribute('data-lucide', section.icon);
-      document.getElementById('progress-label').textContent = 'Question ' + currentFieldNum + ' of ' + TOTAL_FIELDS;
+    if (!bar) return;
 
-      buildProgressBar();
+    bar.innerHTML = '';
 
-      html += '<label class="question-label">' + escapeHtml(field.label);
-      if (!field.required) html += ' <span style="color: #C9C4BC; font-weight: 400;">(optional)</span>';
-      html += '</label>';
+    for (i = 0; i < TOTAL_FIELDS; i++) {
+      seg = document.createElement('div');
+      seg.className = 'progress-segment';
 
-      if (field.type === 'text' || field.type === 'number') {
-        val = formData[field.name] || '';
-        html += '<div class="voice-input-wrapper">';
-        html += '<input type="' + field.type + '" name="' + field.name + '" placeholder="' + escapeHtml(field.placeholder || '') + '" value="' + escapeHtml(val) + '" autocomplete="off" style="border-radius: 12px;">';
-        html += '<button type="button" class="voice-btn voice-input-btn" data-field="' + field.name + '" title="Click to speak"><i data-lucide="mic" style="width:18px;height:18px;"></i></button>';
-        html += '</div>';
-      } else if (field.type === 'textarea') {
-        val = formData[field.name] || '';
-        html += '<div class="voice-input-wrapper" style="position: relative;">';
-        html += '<textarea name="' + field.name + '" placeholder="' + escapeHtml(field.placeholder || '') + '" style="border-radius: 12px; padding-right: 42px;">' + escapeHtml(val) + '</textarea>';
-        html += '<button type="button" class="voice-btn voice-input-btn" data-field="' + field.name + '" style="position: absolute; right: 6px; top: 8px;" title="Click to speak"><i data-lucide="mic" style="width:18px;height:18px;"></i></button>';
-        html += '</div>';
-      } else if (field.type === 'select') {
-        val = formData[field.name] || '';
-        html += '<select name="' + field.name + '" style="border-radius: 12px;">';
-        for (i = 0; i < field.options.length; i++) {
-          opt = field.options[i];
-          selected = '';
-          if (val === opt) selected = ' selected';
-          else if (i === 0 && !val) selected = ' selected';
-          html += '<option value="' + (i === 0 ? '' : escapeHtml(opt)) + '"' + selected + '>' + escapeHtml(opt) + '</option>';
+      if (i < currentFieldNum - 1) seg.className += ' done';
+      if (i === currentFieldNum - 1) seg.className += ' active';
+
+      bar.appendChild(seg);
+    }
+  }
+
+  function renderQuestion() {
+    var section = SECTIONS[currentSectionIdx];
+    var field = section.fields[currentFieldIdx];
+    var container = document.getElementById('question-container');
+    var currentFieldNum = getCurrentFieldNumber();
+    var html = '';
+    var i;
+    var opt;
+    var val;
+    var vals;
+    var selected;
+    var config;
+
+    document.getElementById('section-label').textContent = 'Section ' + (currentSectionIdx + 1);
+    document.getElementById('section-title').textContent = section.title;
+    document.getElementById('section-icon').setAttribute('data-lucide', section.icon);
+    document.getElementById('progress-label').textContent = 'Question ' + currentFieldNum + ' of ' + TOTAL_FIELDS;
+
+    buildProgressBar();
+
+    html += '<label class="question-label">' + escapeHtml(field.label);
+    if (!field.required) {
+      html += ' <span style="color: #C9C4BC; font-weight: 400;">(optional)</span>';
+    }
+    html += '</label>';
+
+    if (field.type === 'text' || field.type === 'number') {
+      val = formData[field.name] || '';
+      html += '<div class="voice-input-wrapper">';
+      html += '<input type="' + field.type + '" name="' + field.name + '" placeholder="' + escapeHtml(field.placeholder || '') + '" value="' + escapeHtml(val) + '" autocomplete="off" style="border-radius: 12px;">';
+      html += '<button type="button" class="voice-btn voice-input-btn" data-field="' + field.name + '" title="Click to speak"><i data-lucide="mic" style="width:18px;height:18px;"></i></button>';
+      html += '</div>';
+    } else if (field.type === 'textarea') {
+      val = formData[field.name] || '';
+      html += '<div class="voice-input-wrapper" style="position: relative;">';
+      html += '<textarea name="' + field.name + '" placeholder="' + escapeHtml(field.placeholder || '') + '" style="border-radius: 12px; padding-right: 42px;">' + escapeHtml(val) + '</textarea>';
+      html += '<button type="button" class="voice-btn voice-input-btn" data-field="' + field.name + '" style="position: absolute; right: 6px; top: 8px;" title="Click to speak"><i data-lucide="mic" style="width:18px;height:18px;"></i></button>';
+      html += '</div>';
+    } else if (field.type === 'select') {
+      val = formData[field.name] || '';
+      html += '<select name="' + field.name + '" style="border-radius: 12px;">';
+      for (i = 0; i < field.options.length; i++) {
+        opt = field.options[i];
+        selected = '';
+
+        if (val === opt) {
+          selected = ' selected';
+        } else if (i === 0 && !val) {
+          selected = ' selected';
         }
-        html += '</select>';
-      } else if (field.type === 'radio') {
-        val = formData[field.name];
-        html += '<div class="question-options">';
-        for (i = 0; i < field.options.length; i++) {
-          opt = field.options[i];
-          selected = val === opt ? ' selected' : '';
-          html += '<button type="button" class="option-btn' + selected + '" data-name="' + field.name + '" data-value="' + escapeHtml(opt) + '" data-type="radio">' + escapeHtml(opt) + '</button>';
-        }
-        html += '</div>';
-      } else if (field.type === 'checkbox') {
-        vals = isArray(formData[field.name]) ? formData[field.name] : [];
-        html += '<div class="question-options">';
-        for (i = 0; i < field.options.length; i++) {
-          opt = field.options[i];
-          selected = arrayIncludes(vals, opt) ? ' selected' : '';
-          html += '<button type="button" class="option-btn' + selected + '" data-name="' + field.name + '" data-value="' + escapeHtml(opt) + '" data-type="checkbox">' + escapeHtml(opt) + '</button>';
-        }
-        html += '</div>';
+
+        html += '<option value="' + (i === 0 ? '' : escapeHtml(opt)) + '"' + selected + '>' + escapeHtml(opt) + '</option>';
       }
-
-      html += '<div class="action-buttons">';
-      if (!field.required) {
-        config = getSdkConfig();
-        html += '<button type="button" id="skip-btn" class="btn-secondary">' + escapeHtml(config.skip_optional_text || defaultConfig.skip_optional_text) + '</button>';
+      html += '</select>';
+    } else if (field.type === 'radio') {
+      val = formData[field.name] || '';
+      html += '<div class="question-options">';
+      for (i = 0; i < field.options.length; i++) {
+        opt = field.options[i];
+        selected = val === opt ? ' selected' : '';
+        html += '<button type="button" class="option-btn' + selected + '" data-name="' + field.name + '" data-value="' + escapeHtml(opt) + '" data-type="radio">' + escapeHtml(opt) + '</button>';
       }
       html += '</div>';
-
-      container.innerHTML = html;
-      if (window.lucide && lucide.createIcons) lucide.createIcons();
-      wireFieldEvents();
-      updateNavFooter();
+    } else if (field.type === 'checkbox') {
+      vals = isArray(formData[field.name]) ? formData[field.name] : [];
+      html += '<div class="question-options">';
+      for (i = 0; i < field.options.length; i++) {
+        opt = field.options[i];
+        selected = arrayIncludes(vals, opt) ? ' selected' : '';
+        html += '<button type="button" class="option-btn' + selected + '" data-name="' + field.name + '" data-value="' + escapeHtml(opt) + '" data-type="checkbox">' + escapeHtml(opt) + '</button>';
+      }
+      html += '</div>';
     }
 
-    function attachInputHandlers(el) {
-      el.addEventListener('input', function() {
-        formData[el.name] = el.value;
-      });
-      el.addEventListener('change', function() {
-        formData[el.name] = el.value;
-      });
+    html += '<div class="action-buttons">';
+    if (!field.required) {
+      config = getSdkConfig();
+      html += '<button type="button" id="skip-btn" class="btn-secondary">' + escapeHtml(config.skip_optional_text || defaultConfig.skip_optional_text) + '</button>';
+    }
+    html += '</div>';
+
+    container.innerHTML = html;
+
+    if (window.lucide && lucide.createIcons) {
+      lucide.createIcons();
     }
 
-    function attachVoiceHandler(btn) {
-      btn.addEventListener('click', function(e) {
-        e.preventDefault();
-        e.stopPropagation();
-        handleVoiceInput(btn);
-      });
-    }
+    wireFieldEvents();
+    updateNavFooter();
+  }
 
-    function attachOptionHandler(btn) {
-      btn.addEventListener('click', function(e) {
-        var name, value, type, allBtns, i;
-        e.preventDefault();
+  function attachInputHandlers(el) {
+    el.addEventListener('input', function() {
+      formData[el.name] = el.value;
+    });
 
-        name = btn.getAttribute('data-name');
-        value = btn.getAttribute('data-value');
-        type = btn.getAttribute('data-type');
+    el.addEventListener('change', function() {
+      formData[el.name] = el.value;
+    });
+  }
 
-        if (type === 'radio') {
-          allBtns = document.querySelectorAll('[data-name="' + name + '"]');
-          for (i = 0; i < allBtns.length; i++) allBtns[i].classList.remove('selected');
-          btn.classList.add('selected');
-          formData[name] = value;
-        } else if (type === 'checkbox') {
-          btn.classList.toggle('selected');
-          if (!isArray(formData[name])) formData[name] = [];
-          if (btn.classList.contains('selected')) {
-            if (!arrayIncludes(formData[name], value)) formData[name].push(value);
-          } else {
-            formData[name] = arrayWithout(formData[name], value);
-          }
+  function attachVoiceHandler(btn) {
+    btn.addEventListener('click', function(e) {
+      e.preventDefault();
+      e.stopPropagation();
+      handleVoiceInput(btn);
+    });
+  }
+
+  function attachOptionHandler(btn) {
+    btn.addEventListener('click', function(e) {
+      var name;
+      var value;
+      var type;
+      var allBtns;
+      var i;
+
+      e.preventDefault();
+
+      name = btn.getAttribute('data-name');
+      value = btn.getAttribute('data-value');
+      type = btn.getAttribute('data-type');
+
+      if (type === 'radio') {
+        allBtns = document.querySelectorAll('[data-name="' + name + '"]');
+        for (i = 0; i < allBtns.length; i++) {
+          allBtns[i].classList.remove('selected');
         }
-      });
+        btn.classList.add('selected');
+        formData[name] = value;
+      } else if (type === 'checkbox') {
+        btn.classList.toggle('selected');
+
+        if (!isArray(formData[name])) {
+          formData[name] = [];
+        }
+
+        if (btn.classList.contains('selected')) {
+          if (!arrayIncludes(formData[name], value)) {
+            formData[name].push(value);
+          }
+        } else {
+          formData[name] = arrayWithout(formData[name], value);
+        }
+      }
+    });
+  }
+
+  function wireFieldEvents() {
+    var inputs = document.querySelectorAll('#question-container input[type="text"], #question-container input[type="number"], #question-container textarea, #question-container select');
+    var voiceBtns = document.querySelectorAll('#question-container .voice-btn');
+    var optionBtns = document.querySelectorAll('#question-container .option-btn');
+    var skipBtn = document.getElementById('skip-btn');
+    var backBtn = document.getElementById('btn-back-conv');
+    var i;
+
+    for (i = 0; i < inputs.length; i++) {
+      attachInputHandlers(inputs[i]);
     }
 
-    function wireFieldEvents() {
-      var inputs = document.querySelectorAll('#question-container input[type="text"], #question-container input[type="number"], #question-container textarea, #question-container select');
-      var voiceBtns = document.querySelectorAll('#question-container .voice-btn');
-      var optionBtns = document.querySelectorAll('#question-container .option-btn');
-      var i, backBtn;
+    for (i = 0; i < voiceBtns.length; i++) {
+      attachVoiceHandler(voiceBtns[i]);
+    }
 
-      for (i = 0; i < inputs.length; i++) attachInputHandlers(inputs[i]);
-      for (i = 0; i < voiceBtns.length; i++) attachVoiceHandler(voiceBtns[i]);
-      for (i = 0; i < optionBtns.length; i++) attachOptionHandler(optionBtns[i]);
+    for (i = 0; i < optionBtns.length; i++) {
+      attachOptionHandler(optionBtns[i]);
+    }
 
-      backBtn = document.getElementById('btn-back-conv');
+    if (skipBtn) {
+      skipBtn.onclick = function(e) {
+        e.preventDefault();
+        if (!isSubmitting) {
+          goToNextField();
+        }
+      };
+    }
+
+    if (backBtn) {
       backBtn.onclick = function(e) {
         e.preventDefault();
-        if (!isSubmitting) goToPrevField();
+        if (!isSubmitting) {
+          goToPrevField();
+        }
       };
     }
+  }
 
-    function updateNavFooter() {
-      var backBtn = document.getElementById('btn-back-conv');
-      var isFirstField = currentSectionIdx === 0 && currentFieldIdx === 0;
-      var navContainer = document.getElementById('nav-buttons-container');
-      var section = SECTIONS[currentSectionIdx];
-      var field = section.fields[currentFieldIdx];
-      var isLastField = currentSectionIdx === TOTAL_SECTIONS - 1 && currentFieldIdx === section.fields.length - 1;
-      var nextBtn, skipBtn, config;
+  function updateNavFooter() {
+    var backBtn = document.getElementById('btn-back-conv');
+    var navContainer = document.getElementById('nav-buttons-container');
+    var isFirstField = currentSectionIdx === 0 && currentFieldIdx === 0;
+    var section = SECTIONS[currentSectionIdx];
+    var field = section.fields[currentFieldIdx];
+    var isLastField = currentSectionIdx === TOTAL_SECTIONS - 1 && currentFieldIdx === section.fields.length - 1;
+    var nextBtn;
+    var skipBtn;
+    var config;
 
-      backBtn.style.visibility = isFirstField ? 'hidden' : 'visible';
-      navContainer.innerHTML = '';
+    if (!backBtn || !navContainer) return;
 
-      if (!field.required) {
-        config = getSdkConfig();
-        skipBtn = document.createElement('button');
-        skipBtn.type = 'button';
-        skipBtn.className = 'btn-secondary';
-        skipBtn.disabled = isSubmitting;
-        skipBtn.textContent = config.skip_optional_text || defaultConfig.skip_optional_text;
-        skipBtn.onclick = function(e) {
-          e.preventDefault();
-          if (!isSubmitting) goToNextField();
-        };
-        navContainer.appendChild(skipBtn);
-      }
+    backBtn.style.visibility = isFirstField ? 'hidden' : 'visible';
+    navContainer.innerHTML = '';
 
-      nextBtn = document.createElement('button');
-      nextBtn.type = 'button';
-      nextBtn.id = 'next-field-btn';
-      nextBtn.className = 'btn-primary';
-      nextBtn.disabled = isSubmitting;
-      nextBtn.textContent = isLastField ? 'Submit Questionnaire' : 'Next';
-      nextBtn.onclick = function(e) {
+    if (!field.required) {
+      config = getSdkConfig();
+      skipBtn = document.createElement('button');
+      skipBtn.type = 'button';
+      skipBtn.className = 'btn-secondary';
+      skipBtn.disabled = isSubmitting;
+      skipBtn.textContent = config.skip_optional_text || defaultConfig.skip_optional_text;
+      skipBtn.onclick = function(e) {
         e.preventDefault();
-        if (isSubmitting) return;
-        if (!validateCurrentField()) {
-          showToast('Please complete this question before continuing.', 'error');
-          return;
-        }
-        if (isLastField) submitForm();
-        else goToNextField();
-      };
-      navContainer.appendChild(nextBtn);
-    }
-
-    function validateCurrentField() {
-      var section = SECTIONS[currentSectionIdx];
-      var field = section.fields[currentFieldIdx];
-      var val = formData[field.name];
-
-      if (!field.required) return true;
-      if (field.type === 'checkbox') return isArray(val) && val.length > 0;
-      if (typeof val === 'string') return val.replace(/^\s+|\s+$/g, '') !== '';
-      return !!val;
-    }
-
-    function goToNextField() {
-      var section = SECTIONS[currentSectionIdx];
-      if (currentFieldIdx < section.fields.length - 1) {
-        currentFieldIdx++;
-        renderQuestion();
-      } else if (currentSectionIdx < TOTAL_SECTIONS - 1) {
-        currentSectionIdx++;
-        currentFieldIdx = 0;
-        renderQuestion();
-      }
-    }
-
-    function goToPrevField() {
-      if (currentFieldIdx > 0) {
-        currentFieldIdx--;
-        renderQuestion();
-      } else if (currentSectionIdx > 0) {
-        currentSectionIdx--;
-        currentFieldIdx = SECTIONS[currentSectionIdx].fields.length - 1;
-        renderQuestion();
-      }
-    }
-
-    function initVoiceRecognition() {
-      var SpeechRecognition;
-      if (voiceRecognition) return true;
-
-      SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
-      if (!SpeechRecognition) {
-        showToast('Voice input is not supported in this browser.', 'error');
-        return false;
-      }
-
-      voiceRecognition = new SpeechRecognition();
-      voiceRecognition.continuous = false;
-      voiceRecognition.interimResults = true;
-      voiceRecognition.lang = 'en-US';
-
-      voiceRecognition.onstart = function() {
-        isRecording = true;
-        updateVoiceButton();
-      };
-
-      voiceRecognition.onend = function() {
-        isRecording = false;
-        updateVoiceButton();
-      };
-
-      voiceRecognition.onerror = function(e) {
-        isRecording = false;
-        updateVoiceButton();
-        if (e.error !== 'no-speech') showToast('Voice input error: ' + e.error, 'error');
-      };
-
-      voiceRecognition.onresult = function(e) {
-        var transcript = '';
-        var i, currentValue;
-        for (i = e.resultIndex; i < e.results.length; i++) {
-          transcript += e.results[i][0].transcript;
-          if (e.results[i].isFinal) transcript += ' ';
-        }
-        if (window.currentVoiceField && transcript.replace(/^\s+|\s+$/g, '')) {
-          currentValue = window.currentVoiceField.value || '';
-          window.currentVoiceField.value = (currentValue + ' ' + transcript).replace(/^\s+|\s+$/g, '');
-          formData[window.currentVoiceField.name] = window.currentVoiceField.value;
+        if (!isSubmitting) {
+          goToNextField();
         }
       };
-
-      return true;
+      navContainer.appendChild(skipBtn);
     }
 
-    function handleVoiceInput(btn) {
-      var fieldName, input;
-      if (!initVoiceRecognition()) return;
-      if (!voiceRecognition) return;
-
-      fieldName = btn.getAttribute('data-field');
-      input = document.querySelector('[name="' + fieldName + '"]');
-      if (!input) return;
-
-      if (isRecording) {
-        voiceRecognition.stop();
-      } else {
-        window.currentVoiceField = input;
-        input.focus();
-        try {
-          voiceRecognition.start();
-        } catch (e) {
-          showToast('Could not start voice input.', 'error');
-        }
-      }
-    }
-
-    function updateVoiceButton() {
-      var btns = document.querySelectorAll('.voice-input-btn');
-      var i, btn;
-      for (i = 0; i < btns.length; i++) {
-        btn = btns[i];
-        if (isRecording && window.currentVoiceField && btn.getAttribute('data-field') === window.currentVoiceField.name) {
-          btn.classList.add('recording');
-        } else {
-          btn.classList.remove('recording');
-        }
-      }
-    }
-
-    function submitForm() {
-      var nextBtn, payload, key;
+    nextBtn = document.createElement('button');
+    nextBtn.type = 'button';
+    nextBtn.id = 'next-field-btn';
+    nextBtn.className = 'btn-primary';
+    nextBtn.disabled = isSubmitting;
+    nextBtn.textContent = isLastField ? (getSdkConfig().submit_button_text || defaultConfig.submit_button_text) : 'Next';
+    nextBtn.onclick = function(e) {
+      e.preventDefault();
 
       if (isSubmitting) return;
 
-      if (!MAKE_WEBHOOK_URL || MAKE_WEBHOOK_URL.indexOf('REPLACE_WITH_YOUR_WEBHOOK_ID') !== -1) {
-        showToast('Add your Make webhook URL before publishing.', 'error');
+      if (!validateCurrentField()) {
+        showToast('Please complete this question before continuing.', 'error');
         return;
       }
 
-      isSubmitting = true;
-      updateNavFooter();
-
-      nextBtn = document.getElementById('next-field-btn');
-      if (nextBtn) {
-        nextBtn.disabled = true;
-        nextBtn.innerHTML = '<span class="spinner"></span>';
+      if (isLastField) {
+        submitForm();
+      } else {
+        goToNextField();
       }
+    };
+    navContainer.appendChild(nextBtn);
+  }
 
-      payload = {};
-      for (key in formData) {
-        if (formData.hasOwnProperty(key)) {
-          payload[key] = isArray(formData[key]) ? formData[key].join(', ') : formData[key];
-        }
-      }
+  function validateCurrentField() {
+    var section = SECTIONS[currentSectionIdx];
+    var field = section.fields[currentFieldIdx];
+    var val = formData[field.name];
 
-      payload.submitted_at = new Date().toISOString();
-      payload.form_name = 'Business Process Intake Questionnaire';
+    if (!field.required) return true;
 
-      fetch(MAKE_WEBHOOK_URL, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(payload)
-      })
-      .then(function(response) {
-        if (!response.ok) throw new Error('Webhook failed with status ' + response.status);
-        document.getElementById('conversation-container').classList.add('hidden');
-        document.getElementById('nav-footer').classList.add('hidden');
-        showSuccess();
-      })
-      .catch(function(err) {
-        if (window.console && console.error) console.error('Submission error:', err);
-        showToast('Submission failed. Please try again.', 'error');
-      })
-      .then(function() {
-        isSubmitting = false;
-        updateNavFooter();
-      });
+    if (field.type === 'checkbox') {
+      return isArray(val) && val.length > 0;
     }
 
-    function showSuccess() {
-      var screen = document.getElementById('success-screen');
-      screen.classList.remove('hidden');
-      screen.style.display = 'flex';
-      if (window.lucide && lucide.createIcons) lucide.createIcons();
+    if (typeof val === 'string') {
+      return val.replace(/^\s+|\s+$/g, '') !== '';
     }
 
-    function resetForm() {
-      formData = { submission_source: 'CCBB Intake' };
-      currentSectionIdx = 0;
+    return !!val;
+  }
+
+  function goToNextField() {
+    var section = SECTIONS[currentSectionIdx];
+
+    if (currentFieldIdx < section.fields.length - 1) {
+      currentFieldIdx++;
+      renderQuestion();
+    } else if (currentSectionIdx < TOTAL_SECTIONS - 1) {
+      currentSectionIdx++;
       currentFieldIdx = 0;
-      isSubmitting = false;
-
-      document.getElementById('conversation-container').classList.add('hidden');
-      document.getElementById('nav-footer').classList.add('hidden');
-      document.getElementById('success-screen').style.display = 'none';
-      document.getElementById('success-screen').classList.add('hidden');
-      document.getElementById('welcome-screen').classList.remove('hidden');
+      renderQuestion();
     }
+  }
 
-    function showToast(msg, type) {
-      var existing = document.querySelector('.toast-msg');
-      var toast;
-      if (!type) type = 'success';
-      if (existing) existing.parentNode.removeChild(existing);
-
-      toast = document.createElement('div');
-      toast.className = 'toast-msg ' + type;
-      toast.textContent = msg;
-      document.body.appendChild(toast);
-
-      setTimeout(function() {
-        toast.style.animation = 'toastOut 0.3s ease forwards';
-        setTimeout(function() {
-          if (toast.parentNode) toast.parentNode.removeChild(toast);
-        }, 300);
-      }, 3000);
+  function goToPrevField() {
+    if (currentFieldIdx > 0) {
+      currentFieldIdx--;
+      renderQuestion();
+    } else if (currentSectionIdx > 0) {
+      currentSectionIdx--;
+      currentFieldIdx = SECTIONS[currentSectionIdx].fields.length - 1;
+      renderQuestion();
     }
+  }
 
-    function escapeHtml(str) {
-      return String(str)
-        .replace(/&/g, '&amp;')
-        .replace(/</g, '&lt;')
-        .replace(/>/g, '&gt;')
-        .replace(/"/g, '&quot;')
-        .replace(/'/g, '&#039;');
-    }
+  function initVoiceRecognition() {
+    var SpeechRecognition;
 
-    function isArray(val) {
-      return Object.prototype.toString.call(val) === '[object Array]';
-    }
+    if (voiceRecognition) return true;
 
-    function arrayIncludes(arr, value) {
-      var i;
-      if (!arr) return false;
-      for (i = 0; i < arr.length; i++) {
-        if (arr[i] === value) return true;
-      }
+    SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+
+    if (!SpeechRecognition) {
+      showToast('Voice input is not supported in this browser.', 'error');
       return false;
     }
 
-    function arrayWithout(arr, value) {
-      var out = [];
-      var i;
-      for (i = 0; i < arr.length; i++) {
-        if (arr[i] !== value) out.push(arr[i]);
+    voiceRecognition = new SpeechRecognition();
+    voiceRecognition.continuous = false;
+    voiceRecognition.interimResults = true;
+    voiceRecognition.lang = 'en-US';
+
+    voiceRecognition.onstart = function() {
+      isRecording = true;
+      updateVoiceButton();
+    };
+
+    voiceRecognition.onend = function() {
+      isRecording = false;
+      updateVoiceButton();
+    };
+
+    voiceRecognition.onerror = function(e) {
+      isRecording = false;
+      updateVoiceButton();
+      if (e.error !== 'no-speech') {
+        showToast('Voice input error: ' + e.error, 'error');
       }
-      return out;
+    };
+
+    voiceRecognition.onresult = function(e) {
+      var transcript = '';
+      var i;
+      var currentValue;
+
+      for (i = e.resultIndex; i < e.results.length; i++) {
+        transcript += e.results[i][0].transcript;
+        if (e.results[i].isFinal) {
+          transcript += ' ';
+        }
+      }
+
+      if (window.currentVoiceField && transcript.replace(/^\s+|\s+$/g, '')) {
+        currentValue = window.currentVoiceField.value || '';
+        window.currentVoiceField.value = (currentValue + ' ' + transcript).replace(/^\s+|\s+$/g, '');
+        formData[window.currentVoiceField.name] = window.currentVoiceField.value;
+      }
+    };
+
+    return true;
+  }
+
+  function handleVoiceInput(btn) {
+    var fieldName;
+    var input;
+
+    if (!initVoiceRecognition()) return;
+    if (!voiceRecognition) return;
+
+    fieldName = btn.getAttribute('data-field');
+    input = document.querySelector('[name="' + fieldName + '"]');
+
+    if (!input) return;
+
+    if (isRecording) {
+      voiceRecognition.stop();
+    } else {
+      window.currentVoiceField = input;
+      input.focus();
+
+      try {
+        voiceRecognition.start();
+      } catch (e) {
+        showToast('Could not start voice input.', 'error');
+      }
+    }
+  }
+
+  function updateVoiceButton() {
+    var btns = document.querySelectorAll('.voice-input-btn');
+    var i;
+    var btn;
+
+    for (i = 0; i < btns.length; i++) {
+      btn = btns[i];
+      if (isRecording && window.currentVoiceField && btn.getAttribute('data-field') === window.currentVoiceField.name) {
+        btn.classList.add('recording');
+      } else {
+        btn.classList.remove('recording');
+      }
+    }
+  }
+
+  function buildPayload() {
+    var payload = {};
+    var key;
+
+    for (key in formData) {
+      if (formData.hasOwnProperty(key)) {
+        payload[key] = isArray(formData[key]) ? formData[key].join(', ') : formData[key];
+      }
     }
 
-    document.getElementById('btn-start').addEventListener('click', function(e) {
-      e.preventDefault();
-      document.getElementById('welcome-screen').classList.add('hidden');
-      document.getElementById('conversation-container').classList.remove('hidden');
-      document.getElementById('nav-footer').classList.remove('hidden');
-      renderQuestion();
+    payload.submitted_at = new Date().toISOString();
+    payload.form_name = 'Business Process Intake Questionnaire';
+    payload.form_version = 'v2';
+    payload.workflow_output_requested = 'client intake document, process map, sop';
+    payload.output_note = 'Use this submission to generate a consulting intake summary, a basic current-state process map, and a basic SOP for the mapped process.';
+
+    return payload;
+  }
+
+  function submitForm() {
+    var nextBtn = document.getElementById('next-field-btn');
+    var payload;
+
+    if (isSubmitting) return;
+
+    if (!MAKE_WEBHOOK_URL || MAKE_WEBHOOK_URL.indexOf('REPLACE_WITH_YOUR_WEBHOOK_ID') !== -1) {
+      showToast('Add your Make webhook URL before publishing.', 'error');
+      return;
+    }
+
+    isSubmitting = true;
+    updateNavFooter();
+
+    if (nextBtn) {
+      nextBtn.disabled = true;
+      nextBtn.innerHTML = '<span class="spinner"></span>';
+    }
+
+    payload = buildPayload();
+
+    fetch(MAKE_WEBHOOK_URL, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(payload)
+    })
+    .then(function(response) {
+      if (!response.ok) {
+        throw new Error('Webhook failed with status ' + response.status);
+      }
+
+      document.getElementById('conversation-container').classList.add('hidden');
+      document.getElementById('nav-footer').classList.add('hidden');
+      showSuccess();
+    })
+    .catch(function(err) {
+      if (window.console && console.error) {
+        console.error('Submission error:', err);
+      }
+      showToast('Submission failed. Please try again.', 'error');
+    })
+    .then(function() {
+      isSubmitting = false;
+      updateNavFooter();
     });
+  }
 
-    applyConfig(getSdkConfig());
-    if (window.lucide && lucide.createIcons) lucide.createIcons();
-  </script>
+  function showSuccess() {
+    var screen = document.getElementById('success-screen');
+    if (!screen) return;
 
-  <script>
-    (function(){
-      function c(){
-        var b=a.contentDocument||a.contentWindow.document;
-        if(b){
-          var d=b.createElement('script');
-          d.innerHTML="window.__CF$cv$params={r:'9dc85cf201750711',t:'MTc3MzU0NDYyNS4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";
-          b.getElementsByTagName('head')[0].appendChild(d);
+    screen.classList.remove('hidden');
+    screen.style.display = 'flex';
+
+    if (window.lucide && lucide.createIcons) {
+      lucide.createIcons();
+    }
+  }
+
+  function resetForm() {
+    formData = getInitialFormData();
+    currentSectionIdx = 0;
+    currentFieldIdx = 0;
+    isSubmitting = false;
+
+    document.getElementById('conversation-container').classList.add('hidden');
+    document.getElementById('nav-footer').classList.add('hidden');
+    document.getElementById('success-screen').style.display = 'none';
+    document.getElementById('success-screen').classList.add('hidden');
+    document.getElementById('welcome-screen').classList.remove('hidden');
+  }
+
+  function showToast(msg, type) {
+    var existing = document.querySelector('.toast-msg');
+    var toast;
+
+    if (!type) type = 'success';
+
+    if (existing && existing.parentNode) {
+      existing.parentNode.removeChild(existing);
+    }
+
+    toast = document.createElement('div');
+    toast.className = 'toast-msg ' + type;
+    toast.textContent = msg;
+    document.body.appendChild(toast);
+
+    setTimeout(function() {
+      toast.style.animation = 'toastOut 0.3s ease forwards';
+      setTimeout(function() {
+        if (toast.parentNode) {
+          toast.parentNode.removeChild(toast);
         }
-      }
-      if(document.body){
-        var a=document.createElement('iframe');
-        a.height=1;
-        a.width=1;
-        a.style.position='absolute';
-        a.style.top=0;
-        a.style.left=0;
-        a.style.border='none';
-        a.style.visibility='hidden';
-        document.body.appendChild(a);
-        if('loading'!==document.readyState) c();
-        else if(window.addEventListener) document.addEventListener('DOMContentLoaded',c);
-        else{
-          var e=document.onreadystatechange||function(){};
-          document.onreadystatechange=function(b){
-            e(b);
-            'loading'!==document.readyState&&(document.onreadystatechange=e,c());
-          };
-        }
-      }
-    })();
-  </script>
+      }, 300);
+    }, 3000);
+  }
+
+  function escapeHtml(str) {
+    return String(str)
+      .replace(/&/g, '&amp;')
+      .replace(/</g, '&lt;')
+      .replace(/>/g, '&gt;')
+      .replace(/"/g, '&quot;')
+      .replace(/'/g, '&#039;');
+  }
+
+  function isArray(val) {
+    return Object.prototype.toString.call(val) === '[object Array]';
+  }
+
+  function arrayIncludes(arr, value) {
+    var i;
+    if (!arr) return false;
+
+    for (i = 0; i < arr.length; i++) {
+      if (arr[i] === value) return true;
+    }
+    return false;
+  }
+
+  function arrayWithout(arr, value) {
+    var out = [];
+    var i;
+
+    for (i = 0; i < arr.length; i++) {
+      if (arr[i] !== value) out.push(arr[i]);
+    }
+
+    return out;
+  }
+
+  document.getElementById('btn-start').addEventListener('click', function(e) {
+    e.preventDefault();
+    document.getElementById('welcome-screen').classList.add('hidden');
+    document.getElementById('conversation-container').classList.remove('hidden');
+    document.getElementById('nav-footer').classList.remove('hidden');
+    renderQuestion();
+  });
+
+  applyConfig(getSdkConfig());
+
+  if (window.lucide && lucide.createIcons) {
+    lucide.createIcons();
+  }
+</script>
+  
 </body>
 </html>

@@ -25,7 +25,22 @@
       from { opacity: 0; transform: translateY(16px); }
       to { opacity: 1; transform: translateY(0); }
     }
+/* Older Safari / Chrome flex-gap fallback */
+.question-options > * + * { margin-top: 12px; }
+.action-buttons > * + * { margin-left: 12px; }
+#nav-buttons-container > * + * { margin-left: 12px; }
+#progress-bar > * + * { margin-left: 8px; }
 
+/* Better button behavior on older iPads */
+button {
+  -webkit-appearance: none;
+  appearance: none;
+}
+
+/* Prevent zoom weirdness on iOS inputs */
+input, textarea, select {
+  font-size: 16px;
+}
     .radio-option {
       transition: all 0.2s ease;
       border: 2px solid #E8E4DD;

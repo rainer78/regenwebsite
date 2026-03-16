@@ -63,24 +63,23 @@
       scroll-behavior: smooth;
     }
 
- body {
+body {
   font-family: "Inter", Arial, Helvetica, sans-serif;
   color: var(--text-color);
   min-height: 100vh;
-
-  background:
-    radial-gradient(900px 520px at 18% 22%, rgba(233,102,99,0.30), transparent 60%),
-    radial-gradient(900px 520px at 78% 28%, rgba(242,163,160,0.18), transparent 60%),
-    radial-gradient(1100px 720px at 50% 95%, rgba(74,46,92,0.20), transparent 65%),
-    linear-gradient(90deg, #1A1238 0%, #08113C 45%, #312348 100%);
-
-  background-attachment: fixed;
-  background-size: cover;
+  background: var(--bg-color);
 
   -webkit-font-smoothing: antialiased;
   text-rendering: optimizeLegibility;
 }
 
+    .hero-bg{
+  background:
+    radial-gradient(900px 520px at 18% 22%, rgba(233,102,99,0.30), transparent 60%),
+    radial-gradient(900px 520px at 78% 28%, rgba(242,163,160,0.18), transparent 60%),
+    radial-gradient(1100px 720px at 50% 95%, rgba(74,46,92,0.20), transparent 65%),
+    linear-gradient(90deg, #1A1238 0%, #08113C 45%, #312348 100%);
+}
     img {
       max-width: 100%;
       display: block;
@@ -577,7 +576,7 @@
   <main>
     <section class="hero">
       <div class="container">
-        <div class="hero-shell brand-hero-bg">
+        <div class="class="hero hero-bg"">
           <div class="hero-grid">
             <div class="hero-copy">
               <div class="eyebrow">Current and future clients</div>

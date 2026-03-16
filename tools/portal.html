@@ -63,19 +63,23 @@
       scroll-behavior: smooth;
     }
 
-    body {
-      font-family: "Inter", Arial, Helvetica, sans-serif;
-      color: var(--text-color);
-      background: var(--bg-color);
-      -webkit-font-smoothing: antialiased;
-      text-rendering: optimizeLegibility;
-    }
+ body {
+  font-family: "Inter", Arial, Helvetica, sans-serif;
+  color: var(--text-color);
+  min-height: 100vh;
 
-    *,
-    *::before,
-    *::after {
-      box-sizing: border-box;
-    }
+  background:
+    radial-gradient(900px 520px at 18% 22%, rgba(233,102,99,0.30), transparent 60%),
+    radial-gradient(900px 520px at 78% 28%, rgba(242,163,160,0.18), transparent 60%),
+    radial-gradient(1100px 720px at 50% 95%, rgba(74,46,92,0.20), transparent 65%),
+    linear-gradient(90deg, #1A1238 0%, #08113C 45%, #312348 100%);
+
+  background-attachment: fixed;
+  background-size: cover;
+
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
 
     img {
       max-width: 100%;

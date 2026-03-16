@@ -265,7 +265,123 @@
       margin-top: 24px;
       justify-content: flex-end;
     }
+.report-loading-card,
+  .report-card {
+    width: 100%;
+    max-width: 760px;
+    margin: 40px auto;
+    background: #ffffff;
+    border: 1px solid rgba(61, 107, 94, 0.12);
+    border-radius: 24px;
+    padding: 32px 24px;
+    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.08);
+  }
 
+  .loading-icon-wrap {
+    width: 64px;
+    height: 64px;
+    border-radius: 999px;
+    background: rgba(61, 107, 94, 0.08);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 20px;
+  }
+
+  .loading-title,
+  .report-header h2 {
+    margin: 0 0 12px;
+    font-size: 1.8rem;
+    line-height: 1.2;
+    text-align: center;
+    color: #2D2A26;
+  }
+
+  .loading-copy,
+  .report-header p {
+    margin: 0 0 24px;
+    text-align: center;
+    color: #6B675F;
+    line-height: 1.6;
+  }
+
+  .loading-steps {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    margin-top: 24px;
+  }
+
+  .loading-step {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    opacity: 0.45;
+    transition: opacity 0.3s ease;
+  }
+
+  .loading-step.active,
+  .loading-step.done {
+    opacity: 1;
+  }
+
+  .step-dot {
+    width: 12px;
+    height: 12px;
+    border-radius: 999px;
+    background: #B8A88A;
+    flex-shrink: 0;
+  }
+
+  .loading-step.active .step-dot,
+  .loading-step.done .step-dot {
+    background: #3D6B5E;
+  }
+
+  .report-section {
+    margin-top: 28px;
+  }
+
+  .report-section h3 {
+    margin: 0 0 10px;
+    font-size: 1.05rem;
+    color: #2D2A26;
+  }
+
+  .report-section p,
+  .report-section li {
+    color: #4D4944;
+    line-height: 1.7;
+  }
+
+  .report-section ul {
+    margin: 0;
+    padding-left: 20px;
+  }
+
+  .report-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    margin-top: 32px;
+  }
+
+  @media (max-width: 640px) {
+    .report-loading-card,
+    .report-card {
+      padding: 24px 18px;
+      border-radius: 18px;
+    }
+
+    .report-actions {
+      flex-direction: column;
+    }
+
+    .report-actions .btn-primary,
+    .report-actions .btn-secondary {
+      width: 100%;
+    }
+  }
     .action-buttons > * + * { margin-left: 12px; }
     #nav-buttons-container > * + * { margin-left: 12px; }
     #progress-bar > * + * { margin-left: 8px; }
@@ -371,11 +487,76 @@
     </p>
 
     <button onclick="resetForm()" class="btn-primary">
-      Start a New Intake
+      Back to Home Page
     </button>
 
   </div>
 
+</div>
+    <div id="loading-screen" class="hidden">
+  <div class="report-loading-card">
+    <div class="loading-icon-wrap">
+      <i data-lucide="file-text"></i>
+    </div>
+
+    <h2 class="loading-title">Generating your report...</h2>
+    <p class="loading-copy">
+      We are reviewing your intake and preparing your business process summary.
+    </p>
+
+    <div class="loading-steps">
+      <div class="loading-step active" id="loading-step-1">
+        <span class="step-dot"></span>
+        <span class="step-text">Intake received</span>
+      </div>
+      <div class="loading-step" id="loading-step-2">
+        <span class="step-dot"></span>
+        <span class="step-text">Workflow mapped</span>
+      </div>
+      <div class="loading-step" id="loading-step-3">
+        <span class="step-dot"></span>
+        <span class="step-text">Report prepared</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div id="report-screen" class="hidden">
+  <div class="report-card">
+    <div class="report-header">
+      <h2 id="report-title">Business Process Analysis Report</h2>
+      <p id="report-subtitle">Prepared from your intake submission.</p>
+    </div>
+
+    <div class="report-section">
+      <h3>Summary</h3>
+      <p id="report-summary"></p>
+    </div>
+
+    <div class="report-section">
+      <h3>Workflow Snapshot</h3>
+      <ul id="report-workflow"></ul>
+    </div>
+
+    <div class="report-section">
+      <h3>Operational Friction Points</h3>
+      <ul id="report-frictions"></ul>
+    </div>
+
+    <div class="report-section">
+      <h3>Recommendations</h3>
+      <ul id="report-recommendations"></ul>
+    </div>
+
+    <div class="report-actions">
+      <button type="button" class="btn-primary" id="email-report-btn">
+        Email me this report
+      </button>
+      <button type="button" class="btn-secondary" onclick="resetForm()">
+        Start a New Intake
+      </button>
+    </div>
+  </div>
 </div>
 
 <script>
@@ -1061,56 +1242,176 @@ function validateCurrentField() {
     return payload;
   }
 
-  function submitForm() {
-    var nextBtn = document.getElementById('next-field-btn');
-    var payload;
+ function submitForm() {
+  var nextBtn = document.getElementById('next-field-btn');
+  var payload;
 
-    if (isSubmitting) return;
+  if (isSubmitting) return;
 
-    if (!MAKE_WEBHOOK_URL || MAKE_WEBHOOK_URL.indexOf('REPLACE_WITH_YOUR_WEBHOOK_ID') !== -1) {
-      showToast('Add your Make webhook URL before publishing.', 'error');
-      return;
-    }
-
-    isSubmitting = true;
-    updateNavFooter();
-
-    if (nextBtn) {
-      nextBtn.disabled = true;
-      nextBtn.innerHTML = '<span class="spinner"></span>';
-    }
-
-    payload = buildPayload();
-    console.log(payload);
-
-    fetch(MAKE_WEBHOOK_URL, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify(payload)
-    })
-    .then(function(response) {
-      if (!response.ok) {
-        throw new Error('Webhook failed with status ' + response.status);
-      }
-
-      document.getElementById('conversation-container').classList.add('hidden');
-      document.getElementById('nav-footer').classList.add('hidden');
-      showSuccess();
-    })
-    .catch(function(err) {
-      if (window.console && console.error) {
-        console.error('Submission error:', err);
-      }
-      showToast('Submission failed. Please try again.', 'error');
-    })
-    .then(function() {
-      isSubmitting = false;
-      updateNavFooter();
-    });
+  if (!MAKE_WEBHOOK_URL || MAKE_WEBHOOK_URL.indexOf('REPLACE_WITH_YOUR_WEBHOOK_ID') !== -1) {
+    showToast('Add your Make webhook URL before publishing.', 'error');
+    return;
   }
 
+  isSubmitting = true;
+  updateNavFooter();
+
+  if (nextBtn) {
+    nextBtn.disabled = true;
+    nextBtn.innerHTML = '<span class="spinner"></span>';
+  }
+
+  payload = buildPayload();
+  payload.action = 'generate_report';
+
+  showLoadingScreen();
+
+  fetch(MAKE_WEBHOOK_URL, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify(payload)
+  })
+  .then(function(response) {
+    if (!response.ok) {
+      throw new Error('Webhook failed with status ' + response.status);
+    }
+    return response.json();
+  })
+  .then(function(data) {
+    if (!data || !data.success || !data.report) {
+      throw new Error('No report data returned from Make.');
+    }
+
+    renderReport(data.report);
+  })
+  .catch(function(err) {
+    if (window.console && console.error) {
+      console.error('Submission error:', err);
+    }
+
+    document.getElementById('loading-screen').classList.add('hidden');
+    showToast('We could not generate the report right now. Please try again.', 'error');
+
+    document.getElementById('conversation-container').classList.remove('hidden');
+    document.getElementById('nav-footer').classList.remove('hidden');
+  })
+  .then(function() {
+    isSubmitting = false;
+    updateNavFooter();
+  });
+}
+
+  function showLoadingScreen() {
+  document.getElementById('conversation-container').classList.add('hidden');
+  document.getElementById('nav-footer').classList.add('hidden');
+  document.getElementById('success-screen').classList.add('hidden');
+  document.getElementById('report-screen').classList.add('hidden');
+
+  document.getElementById('loading-screen').classList.remove('hidden');
+
+  if (window.lucide && lucide.createIcons) {
+    lucide.createIcons();
+  }
+
+  startLoadingAnimation();
+}
+
+function startLoadingAnimation() {
+  var step1 = document.getElementById('loading-step-1');
+  var step2 = document.getElementById('loading-step-2');
+  var step3 = document.getElementById('loading-step-3');
+
+  if (step1) step1.className = 'loading-step done';
+  if (step2) step2.className = 'loading-step';
+  if (step3) step3.className = 'loading-step';
+
+  setTimeout(function() {
+    if (step2) step2.className = 'loading-step active';
+  }, 700);
+
+  setTimeout(function() {
+    if (step2) step2.className = 'loading-step done';
+    if (step3) step3.className = 'loading-step active';
+  }, 1600);
+}
+
+function renderReport(report) {
+  var workflowList = document.getElementById('report-workflow');
+  var frictionsList = document.getElementById('report-frictions');
+  var recommendationsList = document.getElementById('report-recommendations');
+
+  document.getElementById('loading-screen').classList.add('hidden');
+  document.getElementById('report-screen').classList.remove('hidden');
+
+  document.getElementById('report-title').textContent = report.title || 'Business Process Analysis Report';
+  document.getElementById('report-summary').textContent = report.summary || '';
+
+  workflowList.innerHTML = '';
+  frictionsList.innerHTML = '';
+  recommendationsList.innerHTML = '';
+
+  renderListItems(workflowList, report.workflow_snapshot || []);
+  renderListItems(frictionsList, report.friction_points || []);
+  renderListItems(recommendationsList, report.recommendations || []);
+
+  setupEmailReportButton(report);
+
+  if (window.lucide && lucide.createIcons) {
+    lucide.createIcons();
+  }
+}
+
+function renderListItems(listEl, items) {
+  var i;
+  var li;
+
+  if (!listEl) return;
+
+  for (i = 0; i < items.length; i++) {
+    li = document.createElement('li');
+    li.textContent = items[i];
+    listEl.appendChild(li);
+  }
+}
+
+function setupEmailReportButton(report) {
+  var btn = document.getElementById('email-report-btn');
+
+  if (!btn) return;
+
+  btn.onclick = function() {
+    sendReportEmail(report);
+  };
+}
+
+function sendReportEmail(report) {
+  fetch(MAKE_WEBHOOK_URL, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({
+      action: 'email_report',
+      email: formData.email || '',
+      report: report,
+      submitted_at: new Date().toISOString()
+    })
+  })
+  .then(function(response) {
+    if (!response.ok) {
+      throw new Error('Email request failed with status ' + response.status);
+    }
+    showToast('Your report has been sent by email.', 'success');
+  })
+  .catch(function(err) {
+    if (window.console && console.error) {
+      console.error('Email report error:', err);
+    }
+    showToast('We could not send the report by email. Please try again.', 'error');
+  });
+}
   function showSuccess() {
     var screen = document.getElementById('success-screen');
     if (!screen) return;
@@ -1123,43 +1424,30 @@ function validateCurrentField() {
     }
   }
 
-  function resetForm() {
-    formData = getInitialFormData();
-    currentSectionIdx = 0;
-    currentFieldIdx = 0;
-    isSubmitting = false;
+function resetForm() {
+  formData = getInitialFormData();
+  currentSectionIdx = 0;
+  currentFieldIdx = 0;
+  isSubmitting = false;
 
-    document.getElementById('conversation-container').classList.add('hidden');
-    document.getElementById('nav-footer').classList.add('hidden');
+  document.getElementById('conversation-container').classList.add('hidden');
+  document.getElementById('nav-footer').classList.add('hidden');
+
+  if (document.getElementById('success-screen')) {
     document.getElementById('success-screen').style.display = 'none';
     document.getElementById('success-screen').classList.add('hidden');
-    document.getElementById('welcome-screen').classList.remove('hidden');
   }
 
-  function showToast(msg, type) {
-    var existing = document.querySelector('.toast-msg');
-    var toast;
-
-    if (!type) type = 'success';
-
-    if (existing && existing.parentNode) {
-      existing.parentNode.removeChild(existing);
-    }
-
-    toast = document.createElement('div');
-    toast.className = 'toast-msg ' + type;
-    toast.textContent = msg;
-    document.body.appendChild(toast);
-
-    setTimeout(function() {
-      toast.style.animation = 'toastOut 0.3s ease forwards';
-      setTimeout(function() {
-        if (toast.parentNode) {
-          toast.parentNode.removeChild(toast);
-        }
-      }, 300);
-    }, 3000);
+  if (document.getElementById('loading-screen')) {
+    document.getElementById('loading-screen').classList.add('hidden');
   }
+
+  if (document.getElementById('report-screen')) {
+    document.getElementById('report-screen').classList.add('hidden');
+  }
+
+  document.getElementById('welcome-screen').classList.remove('hidden');
+}
 
   function escapeHtml(str) {
     return String(str)

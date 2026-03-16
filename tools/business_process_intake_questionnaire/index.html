@@ -580,21 +580,142 @@
       </div>
     </header>
 
-    <div id="welcome-screen" class="max-w-2xl mx-auto px-5 py-8">
-      <div style="background: var(--surface-color); border-radius: 16px; border: 1px solid #E8E4DD; padding: 48px 32px; text-align: center; animation: slideIn 0.5s cubic-bezier(0.22, 1, 0.36, 1) forwards;">
-        <div class="mb-6 flex items-center justify-center" style="width:80px;height:80px;border-radius:16px;background:linear-gradient(135deg, #F0F5F3 0%, #F9F7F3 100%);margin:0 auto;">
-          <i data-lucide="clipboard-list" style="width:40px;height:40px;color:var(--primary-color);"></i>
+    <div id="welcome-screen" class="max-w-5xl mx-auto px-5 sm:px-6 lg:px-8 py-8 sm:py-10">
+  <div
+    style="
+      background: var(--surface-color);
+      border-radius: 2rem;
+      border: 1px solid var(--border-soft);
+      padding: 40px 28px;
+      animation: slideIn 0.5s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+      box-shadow: var(--shadow-soft);
+    "
+  >
+    <div class="grid lg:grid-cols-[1.1fr_0.9fr] gap-8 lg:gap-10 items-start">
+      
+      <div>
+        <p
+          style="
+            margin: 0 0 12px;
+            font-family: 'Inter', Arial, Helvetica, sans-serif;
+            font-size: 0.82rem;
+            font-weight: 500;
+            letter-spacing: 0.18em;
+            text-transform: uppercase;
+            color: var(--accent-slate);
+          "
+        >
+          Operational Intake
+        </p>
+
+        <h2
+          class="font-display text-3xl sm:text-4xl"
+          style="
+            color: var(--text-color);
+            font-weight: 700;
+            line-height: 1.08;
+            letter-spacing: -0.03em;
+            margin: 0 0 16px;
+          "
+        >
+          Map how the business works before we recommend what to improve.
+        </h2>
+
+        <p
+          id="form-subtitle"
+          style="
+            margin: 0 0 18px;
+            font-family: 'Inter', Arial, Helvetica, sans-serif;
+            font-size: 1.05rem;
+            line-height: 1.7;
+            color: var(--text-soft);
+            max-width: 42rem;
+          "
+        >
+          This intake helps us understand how leads are handled, how work is tracked,
+          where communication breaks down, and where stronger systems or automation
+          would create practical value.
+        </p>
+
+        <p
+          style="
+            margin: 0;
+            font-family: 'Inter', Arial, Helvetica, sans-serif;
+            font-size: 0.95rem;
+            line-height: 1.6;
+            color: var(--text-muted);
+          "
+        >
+          You will move through one question at a time. Keep it honest. A clean answer
+          is more useful than a polished one.
+        </p>
+      </div>
+
+      <div
+        style="
+          background: var(--surface-soft);
+          border: 1px solid var(--border-soft);
+          border-radius: 1.5rem;
+          padding: 24px 22px;
+        "
+      >
+        <div
+          class="mb-5 flex items-center justify-center"
+          style="
+            width: 64px;
+            height: 64px;
+            border-radius: 1rem;
+            background: linear-gradient(135deg, rgba(233,102,99,0.12) 0%, rgba(242,163,160,0.10) 100%);
+            color: var(--text-color);
+          "
+        >
+          <i data-lucide="clipboard-list" style="width:30px;height:30px;color:var(--primary-color);"></i>
         </div>
-        <h2 class="font-display text-2xl font-600 mb-3" style="color:var(--text-color);">Let's Get Started</h2>
-        <p id="form-subtitle" class="text-sm mb-8" style="color:#8A857D;line-height:1.6;">Help us understand your business so we can prepare for your consulting session.</p>
-        <p class="text-xs mb-8" style="color:#C9C4BC;">~10 minutes • 6 sections • One question at a time</p>
-        <button type="button" id="btn-start" class="btn-primary" style="width: 100%; max-width: 220px; margin: 0 auto;">
+
+        <h3
+          style="
+            margin: 0 0 14px;
+            font-family: 'Manrope', 'Inter', Arial, sans-serif;
+            font-size: 1.1rem;
+            font-weight: 700;
+            letter-spacing: -0.02em;
+            color: var(--text-color);
+          "
+        >
+          What to expect
+        </h3>
+
+        <div
+          style="
+            display: grid;
+            gap: 10px;
+            margin-bottom: 22px;
+            font-family: 'Inter', Arial, Helvetica, sans-serif;
+            font-size: 0.96rem;
+            line-height: 1.6;
+            color: var(--text-soft);
+          "
+        >
+          <div>About 10 minutes</div>
+          <div>6 structured sections</div>
+          <div>One question at a time</div>
+        </div>
+
+        <button
+          type="button"
+          id="btn-start"
+          class="btn-primary"
+          style="width: 100%; justify-content: center;"
+        >
           <span class="flex items-center justify-center">
-            <i data-lucide="arrow-right" style="width:16px;height:16px;margin-right:8px;"></i> Begin
+            <i data-lucide="arrow-right" style="width:16px;height:16px;margin-right:8px;"></i>
+            Start intake
           </span>
         </button>
       </div>
     </div>
+  </div>
+</div>
 
     <div id="conversation-container" class="hidden max-w-2xl mx-auto px-5 py-8 pb-32">
       <div class="mb-8">

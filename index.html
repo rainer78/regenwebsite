@@ -1,154 +1,2001 @@
 <!doctype html>
-<html lang="en">
+<html lang="en" class="h-full">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Regen Creatives | Scheduled Maintenance</title>
-  <meta name="description" content="Regen Creatives is currently undergoing scheduled maintenance. Please check back soon." />
-  <meta name="robots" content="noindex,nofollow" />
-
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
-
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Regen Creatives</title>
+  <meta name="description" content="AI tools and automation for modern operators." />
+  <link rel="icon" href="/icon-light-32x32.png" />
+  <script src="https://cdn.tailwindcss.com/3.4.17"></script>
   <style>
-    :root {
-      --brand-red: #ef4e45;
-      --brand-red-dark: #d9443c;
-      --bg-light: #f4f4f6;
-      --text-dark: #222;
-      --text-muted: #6d6d6d;
-    }
+    html { scroll-behavior:smooth; }
+      /* If you see this, your background layer is positioned correctly */
+ /* Background wash (logo palette) */
+  .hero-fallback{
+    background:
+    radial-gradient(900px 520px at 18% 22%, rgba(221,102,101,0.45), transparent 60%),
+    radial-gradient(900px 520px at 78% 28%, rgba(233,155,154,0.40), transparent 60%),
+    radial-gradient(1100px 720px at 50% 95%, rgba(129,64,75,0.28), transparent 65%),
+    #0D1030; /* logo navy base */
+}
 
-    * {
-      box-sizing: border-box;
-    }
+.hero-blob-1{
+  background: radial-gradient(circle at 35% 35%, rgba(221,102,101,1), rgba(221,102,101,0.0) 62%);
+}
 
-    html, body {
-      height: 100%;
-      margin: 0;
-      font-family: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-      background: linear-gradient(145deg, #f6f6f8, #e8e8ec);
-      color: var(--text-dark);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
+.hero-blob-2{
+  background: radial-gradient(circle at 40% 35%, rgba(233,155,154,0.95), rgba(233,155,154,0.0) 64%);
+}
 
-    .container {
-      text-align: center;
-      max-width: 780px;
-      padding: 40px 24px;
-    }
+/* Remove the dark vignette completely */
+.hero-vignette{
+  background: none;
+}
+  #heroFx { pointer-events:none; }
+  @media (prefers-reduced-motion: reduce){ #heroFx{ display:none; } }
+      .ticker-wrap {
+    width: 100%;
+    overflow: hidden;
+    background-color: transparent;
+    padding: 10px 0;
+  }
+  .ticker {
+    display: flex;
+    white-space: nowrap;
+    gap: 30px; /* Space between logos */
+    animation: ticker-scroll 20s linear infinite;
+  }
+  .ticker-item {
+    flex: 0 0 auto;
+  }
+  .ticker-item img {
+    height: 50px; /* Adjust logo size */
+    width: auto;
+  }
+  @keyframes ticker-scroll {
+    0% { transform: translateX(0); }
+    100% { transform: translateX(-100%); }
+  }
+  /* Pause on hover */
+  .ticker-wrap:hover .ticker {
+    animation-play-state: paused;
+  }
 
-    .logo-wrapper {
-      position: relative;
-      margin-bottom: 40px;
-    }
+      .assessment-option {
+  width: 100%;
+  text-align: left;
+  border-radius: 1rem;
+  border: 1px solid rgba(0,0,0,0.08);
+  background: white;
+  padding: 1rem 1.1rem;
+  transition: 0.2s ease;
+}
 
-    .logo-wrapper::before {
-      content: "";
-      position: absolute;
-      inset: -30px;
-      background: radial-gradient(circle at center, rgba(239,78,69,0.25), transparent 70%);
-      filter: blur(40px);
-      z-index: -1;
-    }
+.assessment-option:hover,
+.assessment-option.selected {
+  border-color: #000;
+  background: rgba(0,0,0,0.04);
+}
 
-    .logo {
-      width: 160px;
-      height: 160px;
-      object-fit: contain;
-      border-radius: 28px;
-      box-shadow:
-        0 20px 40px rgba(0,0,0,0.12),
-        0 6px 12px rgba(0,0,0,0.08);
-      transition: transform 0.4s ease;
-    }
+.assessment-option-title {
+  display: block;
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: #000;
+}
 
-    .logo:hover {
-      transform: translateY(-6px);
-    }
+.assessment-option-copy {
+  display: block;
+  margin-top: 0.35rem;
+  font-size: 0.88rem;
+  color: rgba(0,0,0,0.65);
+  line-height: 1.5;
+}
 
-    h1 {
-      font-size: clamp(30px, 4.5vw, 48px);
-      font-weight: 500;
-      line-height: 1.2;
-      margin: 0 0 18px;
-      letter-spacing: 0.2px;
-    }
 
-    p {
-      font-size: clamp(16px, 2vw, 20px);
-      color: var(--text-muted);
-      margin: 0;
-      line-height: 1.6;
-    }
+      .assessment-option {
+  width: 100%;
+  text-align: left;
+  border-radius: 1rem;
+  border: 1px solid rgba(0,0,0,0.08);
+  background: white;
+  padding: 1rem 1.1rem;
+  transition: 0.2s ease;
+}
 
-    .sub {
-      margin-top: 10px;
-    }
+.assessment-option:hover,
+.assessment-option.selected {
+  border-color: #000;
+  background: rgba(0,0,0,0.04);
+}
 
-    .maintenance-card {
-      margin-top: 40px;
-      display: inline-block;
-      padding: 14px 22px;
-      border-radius: 999px;
-      background: white;
-      box-shadow:
-        0 10px 25px rgba(0,0,0,0.08);
-      font-size: 14px;
-      color: #444;
-    }
+.assessment-option-title {
+  display: block;
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: #000;
+}
 
-    .maintenance-card strong {
-      color: var(--brand-red-dark);
-      font-weight: 600;
-    }
+.assessment-option-copy {
+  display: block;
+  margin-top: 0.35rem;
+  font-size: 0.88rem;
+  color: rgba(0,0,0,0.65);
+  line-height: 1.5;
+}
 
-    footer {
-      margin-top: 50px;
-      font-size: 13px;
-      color: #9a9a9a;
-    }
-
-    @media (prefers-color-scheme: dark) {
-      body {
-        background: radial-gradient(circle at top, #1b1b1d, #0e0e0f);
-        color: #f2f2f2;
-      }
-
-      p {
-        color: #b5b5b5;
-      }
-
-      .maintenance-card {
-        background: #1c1c1e;
-        color: #cfcfcf;
-      }
-
-      footer {
-        color: #777;
-      }
-    }
   </style>
 </head>
-<body>
-  <main class="container">
-    <div class="logo-wrapper">
-      <img src="./img/regenlogo3d.png" alt="Regen Creatives Logo" class="logo" />
+<body class="min-h-full bg-[#d5cdcd] text-black antialiased">
+
+<header class="fixed top-0 inset-x-0 z-50">
+  <nav id="topnav" class="transition-all duration-300 bg-[#d5cdcd]">
+    <div class="mx-auto max-w-7xl px-6 lg:px-8">
+      <div class="flex h-20 items-center justify-between">
+        <a href="./index.html" class="flex items-center gap-3">
+          <img src="./img/regenlogo3d.png" alt="Regen Creatives" class="h-10 w-10 rounded-full" />
+          
+        </a>
+
+        <div class="hidden md:flex items-center gap-8 text-sm font-medium">
+          <a class="hover:opacity-80" href="./about/index.html">About Regen Creatives</a>
+          
+          <!--<a class="hover:opacity-80" href="./blog/index.html">Blog</a> -->
+          
+          <a href="#ai-readiness" class="inline-flex items-center rounded-full bg-black text-white px-4 py-2 hover:opacity-90">Find Out If Your Business Is Ready for AI</a>
+        </div>
+
+        <button id="menuBtn" class="md:hidden inline-flex items-center justify-center rounded-xl border border-black/10 bg-white/70 backdrop-blur px-3 py-2" aria-label="Open menu">
+          <svg id="menuIcon" xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>
+          <svg id="closeIcon" xmlns="http://www.w3.org/2000/svg" class="hidden h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+        </button>
+      </div>
+
+      <div id="mobileMenu" class="hidden md:hidden pb-6">
+        <div class="rounded-2xl border border-black/10 bg-white/80 backdrop-blur p-4 space-y-3 text-sm font-medium">
+          <a class="block hover:opacity-80" href="./about/index.html">About Regen Creatives</a>
+          <!--<a class="block hover:opacity-80" href="#tools">Tools</a> 
+          <a class="block hover:opacity-80" href="./blog/index.html">Blog</a>-->
+          
+          <a href="/contact.html" class="mt-2 block text-center rounded-xl bg-black text-white px-4 py-2 hover:opacity-90">Find Out If Your Business Is Ready for AI</a>
+        </div>
+      </div>
+    </div>
+  </nav>
+</header>
+
+<main class="pt-24">
+
+<section class="relative overflow-hidden relative z-10 text-white text-white/80">
+   <!-- Hero Background (logo-matched) -->
+<div class="absolute inset-0 -z-10 pointer-events-none overflow-hidden">
+  <div class="absolute inset-0 hero-fallback"></div>
+
+  <!-- Color blobs -->
+  <div class="absolute -top-48 left-[-12%] h-[520px] w-[520px] rounded-full blur-3xl opacity-35 hero-blob-1"></div>
+  <div class="absolute -bottom-52 right-[-10%] h-[620px] w-[620px] rounded-full blur-3xl opacity-30 hero-blob-2"></div>
+
+  <!-- Animated layer -->
+  <canvas id="heroFx" class="absolute inset-0 w-full h-full"></canvas>
+
+  <!-- Subtle vignette for readability -->
+  <div class="absolute inset-0 hero-vignette"></div>
+</div>
+
+
+  
+  <!-- Animated Hero Background (behind content) -->
+  <div class="absolute inset-0 -z-10 pointer-events-none overflow-hidden">
+    <canvas id="heroFx" class="absolute inset-0 h-full w-full"></canvas>
+    
+  </div>
+
+ <!-- Hero Content -->
+<div class="mx-auto max-w-7xl px-6 lg:px-8 py-20 lg:py-28">
+  <div class="grid lg:grid-cols-12 gap-12 items-center">
+
+    <!-- Left Column -->
+    <div class="lg:col-span-7">
+
+      <p class="inline-flex items-center rounded-full border border-white/20 bg-white/10 px-4 py-1.5 text-sm text-white/80 backdrop-blur-md">
+        AI implementation agency for solopreneurs
+      </p>
+
+      <h1 class="mt-6 text-4xl sm:text-5xl lg:text-6xl font-semibold tracking-tight text-white leading-tight">
+      Designing systems <br>that run your modern <br>solo business
+      </h1>
+
+      <p class="mt-6 text-lg text-white/85 max-w-2xl leading-relaxed">
+       Regen Creatives builds practical AI and automation systems for solo business owners who need better follow-up, smoother operations, and more capacity without hiring first. 
+      </p>
+
+      <!-- CTA -->
+      <div class="mt-8 flex flex-col sm:flex-row gap-4">
+        <a href="#ai-readiness" class="inline-flex items-center justify-center rounded-xl bg-black text-white px-6 py-3 font-medium hover:opacity-90 transition">
+          Find Out If Your Business Is Ready for AI <span class="ml-2">→</span>
+        </a>
+        <a href="#case-study" class="inline-flex items-center justify-center rounded-xl border border-white/30 bg-white/10 text-white px-6 py-3 font-medium hover:bg-white/20 transition">
+          Read Our Case Studies
+        </a>
+      </div>
+
+      <!-- Feature Grid 
+      <div class="mt-12 grid grid-cols-1 sm:grid-cols-2 gap-4 max-w-2xl">
+        <div class="flex items-center gap-3 rounded-2xl border border-white/20 bg-white/10 px-4 py-3 backdrop-blur-md">
+          <span class="h-2.5 w-2.5 rounded-full bg-white/80"></span>
+          <span class="text-sm font-medium text-white">AI-powered automation</span>
+        </div>
+
+        <div class="flex items-center gap-3 rounded-2xl border border-white/20 bg-white/10 px-4 py-3 backdrop-blur-md">
+          <span class="h-2.5 w-2.5 rounded-full bg-white/80"></span>
+          <span class="text-sm font-medium text-white">Built for solopreneurs</span>
+        </div>
+
+        <div class="flex items-center gap-3 rounded-2xl border border-white/20 bg-white/10 px-4 py-3 backdrop-blur-md">
+          <span class="h-2.5 w-2.5 rounded-full bg-white/80"></span>
+          <span class="text-sm font-medium text-white">Launch in minutes, not months</span>
+        </div>
+
+        <div class="flex items-center gap-3 rounded-2xl border border-white/20 bg-white/10 px-4 py-3 backdrop-blur-md">
+          <span class="h-2.5 w-2.5 rounded-full bg-white/80"></span>
+          <span class="text-sm font-medium text-white">No coding required</span>
+        </div>
+
+        <div class="flex items-center gap-3 rounded-2xl border border-white/20 bg-white/10 px-4 py-3 backdrop-blur-md">
+          <span class="h-2.5 w-2.5 rounded-full bg-white/80"></span>
+          <span class="text-sm font-medium text-white">Scalable infrastructure</span>
+        </div>
+
+        <div class="flex items-center gap-3 rounded-2xl border border-white/20 bg-white/10 px-4 py-3 backdrop-blur-md">
+          <span class="h-2.5 w-2.5 rounded-full bg-white/80"></span>
+          <span class="text-sm font-medium text-white">Continuous updates</span>
+        </div>
+      </div> -->
+
     </div>
 
-    <h1>We’re improving things behind the scenes.</h1>
+    <!-- Right Column -->
+<div class="lg:col-span-5">
+  <div class="relative rounded-3xl overflow-hidden shadow-2xl shadow-black/30">
 
-    <p>Regen Creatives is currently undergoing scheduled maintenance.</p>
-    <p class="sub">We appreciate your patience and look forward to welcoming you back shortly.</p>
+   <img 
+  src="./img/hero-video.gif?q=80&w=1200&auto=format&fit=crop"
+  alt="Dashboard preview"
+  class="w-full h-auto object-cover"
+/>
+  </div>
+</div>
 
-    <div class="maintenance-card">
-      <strong>Status:</strong> Scheduled maintenance in progress
+  </div>
+</div>
+</section>
+
+  <section id="ai-readiness" class="mx-auto max-w-7xl px-6 lg:px-8 py-16">
+  <div class="overflow-hidden rounded-[2rem] border border-black/10 bg-white shadow-sm">
+    <div class="grid lg:grid-cols-12 gap-0">
+
+      <!-- Left column: Why this matters -->
+      <div class="lg:col-span-5 border-b border-black/10 lg:border-b-0 lg:border-r border-black/10 bg-white p-8 sm:p-10 lg:p-12">
+        <p class="text-sm font-medium uppercase tracking-[0.18em] text-black/50">
+          AI Implementation Readiness
+        </p>
+
+        <h2 class="mt-3 text-3xl sm:text-4xl font-semibold tracking-tight text-black leading-tight">
+          For many businesses the challenge is not AI, 
+          <br class="hidden sm:block" />
+          It's operational structure.
+        </h2>
+
+        <p class="mt-5 text-base sm:text-lg leading-relaxed text-black/70">
+          Automation reflects the way a business already works.</p> <p class="mt-5 text-base sm:text-lg leading-relaxed text-black/70"> Without clear processes, it increases complexity. With structured workflows, it improves efficiency and capacity.
+        </p>
+
+        
+
+        <div class="mt-8 rounded-2xl bg-amber-50 p-5">
+          <div class="text-sm font-semibold text-black">What this assessment checks</div>
+          <p class="mt-2 text-sm leading-relaxed text-black/70">
+            Lead handling, process clarity, documentation, scheduling, follow-up discipline, and whether your business is structurally ready for implementation.
+          </p>
+        </div>
+
+        <div class="mt-4 rounded-2xl bg-black text-white p-5">
+          <div class="text-sm font-semibold text-white">Takes about 2 minutes</div>
+          <p class="mt-2 text-sm leading-relaxed text-white/75">
+            You will receive a readiness score and the right next step for your business. If your foundation is not ready yet, we will send you a guide to help you prepare.
+          </p>
+        </div>
+      </div>
+
+      <!-- Right column: Assessment -->
+      <div class="lg:col-span-7 bg-white p-6 sm:p-8 lg:p-10">
+
+        <!-- Progress -->
+        <div class="mb-6">
+          <div class="flex items-center justify-between text-sm text-black/60">
+            <span id="assessmentStepLabel">Question 1 of 8</span>
+            <span id="assessmentProgressLabel">12%</span>
+          </div>
+          <div class="mt-3 h-2 w-full overflow-hidden rounded-full bg-black/10">
+            <div
+              id="assessmentProgressBar"
+              class="h-full rounded-full bg-black transition-all duration-300"
+              style="width: 12%;"
+            ></div>
+          </div>
+        </div>
+
+        <!-- Assessment card -->
+        <div id="assessmentCard">
+          <div
+            class="text-xs font-semibold uppercase tracking-[0.18em] text-black/45"
+            id="assessmentCategory"
+          >
+            Operations
+          </div>
+
+          <h3
+            id="assessmentPrompt"
+            class="mt-3 text-2xl font-semibold tracking-tight text-black leading-snug"
+          >
+            Placeholder question
+          </h3>
+
+          <div id="assessmentOptions" class="mt-6 space-y-3"></div>
+
+          <div class="mt-8 flex items-center justify-between gap-4">
+            <button
+              id="assessmentPrevBtn"
+              type="button"
+              class="inline-flex items-center justify-center rounded-xl border border-black/10 bg-white px-5 py-3 text-sm font-medium text-black hover:bg-black/5 disabled:opacity-40 disabled:cursor-not-allowed"
+            >
+              Back
+            </button>
+
+            <button
+              id="assessmentNextBtn"
+              type="button"
+              class="inline-flex items-center justify-center rounded-xl bg-black px-5 py-3 text-sm font-medium text-white hover:opacity-90 disabled:opacity-40 disabled:cursor-not-allowed"
+              disabled
+            >
+              Next
+            </button>
+          </div>
+        </div>
+
+        <!-- Email gate -->
+       <div id="assessmentGate" class="hidden">
+  <div class="rounded-3xl border border-black/10 bg-black text-white p-8">
+    <p class="text-sm uppercase tracking-[0.18em] text-white/60">Assessment complete</p>
+
+    <h3 class="mt-3 text-3xl font-semibold tracking-tight">
+      Your result is ready. Tell us where to send it.
+    </h3>
+
+    <p class="mt-4 max-w-2xl text-sm leading-relaxed text-white/80">
+      Enter your name and email to receive your readiness score and the right next step for your business. If your business is not ready yet, we will also send you a practical guide to help you prepare.
+    </p>
+
+    <form id="assessmentLeadForm" class="mt-6 grid gap-4 sm:grid-cols-2">
+      <div>
+        <label for="leadName" class="block text-sm font-medium text-white">Name</label>
+        <input id="leadName" name="name" type="text" class="mt-2 w-full rounded-xl border border-white/15 bg-white/10 px-4 py-3 text-sm text-white outline-none placeholder:text-white/40 focus:border-white/40" placeholder="Your name" />
+      </div>
+
+      <div>
+        <label for="leadEmail" class="block text-sm font-medium text-white">Email</label>
+        <input id="leadEmail" name="email" type="email" class="mt-2 w-full rounded-xl border border-white/15 bg-white/10 px-4 py-3 text-sm text-white outline-none placeholder:text-white/40 focus:border-white/40" placeholder="you@business.com" />
+      </div>
+
+      <div class="sm:col-span-2">
+        <label for="leadBusiness" class="block text-sm font-medium text-white">Business name</label>
+        <input id="leadBusiness" name="business" type="text" class="mt-2 w-full rounded-xl border border-white/15 bg-white/10 px-4 py-3 text-sm text-white outline-none placeholder:text-white/40 focus:border-white/40" placeholder="Your business name" />
+      </div>
+
+      <div class="sm:col-span-2">
+        <input type="hidden" id="leadScore" name="score" />
+        <input type="hidden" id="leadTier" name="tier" />
+        <input type="hidden" id="leadStatus" name="status" />
+        <button id="assessmentSubmitBtn" type="submit" class="inline-flex items-center justify-center rounded-xl bg-white px-5 py-3 text-sm font-medium text-black hover:opacity-90">
+          Get my result
+        </button>
+      </div>
+    </form>
+
+    <p id="assessmentFormMessage" class="mt-4 text-sm text-white/70"></p>
+  </div>
+</div>
+
+        <!-- Results -->
+        
+      <div id="assessmentResults" class="hidden">
+  <div class="rounded-3xl bg-black text-white p-8">
+    <p class="text-sm uppercase tracking-[0.18em] text-white/60">Assessment result</p>
+
+    <h3 class="mt-3 text-3xl font-semibold tracking-tight" id="resultTitle">
+      AI Implementation Readiness Score
+    </h3>
+
+    <div class="mt-6 flex flex-wrap items-center gap-6">
+      <div class="relative h-24 w-24">
+        <svg viewBox="0 0 36 36" class="h-24 w-24">
+          <path
+            d="M18 2.0845
+               a 15.9155 15.9155 0 0 1 0 31.831
+               a 15.9155 15.9155 0 0 1 0 -31.831"
+            fill="none"
+            stroke="currentColor"
+            class="text-white/15"
+            stroke-width="3.5"
+          />
+          <path
+            id="resultCircle"
+            d="M18 2.0845
+               a 15.9155 15.9155 0 0 1 0 31.831
+               a 15.9155 15.9155 0 0 1 0 -31.831"
+            fill="none"
+            stroke="currentColor"
+            class="text-amber-300"
+            stroke-width="3.5"
+            stroke-linecap="round"
+            stroke-dasharray="0 100"
+          />
+        </svg>
+
+        <div
+          id="resultScore"
+          class="absolute inset-0 flex items-center justify-center text-lg font-semibold"
+        >
+          0%
+        </div>
+      </div>
+
+      <div>
+        <div class="text-sm text-white/60">Tier</div>
+        <div
+          id="resultTier"
+          class="mt-1 inline-flex items-center rounded-xl bg-white/10 px-4 py-2 text-sm font-semibold text-white"
+        >
+          Developing
+        </div>
+      </div>
     </div>
 
-    <footer>
-      © 2026 Regen Creatives. All rights reserved.
-    </footer>
-  </main>
+    <div class="mt-8 grid gap-4">
+      <div class="rounded-2xl bg-white/10 p-5">
+        <div class="text-xs font-semibold uppercase tracking-wide text-white/55">
+          What this means
+        </div>
+        <p id="resultSummary" class="mt-2 text-sm leading-relaxed text-white/80">
+          Your business has some structure in place, but implementation should begin with one focused workflow.
+        </p>
+      </div>
+
+      <div class="rounded-2xl bg-white text-black p-5">
+        <div class="text-xs font-semibold uppercase tracking-wide text-black/50">
+          What to do first
+        </div>
+        <p id="resultRecommendation" class="mt-2 text-sm leading-relaxed text-black/75">
+          Start with one contained system such as lead follow-up, intake, or scheduling before expanding further.
+        </p>
+      </div>
+
+      <div class="rounded-2xl border border-white/15 bg-white/5 p-5">
+        <div class="text-xs font-semibold uppercase tracking-wide text-white/55">
+          What happens next
+        </div>
+        <p id="resultNextAction" class="mt-2 text-sm leading-relaxed text-white/80">
+          We will send your result by email along with the right next step for your business. If you want help identifying the best first workflow to automate, Regen Creatives can review your result and recommend a practical starting point.
+        </p>
+      </div>
+    </div>
+  </div>
+</div>
+    </div>
+  </div>
+</section>
+
+<!--
+
+<section id="tools" class="mx-auto max-w-7xl px-6 lg:px-8 py-14">
+     <section class="mx-auto max-w-7xl px-6 lg:px-8 py-14">
+        <div class="ticker-wrap">
+  <div class="ticker">
+   <!-- <div class="ticker-item"><img src="" alt="Logo 1"></div>
+    <div class="ticker-item"><img src="logo2.png" alt="Logo 2"></div>
+    <div class="ticker-item"><img src="logo3.png" alt="Logo 3"></div>
+    <div class="ticker-item"><img src="logo4.png" alt="Logo 4"></div>
+    <!-- Duplicate items to ensure smooth loop
+    <div class="ticker-item"><img src="logo1.png" alt="Logo 1"></div>
+    <div class="ticker-item"><img src="logo2.png" alt="Logo 2"></div> 
+      
+      <div class="flex items-center gap-3 rounded-2xl border border-white/20 bg-white/10 px-4 py-3 backdrop-blur-md ticker-item">
+          <span class="h-2.5 w-2.5 rounded-full bg-white/80"></span>
+          <span class="text-sm font-medium text-white">AI-powered automation</span>
+        </div>
+
+        <div class="flex items-center gap-3 rounded-2xl border border-white/20 bg-white/10 px-4 py-3 backdrop-blur-md ticker-item">
+          <span class="h-2.5 w-2.5 rounded-full bg-white/80"></span>
+          <span class="text-sm font-medium text-white">Built for solopreneurs</span>
+        </div>
+
+        <div class="flex items-center gap-3 rounded-2xl border border-white/20 bg-white/10 px-4 py-3 backdrop-blur-md ticker-item">
+          <span class="h-2.5 w-2.5 rounded-full bg-white/80"></span>
+          <span class="text-sm font-medium text-white">Launch in minutes, not months</span>
+        </div>
+
+        <div class="flex items-center gap-3 rounded-2xl border border-white/20 bg-white/10 px-4 py-3 backdrop-blur-md ticker-item">
+          <span class="h-2.5 w-2.5 rounded-full bg-white/80"></span>
+          <span class="text-sm font-medium text-white">No coding required</span>
+        </div>
+
+        <div class="flex items-center gap-3 rounded-2xl border border-white/20 bg-white/10 px-4 py-3 backdrop-blur-md ticker-item">
+          <span class="h-2.5 w-2.5 rounded-full bg-white/80"></span>
+          <span class="text-sm font-medium text-white">Scalable infrastructure</span>
+        </div>
+
+        <div class="flex items-center gap-3 rounded-2xl border border-white/20 bg-white/10 px-4 py-3 backdrop-blur-md ">
+          <span class="h-2.5 w-2.5 rounded-full bg-white/80"></span>
+          <span class="text-sm font-medium text-white">Continuous updates</span>
+        </div>
+  </div>
+</div>
+    </section>
+  <div class="flex items-end justify-between gap-6 flex-wrap">
+    <div>
+      <h2 class="text-5xl font-semibold tracking-tight">Tools</h2>
+      <p class="mt-2 text-black/70 max-w-2xl">A small set of products, each designed to eliminate a specific category of work.</p>
+    </div>
+    <a href="./tools/" class="text-sm font-medium hover:opacity-80">See all →</a>
+  </div>
+
+  <div class="mt-8 grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
+    
+      <div class="rounded-3xl border border-black/10 bg-white shadow-sm p-6 flex flex-col">
+        <div class="text-sm text-black/60">Product</div>
+        <div class="mt-1 text-xl font-semibold">ChannelBooster</div>
+        <p class="mt-3 text-black/70 flex-1">YouTube optimization in seconds. Analyze content, improve thumbnails, and boost engagement.</p>
+        <div class="mt-5 flex gap-3">
+          <a href="./channelbooster/index.html" class="inline-flex items-center rounded-xl bg-black text-white px-4 py-2 text-sm font-medium hover:opacity-90">Read Case Study</a>
+          <a href="https://channelbooster.regencreatives.com" class="inline-flex items-center rounded-xl border border-black/10 bg-white px-4 py-2 text-sm font-medium hover:bg-black/5" target="_blank" rel="noreferrer">Open App</a>
+        </div>
+      </div>
+    
+      <div class="rounded-3xl border border-black/10 bg-white shadow-sm p-6 flex flex-col">
+        <div class="text-sm text-black/60">Product</div>
+        <div class="mt-1 text-xl font-semibold">AutoSite AI</div>
+        <p class="mt-3 text-black/70 flex-1">Launch a professional website in 7 minutes. AI-powered design, content, and optimization.</p>
+        <div class="mt-5 flex gap-3">
+          <a href="./autosite-ai/index.html" class="inline-flex items-center rounded-xl bg-black text-white px-4 py-2 text-sm font-medium hover:opacity-90">Read Case Study</a>
+          <a href="https://autositeai.com" class="inline-flex items-center rounded-xl border border-black/10 bg-white px-4 py-2 text-sm font-medium hover:bg-black/5" target="_blank" rel="noreferrer">Open App</a>
+        </div>
+      </div>
+    
+      <div class="rounded-3xl border border-black/10 bg-white shadow-sm p-6 flex flex-col">
+        <div class="text-sm text-black/60">Product</div>
+        <div class="mt-1 text-xl font-semibold">Fix Pixie</div>
+        <p class="mt-3 text-black/70 flex-1">Upload a photo, fix your problem. Smart DIY repair assistant with step-by-step guidance.</p>
+        <div class="mt-5 flex gap-3">
+          <a href="./fixpixie/index.html" class="inline-flex items-center rounded-xl bg-black text-white px-4 py-2 text-sm font-medium hover:opacity-90">Read Case Study</a>
+          <a href="https://fixpixie.com" class="inline-flex items-center rounded-xl border border-black/10 bg-white px-4 py-2 text-sm font-medium hover:bg-black/5" target="_blank" rel="noreferrer">Open App</a>
+        </div>
+      </div>
+    
+      <div class="rounded-3xl border border-black/10 bg-white shadow-sm p-6 flex flex-col">
+        <div class="text-sm text-black/60">Product</div>
+        <div class="mt-1 text-xl font-semibold">Viewer Match</div>
+        <p class="mt-3 text-black/70 flex-1">Intelligent recommendation engine for content discovery.</p>
+        <div class="mt-5 flex gap-3">
+          
+          <a href="#case-study-haasn" target="_self" class="inline-flex items-center rounded-xl bg-black text-white px-4 py-2 text-sm font-medium hover:opacity-90" target="_blank" rel="noreferrer">Read Case Study</a>
+            <a href="http://viewermatch.com/" target="_blank" class="inline-flex items-center rounded-xl border border-black/10 bg-white px-4 py-2 text-sm font-medium hover:bg-black/5" target="_blank" rel="noreferrer">Open App</a>
+        </div>
+      </div>
+    
+      <div class="rounded-3xl border border-black/10 bg-white shadow-sm p-6 flex flex-col">
+        <div class="text-sm text-black/60">Product</div>
+        <div class="mt-1 text-xl font-semibold">REVA (Real Estate Virutal Agent)</div>
+        <p class="mt-3 text-black/70 flex-1">Qualify leads before they hit your inbox. AI-powered lead screening and prioritization.</p>
+        <div class="mt-5 flex gap-3">
+          
+          <a href="#case-study" target="_self" class="inline-flex items-center rounded-xl bg-black text-white px-4 py-2 text-sm font-medium hover:opacity-90" target="_blank" rel="noreferrer">Read Case Study</a>
+        </div>
+      </div>
+    
+      <div class="rounded-3xl border border-black/10 bg-white shadow-sm p-6 flex flex-col">
+        <div class="text-sm text-black/60">Product</div>
+        <div class="mt-1 text-xl font-semibold">Glam Book</div>
+        <p class="mt-3 text-black/70 flex-1">Beauty business automation done right. Management suite for beauty professionals.</p>
+        <div class="mt-5 flex gap-3">
+          
+          <a href="#case-study-jessica" target="_self" class="inline-flex items-center rounded-xl bg-black text-white px-4 py-2 text-sm font-medium hover:opacity-90" target="_blank" rel="noreferrer">Read Case Study</a>
+        </div>
+      </div>
+    
+  </div>
+    
+</section> -->
+
+    <!-- Case Study -->
+
+   <section id="case-study" class="mx-auto max-w-7xl px-6 lg:px-8 py-14">
+  <div class="flex items-end justify-between gap-6 flex-wrap">
+    
+  </div>
+        <!-- Persona Card -->
+<div class="mt-10 overflow-hidden rounded-2xl border border-black/10 bg-white shadow-sm">
+  <!-- Top Bar -->
+  <div class="flex flex-col gap-4 border-b border-black/10 bg-white px-6 py-5 sm:flex-row sm:items-center sm:justify-between">
+    <div class="flex items-center gap-3">
+      <div>
+        <h2 class="text-5xl font-semibold tracking-tight">Meet Tatyana</h2>
+        <p class="mt-2 text-black/70 max-w-2xl">
+          A solo real estate agent balancing a full-time job and young family life. She cares deeply about every inquiry, but without structured boundaries, she spends too much time nurturing buyers who are not financially ready, leading to burnout and unpredictable revenue.
+        </p>
+      </div>
+    </div>
+
+    <div class="flex flex-wrap items-center gap-6">
+      <!-- Market Size -->
+      <div class="flex items-center gap-3">
+        <div class="text-xs uppercase tracking-wide text-black/50">Market Size</div>
+
+        <div class="relative h-10 w-10">
+          <svg viewBox="0 0 36 36" class="h-10 w-10">
+            <path
+              d="M18 2.0845
+                 a 15.9155 15.9155 0 0 1 0 31.831
+                 a 15.9155 15.9155 0 0 1 0 -31.831"
+              fill="none"
+              stroke="currentColor"
+              class="text-black/10"
+              stroke-width="4"
+            />
+            <path
+              d="M18 2.0845
+                 a 15.9155 15.9155 0 0 1 0 31.831
+                 a 15.9155 15.9155 0 0 1 0 -31.831"
+              fill="none"
+              stroke="currentColor"
+              class="text-amber-400"
+              stroke-width="4"
+              stroke-linecap="round"
+              stroke-dasharray="54 100"
+            />
+          </svg>
+          <div class="absolute inset-0 flex items-center justify-center text-xs font-semibold text-black/70">
+            54%
+          </div>
+        </div>
+      </div>
+
+      <!-- Type Badge -->
+      <div class="flex items-center gap-3">
+        <div class="text-xs uppercase tracking-wide text-black/50">Type</div>
+        <div class="inline-flex items-center rounded-xl bg-[#0D1030] px-4 py-2 text-sm font-semibold text-white">
+          Guardian
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Body Grid -->
+  <div class="grid grid-cols-1 gap-0 lg:grid-cols-12">
+    <!-- Left Column -->
+    <div class="lg:col-span-4 border-b border-black/10 lg:border-b-0 lg:border-r border-black/10">
+      <!-- Photo -->
+      <div class="aspect-[16/10] w-full bg-black/5">
+        <img
+          src="./clients/Sapphire%20Realty/Tatyana-Renee-Molina/img/Tatyana_Renee_Molina.png?auto=format&fit=crop&w=1200&q=80"
+          alt="Tatyana working on her laptop"
+          class="h-full w-full object-cover"
+          loading="lazy"
+        />
+      </div>
+
+      <!-- Demographics Card -->
+      <div class="p-6">
+        <div class="rounded-2xl border border-black/10 bg-white p-5 shadow-sm">
+          <div class="flex items-center justify-between">
+            <h3 class="text-sm font-semibold tracking-tight">Demographic</h3>
+            <span class="text-xs text-black/50">Snapshot</span>
+          </div>
+
+          <dl class="mt-4 space-y-3 text-sm">
+            <div class="flex items-center justify-between">
+              <dt class="text-black/60">Role</dt>
+              <dd class="font-medium text-black">Solo real estate agent</dd>
+            </div>
+            <div class="flex items-center justify-between">
+              <dt class="text-black/60">Experience</dt>
+              <dd class="font-medium text-black">5–10 years</dd>
+            </div>
+            <div class="flex items-center justify-between">
+              <dt class="text-black/60">Location</dt>
+              <dd class="font-medium text-black">United States</dd>
+            </div>
+            <div class="flex items-center justify-between">
+              <dt class="text-black/60">Primary channel</dt>
+              <dd class="font-medium text-black">Text + email</dd>
+            </div>
+          </dl>
+
+          <div class="mt-5 rounded-xl bg-black/[0.03] p-4">
+            <div class="text-xs font-semibold uppercase tracking-wide text-black/50">Pain point</div>
+            <p class="mt-2 text-sm text-black/70">
+              She invests emotional energy in every lead, even when they are months away from buying. Without qualification guardrails, her calendar fills with conversations instead of closings.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Right Column -->
+    <div class="lg:col-span-8">
+      <div class="grid grid-cols-1 gap-0">
+
+        <!-- Background -->
+        <div class="border-b border-black/10 p-6">
+          <div class="flex items-start justify-between gap-4">
+            <h3 class="text-base font-semibold tracking-tight">Background</h3>
+            <span class="rounded-full bg-black/[0.04] px-3 py-1 text-xs font-medium text-black/60">Persona</span>
+          </div>
+          <p class="mt-3 text-sm leading-relaxed text-black/70">
+            Tatyana runs her business alone while managing a full-time job and raising young children. She values relationships and rarely turns people away. When inquiries come in, she responds personally and generously. Over time, this creates decision fatigue, inconsistent boundaries, and time spent on prospects who are not financially prepared to move forward.
+          </p>
+        </div>
+
+        <!-- Quote -->
+        <div class="border-b border-black/10 p-6">
+          <h3 class="text-base font-semibold tracking-tight">Quote</h3>
+          <div class="mt-3 rounded-2xl bg-black/[0.03] p-5">
+            <p class="text-sm italic leading-relaxed text-black/70">
+              “I care about people. I just need a way to protect my time without feeling like I am abandoning someone.”
+            </p>
+          </div>
+        </div>
+
+        <!-- Jobs to be Done -->
+        <div class="p-6">
+          <h3 class="text-base font-semibold tracking-tight">Jobs to be Done</h3>
+
+          <div class="mt-4 grid grid-cols-1 gap-4 sm:grid-cols-2">
+
+            <div class="rounded-2xl border border-black/10 p-5">
+              <div class="text-xs font-semibold uppercase tracking-wide text-black/50">Job 1</div>
+              <p class="mt-2 text-sm text-black/75">
+                Automatically determine which buyers are financially prepared before time is invested in showings.
+              </p>
+            </div>
+
+            <div class="rounded-2xl border border-black/10 p-5">
+              <div class="text-xs font-semibold uppercase tracking-wide text-black/50">Job 2</div>
+              <p class="mt-2 text-sm text-black/75">
+                Schedule only within predefined days, hours, and capacity limits to prevent calendar overload.
+              </p>
+            </div>
+
+            <div class="rounded-2xl border border-black/10 p-5">
+              <div class="text-xs font-semibold uppercase tracking-wide text-black/50">Job 3</div>
+              <p class="mt-2 text-sm text-black/75">
+                Provide structured follow-up that feels professional and human without requiring constant personal responses.
+              </p>
+            </div>
+
+            <div class="rounded-2xl border border-black/10 p-5">
+              <div class="text-xs font-semibold uppercase tracking-wide text-black/50">Job 4</div>
+              <p class="mt-2 text-sm text-black/75">
+                Create a predictable workflow so evenings and weekends are not consumed by reactive communication.
+              </p>
+            </div>
+
+          </div>
+
+          <div class="mt-6 rounded-2xl bg-amber-50 p-5">
+            <div class="text-sm font-semibold text-black">Success signal</div>
+            <p class="mt-2 text-sm text-black/70">
+              Tatyana experiences fewer last-minute showings, more pre-qualified appointments, and clearer separation between business hours and family time.
+            </p>
+          </div>
+
+          <!-- SOLUTION SECTION -->
+          <div class="mt-8 p-8 bg-black text-white rounded-2xl">
+            <div class="max-w-4xl">
+              <h3 class="text-xl font-semibold tracking-tight">
+                Solution: REVA — Real Estate Virtual Agent
+              </h3>
+
+              <p class="mt-4 text-sm leading-relaxed text-white/80">
+                REVA acts as a digital gatekeeper, ensuring that only financially ready buyers move forward to scheduling. It greets visitors, qualifies readiness, enforces boundaries, and books showings automatically within defined availability rules.
+              </p>
+
+              <div class="mt-6 grid grid-cols-1 sm:grid-cols-2 gap-6">
+                <div class="rounded-xl bg-white/10 p-5">
+                  <h4 class="text-sm font-semibold">Qualification Guardrails</h4>
+                  <p class="mt-2 text-sm text-white/80">
+                    Buyers are filtered for financial readiness before access to scheduling.
+                  </p>
+                </div>
+
+                <div class="rounded-xl bg-white/10 p-5">
+                  <h4 class="text-sm font-semibold">Boundary-Based Scheduling</h4>
+                  <p class="mt-2 text-sm text-white/80">
+                    Showings are limited to approved days, hours, and capacity thresholds.
+                  </p>
+                </div>
+
+                <div class="rounded-xl bg-white/10 p-5">
+                  <h4 class="text-sm font-semibold">Automated Follow-Up</h4>
+                  <p class="mt-2 text-sm text-white/80">
+                    Structured messaging maintains momentum without manual effort.
+                  </p>
+                </div>
+
+                <div class="rounded-xl bg-white/10 p-5">
+                  <h4 class="text-sm font-semibold">Predictable Pipeline</h4>
+                  <p class="mt-2 text-sm text-white/80">
+                    Calendar clarity and pre-qualified appointments lead to steadier closings.
+                  </p>
+                </div>
+              </div>
+
+              <div class="mt-8 rounded-xl bg-white text-black p-6">
+                <h4 class="text-sm font-semibold uppercase tracking-wide text-black/60">
+                  Outcome
+                </h4>
+                <p class="mt-2 text-sm leading-relaxed text-black/75">
+                  Tatyana regains control of her pipeline. Only serious buyers reach her calendar. Revenue becomes more predictable, and her family time is protected.
+                </p>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+  
+    </section>
+        
+ <section class="mx-auto max-w-7xl px-6 lg:px-8 py-14">
+  <div class="rounded-3xl border border-black/10 bg-black text-white p-8 lg:p-12">
+    <div class="grid lg:grid-cols-12 gap-10 items-center">
+      <div class="lg:col-span-7">
+        <h2 class="text-3xl font-semibold tracking-tight">Want a system built for your business?</h2>
+        <p class="mt-3 text-white/80">
+          If you have a repetitive process that should be automated, we can design the workflow and ship a clean interface to run it.
+        </p>
+      </div>
+      <div class="lg:col-span-5 flex flex-col sm:flex-row gap-3 lg:justify-end">
+        <a href="./contact/" class="inline-flex items-center justify-center rounded-xl bg-white text-black px-5 py-3 font-medium hover:opacity-90">Start a conversation</a>
+        <a href="./powder-springs/" class="inline-flex items-center justify-center rounded-xl border border-white/25 px-5 py-3 font-medium hover:bg-white/10">Local page</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+        <section id="case-study-haasn" class="mx-auto max-w-7xl px-6 lg:px-8 py-14">
+  <div class="flex items-end justify-between gap-6 flex-wrap"></div>
+
+  <!-- Persona Card -->
+  <div class="mt-10 overflow-hidden rounded-2xl border border-black/10 bg-white shadow-sm">
+    <!-- Top Bar -->
+    <div class="flex flex-col gap-4 border-b border-black/10 bg-white px-6 py-5 sm:flex-row sm:items-center sm:justify-between">
+      <div class="flex items-center gap-3">
+        <div>
+          <h2 class="text-5xl font-semibold tracking-tight">Meet Haasn</h2>
+          <p class="mt-2 text-black/70 max-w-2xl">
+            A solo YouTuber who wants to increase the visibility of his content with the right target audience.
+            After implementing ViewerMatch, he stopped guessing at discovery and began aligning each video to a clear viewer intent,
+            resulting in stronger impressions, higher click-through rates, and more consistent returning viewers.
+          </p>
+        </div>
+      </div>
+
+      <div class="flex flex-wrap items-center gap-6">
+        <!-- Market Size -->
+        <div class="flex items-center gap-3">
+          <div class="text-xs uppercase tracking-wide text-black/50">Market Size</div>
+
+          <div class="relative h-10 w-10">
+            <svg viewBox="0 0 36 36" class="h-10 w-10">
+              <path
+                d="M18 2.0845
+                   a 15.9155 15.9155 0 0 1 0 31.831
+                   a 15.9155 15.9155 0 0 1 0 -31.831"
+                fill="none"
+                stroke="currentColor"
+                class="text-black/10"
+                stroke-width="4"
+              />
+              <!-- progress (57%) -->
+              <path
+                d="M18 2.0845
+                   a 15.9155 15.9155 0 0 1 0 31.831
+                   a 15.9155 15.9155 0 0 1 0 -31.831"
+                fill="none"
+                stroke="currentColor"
+                class="text-amber-400"
+                stroke-width="4"
+                stroke-linecap="round"
+                stroke-dasharray="57 100"
+              />
+            </svg>
+            <div class="absolute inset-0 flex items-center justify-center text-xs font-semibold text-black/70">
+              57%
+            </div>
+          </div>
+        </div>
+
+        <!-- Type Badge -->
+        <div class="flex items-center gap-3">
+          <div class="text-xs uppercase tracking-wide text-black/50">Type</div>
+          <div class="inline-flex items-center rounded-xl bg-[#0D1030] px-4 py-2 text-sm font-semibold text-white">
+            Strategist
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Body Grid -->
+    <div class="grid grid-cols-1 gap-0 lg:grid-cols-12">
+      <!-- Left Column -->
+      <div class="lg:col-span-4 border-b border-black/10 lg:border-b-0 lg:border-r border-black/10">
+        <!-- Photo -->
+        <div class="aspect-[16/10] w-full bg-black/5">
+          <img
+            src="./img/veiwmatch.png"
+            alt="YouTuber planning content strategy"
+            class="h-full w-full object-cover"
+            loading="lazy"
+          />
+        </div>
+
+        <!-- Demographics Card -->
+        <div class="p-6">
+          <div class="rounded-2xl border border-black/10 bg-white p-5 shadow-sm">
+            <div class="flex items-center justify-between">
+              <h3 class="text-sm font-semibold tracking-tight">Demographic</h3>
+              <span class="text-xs text-black/50">Snapshot</span>
+            </div>
+
+            <dl class="mt-4 space-y-3 text-sm">
+              <div class="flex items-center justify-between">
+                <dt class="text-black/60">Role</dt>
+                <dd class="font-medium text-black">Solo YouTuber</dd>
+              </div>
+              <div class="flex items-center justify-between">
+                <dt class="text-black/60">Experience</dt>
+                <dd class="font-medium text-black">2–6 years</dd>
+              </div>
+              <div class="flex items-center justify-between">
+                <dt class="text-black/60">Primary channel</dt>
+                <dd class="font-medium text-black">YouTube</dd>
+              </div>
+              <div class="flex items-center justify-between">
+                <dt class="text-black/60">Focus</dt>
+                <dd class="font-medium text-black">Audience fit</dd>
+              </div>
+            </dl>
+
+            <div class="mt-5 rounded-xl bg-black/[0.03] p-4">
+              <div class="text-xs font-semibold uppercase tracking-wide text-black/50">Pain point</div>
+              <p class="mt-2 text-sm text-black/70">
+                His videos reach viewers, but not consistently the right viewers, which limits retention and long-term channel growth.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Right Column -->
+      <div class="lg:col-span-8">
+        <div class="grid grid-cols-1 gap-0">
+          <!-- Background -->
+          <div class="border-b border-black/10 p-6">
+            <div class="flex items-start justify-between gap-4">
+              <h3 class="text-base font-semibold tracking-tight">Background</h3>
+              <span class="rounded-full bg-black/[0.04] px-3 py-1 text-xs font-medium text-black/60">Persona</span>
+            </div>
+            <p class="mt-3 text-sm leading-relaxed text-black/70">
+              Haasn publishes consistently, but discovery is uneven. Some videos perform well, others fade quickly.
+              The issue is not output. It is targeting. Without a clear way to map content to viewer intent, he ends up
+              optimizing for broad reach instead of the specific audience he is trying to build.
+            </p>
+          </div>
+
+          <!-- Quote -->
+          <div class="border-b border-black/10 p-6">
+            <h3 class="text-base font-semibold tracking-tight">Quote</h3>
+            <div class="mt-3 rounded-2xl bg-black/[0.03] p-5">
+              <p class="text-sm italic leading-relaxed text-black/70">
+                “I do not want more views. I want the right viewers to find my videos and come back.”
+              </p>
+            </div>
+          </div>
+
+          <!-- Jobs to be Done -->
+          <div class="p-6">
+            <h3 class="text-base font-semibold tracking-tight">Jobs to be Done</h3>
+
+            <div class="mt-4 grid grid-cols-1 gap-4 sm:grid-cols-2">
+              <div class="rounded-2xl border border-black/10 p-5">
+                <div class="text-xs font-semibold uppercase tracking-wide text-black/50">Job 1</div>
+                <p class="mt-2 text-sm text-black/75">
+                  Define a precise target audience and what they are trying to accomplish when they watch.
+                </p>
+              </div>
+
+              <div class="rounded-2xl border border-black/10 p-5">
+                <div class="text-xs font-semibold uppercase tracking-wide text-black/50">Job 2</div>
+                <p class="mt-2 text-sm text-black/75">
+                  Align each video to a clear viewer intent so YouTube can categorize it correctly.
+                </p>
+              </div>
+
+              <div class="rounded-2xl border border-black/10 p-5">
+                <div class="text-xs font-semibold uppercase tracking-wide text-black/50">Job 3</div>
+                <p class="mt-2 text-sm text-black/75">
+                  Increase returning viewers by building content sequences that compound.
+                </p>
+              </div>
+
+              <div class="rounded-2xl border border-black/10 p-5">
+                <div class="text-xs font-semibold uppercase tracking-wide text-black/50">Job 4</div>
+                <p class="mt-2 text-sm text-black/75">
+                  Improve discovery through iteration based on signals, not guesswork.
+                </p>
+              </div>
+            </div>
+
+            <div class="mt-6 rounded-2xl bg-amber-50 p-5">
+              <div class="text-sm font-semibold text-black">Success signal</div>
+              <p class="mt-2 text-sm text-black/70">
+                Haasn sees more views from search and suggested among his target audience, higher retention from relevant viewers,
+                and a steady rise in returning viewers week over week.
+              </p>
+            </div>
+
+            <!-- SOLUTION SECTION -->
+            <div class="mt-8 p-8 bg-black text-white rounded-2xl">
+              <div class="max-w-4xl">
+                <h3 class="text-xl font-semibold tracking-tight">
+                  Solution: ViewerMatch — Audience Fit & Discovery System
+                </h3>
+
+                <p class="mt-4 text-sm leading-relaxed text-white/80">
+                  ViewerMatch helps Haasn match each video to a specific viewer goal and viewing context.
+                  It produces topic framing, titles, descriptions, and sequencing recommendations designed to reach
+                  the audience he actually wants. The result is stronger relevance, better retention, and growth that compounds.
+                </p>
+
+                <div class="mt-6 grid grid-cols-1 sm:grid-cols-2 gap-6">
+                  <div class="rounded-xl bg-white/10 p-5">
+                    <h4 class="text-sm font-semibold">Audience Targeting</h4>
+                    <p class="mt-2 text-sm text-white/80">
+                      Clarifies the viewer profile and what they are trying to achieve.
+                    </p>
+                  </div>
+
+                  <div class="rounded-xl bg-white/10 p-5">
+                    <h4 class="text-sm font-semibold">Intent-Based Packaging</h4>
+                    <p class="mt-2 text-sm text-white/80">
+                      Aligns titles and descriptions to the viewer’s reason for watching.
+                    </p>
+                  </div>
+
+                  <div class="rounded-xl bg-white/10 p-5">
+                    <h4 class="text-sm font-semibold">Sequencing for Retention</h4>
+                    <p class="mt-2 text-sm text-white/80">
+                      Builds content paths that turn one view into a returning viewer.
+                    </p>
+                  </div>
+
+                  <div class="rounded-xl bg-white/10 p-5">
+                    <h4 class="text-sm font-semibold">Signals-Driven Iteration</h4>
+                    <p class="mt-2 text-sm text-white/80">
+                      Uses performance signals to refine relevance over time.
+                    </p>
+                  </div>
+                </div>
+
+                <div class="mt-8 rounded-xl bg-white text-black p-6">
+                  <h4 class="text-sm font-semibold uppercase tracking-wide text-black/60">
+                    Outcome
+                  </h4>
+                  <p class="mt-2 text-sm leading-relaxed text-black/75">
+                    Haasn stops optimizing for broad reach and starts building relevance.
+                    His content becomes easier for the right audience to find, easier to binge, and easier to return to.
+                  </p>
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+        <section class="mx-auto max-w-7xl px-6 lg:px-8 py-14">
+  <div class="rounded-3xl border border-black/10 bg-black text-white p-8 lg:p-12">
+    <div class="grid lg:grid-cols-12 gap-10 items-center">
+      <div class="lg:col-span-7">
+        <h2 class="text-3xl font-semibold tracking-tight">Want a system built for your business?</h2>
+        <p class="mt-3 text-white/80">
+          If you have a repetitive process that should be automated, we can design the workflow and ship a clean interface to run it.
+        </p>
+      </div>
+      <div class="lg:col-span-5 flex flex-col sm:flex-row gap-3 lg:justify-end">
+        <a href="./contact/" class="inline-flex items-center justify-center rounded-xl bg-white text-black px-5 py-3 font-medium hover:opacity-90">Start a conversation</a>
+        <a href="./powder-springs/" class="inline-flex items-center justify-center rounded-xl border border-white/25 px-5 py-3 font-medium hover:bg-white/10">Local page</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+        <section id="case-study-jessica" class="mx-auto max-w-7xl px-6 lg:px-8 py-14">
+  <div class="flex items-end justify-between gap-6 flex-wrap"></div>
+
+  <!-- Persona Card -->
+  <div class="mt-10 overflow-hidden rounded-2xl border border-black/10 bg-white shadow-sm">
+    <!-- Top Bar -->
+    <div class="flex flex-col gap-4 border-b border-black/10 bg-white px-6 py-5 sm:flex-row sm:items-center sm:justify-between">
+      <div class="flex items-center gap-3">
+        <div>
+          <h2 class="text-5xl font-semibold tracking-tight">Meet Jessica</h2>
+          <p class="mt-2 text-black/70 max-w-2xl">
+            A spa owner who wants to simplify appointment scheduling without losing the personal touch.
+            After implementing Glam Book, she reduced back-and-forth messaging, cut no-shows, and began filling her calendar with less manual effort.
+          </p>
+        </div>
+      </div>
+
+      <div class="flex flex-wrap items-center gap-6">
+        <!-- Market Size -->
+        <div class="flex items-center gap-3">
+          <div class="text-xs uppercase tracking-wide text-black/50">Market Size</div>
+
+          <div class="relative h-10 w-10">
+            <svg viewBox="0 0 36 36" class="h-10 w-10">
+              <path
+                d="M18 2.0845
+                   a 15.9155 15.9155 0 0 1 0 31.831
+                   a 15.9155 15.9155 0 0 1 0 -31.831"
+                fill="none"
+                stroke="currentColor"
+                class="text-black/10"
+                stroke-width="4"
+              />
+              <!-- progress (59%) -->
+              <path
+                d="M18 2.0845
+                   a 15.9155 15.9155 0 0 1 0 31.831
+                   a 15.9155 15.9155 0 0 1 0 -31.831"
+                fill="none"
+                stroke="currentColor"
+                class="text-amber-400"
+                stroke-width="4"
+                stroke-linecap="round"
+                stroke-dasharray="59 100"
+              />
+            </svg>
+            <div class="absolute inset-0 flex items-center justify-center text-xs font-semibold text-black/70">
+              59%
+            </div>
+          </div>
+        </div>
+
+        <!-- Type Badge -->
+        <div class="flex items-center gap-3">
+          <div class="text-xs uppercase tracking-wide text-black/50">Type</div>
+          <div class="inline-flex items-center rounded-xl bg-[#0D1030] px-4 py-2 text-sm font-semibold text-white">
+            Host
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Body Grid -->
+    <div class="grid grid-cols-1 gap-0 lg:grid-cols-12">
+      <!-- Left Column -->
+      <div class="lg:col-span-4 border-b border-black/10 lg:border-b-0 lg:border-r border-black/10">
+        <!-- Photo -->
+        <div class="aspect-[16/10] w-full bg-black/5">
+          <img
+            src="./img/glambook.png"
+            alt="Spa owner preparing a treatment room"
+            class="h-full w-full object-cover"
+            loading="lazy"
+          />
+        </div>
+
+        <!-- Demographics Card -->
+        <div class="p-6">
+          <div class="rounded-2xl border border-black/10 bg-white p-5 shadow-sm">
+            <div class="flex items-center justify-between">
+              <h3 class="text-sm font-semibold tracking-tight">Demographic</h3>
+              <span class="text-xs text-black/50">Snapshot</span>
+            </div>
+
+            <dl class="mt-4 space-y-3 text-sm">
+              <div class="flex items-center justify-between">
+                <dt class="text-black/60">Role</dt>
+                <dd class="font-medium text-black">Spa owner</dd>
+              </div>
+              <div class="flex items-center justify-between">
+                <dt class="text-black/60">Business</dt>
+                <dd class="font-medium text-black">Solo / small team</dd>
+              </div>
+              <div class="flex items-center justify-between">
+                <dt class="text-black/60">Primary channel</dt>
+                <dd class="font-medium text-black">Text + Instagram</dd>
+              </div>
+              <div class="flex items-center justify-between">
+                <dt class="text-black/60">Goal</dt>
+                <dd class="font-medium text-black">Booked calendar</dd>
+              </div>
+            </dl>
+
+            <div class="mt-5 rounded-xl bg-black/[0.03] p-4">
+              <div class="text-xs font-semibold uppercase tracking-wide text-black/50">Pain point</div>
+              <p class="mt-2 text-sm text-black/70">
+                Booking happens through messages and DMs, which creates delays, scheduling errors, and missed opportunities.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Right Column -->
+      <div class="lg:col-span-8">
+        <div class="grid grid-cols-1 gap-0">
+          <!-- Background -->
+          <div class="border-b border-black/10 p-6">
+            <div class="flex items-start justify-between gap-4">
+              <h3 class="text-base font-semibold tracking-tight">Background</h3>
+              <span class="rounded-full bg-black/[0.04] px-3 py-1 text-xs font-medium text-black/60">Persona</span>
+            </div>
+            <p class="mt-3 text-sm leading-relaxed text-black/70">
+              Jessica provides services that require preparation time, clear client expectations, and reliable scheduling.
+              Most appointment requests arrive while she is with clients. She often responds late, spends time clarifying details,
+              and still has to manually confirm availability. This back-and-forth creates friction and increases no-shows.
+            </p>
+          </div>
+
+          <!-- Quote -->
+          <div class="border-b border-black/10 p-6">
+            <h3 class="text-base font-semibold tracking-tight">Quote</h3>
+            <div class="mt-3 rounded-2xl bg-black/[0.03] p-5">
+              <p class="text-sm italic leading-relaxed text-black/70">
+                “I want clients to book in one step, without me living in my phone.”
+              </p>
+            </div>
+          </div>
+
+          <!-- Jobs to be Done -->
+          <div class="p-6">
+            <h3 class="text-base font-semibold tracking-tight">Jobs to be Done</h3>
+
+            <div class="mt-4 grid grid-cols-1 gap-4 sm:grid-cols-2">
+              <div class="rounded-2xl border border-black/10 p-5">
+                <div class="text-xs font-semibold uppercase tracking-wide text-black/50">Job 1</div>
+                <p class="mt-2 text-sm text-black/75">
+                  Let clients schedule appointments without waiting for a reply.
+                </p>
+              </div>
+
+              <div class="rounded-2xl border border-black/10 p-5">
+                <div class="text-xs font-semibold uppercase tracking-wide text-black/50">Job 2</div>
+                <p class="mt-2 text-sm text-black/75">
+                  Capture the right service details upfront so sessions run smoothly.
+                </p>
+              </div>
+
+              <div class="rounded-2xl border border-black/10 p-5">
+                <div class="text-xs font-semibold uppercase tracking-wide text-black/50">Job 3</div>
+                <p class="mt-2 text-sm text-black/75">
+                  Reduce cancellations and no-shows with confirmations and reminders.
+                </p>
+              </div>
+
+              <div class="rounded-2xl border border-black/10 p-5">
+                <div class="text-xs font-semibold uppercase tracking-wide text-black/50">Job 4</div>
+                <p class="mt-2 text-sm text-black/75">
+                  Keep scheduling, payments, and intake organized in one place.
+                </p>
+              </div>
+            </div>
+
+            <div class="mt-6 rounded-2xl bg-amber-50 p-5">
+              <div class="text-sm font-semibold text-black">Success signal</div>
+              <p class="mt-2 text-sm text-black/70">
+                Jessica books appointments faster, reduces no-shows, and spends less time coordinating logistics, while clients get a smoother booking experience.
+              </p>
+            </div>
+
+            <!-- SOLUTION SECTION -->
+            <div class="mt-8 p-8 bg-black text-white rounded-2xl">
+              <div class="max-w-4xl">
+                <h3 class="text-xl font-semibold tracking-tight">
+                  Solution: Glam Book — Smart Scheduling for Spas
+                </h3>
+
+                <p class="mt-4 text-sm leading-relaxed text-white/80">
+                  Glam Book gives Jessica a scheduling system that works while she is working.
+                  Clients can self-book based on real availability, complete intake details, and receive confirmations automatically.
+                  Jessica gets a cleaner calendar and fewer interruptions.
+                </p>
+
+                <div class="mt-6 grid grid-cols-1 sm:grid-cols-2 gap-6">
+                  <div class="rounded-xl bg-white/10 p-5">
+                    <h4 class="text-sm font-semibold">Self-Booking</h4>
+                    <p class="mt-2 text-sm text-white/80">
+                      Clients pick times based on real-time availability.
+                    </p>
+                  </div>
+
+                  <div class="rounded-xl bg-white/10 p-5">
+                    <h4 class="text-sm font-semibold">Service Intake</h4>
+                    <p class="mt-2 text-sm text-white/80">
+                      Captures service details and preferences before the appointment.
+                    </p>
+                  </div>
+
+                  <div class="rounded-xl bg-white/10 p-5">
+                    <h4 class="text-sm font-semibold">Reminders + Confirmations</h4>
+                    <p class="mt-2 text-sm text-white/80">
+                      Reduces no-shows with automated messaging.
+                    </p>
+                  </div>
+
+                  <div class="rounded-xl bg-white/10 p-5">
+                    <h4 class="text-sm font-semibold">Centralized Workflow</h4>
+                    <p class="mt-2 text-sm text-white/80">
+                      Keeps scheduling and follow-up organized without extra admin work.
+                    </p>
+                  </div>
+                </div>
+
+                <div class="mt-8 rounded-xl bg-white text-black p-6">
+                  <h4 class="text-sm font-semibold uppercase tracking-wide text-black/60">
+                    Outcome
+                  </h4>
+                  <p class="mt-2 text-sm leading-relaxed text-black/75">
+                    Jessica replaces scheduling chaos with a clean booking flow. Clients book faster, show up more reliably,
+                    and her business runs with fewer interruptions.
+                  </p>
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+</main>
+
+<footer class="border-t border-black/10 mt-20">
+  <div class="mx-auto max-w-7xl px-6 lg:px-8 py-10 flex flex-col md:flex-row gap-6 items-start md:items-center justify-between">
+    <div class="flex items-center gap-3">
+      <img src="./img/regenlogo3d.png" alt="Regen Creatives" class="h-9 w-9 rounded-full" />
+      <div>
+        <div class="font-semibold">Regen Creatives</div>
+        <div class="text-sm text-black/60">AI tools and automation for solopreneurs and small teams.</div>
+      </div>
+    </div>
+    <div class="text-sm text-black/60">© <span id="year"></span> Regen Creatives. All rights reserved.</div>
+  </div>
+</footer>
+
+
+<script>
+(function(){
+  const nav = document.getElementById('topnav');
+  const mobileMenu = document.getElementById('mobileMenu');
+  const menuBtn = document.getElementById('menuBtn');
+  const menuIcon = document.getElementById('menuIcon');
+  const closeIcon = document.getElementById('closeIcon');
+
+  function setScrolled(){
+    if(!nav) return;
+    if(window.scrollY > 50){
+      nav.className = 'transition-all duration-300 bg-white/85 backdrop-blur border-b border-black/10';
+    } else {
+      nav.className = 'transition-all duration-300 bg-transparent';
+    }
+  }
+  window.addEventListener('scroll', setScrolled);
+  setScrolled();
+
+  if(menuBtn && mobileMenu){
+    menuBtn.addEventListener('click', function(){
+      const isOpen = !mobileMenu.classList.contains('hidden');
+      if(isOpen){
+        mobileMenu.classList.add('hidden');
+        menuIcon.classList.remove('hidden');
+        closeIcon.classList.add('hidden');
+        menuBtn.setAttribute('aria-label','Open menu');
+      } else {
+        mobileMenu.classList.remove('hidden');
+        menuIcon.classList.add('hidden');
+        closeIcon.classList.remove('hidden');
+        menuBtn.setAttribute('aria-label','Close menu');
+      }
+    });
+  }
+
+  const year = document.getElementById('year');
+  if(year){ year.textContent = new Date().getFullYear(); }
+})();
+</script>
+
+<script>
+(function () {
+
+  const canvas = document.getElementById("heroFx");
+  if (!canvas) return;
+
+  const prefersReduced =
+    window.matchMedia &&
+    window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  if (prefersReduced) return;
+
+  const ctx = canvas.getContext("2d", { alpha: true });
+  const section = canvas.closest("section");
+  if (!ctx || !section) return;
+
+  let width = 0, height = 0;
+  let dots = [];
+  let raf;
+
+  const CORAL = [221, 102, 101];   // #DD6665
+  const PINK  = [233, 155, 154];   // #E99B9A
+
+  const DOT_COUNT = 48;
+  const MAX_DIST = 170;
+  const SPEED = 0.24;
+
+  function rand(min, max) { return Math.random() * (max - min) + min; }
+
+  function resize() {
+    width = section.offsetWidth;
+    height = section.offsetHeight;
+    canvas.width = width;
+    canvas.height = height;
+
+    dots = [];
+    for (let i = 0; i < DOT_COUNT; i++) {
+      const useCoral = Math.random() > 0.5;
+      dots.push({
+        x: rand(0, width),
+        y: rand(0, height),
+        vx: rand(-SPEED, SPEED),
+        vy: rand(-SPEED, SPEED),
+        r: rand(1.2, 2.3),
+        c: useCoral ? CORAL : PINK
+      });
+    }
+  }
+
+  function draw() {
+    ctx.clearRect(0, 0, width, height);
+
+    for (const p of dots) {
+      p.x += p.vx;
+      p.y += p.vy;
+
+      if (p.x < 0 || p.x > width) p.vx *= -1;
+      if (p.y < 0 || p.y > height) p.vy *= -1;
+    }
+
+    for (let i = 0; i < dots.length; i++) {
+      for (let j = i + 1; j < dots.length; j++) {
+        const a = dots[i], b = dots[j];
+        const dx = a.x - b.x, dy = a.y - b.y;
+        const dist = Math.sqrt(dx * dx + dy * dy);
+
+        if (dist < MAX_DIST) {
+          const t = 1 - dist / MAX_DIST;
+
+          const r = Math.round((a.c[0] + b.c[0]) / 2);
+          const g = Math.round((a.c[1] + b.c[1]) / 2);
+          const bl = Math.round((a.c[2] + b.c[2]) / 2);
+
+          const alpha = 0.28 * t;
+
+          ctx.strokeStyle = `rgba(${r},${g},${bl},${alpha})`;
+          ctx.lineWidth = 1;
+          ctx.beginPath();
+          ctx.moveTo(a.x, a.y);
+          ctx.lineTo(b.x, b.y);
+          ctx.stroke();
+        }
+      }
+    }
+
+    for (const p of dots) {
+      ctx.fillStyle = `rgba(${p.c[0]},${p.c[1]},${p.c[2]},0.7)`;
+      ctx.beginPath();
+      ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+      ctx.fill();
+    }
+
+    raf = requestAnimationFrame(draw);
+  }
+
+  resize();
+  draw();
+
+  window.addEventListener("resize", function () {
+    cancelAnimationFrame(raf);
+    resize();
+    draw();
+  }, { passive: true });
+
+})();
+</script>
+
+    <script>
+(function () {
+  const MAKE_WEBHOOK_URL = "YOUR_MAKE_WEBHOOK_URL";
+
+  const questions = [
+    {
+      id: 1,
+      category: "Lead handling",
+      prompt: "When a new lead contacts your business, how quickly do they usually receive a response?",
+      options: [
+        {
+          title: "Usually late",
+          copy: "Responses often happen hours later, the next day, or only when someone remembers.",
+          score: 0
+        },
+        {
+          title: "Somewhat consistent",
+          copy: "Responses usually happen the same day, but timing depends on workload.",
+          score: 1
+        },
+        {
+          title: "Fast and reliable",
+          copy: "Leads get a prompt response through a clear process or automated first touch.",
+          score: 2
+        }
+      ]
+    },
+    {
+      id: 2,
+      category: "Process clarity",
+      prompt: "How clearly defined is the process for what happens after a lead comes in?",
+      options: [
+        {
+          title: "Not clearly defined",
+          copy: "Each inquiry is handled differently depending on the situation.",
+          score: 0
+        },
+        {
+          title: "Partly defined",
+          copy: "There is a rough routine, but it is not fully structured.",
+          score: 1
+        },
+        {
+          title: "Clearly defined",
+          copy: "There is a repeatable step-by-step workflow for lead handling.",
+          score: 2
+        }
+      ]
+    },
+    {
+      id: 3,
+      category: "Documentation",
+      prompt: "If someone else had to step in and run part of your workflow, how easy would that be?",
+      options: [
+        {
+          title: "Very difficult",
+          copy: "Most of the process lives in memory, messages, or scattered notes.",
+          score: 0
+        },
+        {
+          title: "Possible with effort",
+          copy: "Some parts are documented, but important details are still informal.",
+          score: 1
+        },
+        {
+          title: "Relatively easy",
+          copy: "Core workflows are documented clearly enough for another person to follow.",
+          score: 2
+        }
+      ]
+    },
+    {
+      id: 4,
+      category: "Scheduling",
+      prompt: "How controlled is your calendar for calls, appointments, or meetings?",
+      options: [
+        {
+          title: "Mostly reactive",
+          copy: "Requests land whenever they land, and the calendar often drives the day.",
+          score: 0
+        },
+        {
+          title: "Somewhat controlled",
+          copy: "There are some boundaries, but availability still shifts around often.",
+          score: 1
+        },
+        {
+          title: "Well controlled",
+          copy: "Scheduling follows clear availability rules that protect time and capacity.",
+          score: 2
+        }
+      ]
+    },
+    {
+      id: 5,
+      category: "Follow-up",
+      prompt: "How reliable is your follow-up with leads, prospects, or clients?",
+      options: [
+        {
+          title: "Unreliable",
+          copy: "Follow-up is manual and often delayed, forgotten, or inconsistent.",
+          score: 0
+        },
+        {
+          title: "Somewhat reliable",
+          copy: "Follow-up usually happens, but it still depends on reminders or personal effort.",
+          score: 1
+        },
+        {
+          title: "Reliable",
+          copy: "Follow-up happens through a dependable system or schedule.",
+          score: 2
+        }
+      ]
+    },
+    {
+      id: 6,
+      category: "Tool readiness",
+      prompt: "How comfortable is your business with using digital tools to support daily operations?",
+      options: [
+        {
+          title: "Low comfort",
+          copy: "Most work is still handled manually, and tools feel difficult to maintain.",
+          score: 0
+        },
+        {
+          title: "Moderate comfort",
+          copy: "A few tools are in use, but adoption is uneven or limited.",
+          score: 1
+        },
+        {
+          title: "High comfort",
+          copy: "Digital tools are already part of how the business operates day to day.",
+          score: 2
+        }
+      ]
+    },
+    {
+      id: 7,
+      category: "Decision speed",
+      prompt: "How quickly can your business make decisions about improving a broken workflow?",
+      options: [
+        {
+          title: "Slowly",
+          copy: "Changes take too long because priorities, ownership, or next steps are unclear.",
+          score: 0
+        },
+        {
+          title: "Reasonably quickly",
+          copy: "Some improvements happen, but decision-making can still lag.",
+          score: 1
+        },
+        {
+          title: "Quickly",
+          copy: "The business can identify a problem and act on a solution without much delay.",
+          score: 2
+        }
+      ]
+    },
+    {
+      id: 8,
+      category: "Operational stability",
+      prompt: "How stable do your day-to-day operations feel right now?",
+      options: [
+        {
+          title: "Chaotic",
+          copy: "The business still runs on constant reaction, patchwork, or personal heroics.",
+          score: 0
+        },
+        {
+          title: "Mixed",
+          copy: "Some systems work well, but important gaps still create friction.",
+          score: 1
+        },
+        {
+          title: "Stable",
+          copy: "Core operations are steady enough to support automation and AI implementation.",
+          score: 2
+        }
+      ]
+    }
+  ];
+
+  let currentIndex = 0;
+  let answers = new Array(questions.length).fill(null);
+  let latestResults = null;
+
+  const stepLabel = document.getElementById("assessmentStepLabel");
+  const progressLabel = document.getElementById("assessmentProgressLabel");
+  const progressBar = document.getElementById("assessmentProgressBar");
+  const categoryEl = document.getElementById("assessmentCategory");
+  const promptEl = document.getElementById("assessmentPrompt");
+  const optionsEl = document.getElementById("assessmentOptions");
+  const prevBtn = document.getElementById("assessmentPrevBtn");
+  const nextBtn = document.getElementById("assessmentNextBtn");
+
+  const assessmentCard = document.getElementById("assessmentCard");
+  const assessmentGate = document.getElementById("assessmentGate");
+  const assessmentResults = document.getElementById("assessmentResults");
+
+  const resultTitle = document.getElementById("resultTitle");
+  const resultScore = document.getElementById("resultScore");
+  const resultCircle = document.getElementById("resultCircle");
+  const resultTier = document.getElementById("resultTier");
+  const resultSummary = document.getElementById("resultSummary");
+  const resultRecommendation = document.getElementById("resultRecommendation");
+
+  const leadForm = document.getElementById("assessmentLeadForm");
+  const leadName = document.getElementById("leadName");
+  const leadEmail = document.getElementById("leadEmail");
+  const leadBusiness = document.getElementById("leadBusiness");
+  const leadScore = document.getElementById("leadScore");
+  const leadTier = document.getElementById("leadTier");
+  const leadStatus = document.getElementById("leadStatus");
+  const submitBtn = document.getElementById("assessmentSubmitBtn");
+  const formMessage = document.getElementById("assessmentFormMessage");
+    const resultNextAction = document.getElementById("resultNextAction");
+
+  if (
+    !stepLabel || !progressLabel || !progressBar || !categoryEl || !promptEl ||
+    !optionsEl || !prevBtn || !nextBtn || !assessmentCard || !assessmentGate ||
+    !assessmentResults || !leadForm
+  ) {
+    return;
+  }
+
+  function getProgressPercent() {
+    return Math.round(((currentIndex + 1) / questions.length) * 100);
+  }
+
+  function renderQuestion() {
+    const q = questions[currentIndex];
+    const progress = getProgressPercent();
+
+    stepLabel.textContent = `Question ${currentIndex + 1} of ${questions.length}`;
+    progressLabel.textContent = `${progress}%`;
+    progressBar.style.width = `${progress}%`;
+
+    categoryEl.textContent = q.category;
+    promptEl.textContent = q.prompt;
+
+    optionsEl.innerHTML = "";
+
+    q.options.forEach((option, optionIndex) => {
+      const button = document.createElement("button");
+      button.type = "button";
+      button.className = "assessment-option";
+      if (answers[currentIndex] === optionIndex) {
+        button.classList.add("selected");
+      }
+
+      button.innerHTML = `
+        <span class="assessment-option-title">${option.title}</span>
+        <span class="assessment-option-copy">${option.copy}</span>
+      `;
+
+      button.addEventListener("click", function () {
+        answers[currentIndex] = optionIndex;
+        renderQuestion();
+      });
+
+      optionsEl.appendChild(button);
+    });
+
+    prevBtn.disabled = currentIndex === 0;
+    nextBtn.disabled = answers[currentIndex] === null;
+    nextBtn.textContent = currentIndex === questions.length - 1 ? "Continue" : "Next";
+  }
+
+  function calculateResults() {
+  const totalScore = answers.reduce((sum, answerIndex, idx) => {
+    const option = questions[idx].options[answerIndex];
+    return sum + (option ? option.score : 0);
+  }, 0);
+
+  const maxScore = questions.length * 2;
+  const percent = Math.round((totalScore / maxScore) * 100);
+
+  let tier = "";
+  let readinessStatus = "";
+  let summary = "";
+  let recommendation = "";
+  let nextAction = "";
+  let guide = "";
+
+  if (totalScore <= 5) {
+    tier = "Not Ready Yet";
+    readinessStatus = "not_ready";
+    summary = "Your business needs stronger operating structure before automation will produce reliable results.";
+    recommendation = "Begin by tightening one core process such as lead response, scheduling, or follow-up. Document the steps, remove inconsistency, and create a repeatable workflow.";
+    nextAction = "We will email your result and send you a practical readiness guide. Once your foundation is stronger, Regen Creatives can help you identify the first workflow to implement.";
+    guide = "Before You Implement AI: A Small Business Readiness Guide";
+  } else if (totalScore <= 11) {
+    tier = "Developing";
+    readinessStatus = "developing";
+    summary = "Your business has some useful structure in place, but it is not ready for broad automation yet. The best approach is to begin with one contained workflow.";
+    recommendation = "Choose one process that creates regular friction, such as lead follow-up, client intake, or scheduling. Tighten that workflow first, then automate it before expanding.";
+    nextAction = "We will email your result and recommend a strong starting point. If you want help identifying the first workflow to automate, Regen Creatives can review your result and suggest a practical next move.";
+    guide = "The Best First Automation Guide";
+  } else {
+    tier = "Ready for Implementation";
+    readinessStatus = "ready";
+    summary = "Your business has enough structure and consistency to begin AI implementation now.";
+    recommendation = "Identify the most repetitive and time-sensitive workflow in your business and implement there first. That is usually where the fastest operational gain appears.";
+    nextAction = "We will email your result and recommended implementation direction. If you are ready to move forward, the next step is to review the workflow you want to automate first.";
+    guide = "AI Implementation Strategy Call";
+  }
+
+  return {
+    totalScore,
+    maxScore,
+    percent,
+    tier,
+    readinessStatus,
+    summary,
+    recommendation,
+    nextAction,
+    guide
+  };
+}
+
+  function showGate() {
+    latestResults = calculateResults();
+
+    leadScore.value = latestResults.totalScore;
+    leadTier.value = latestResults.tier;
+    leadStatus.value = latestResults.readinessStatus;
+
+    assessmentCard.classList.add("hidden");
+    assessmentGate.classList.remove("hidden");
+    assessmentResults.classList.add("hidden");
+  }
+
+  function showResults(results) {
+  resultTitle.textContent = "AI Implementation Readiness Score";
+  resultScore.textContent = `${results.percent}%`;
+  resultCircle.setAttribute("stroke-dasharray", `${results.percent} 100`);
+  resultTier.textContent = results.tier;
+  resultSummary.textContent = results.summary;
+  resultRecommendation.textContent = results.recommendation;
+  resultNextAction.textContent = results.nextAction;
+
+  assessmentCard.classList.add("hidden");
+  assessmentGate.classList.add("hidden");
+  assessmentResults.classList.remove("hidden");
+}
+
+  function buildPayload(results) {
+    return {
+      name: leadName.value.trim(),
+      email: leadEmail.value.trim(),
+      business: leadBusiness.value.trim(),
+      score: results.totalScore,
+      max_score: results.maxScore,
+      percent: results.percent,
+      tier: results.tier,
+      readiness_status: results.readinessStatus,
+      recommended_next_step: results.recommendation,
+      recommended_asset: results.guide,
+      answers: answers.map((answerIndex, idx) => {
+        const option = questions[idx].options[answerIndex];
+        return {
+          question_id: questions[idx].id,
+          category: questions[idx].category,
+          question: questions[idx].prompt,
+          selected_title: option ? option.title : "",
+          selected_copy: option ? option.copy : "",
+          selected_score: option ? option.score : null
+        };
+      }),
+      submitted_at: new Date().toISOString()
+    };
+  }
+
+  async function submitAssessment(payload) {
+    const response = await fetch(MAKE_WEBHOOK_URL, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify(payload)
+    });
+
+    if (!response.ok) {
+      throw new Error(`Webhook failed with status ${response.status}`);
+    }
+
+    return response;
+  }
+
+  prevBtn.addEventListener("click", function () {
+    if (currentIndex > 0) {
+      currentIndex -= 1;
+      renderQuestion();
+    }
+  });
+
+  nextBtn.addEventListener("click", function () {
+    if (answers[currentIndex] === null) return;
+
+    if (currentIndex < questions.length - 1) {
+      currentIndex += 1;
+      renderQuestion();
+    } else {
+      showGate();
+    }
+  });
+
+  leadForm.addEventListener("submit", async function (e) {
+    e.preventDefault();
+
+    if (!leadName.value.trim() || !leadEmail.value.trim()) {
+      formMessage.textContent = "Please enter your name and email to see your result.";
+      return;
+    }
+
+    if (!latestResults) {
+      latestResults = calculateResults();
+    }
+
+    const payload = buildPayload(latestResults);
+
+    submitBtn.disabled = true;
+    formMessage.textContent = "Submitting your result...";
+
+    try {
+      if (MAKE_WEBHOOK_URL && MAKE_WEBHOOK_URL !== "YOUR_MAKE_WEBHOOK_URL") {
+        await submitAssessment(payload);
+      } else {
+        console.log("Assessment payload:", payload);
+      }
+
+      if (latestResults.readinessStatus === "not_ready") {
+        formMessage.textContent = "Your result is ready. We are also sending your business readiness guide.";
+      } else if (latestResults.readinessStatus === "developing") {
+        formMessage.textContent = "Your result is ready. Check your inbox for your next-step recommendation.";
+      } else {
+        formMessage.textContent = "Your result is ready. Check your inbox for your implementation recommendation.";
+      }
+
+      showResults(latestResults);
+    } catch (error) {
+      console.error(error);
+      formMessage.textContent = "We could not submit your result right now. Please try again.";
+      submitBtn.disabled = false;
+    }
+  });
+
+  renderQuestion();
+})();
+</script>
+
+
 </body>
 </html>

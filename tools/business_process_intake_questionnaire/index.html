@@ -344,17 +344,39 @@
       </div>
     </div>
 
-    <div id="success-screen" class="hidden" style="position: fixed; inset: 0; background: var(--bg-color); z-index: 50; display: none; align-items: center; justify-content: center;">
-      <div class="success-screen text-center px-6 max-w-md">
-        <div class="mx-auto mb-6 flex items-center justify-center" style="width:72px;height:72px;border-radius:50%;background:#F0F5F3;">
-          <i data-lucide="check-circle" style="width:36px;height:36px;color:var(--primary-color);"></i>
-        </div>
-        <h2 class="font-display text-2xl font-600 mb-3" style="color:var(--text-color);">Questionnaire Submitted</h2>
-        <p class="text-sm mb-6" style="color:#8A857D;line-height:1.6;">Thank you for completing the intake questionnaire. We'll review your responses and prepare for your consulting session.</p>
-        <button type="button" class="btn-primary" onclick="resetForm()">Start New Submission</button>
-      </div>
+    <div id="success-screen" class="hidden success-screen">
+
+  <div class="success-card">
+
+    <div class="success-icon">
+      <i data-lucide="check-circle"></i>
     </div>
+
+    <h2 class="success-title">
+      Your intake submission has been received.
+    </h2>
+
+    <p class="success-text">
+      Thank you for completing the Business Process Intake Questionnaire.
+      Your responses are being processed to generate your intake summary,
+      workflow snapshot, and draft operating procedure.
+    </p>
+
+    <p class="success-text">
+      Your results will be delivered to the email address you provided shortly.
+    </p>
+
+    <p class="success-note">
+      If you do not see the email within a few minutes, please check your spam folder.
+    </p>
+
+    <button onclick="resetForm()" class="btn-primary">
+      Start a New Intake
+    </button>
+
   </div>
+
+</div>
 
 <script>
   var MAKE_WEBHOOK_URL = 'https://hook.us2.make.com/95eb4haubwts1fad6rrvys7elhgfsrqe';
@@ -442,7 +464,22 @@
         { name: 'post_scheduling_step', label: 'After scheduling, what normally happens next?', type: 'radio', options: ['Consultation call','In-person appointment','Quote or proposal','Immediate service','It varies'], required: true },
         { name: 'post_interaction_followup', label: 'After a client interaction, what follow-up normally happens?', type: 'radio', options: ['Automated follow-up','Manual follow-up','Occasional follow-up','No formal follow-up'], required: true }
       ]
+    },
+{
+  id: 'results_delivery',
+  title: 'Results Delivery',
+  description: 'Tell us where to send your results.',
+  icon: 'send',
+  fields: [
+    {
+      name: 'email',
+      label: 'Your intake submission has been received. Please enter the best email address for delivery of your results.',
+      type: 'email',
+      placeholder: 'you@example.com',
+      required: true
     }
+  ]
+}
   ];
 
   var TOTAL_SECTIONS = SECTIONS.length;
@@ -634,7 +671,7 @@
     }
     html += '</label>';
 
-    if (field.type === 'text' || field.type === 'number') {
+    if (field.type === 'text' || field.type === 'number' || field.type === 'email') {
       val = formData[field.name] || '';
       html += '<div class="voice-input-wrapper">';
       html += '<input type="' + field.type + '" name="' + field.name + '" placeholder="' + escapeHtml(field.placeholder || '') + '" value="' + escapeHtml(val) + '" autocomplete="off" style="border-radius: 12px;">';
@@ -757,7 +794,7 @@
   }
 
   function wireFieldEvents() {
-    var inputs = document.querySelectorAll('#question-container input[type="text"], #question-container input[type="number"], #question-container textarea, #question-container select');
+    var inputs = document.querySelectorAll('#question-container input[type="text"], #question-container input[type="number"], #question-container input[type="email"], #question-container textarea, #question-container select');
     var voiceBtns = document.querySelectorAll('#question-container .voice-btn');
     var optionBtns = document.querySelectorAll('#question-container .option-btn');
     var skipBtn = document.getElementById('skip-btn');
@@ -838,10 +875,14 @@
 
       if (isSubmitting) return;
 
-      if (!validateCurrentField()) {
-        showToast('Please complete this question before continuing.', 'error');
-        return;
-      }
+     if (!validateCurrentField()) {
+  if (field.type === 'email') {
+    showToast('Please enter a valid email address before continuing.', 'error');
+  } else {
+    showToast('Please complete this question before continuing.', 'error');
+  }
+  return;
+}
 
       if (isLastField) {
         submitForm();
@@ -852,23 +893,32 @@
     navContainer.appendChild(nextBtn);
   }
 
-  function validateCurrentField() {
-    var section = SECTIONS[currentSectionIdx];
-    var field = section.fields[currentFieldIdx];
-    var val = formData[field.name];
+function validateCurrentField() {
+  var section = SECTIONS[currentSectionIdx];
+  var field = section.fields[currentFieldIdx];
+  var val = formData[field.name];
+  var emailPattern;
 
-    if (!field.required) return true;
+  if (!field.required) return true;
 
-    if (field.type === 'checkbox') {
-      return isArray(val) && val.length > 0;
-    }
-
-    if (typeof val === 'string') {
-      return val.replace(/^\s+|\s+$/g, '') !== '';
-    }
-
-    return !!val;
+  if (field.type === 'checkbox') {
+    return isArray(val) && val.length > 0;
   }
+
+  if (typeof val === 'string') {
+    val = val.replace(/^\s+|\s+$/g, '');
+    if (val === '') return false;
+
+    if (field.type === 'email') {
+      emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      return emailPattern.test(val);
+    }
+
+    return true;
+  }
+
+  return !!val;
+}
 
   function goToNextField() {
     var section = SECTIONS[currentSectionIdx];
@@ -1001,7 +1051,7 @@
         payload[key] = isArray(formData[key]) ? formData[key].join(', ') : formData[key];
       }
     }
-
+    payload.results_delivery_email = formData.email || '';
     payload.submitted_at = new Date().toISOString();
     payload.form_name = 'Business Process Intake Questionnaire';
     payload.form_version = 'v2';
@@ -1031,6 +1081,7 @@
     }
 
     payload = buildPayload();
+    console.log(payload);
 
     fetch(MAKE_WEBHOOK_URL, {
       method: 'POST',

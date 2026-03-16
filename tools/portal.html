@@ -72,7 +72,10 @@ body {
   -webkit-font-smoothing: antialiased;
   text-rendering: optimizeLegibility;
 }
-
+.hero{
+  padding: 5rem 0 3rem;
+  position: relative;
+}
     .hero-bg{
   background:
     radial-gradient(900px 520px at 18% 22%, rgba(233,102,99,0.30), transparent 60%),
@@ -80,6 +83,23 @@ body {
     radial-gradient(1100px 720px at 50% 95%, rgba(74,46,92,0.20), transparent 65%),
     linear-gradient(90deg, #1A1238 0%, #08113C 45%, #312348 100%);
 }
+    .hero-shell{
+  background: rgba(11,16,51,0.35);
+  backdrop-filter: blur(8px);
+  border-radius: 2rem;
+  overflow: hidden;
+  box-shadow: var(--shadow-card);
+}
+    .hero::after{
+  content:"";
+  position:absolute;
+  left:0;
+  right:0;
+  bottom:0;
+  height:120px;
+  background:linear-gradient(to bottom, rgba(0,0,0,0), var(--bg-color));
+}
+    
     img {
       max-width: 100%;
       display: block;
@@ -574,9 +594,9 @@ body {
   </header>
 
   <main>
-    <section class="hero">
-      <div class="container">
-        <div class="class="hero hero-bg"">
+    <section class="hero brand-hero-bg">
+  <div class="container">
+    <div class="hero-shell">
           <div class="hero-grid">
             <div class="hero-copy">
               <div class="eyebrow">Current and future clients</div>

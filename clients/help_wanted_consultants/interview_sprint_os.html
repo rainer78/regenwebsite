@@ -494,31 +494,47 @@ Sarah Chen | Senior PM | sarah@example.com
 
   // 6) MAKE API LAYER
   async function fetchDashboardData() {
-    try {
-      setRefreshState(true);
+  try {
+    setRefreshState(true);
 
-      const response = await fetch(MAKE_CONFIG.readUrl, {
-        method: 'GET',
-        headers: {
-          'Accept': 'application/json'
-        }
-      });
-
-      if (!response.ok) {
-        throw new Error('Dashboard fetch failed: ' + response.status);
+    const response = await fetch(MAKE_CONFIG.readUrl, {
+      method: 'GET',
+      headers: {
+        'Accept': 'application/json'
       }
+    });
 
-      const data = await response.json();
-      applyDashboardData(data);
-      showToast('✓ Dashboard synced successfully');
-    } catch (error) {
-      console.error('fetchDashboardData error:', error);
-      showFallbackData();
-      showToast('Using fallback data. Check Make webhook.');
-    } finally {
-      setRefreshState(false);
+    if (!response.ok) {
+      throw new Error('Dashboard fetch failed: ' + response.status);
     }
+
+    const data = await response.json();
+
+    // Guard against empty or bad payloads
+    if (
+      !data ||
+      typeof data !== 'object' ||
+      (!Array.isArray(data.leads) &&
+       !Array.isArray(data.activities) &&
+       !Array.isArray(data.actionQueue))
+    ) {
+      throw new Error('Make returned an invalid dashboard payload');
+    }
+
+    applyDashboardData(data);
+    switchView('dashboard');
+    showToast('✓ Dashboard synced successfully');
+  } catch (error) {
+    console.error('fetchDashboardData error:', error);
+
+    // Keep the UI populated instead of blank
+    showFallbackData();
+    switchView('dashboard');
+    showToast('Using fallback data. Check Make webhook.');
+  } finally {
+    setRefreshState(false);
   }
+}
 
   async function sendActionToMake(action, payload) {
     const body = Object.assign({ action: action }, payload || {});
@@ -1388,6 +1404,7 @@ Sarah Chen | Senior PM | sarah@example.com
     document.body.style.fontSize = (c.font_size || 14) + 'px';
   }
 
+  if (window.elementSdk && typeof window.elementSdk.init === 'function') {
   window.elementSdk.init({
     defaultConfig: defaultConfig,
     onConfigChange: async function(config) { applyConfig(config); },
@@ -1421,11 +1438,20 @@ Sarah Chen | Senior PM | sarah@example.com
       ]);
     }
   });
+}
+    
 
   // 14) INITIALIZE
+  <script>
   async function initDashboard() {
     lucide.createIcons();
     applyConfig(defaultConfig);
+
+    // Paint the UI immediately so the dashboard is never blank
+    showFallbackData();
+    switchView('dashboard');
+
+    // Then try to load live data from Make
     await fetchDashboardData();
   }
 

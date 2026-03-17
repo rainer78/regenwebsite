@@ -1,1 +1,722 @@
-Test
+<!doctype html>
+<html lang="en" class="h-full">
+ <head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Interview Sprint OS</title>
+  <script src="https://cdn.tailwindcss.com/3.4.17"></script>
+  <script src="https://cdn.jsdelivr.net/npm/lucide@0.263.0/dist/umd/lucide.min.js"></script>
+  <script src="/_sdk/element_sdk.js"></script>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&amp;family=Space+Mono:wght@400;700&amp;display=swap" rel="stylesheet">
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            navy: { 50: '#f0f3f9', 100: '#dce3f0', 200: '#b8c7e1', 300: '#8ba4cd', 400: '#5c7db5', 500: '#3d5f9a', 600: '#2d4a7c', 700: '#1e3561', 800: '#152847', 900: '#0d1b30', 950: '#080f1c' },
+            accent: { 50: '#eef4ff', 100: '#d9e6ff', 200: '#bcd4ff', 300: '#8ebaff', 400: '#5994ff', 500: '#3370ff', 600: '#1a56f5', 700: '#1342e1', 800: '#1636b6', 900: '#17318f' }
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    * { font-family: 'DM Sans', sans-serif; }
+    .mono-font { font-family: 'Space Mono', monospace; }
+    html, body { height: 100%; margin: 0; }
+    .app-shell { height: 100%; overflow: hidden; }
+    .scroll-area { overflow-y: auto; overflow-x: hidden; }
+    .scroll-area::-webkit-scrollbar { width: 6px; }
+    .scroll-area::-webkit-scrollbar-track { background: transparent; }
+    .scroll-area::-webkit-scrollbar-thumb { background: #b8c7e1; border-radius: 3px; }
+    .card-lift { transition: transform 0.2s ease, box-shadow 0.2s ease; }
+    .card-lift:hover { transform: translateY(-2px); box-shadow: 0 8px 25px rgba(13,27,48,0.12); }
+    .fade-in { animation: fadeIn 0.4s ease forwards; opacity: 0; }
+    @keyframes fadeIn { to { opacity: 1; } }
+    .stagger-1 { animation-delay: 0.05s; }
+    .stagger-2 { animation-delay: 0.1s; }
+    .stagger-3 { animation-delay: 0.15s; }
+    .stagger-4 { animation-delay: 0.2s; }
+    .stagger-5 { animation-delay: 0.25s; }
+    .pulse-dot { animation: pulseDot 2s ease infinite; }
+    @keyframes pulseDot { 0%,100% { opacity: 1; } 50% { opacity: 0.4; } }
+    .sidebar-item { transition: all 0.15s ease; }
+    .sidebar-item:hover { background: rgba(51,112,255,0.08); }
+    .sidebar-item.active { background: rgba(51,112,255,0.12); color: #3370ff; border-right: 3px solid #3370ff; }
+    .tag-hot { background: #fef2f2; color: #dc2626; border: 1px solid #fecaca; }
+    .tag-warm { background: #fff7ed; color: #ea580c; border: 1px solid #fed7aa; }
+    .tag-cold { background: #eff6ff; color: #2563eb; border: 1px solid #bfdbfe; }
+    .progress-fill { transition: width 0.8s cubic-bezier(0.4, 0, 0.2, 1); }
+    .toast-msg {
+      position: fixed; bottom: 24px; left: 50%; transform: translateX(-50%);
+      background: #152847; color: white; padding: 10px 20px; border-radius: 10px;
+      font-size: 14px; font-weight: 500; z-index: 999; opacity: 0;
+      transition: opacity 0.3s ease; pointer-events: none;
+    }
+    .toast-msg.show { opacity: 1; }
+    .detail-panel { transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1); }
+    .pipeline-col { min-width: 220px; }
+    @media (max-width: 1024px) {
+      .sidebar-desktop { display: none; }
+      .mobile-header { display: flex !important; }
+    }
+    @media (min-width: 1025px) {
+      .mobile-header { display: none !important; }
+      .mobile-nav { display: none !important; }
+    }
+  </style>
+  <style>body { box-sizing: border-box; }</style>
+  <script src="/_sdk/data_sdk.js" type="text/javascript"></script>
+ </head>
+ <body class="h-full bg-navy-50">
+  <div class="app-shell flex flex-col lg:flex-row w-full" id="appShell">
+   <!-- Sidebar Desktop -->
+   <aside class="sidebar-desktop w-64 bg-navy-950 flex flex-col shrink-0" style="height:100%">
+    <div class="p-5 border-b border-navy-800">
+     <div class="flex items-center gap-3">
+      <div class="w-9 h-9 rounded-xl bg-accent-600 flex items-center justify-center">
+       <i data-lucide="zap" class="w-5 h-5 text-white"></i>
+      </div>
+      <div>
+       <h1 class="text-white font-bold text-sm leading-tight" id="sidebarTitle">Interview Sprint OS</h1>
+       <p class="text-navy-400 text-xs" id="sidebarSubtitle">30-Day Outreach Sprint</p>
+      </div>
+     </div>
+    </div>
+    <nav class="flex-1 py-4 scroll-area">
+     <div class="px-3 mb-2"><span class="text-navy-500 text-[10px] font-semibold uppercase tracking-widest px-3">Main</span>
+     </div><button class="sidebar-item active w-full flex items-center gap-3 px-6 py-2.5 text-sm text-navy-300" data-view="dashboard" onclick="switchView('dashboard')"> <i data-lucide="layout-dashboard" class="w-4 h-4"></i> Dashboard </button> <button class="sidebar-item w-full flex items-center gap-3 px-6 py-2.5 text-sm text-navy-300" data-view="queue" onclick="switchView('queue')"> <i data-lucide="list-checks" class="w-4 h-4"></i> Action Queue <span class="ml-auto bg-accent-600 text-white text-[10px] font-bold px-2 py-0.5 rounded-full">5</span> </button> <button class="sidebar-item w-full flex items-center gap-3 px-6 py-2.5 text-sm text-navy-300" data-view="pipeline" onclick="switchView('pipeline')"> <i data-lucide="kanban" class="w-4 h-4"></i> Pipeline </button> <button class="sidebar-item w-full flex items-center gap-3 px-6 py-2.5 text-sm text-navy-300" data-view="leads" onclick="switchView('leads')"> <i data-lucide="users" class="w-4 h-4"></i> Leads </button> <button class="sidebar-item w-full flex items-center gap-3 px-6 py-2.5 text-sm text-navy-300" data-view="activity" onclick="switchView('activity')"> <i data-lucide="activity" class="w-4 h-4"></i> Activity </button>
+    </nav>
+    <div class="p-4 border-t border-navy-800">
+     <div class="bg-navy-900 rounded-xl p-4">
+      <div class="flex items-center justify-between mb-2">
+       <span class="text-navy-400 text-xs font-medium">Sprint Goal</span> <span class="mono-font text-accent-400 text-xs font-bold" id="sidebarGoalCount">7/10</span>
+      </div>
+      <div class="w-full bg-navy-700 rounded-full h-2">
+       <div class="bg-accent-500 h-2 rounded-full progress-fill" style="width:70%" id="sidebarProgress"></div>
+      </div>
+      <p class="text-navy-500 text-[10px] mt-2">18 days remaining</p>
+     </div>
+    </div>
+   </aside><!-- Mobile Header -->
+   <header class="mobile-header items-center justify-between bg-navy-950 px-4 py-3" style="display:none">
+    <div class="flex items-center gap-2">
+     <div class="w-8 h-8 rounded-lg bg-accent-600 flex items-center justify-center">
+      <i data-lucide="zap" class="w-4 h-4 text-white"></i>
+     </div><span class="text-white font-bold text-sm">Sprint OS</span>
+    </div><button onclick="toggleMobileNav()" class="text-navy-300 p-1"> <i data-lucide="menu" class="w-5 h-5"></i> </button>
+   </header><!-- Mobile Nav -->
+   <nav class="mobile-nav hidden bg-navy-950 px-4 pb-3 border-b border-navy-800" id="mobileNav">
+    <div class="flex gap-2 flex-wrap">
+     <button class="px-3 py-1.5 text-xs rounded-lg bg-accent-600 text-white" data-view="dashboard" onclick="switchView('dashboard')">Dashboard</button> <button class="px-3 py-1.5 text-xs rounded-lg text-navy-300 hover:bg-navy-800" data-view="queue" onclick="switchView('queue')">Queue</button> <button class="px-3 py-1.5 text-xs rounded-lg text-navy-300 hover:bg-navy-800" data-view="pipeline" onclick="switchView('pipeline')">Pipeline</button> <button class="px-3 py-1.5 text-xs rounded-lg text-navy-300 hover:bg-navy-800" data-view="leads" onclick="switchView('leads')">Leads</button> <button class="px-3 py-1.5 text-xs rounded-lg text-navy-300 hover:bg-navy-800" data-view="activity" onclick="switchView('activity')">Activity</button>
+    </div>
+   </nav><!-- Main Content -->
+   <main class="flex-1 flex flex-col overflow-hidden" style="height:100%">
+    <!-- Top Bar -->
+    <header class="bg-white border-b border-navy-100 px-6 py-4 flex items-center justify-between shrink-0">
+     <div>
+      <h2 class="text-navy-900 font-bold text-lg" id="viewTitle">Dashboard</h2>
+      <p class="text-navy-400 text-xs mt-0.5">Wednesday, Jan 15, 2025 · Day 12 of 30</p>
+     </div>
+     <div class="flex items-center gap-3">
+      <div class="hidden sm:flex items-center gap-2 bg-emerald-50 text-emerald-700 text-xs font-medium px-3 py-1.5 rounded-full border border-emerald-200">
+       <span class="w-2 h-2 rounded-full bg-emerald-500 pulse-dot"></span> Leads synced from your spreadsheet
+      </div><button onclick="openUploadModal()" class="flex items-center gap-1.5 text-xs font-medium text-white bg-accent-600 hover:bg-accent-700 px-3 py-1.5 rounded-lg transition-colors"> <i data-lucide="upload" class="w-3.5 h-3.5"></i> Upload Leads </button> <button onclick="showToast('Leads refreshed successfully')" class="flex items-center gap-1.5 text-xs font-medium text-navy-500 hover:text-accent-600 bg-navy-50 hover:bg-accent-50 px-3 py-1.5 rounded-lg transition-colors border border-navy-200"> <i data-lucide="refresh-cw" class="w-3.5 h-3.5"></i> Refresh </button>
+     </div>
+    </header><!-- Content Area -->
+    <div class="flex-1 scroll-area">
+     <!-- DASHBOARD VIEW -->
+     <div id="view-dashboard" class="p-6">
+      <!-- KPI Cards -->
+      <div class="grid grid-cols-2 lg:grid-cols-5 gap-4 mb-6">
+       <div class="bg-white rounded-2xl p-4 border border-navy-100 card-lift fade-in stagger-1">
+        <div class="flex items-center justify-between mb-3">
+         <div class="w-9 h-9 rounded-xl bg-accent-50 flex items-center justify-center">
+          <i data-lucide="user-plus" class="w-4 h-4 text-accent-600"></i>
+         </div><span class="text-emerald-600 text-[10px] font-semibold bg-emerald-50 px-2 py-0.5 rounded-full">+3 today</span>
+        </div>
+        <p class="mono-font text-2xl font-bold text-navy-900">24</p>
+        <p class="text-navy-400 text-xs mt-1">New Leads</p>
+       </div>
+       <div class="bg-white rounded-2xl p-4 border border-navy-100 card-lift fade-in stagger-2">
+        <div class="flex items-center justify-between mb-3">
+         <div class="w-9 h-9 rounded-xl bg-amber-50 flex items-center justify-center">
+          <i data-lucide="message-circle" class="w-4 h-4 text-amber-600"></i>
+         </div><span class="text-amber-600 text-[10px] font-semibold bg-amber-50 px-2 py-0.5 rounded-full">5 pending</span>
+        </div>
+        <p class="mono-font text-2xl font-bold text-navy-900">12</p>
+        <p class="text-navy-400 text-xs mt-1">Active Conversations</p>
+       </div>
+       <div class="bg-white rounded-2xl p-4 border border-navy-100 card-lift fade-in stagger-3">
+        <div class="flex items-center justify-between mb-3">
+         <div class="w-9 h-9 rounded-xl bg-violet-50 flex items-center justify-center">
+          <i data-lucide="star" class="w-4 h-4 text-violet-600"></i>
+         </div>
+        </div>
+        <p class="mono-font text-2xl font-bold text-navy-900">9</p>
+        <p class="text-navy-400 text-xs mt-1">Qualified Leads</p>
+       </div>
+       <div class="bg-white rounded-2xl p-4 border border-navy-100 card-lift fade-in stagger-4">
+        <div class="flex items-center justify-between mb-3">
+         <div class="w-9 h-9 rounded-xl bg-emerald-50 flex items-center justify-center">
+          <i data-lucide="phone" class="w-4 h-4 text-emerald-600"></i>
+         </div>
+        </div>
+        <p class="mono-font text-2xl font-bold text-navy-900" id="kpiBooked">7</p>
+        <p class="text-navy-400 text-xs mt-1">Calls Booked</p>
+       </div>
+       <div class="bg-white rounded-2xl p-4 border border-navy-100 card-lift fade-in stagger-5 col-span-2 lg:col-span-1">
+        <div class="flex items-center justify-between mb-3">
+         <div class="w-9 h-9 rounded-xl bg-accent-50 flex items-center justify-center">
+          <i data-lucide="target" class="w-4 h-4 text-accent-600"></i>
+         </div><span class="mono-font text-accent-600 text-xs font-bold" id="goalLabel">70%</span>
+        </div>
+        <div class="w-full bg-navy-100 rounded-full h-2.5 mb-2">
+         <div class="bg-gradient-to-r from-accent-500 to-accent-400 h-2.5 rounded-full progress-fill" style="width:70%" id="goalBar"></div>
+        </div>
+        <p class="text-navy-400 text-xs">Goal: <span id="goalTarget">10</span> calls · 18 days left</p>
+       </div>
+      </div><!-- Action Queue Preview + Activity -->
+      <div class="grid lg:grid-cols-3 gap-6">
+       <!-- Action Queue -->
+       <div class="lg:col-span-2">
+        <div class="flex items-center justify-between mb-4">
+         <h3 class="text-navy-900 font-bold text-sm">Priority Actions</h3><button onclick="switchView('queue')" class="text-accent-600 text-xs font-medium hover:underline">View All →</button>
+        </div>
+        <div class="space-y-3" id="dashboardActions">
+         <!-- Populated by JS -->
+        </div>
+       </div><!-- Activity Feed -->
+       <div>
+        <div class="flex items-center justify-between mb-4">
+         <h3 class="text-navy-900 font-bold text-sm">Recent Activity</h3><button onclick="switchView('activity')" class="text-accent-600 text-xs font-medium hover:underline">View All →</button>
+        </div>
+        <div class="bg-white rounded-2xl border border-navy-100 divide-y divide-navy-50" id="dashboardActivity">
+         <!-- Populated by JS -->
+        </div>
+       </div>
+      </div>
+     </div><!-- QUEUE VIEW -->
+     <div id="view-queue" class="p-6 hidden">
+      <div class="flex items-center justify-between mb-6">
+       <div>
+        <h3 class="text-navy-900 font-bold">Action Queue</h3>
+        <p class="text-navy-400 text-xs mt-1">Prioritized tasks for today — work top to bottom</p>
+       </div>
+       <div class="flex gap-2">
+        <button class="queue-filter active-filter px-3 py-1.5 text-xs font-medium rounded-lg bg-accent-600 text-white" onclick="filterQueue('all', this)">All</button> <button class="queue-filter px-3 py-1.5 text-xs font-medium rounded-lg bg-navy-50 text-navy-500 border border-navy-200" onclick="filterQueue('message', this)">Ready to Message</button> <button class="queue-filter px-3 py-1.5 text-xs font-medium rounded-lg bg-navy-50 text-navy-500 border border-navy-200" onclick="filterQueue('followup', this)">Follow-Up</button> <button class="queue-filter px-3 py-1.5 text-xs font-medium rounded-lg bg-navy-50 text-navy-500 border border-navy-200" onclick="filterQueue('book', this)">Ready to Book</button>
+       </div>
+      </div>
+      <div class="space-y-3" id="queueList">
+       <!-- Populated by JS -->
+      </div>
+     </div><!-- PIPELINE VIEW -->
+     <div id="view-pipeline" class="p-6 hidden">
+      <div class="flex items-center justify-between mb-6">
+       <div>
+        <h3 class="text-navy-900 font-bold">Pipeline</h3>
+        <p class="text-navy-400 text-xs mt-1">Drag-free overview of all leads by stage</p>
+       </div>
+      </div>
+      <div class="flex gap-4 overflow-x-auto pb-4" id="pipelineBoard">
+       <!-- Populated by JS -->
+      </div>
+     </div><!-- LEADS VIEW -->
+     <div id="view-leads" class="p-6 hidden">
+      <div class="flex items-center justify-between mb-6">
+       <div>
+        <h3 class="text-navy-900 font-bold">All Leads</h3>
+        <p class="text-navy-400 text-xs mt-1">Complete list of leads from your spreadsheet</p>
+       </div>
+       <div class="relative">
+        <i data-lucide="search" class="w-4 h-4 text-navy-400 absolute left-3 top-1/2 -translate-y-1/2"></i> <input type="text" placeholder="Search leads..." id="leadSearch" oninput="searchLeads(this.value)" class="pl-9 pr-4 py-2 text-sm bg-white border border-navy-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-accent-200 focus:border-accent-400 w-64" aria-label="Search leads">
+       </div>
+      </div>
+      <div class="bg-white rounded-2xl border border-navy-100 overflow-hidden">
+       <table class="w-full text-sm">
+        <thead>
+         <tr class="bg-navy-50 text-navy-500 text-xs uppercase tracking-wider">
+          <th class="text-left px-5 py-3 font-semibold">Name</th>
+          <th class="text-left px-5 py-3 font-semibold hidden sm:table-cell">Role</th>
+          <th class="text-left px-5 py-3 font-semibold">Stage</th>
+          <th class="text-left px-5 py-3 font-semibold hidden md:table-cell">Priority</th>
+          <th class="text-left px-5 py-3 font-semibold hidden lg:table-cell">Last Contact</th>
+          <th class="px-5 py-3 font-semibold text-right">Action</th>
+         </tr>
+        </thead>
+        <tbody id="leadsTable" class="divide-y divide-navy-50">
+         <!-- Populated by JS -->
+        </tbody>
+       </table>
+      </div>
+     </div><!-- ACTIVITY VIEW -->
+     <div id="view-activity" class="p-6 hidden">
+      <div class="mb-6">
+       <h3 class="text-navy-900 font-bold">Activity Feed</h3>
+       <p class="text-navy-400 text-xs mt-1">Everything that's happened in your sprint</p>
+      </div>
+      <div class="bg-white rounded-2xl border border-navy-100 divide-y divide-navy-50" id="activityFull">
+       <!-- Populated by JS -->
+      </div>
+     </div>
+    </div>
+   </main><!-- Lead Detail Panel -->
+   <div id="detailOverlay" class="fixed inset-0 bg-navy-950/40 z-40 hidden" onclick="closeDetail()"></div>
+   <aside id="detailPanel" class="detail-panel fixed top-0 right-0 h-full w-full max-w-md bg-white shadow-2xl z-50 flex flex-col translate-x-full" style="height:100%">
+    <div class="flex items-center justify-between p-5 border-b border-navy-100 shrink-0">
+     <h3 class="text-navy-900 font-bold text-sm">Lead Details</h3><button onclick="closeDetail()" class="text-navy-400 hover:text-navy-600 p-1 rounded-lg hover:bg-navy-50"> <i data-lucide="x" class="w-5 h-5"></i> </button>
+    </div>
+    <div class="flex-1 scroll-area p-5" id="detailContent">
+     <!-- Populated by JS -->
+    </div>
+   </aside><!-- Toast -->
+   <div class="toast-msg" id="toast"></div><!-- Upload Modal -->
+   <div id="uploadOverlay" class="fixed inset-0 bg-navy-950/40 z-50 hidden flex items-center justify-center" onclick="if(event.target === this) closeUploadModal()">
+    <div class="bg-white rounded-3xl shadow-2xl w-full max-w-md mx-4 overflow-hidden">
+     <div class="flex items-center justify-between p-6 border-b border-navy-100">
+      <h3 class="text-navy-900 font-bold text-lg">Upload Leads</h3><button onclick="closeUploadModal()" class="text-navy-400 hover:text-navy-600 p-1 rounded-lg hover:bg-navy-50"><i data-lucide="x" class="w-5 h-5"></i></button>
+     </div>
+     <div class="p-6">
+      <p class="text-navy-600 text-sm mb-4">Paste your leads data or select a CSV file to sync with Interview Sprint OS.</p>
+      <div class="space-y-4">
+       <div class="border-2 border-dashed border-navy-200 rounded-xl p-6 text-center hover:bg-navy-50 transition-colors cursor-pointer" onclick="document.getElementById('fileInput').click()">
+        <div class="flex justify-center mb-2">
+         <div class="w-12 h-12 rounded-lg bg-accent-50 flex items-center justify-center">
+          <i data-lucide="upload-cloud" class="w-6 h-6 text-accent-600"></i>
+         </div>
+        </div>
+        <p class="font-medium text-navy-900 text-sm">Drag and drop or click to upload</p>
+        <p class="text-navy-400 text-xs mt-1">CSV or Excel spreadsheet</p><input type="file" id="fileInput" class="hidden" accept=".csv,.xlsx" onchange="handleFileUpload(event)">
+       </div>
+       <div class="relative">
+        <div class="absolute inset-0 flex items-center">
+         <div class="w-full border-t border-navy-200"></div>
+        </div>
+        <div class="relative flex justify-center">
+         <span class="bg-white px-2 text-navy-400 text-xs font-medium">OR</span>
+        </div>
+       </div><textarea id="pasteArea" placeholder="Paste lead data here...
+Name | Role | Email
+Sarah Chen | Senior PM | sarah@example.com
+..." class="w-full h-24 p-3 border border-navy-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-accent-200 focus:border-accent-400 resize-none font-mono text-xs"></textarea>
+       <div class="flex gap-2"><button onclick="closeUploadModal()" class="flex-1 px-4 py-2.5 rounded-xl border-2 border-navy-200 text-navy-700 text-sm font-semibold hover:bg-navy-50 transition-colors">Cancel</button> <button onclick="processUpload()" class="flex-1 px-4 py-2.5 rounded-xl bg-accent-600 text-white text-sm font-semibold hover:bg-accent-700 transition-colors flex items-center justify-center gap-2"><i data-lucide="check" class="w-4 h-4"></i> Upload</button>
+       </div>
+      </div>
+     </div>
+    </div>
+   </div>
+  </div>
+  <script>
+    // Data
+    const leads = [
+      { id:1, name:'Sarah Chen', role:'Senior PM at Stripe', stage:'Qualified', priority:'Hot', lastContact:'2 hours ago', linkedin:'linkedin.com/in/sarachen', notes:'Preparing for final round at Stripe. Very engaged, asked about mock interviews.', message:'Hi Sarah — I put together a focused plan for your Stripe final round. It covers the product sense case and cross-functional scenarios they typically run. Want me to walk you through it? I have a slot Thursday at 2pm.', nextStep:'Send booking link for Thursday strategy call', offer:'Final Round Interview Intensive' },
+      { id:2, name:'Marcus Johnson', role:'Engineering Manager at Meta', stage:'Active', priority:'Hot', lastContact:'1 day ago', linkedin:'linkedin.com/in/marcusjohnson', notes:'Reached out after seeing LinkedIn post. Has interviews at Meta and Google next month.', message:'Hey Marcus — saw you\'re gearing up for Meta and Google EM rounds. I just helped someone through the exact same loop last month. Want to do a quick 20-min call to map out your prep strategy?', nextStep:'Follow up with availability for intro call', offer:'Final Round Interview Intensive' },
+      { id:3, name:'Priya Patel', role:'Staff Designer at Figma', stage:'Active', priority:'Warm', lastContact:'3 days ago', linkedin:'linkedin.com/in/priyapatel', notes:'Interested but hasn\'t committed to a call yet. Follows content regularly.', message:'Hi Priya — I noticed your portfolio work on design systems is really strong. For your Figma process, I have a 48-hour intensive that covers exactly what they look for in Staff-level critiques. Interested?', nextStep:'Send follow-up with case study link', offer:'48-Hour Interview Fast Track' },
+      { id:4, name:'David Kim', role:'VP Product at Coinbase', stage:'New', priority:'Warm', lastContact:'5 days ago', linkedin:'linkedin.com/in/davidkim', notes:'New lead from spreadsheet upload. Needs initial outreach.', message:'Hi David — I help senior product leaders land VP roles through structured interview prep. Given your background at Coinbase, I think I can add a lot of value. Open to a quick chat this week?', nextStep:'Send initial outreach message on LinkedIn', offer:'Final Round Interview Intensive' },
+      { id:5, name:'Elena Rodriguez', role:'Director of Eng at Netflix', stage:'Booked', priority:'Hot', lastContact:'Today', linkedin:'linkedin.com/in/elenarodriguez', notes:'Call booked for Friday. Very motivated — has Netflix final round in 10 days.', message:'Elena — looking forward to Friday! I\'ve prepared a Netflix-specific system design framework and leadership scenario deck for us to work through.', nextStep:'Prepare session materials for Friday call', offer:'Final Round Interview Intensive' },
+      { id:6, name:'James Wright', role:'Product Lead at Shopify', stage:'Qualified', priority:'Warm', lastContact:'1 day ago', linkedin:'linkedin.com/in/jameswright', notes:'Completed qualification. Interested in fast track option.', message:'James — based on your Shopify background, the 48-Hour Fast Track would cover exactly what you need for those product strategy cases. Ready to lock in a session?', nextStep:'Send booking link with fast track details', offer:'48-Hour Interview Fast Track' },
+      { id:7, name:'Aisha Mohammed', role:'Senior SWE at Apple', stage:'New', priority:'Cold', lastContact:'1 week ago', linkedin:'linkedin.com/in/aishamohammed', notes:'Added from spreadsheet. No engagement yet.', message:'Hi Aisha — I specialize in helping senior engineers at top companies prepare for their next big move. If you\'re exploring opportunities, I\'d love to share some strategies. Worth a quick chat?', nextStep:'Send initial outreach message', offer:'48-Hour Interview Fast Track' },
+      { id:8, name:'Tom Baker', role:'CPO at Series B startup', stage:'Booked', priority:'Hot', lastContact:'Today', linkedin:'linkedin.com/in/tombaker', notes:'Booked call for next Tuesday. Targeting FAANG CPO roles.', message:'Tom — for Tuesday\'s session, I\'m building out a CPO-level case study deck tailored to the companies you\'re targeting. We\'ll cover exec presence and board-level storytelling.', nextStep:'Finalize session prep for Tuesday', offer:'Final Round Interview Intensive' },
+      { id:9, name:'Nina Kowalski', role:'Head of Design at Airbnb', stage:'Closed', priority:'Cold', lastContact:'2 weeks ago', linkedin:'linkedin.com/in/ninakowalski', notes:'Decided to postpone job search. Check back in Q2.', message:'', nextStep:'Add to Q2 follow-up list', offer:'' },
+      { id:10, name:'Ryan Foster', role:'Engineering Lead at Uber', stage:'Active', priority:'Warm', lastContact:'4 days ago', linkedin:'linkedin.com/in/ryanfoster', notes:'Engaged in DMs. Comparing prep services.', message:'Ryan — I know you\'re evaluating options. Here\'s what makes my approach different: I\'ve coached 30+ eng leads through Uber/Lyft loops this year alone. Happy to share recent outcomes on a quick call.', nextStep:'Send comparison doc and social proof', offer:'Final Round Interview Intensive' }
+    ];
+
+    const activities = [
+      { icon:'user-plus', text:'3 new leads processed from spreadsheet', time:'2 hours ago', color:'accent' },
+      { icon:'flame', text:'Sarah Chen marked as high priority', time:'2 hours ago', color:'red' },
+      { icon:'message-circle', text:'Follow-up message generated for Marcus Johnson', time:'3 hours ago', color:'amber' },
+      { icon:'calendar', text:'Elena Rodriguez booked a strategy call', time:'5 hours ago', color:'emerald' },
+      { icon:'star', text:'James Wright qualified — ready to book', time:'Yesterday', color:'violet' },
+      { icon:'send', text:'Initial outreach sent to David Kim', time:'Yesterday', color:'accent' },
+      { icon:'calendar', text:'Tom Baker booked a strategy call', time:'2 days ago', color:'emerald' },
+      { icon:'user-plus', text:'5 new leads processed from spreadsheet', time:'3 days ago', color:'accent' },
+      { icon:'flame', text:'Marcus Johnson moved to high priority', time:'3 days ago', color:'red' },
+      { icon:'check-circle', text:'Sprint Day 12 — on track for goal', time:'Today', color:'emerald' }
+    ];
+
+    const actionQueue = [
+      { leadId:4, type:'message', label:'Ready to Message', desc:'Send initial outreach to David Kim' },
+      { leadId:7, type:'message', label:'Ready to Message', desc:'Send initial outreach to Aisha Mohammed' },
+      { leadId:2, type:'followup', label:'Follow-Up Needed', desc:'Marcus Johnson hasn\'t replied in 24h' },
+      { leadId:3, type:'followup', label:'Follow-Up Needed', desc:'Priya Patel — send case study link' },
+      { leadId:10, type:'followup', label:'Follow-Up Needed', desc:'Ryan Foster — send comparison doc' },
+      { leadId:1, type:'book', label:'Ready to Book', desc:'Sarah Chen is qualified — send booking link' },
+      { leadId:6, type:'book', label:'Ready to Book', desc:'James Wright wants the fast track option' }
+    ];
+
+    // Default config
+    const defaultConfig = {
+      dashboard_title: 'Interview Sprint OS',
+      dashboard_subtitle: '30-Day Outreach Sprint',
+      goal_target: '10',
+      offer_primary: 'Final Round Interview Intensive',
+      offer_secondary: '48-Hour Interview Fast Track',
+      background_color: '#f0f3f9',
+      surface_color: '#ffffff',
+      text_color: '#0d1b30',
+      primary_action_color: '#3370ff',
+      secondary_action_color: '#2d4a7c',
+      font_family: 'DM Sans',
+      font_size: 14
+    };
+
+    let completedActions = new Set();
+
+    // Render functions
+    function renderDashboardActions() {
+      const el = document.getElementById('dashboardActions');
+      const top3 = actionQueue.slice(0, 3);
+      el.innerHTML = top3.map((a, i) => {
+        const lead = leads.find(l => l.id === a.leadId);
+        const typeColors = { message:'bg-accent-50 text-accent-700 border-accent-200', followup:'bg-amber-50 text-amber-700 border-amber-200', book:'bg-emerald-50 text-emerald-700 border-emerald-200' };
+        const completed = completedActions.has(a.leadId + a.type);
+        return `<div class="bg-white rounded-2xl border border-navy-100 p-4 card-lift fade-in stagger-${i+1} ${completed ? 'opacity-50' : ''}">
+          <div class="flex items-start justify-between gap-4">
+            <div class="flex-1 min-w-0">
+              <div class="flex items-center gap-2 mb-2">
+                <span class="text-[10px] font-semibold px-2 py-0.5 rounded-full border ${typeColors[a.type]}">${a.label}</span>
+                ${completed ? '<span class="text-[10px] font-semibold px-2 py-0.5 rounded-full bg-emerald-100 text-emerald-700">✓ Done</span>' : ''}
+              </div>
+              <p class="font-semibold text-navy-900 text-sm">${lead.name} <span class="font-normal text-navy-400">· ${lead.role}</span></p>
+              <p class="text-navy-500 text-xs mt-1 truncate">${lead.message ? '"' + lead.message.substring(0, 80) + '..."' : 'No message yet'}</p>
+            </div>
+            <div class="flex gap-2 shrink-0">
+              ${lead.message ? `<button onclick="copyMessage(${lead.id})" class="text-xs font-medium px-3 py-1.5 rounded-lg border border-navy-200 text-navy-600 hover:bg-navy-50 transition-colors flex items-center gap-1"><i data-lucide="copy" class="w-3 h-3"></i> Copy</button>` : ''}
+              <button onclick="openDetail(${lead.id})" class="text-xs font-medium px-3 py-1.5 rounded-lg bg-accent-600 text-white hover:bg-accent-700 transition-colors">View</button>
+            </div>
+          </div>
+        </div>`;
+      }).join('');
+      lucide.createIcons();
+    }
+
+    function renderDashboardActivity() {
+      const el = document.getElementById('dashboardActivity');
+      const colorMap = { accent:'text-accent-600 bg-accent-50', red:'text-red-500 bg-red-50', amber:'text-amber-600 bg-amber-50', emerald:'text-emerald-600 bg-emerald-50', violet:'text-violet-600 bg-violet-50' };
+      el.innerHTML = activities.slice(0, 6).map(a => `<div class="flex items-center gap-3 px-4 py-3">
+        <div class="w-7 h-7 rounded-lg ${colorMap[a.color]} flex items-center justify-center shrink-0">
+          <i data-lucide="${a.icon}" class="w-3.5 h-3.5"></i>
+        </div>
+        <div class="flex-1 min-w-0">
+          <p class="text-navy-700 text-xs">${a.text}</p>
+          <p class="text-navy-400 text-[10px] mt-0.5">${a.time}</p>
+        </div>
+      </div>`).join('');
+      lucide.createIcons();
+    }
+
+    function renderQueue(filter = 'all') {
+      const el = document.getElementById('queueList');
+      const filtered = filter === 'all' ? actionQueue : actionQueue.filter(a => a.type === filter);
+      const typeColors = { message:'bg-accent-50 text-accent-700 border-accent-200', followup:'bg-amber-50 text-amber-700 border-amber-200', book:'bg-emerald-50 text-emerald-700 border-emerald-200' };
+
+      el.innerHTML = filtered.map((a, i) => {
+        const lead = leads.find(l => l.id === a.leadId);
+        const completed = completedActions.has(a.leadId + a.type);
+        return `<div class="bg-white rounded-2xl border border-navy-100 p-5 card-lift fade-in ${completed ? 'opacity-50' : ''}" style="animation-delay:${i * 0.05}s">
+          <div class="flex flex-col sm:flex-row sm:items-start justify-between gap-4">
+            <div class="flex-1 min-w-0">
+              <div class="flex items-center gap-2 mb-2 flex-wrap">
+                <span class="text-[10px] font-semibold px-2 py-0.5 rounded-full border ${typeColors[a.type]}">${a.label}</span>
+                <span class="tag-${lead.priority.toLowerCase()} text-[10px] font-semibold px-2 py-0.5 rounded-full">${lead.priority}</span>
+                ${completed ? '<span class="text-[10px] font-semibold px-2 py-0.5 rounded-full bg-emerald-100 text-emerald-700">✓ Completed</span>' : ''}
+              </div>
+              <p class="font-semibold text-navy-900">${lead.name}</p>
+              <p class="text-navy-500 text-xs mt-0.5">${lead.role} · ${lead.stage} · Last contact: ${lead.lastContact}</p>
+              ${lead.message ? `<div class="mt-3 bg-navy-50 rounded-xl p-3 border border-navy-100"><p class="text-navy-600 text-xs italic leading-relaxed">"${lead.message.substring(0, 140)}${lead.message.length > 140 ? '...' : ''}"</p></div>` : ''}
+            </div>
+            <div class="flex gap-2 shrink-0 flex-wrap sm:flex-nowrap">
+              ${lead.message ? `<button onclick="copyMessage(${lead.id})" class="text-xs font-medium px-3 py-2 rounded-xl border border-navy-200 text-navy-600 hover:bg-navy-50 transition-colors flex items-center gap-1.5"><i data-lucide="copy" class="w-3.5 h-3.5"></i> Copy Message</button>` : ''}
+              <button onclick="openDetail(${lead.id})" class="text-xs font-medium px-3 py-2 rounded-xl border border-navy-200 text-navy-600 hover:bg-navy-50 transition-colors flex items-center gap-1.5"><i data-lucide="eye" class="w-3.5 h-3.5"></i> View Lead</button>
+              ${!completed ? `<button onclick="markComplete(${lead.id}, '${a.type}')" class="text-xs font-medium px-3 py-2 rounded-xl bg-emerald-600 text-white hover:bg-emerald-700 transition-colors flex items-center gap-1.5"><i data-lucide="check" class="w-3.5 h-3.5"></i> Done</button>` : ''}
+            </div>
+          </div>
+        </div>`;
+      }).join('');
+      lucide.createIcons();
+    }
+
+    function renderPipeline() {
+      const stages = ['New', 'Active', 'Qualified', 'Booked', 'Closed'];
+      const stageColors = { New:'accent', Active:'amber', Qualified:'violet', Booked:'emerald', Closed:'navy' };
+      const el = document.getElementById('pipelineBoard');
+
+      el.innerHTML = stages.map(stage => {
+        const stageLeads = leads.filter(l => l.stage === stage);
+        const c = stageColors[stage];
+        return `<div class="pipeline-col flex-1">
+          <div class="flex items-center gap-2 mb-3">
+            <span class="w-2.5 h-2.5 rounded-full bg-${c}-500"></span>
+            <h4 class="text-navy-900 font-semibold text-sm">${stage}</h4>
+            <span class="mono-font text-navy-400 text-xs">${stageLeads.length}</span>
+          </div>
+          <div class="space-y-2.5">
+            ${stageLeads.map(l => `<div class="bg-white rounded-xl border border-navy-100 p-3.5 card-lift cursor-pointer" onclick="openDetail(${l.id})">
+              <div class="flex items-start justify-between mb-2">
+                <p class="font-semibold text-navy-900 text-sm">${l.name}</p>
+                <span class="tag-${l.priority.toLowerCase()} text-[9px] font-semibold px-1.5 py-0.5 rounded-full">${l.priority}</span>
+              </div>
+              <p class="text-navy-500 text-xs">${l.role}</p>
+              <p class="text-navy-400 text-[10px] mt-2"><i data-lucide="clock" class="w-3 h-3 inline-block mr-1" style="vertical-align: -2px"></i>${l.lastContact}</p>
+            </div>`).join('')}
+          </div>
+        </div>`;
+      }).join('');
+      lucide.createIcons();
+    }
+
+    function renderLeads(filter = '') {
+      const el = document.getElementById('leadsTable');
+      const filtered = filter ? leads.filter(l => l.name.toLowerCase().includes(filter.toLowerCase()) || l.role.toLowerCase().includes(filter.toLowerCase())) : leads;
+      el.innerHTML = filtered.map(l => `<tr class="hover:bg-navy-50/50 transition-colors">
+        <td class="px-5 py-3.5">
+          <p class="font-semibold text-navy-900">${l.name}</p>
+        </td>
+        <td class="px-5 py-3.5 text-navy-500 hidden sm:table-cell">${l.role}</td>
+        <td class="px-5 py-3.5"><span class="text-xs font-medium px-2 py-1 rounded-lg bg-navy-50 text-navy-600">${l.stage}</span></td>
+        <td class="px-5 py-3.5 hidden md:table-cell"><span class="tag-${l.priority.toLowerCase()} text-[10px] font-semibold px-2 py-0.5 rounded-full">${l.priority}</span></td>
+        <td class="px-5 py-3.5 text-navy-400 text-xs hidden lg:table-cell">${l.lastContact}</td>
+        <td class="px-5 py-3.5 text-right"><button onclick="openDetail(${l.id})" class="text-xs font-medium text-accent-600 hover:underline">View →</button></td>
+      </tr>`).join('');
+    }
+
+    function renderActivityFull() {
+      const el = document.getElementById('activityFull');
+      const colorMap = { accent:'text-accent-600 bg-accent-50', red:'text-red-500 bg-red-50', amber:'text-amber-600 bg-amber-50', emerald:'text-emerald-600 bg-emerald-50', violet:'text-violet-600 bg-violet-50' };
+      el.innerHTML = activities.map(a => `<div class="flex items-center gap-3 px-5 py-4">
+        <div class="w-8 h-8 rounded-lg ${colorMap[a.color]} flex items-center justify-center shrink-0">
+          <i data-lucide="${a.icon}" class="w-4 h-4"></i>
+        </div>
+        <div class="flex-1 min-w-0">
+          <p class="text-navy-700 text-sm">${a.text}</p>
+          <p class="text-navy-400 text-xs mt-0.5">${a.time}</p>
+        </div>
+      </div>`).join('');
+      lucide.createIcons();
+    }
+
+    // Actions
+    function switchView(view) {
+      document.querySelectorAll('[id^="view-"]').forEach(v => v.classList.add('hidden'));
+      document.getElementById('view-' + view).classList.remove('hidden');
+      document.querySelectorAll('.sidebar-item').forEach(b => b.classList.remove('active'));
+      document.querySelectorAll(`.sidebar-item[data-view="${view}"]`).forEach(b => b.classList.add('active'));
+      const titles = { dashboard:'Dashboard', queue:'Action Queue', pipeline:'Pipeline', leads:'All Leads', activity:'Activity Feed' };
+      document.getElementById('viewTitle').textContent = titles[view] || 'Dashboard';
+
+      // Render view content
+      if (view === 'queue') renderQueue();
+      if (view === 'pipeline') renderPipeline();
+      if (view === 'leads') renderLeads();
+      if (view === 'activity') renderActivityFull();
+
+      // Mobile nav
+      document.getElementById('mobileNav').classList.add('hidden');
+      document.querySelectorAll('.mobile-nav button').forEach(b => {
+        b.className = b.dataset.view === view ? 'px-3 py-1.5 text-xs rounded-lg bg-accent-600 text-white' : 'px-3 py-1.5 text-xs rounded-lg text-navy-300 hover:bg-navy-800';
+      });
+    }
+
+    function toggleMobileNav() {
+      document.getElementById('mobileNav').classList.toggle('hidden');
+    }
+
+    function filterQueue(filter, btn) {
+      document.querySelectorAll('.queue-filter').forEach(b => {
+        b.className = 'queue-filter px-3 py-1.5 text-xs font-medium rounded-lg bg-navy-50 text-navy-500 border border-navy-200';
+      });
+      btn.className = 'queue-filter active-filter px-3 py-1.5 text-xs font-medium rounded-lg bg-accent-600 text-white';
+      renderQueue(filter);
+    }
+
+    function openDetail(leadId) {
+      const lead = leads.find(l => l.id === leadId);
+      if (!lead) return;
+      const cfg = window.elementSdk ? window.elementSdk.config : defaultConfig;
+      const offerPrimary = cfg.offer_primary || defaultConfig.offer_primary;
+      const offerSecondary = cfg.offer_secondary || defaultConfig.offer_secondary;
+      const offer = lead.offer === 'Final Round Interview Intensive' ? offerPrimary : (lead.offer === '48-Hour Interview Fast Track' ? offerSecondary : lead.offer);
+
+      document.getElementById('detailContent').innerHTML = `
+        <div class="flex items-center gap-4 mb-6">
+          <div class="w-14 h-14 rounded-2xl bg-gradient-to-br from-accent-500 to-accent-700 flex items-center justify-center text-white font-bold text-lg">${lead.name.split(' ').map(n=>n[0]).join('')}</div>
+          <div>
+            <h4 class="font-bold text-navy-900 text-lg">${lead.name}</h4>
+            <p class="text-navy-500 text-sm">${lead.role}</p>
+          </div>
+        </div>
+        <div class="grid grid-cols-2 gap-3 mb-6">
+          <div class="bg-navy-50 rounded-xl p-3">
+            <p class="text-navy-400 text-[10px] uppercase font-semibold tracking-wider mb-1">Stage</p>
+            <p class="text-navy-900 font-semibold text-sm">${lead.stage}</p>
+          </div>
+          <div class="bg-navy-50 rounded-xl p-3">
+            <p class="text-navy-400 text-[10px] uppercase font-semibold tracking-wider mb-1">Priority</p>
+            <span class="tag-${lead.priority.toLowerCase()} text-xs font-semibold px-2 py-0.5 rounded-full">${lead.priority}</span>
+          </div>
+          <div class="bg-navy-50 rounded-xl p-3">
+            <p class="text-navy-400 text-[10px] uppercase font-semibold tracking-wider mb-1">Last Contact</p>
+            <p class="text-navy-900 font-semibold text-sm">${lead.lastContact}</p>
+          </div>
+          <div class="bg-navy-50 rounded-xl p-3">
+            <p class="text-navy-400 text-[10px] uppercase font-semibold tracking-wider mb-1">LinkedIn</p>
+            <a href="https://${lead.linkedin}" target="_blank" rel="noopener noreferrer" class="text-accent-600 text-sm font-medium hover:underline flex items-center gap-1"><i data-lucide="external-link" class="w-3 h-3"></i> Profile</a>
+          </div>
+        </div>
+        <div class="mb-5">
+          <p class="text-navy-400 text-[10px] uppercase font-semibold tracking-wider mb-2">Notes</p>
+          <p class="text-navy-700 text-sm leading-relaxed bg-navy-50 rounded-xl p-3">${lead.notes}</p>
+        </div>
+        ${lead.message ? `<div class="mb-5">
+          <p class="text-navy-400 text-[10px] uppercase font-semibold tracking-wider mb-2">Suggested Message</p>
+          <div class="bg-accent-50 rounded-xl p-4 border border-accent-100">
+            <p class="text-navy-800 text-sm leading-relaxed italic">"${lead.message}"</p>
+          </div>
+        </div>` : ''}
+        <div class="mb-5">
+          <p class="text-navy-400 text-[10px] uppercase font-semibold tracking-wider mb-2">Recommended Next Step</p>
+          <div class="flex items-center gap-3 bg-emerald-50 rounded-xl p-3 border border-emerald-100">
+            <i data-lucide="arrow-right-circle" class="w-5 h-5 text-emerald-600 shrink-0"></i>
+            <p class="text-emerald-800 text-sm font-medium">${lead.nextStep}</p>
+          </div>
+        </div>
+        ${offer ? `<div class="mb-6">
+          <p class="text-navy-400 text-[10px] uppercase font-semibold tracking-wider mb-2">Suggested Offer</p>
+          <div class="bg-violet-50 rounded-xl p-3 border border-violet-100">
+            <p class="text-violet-800 text-sm font-semibold">${offer}</p>
+          </div>
+        </div>` : ''}
+        <div class="flex flex-col gap-2.5">
+          ${lead.message ? `<button onclick="copyMessage(${lead.id})" class="w-full flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl bg-accent-600 text-white text-sm font-semibold hover:bg-accent-700 transition-colors"><i data-lucide="copy" class="w-4 h-4"></i> Copy Message</button>` : ''}
+          <button onclick="showToast('Status updated for ${lead.name}')" class="w-full flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl border-2 border-navy-200 text-navy-700 text-sm font-semibold hover:bg-navy-50 transition-colors"><i data-lucide="refresh-cw" class="w-4 h-4"></i> Update Status</button>
+          <button onclick="showToast('Booking link sent to ${lead.name}')" class="w-full flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl bg-emerald-600 text-white text-sm font-semibold hover:bg-emerald-700 transition-colors"><i data-lucide="send" class="w-4 h-4"></i> Send Booking Link</button>
+        </div>
+      `;
+      document.getElementById('detailOverlay').classList.remove('hidden');
+      document.getElementById('detailPanel').classList.remove('translate-x-full');
+      lucide.createIcons();
+    }
+
+    function closeDetail() {
+      document.getElementById('detailOverlay').classList.add('hidden');
+      document.getElementById('detailPanel').classList.add('translate-x-full');
+    }
+
+    function copyMessage(leadId) {
+      const lead = leads.find(l => l.id === leadId);
+      if (lead && lead.message) {
+        navigator.clipboard.writeText(lead.message).then(() => showToast('Message copied to clipboard'));
+      }
+    }
+
+    function markComplete(leadId, type) {
+      completedActions.add(leadId + type);
+      renderQueue();
+      renderDashboardActions();
+      showToast('Task marked as complete');
+    }
+
+    function searchLeads(val) { renderLeads(val); }
+
+    function showToast(msg) {
+      const t = document.getElementById('toast');
+      t.textContent = msg;
+      t.classList.add('show');
+      setTimeout(() => t.classList.remove('show'), 2500);
+    }
+
+    function openUploadModal() {
+      document.getElementById('uploadOverlay').classList.remove('hidden');
+      lucide.createIcons();
+    }
+
+    function closeUploadModal() {
+      document.getElementById('uploadOverlay').classList.add('hidden');
+      document.getElementById('pasteArea').value = '';
+    }
+
+    function handleFileUpload(event) {
+      const file = event.target.files[0];
+      if (file) {
+        showToast(`File "${file.name}" selected. Click Upload to sync leads.`);
+      }
+    }
+
+    function processUpload() {
+      const pasteData = document.getElementById('pasteArea').value;
+      const fileSelected = document.getElementById('fileInput').files.length > 0;
+      
+      if (!pasteData && !fileSelected) {
+        showToast('Please paste data or select a file');
+        return;
+      }
+
+      closeUploadModal();
+      showToast('✓ Leads uploaded successfully. Processing...');
+      setTimeout(() => {
+        showToast('✓ 12 new leads processed and added to your pipeline');
+      }, 1500);
+    }
+
+    // Element SDK
+    function applyConfig(config) {
+      const c = { ...defaultConfig, ...config };
+      const titleEls = document.querySelectorAll('#sidebarTitle, [data-cfg="title"]');
+      titleEls.forEach(el => el.textContent = c.dashboard_title);
+      const subEls = document.querySelectorAll('#sidebarSubtitle, [data-cfg="subtitle"]');
+      subEls.forEach(el => el.textContent = c.dashboard_subtitle);
+
+      // Colors
+      document.getElementById('appShell').style.backgroundColor = c.background_color;
+      document.querySelectorAll('.bg-white').forEach(el => el.style.backgroundColor = c.surface_color);
+      document.body.style.color = c.text_color;
+
+      // Font
+      const fontStack = `${c.font_family}, 'DM Sans', sans-serif`;
+      document.body.style.fontFamily = fontStack;
+      document.querySelectorAll('h1,h2,h3,h4,p,span,button,td,th,a,input').forEach(el => {
+        if (!el.classList.contains('mono-font')) el.style.fontFamily = fontStack;
+      });
+
+      // Font size
+      const base = c.font_size || 14;
+      document.body.style.fontSize = base + 'px';
+    }
+
+    window.elementSdk.init({
+      defaultConfig,
+      onConfigChange: async (config) => { applyConfig(config); },
+      mapToCapabilities: (config) => ({
+        recolorables: [
+          { get: () => config.background_color || defaultConfig.background_color, set: (v) => { config.background_color = v; window.elementSdk.setConfig({ background_color: v }); } },
+          { get: () => config.surface_color || defaultConfig.surface_color, set: (v) => { config.surface_color = v; window.elementSdk.setConfig({ surface_color: v }); } },
+          { get: () => config.text_color || defaultConfig.text_color, set: (v) => { config.text_color = v; window.elementSdk.setConfig({ text_color: v }); } },
+          { get: () => config.primary_action_color || defaultConfig.primary_action_color, set: (v) => { config.primary_action_color = v; window.elementSdk.setConfig({ primary_action_color: v }); } },
+          { get: () => config.secondary_action_color || defaultConfig.secondary_action_color, set: (v) => { config.secondary_action_color = v; window.elementSdk.setConfig({ secondary_action_color: v }); } }
+        ],
+        borderables: [],
+        fontEditable: {
+          get: () => config.font_family || defaultConfig.font_family,
+          set: (v) => { config.font_family = v; window.elementSdk.setConfig({ font_family: v }); }
+        },
+        fontSizeable: {
+          get: () => config.font_size || defaultConfig.font_size,
+          set: (v) => { config.font_size = v; window.elementSdk.setConfig({ font_size: v }); }
+        }
+      }),
+      mapToEditPanelValues: (config) => new Map([
+        ['dashboard_title', config.dashboard_title || defaultConfig.dashboard_title],
+        ['dashboard_subtitle', config.dashboard_subtitle || defaultConfig.dashboard_subtitle],
+        ['goal_target', config.goal_target || defaultConfig.goal_target],
+        ['offer_primary', config.offer_primary || defaultConfig.offer_primary],
+        ['offer_secondary', config.offer_secondary || defaultConfig.offer_secondary]
+      ])
+    });
+
+    // Initial render
+    renderDashboardActions();
+    renderDashboardActivity();
+    lucide.createIcons();
+  </script>
+ <script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'9dd89ba7812f6765',t:'MTc3MzcxNDk2NS4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+</html>

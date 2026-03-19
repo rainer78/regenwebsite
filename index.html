@@ -181,6 +181,46 @@
     border-radius: 20px;
   }
 }
+    .faq-list {
+  display: grid;
+  gap: 20px;
+}
+
+.faq-item {
+  padding: 0 0 20px;
+  border-bottom: 1px solid rgba(17,24,39,0.10);
+}
+
+.faq-item:last-child {
+  border-bottom: none;
+  padding-bottom: 0;
+}
+
+.faq-question {
+  margin: 0 0 10px;
+  font-size: 18px;
+  line-height: 1.4;
+  font-weight: 700;
+  color: #111827;
+}
+
+.faq-answer {
+  margin: 0;
+  font-size: 16px;
+  line-height: 1.75;
+  color: rgba(17,24,39,0.72);
+}
+
+@media (max-width: 768px) {
+  .faq-question {
+    font-size: 17px;
+  }
+
+  .faq-answer {
+    font-size: 15px;
+    line-height: 1.7;
+  }
+}
   </style>
 </head>
 <body class="min-h-full bg-[#d5cdcd] text-black antialiased">
@@ -355,12 +395,10 @@
         </p>
 
         <div style="margin-top: 24px; font-size: 42px; line-height: 1; font-weight: 700; color: #111827;">
-          $5,000–$8,000
+          $499/month
         </div>
 
-        <p style="max-width: 680px; margin: 20px auto 0; font-size: 17px; line-height: 1.7; color: rgba(17,24,39,0.72);">
-          You move from scattered outreach and missed follow-ups to a clear, working pipeline that surfaces the right leads and keeps conversations moving without manual effort.
-        </p>
+      
 
         <div style="margin-top: 30px;">
           <a href="https://regencreatives.com/offers/" style="display: inline-block; background: linear-gradient(135deg, #1085D2, #0B1731); color: #ffffff; text-decoration: none; padding: 15px 28px; border-radius: 14px; font-weight: 600; font-size: 16px;">

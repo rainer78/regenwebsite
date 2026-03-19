@@ -316,10 +316,15 @@
         <div class="relative flex justify-center"><span class="bg-white px-2 text-navy-400 text-xs font-medium">OR</span>
         </div>
        </div>
-       <textarea id="pasteArea" placeholder="Paste lead data here...
+     <textarea
+  id="pasteArea"
+  class="w-full h-24 p-3 border border-navy-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-accent-200 focus:border-accent-400 resize-none font-mono text-xs"
+  placeholder="Paste lead data here...
 Name | Company | Email | Phone | Service Interest
 Afton Jones | Help Wanted Consulting | afton@example.com | 555-212-8890 | Lead workflow automation
-...">
+..."></textarea>
+
+<div class="flex gap-2">
        
        <div class="flex gap-2">
         <button onclick="closeUploadModal()" class="flex-1 px-4 py-2.5 rounded-xl border-2 border-navy-200 text-navy-700 text-sm font-semibold hover:bg-navy-50 transition-colors">Cancel</button> <button onclick="processUpload()" class="flex-1 px-4 py-2.5 rounded-xl bg-accent-600 text-white text-sm font-semibold hover:bg-accent-700 transition-colors flex items-center justify-center gap-2"><i data-lucide="check" class="w-4 h-4"></i> Upload</button>
@@ -540,21 +545,28 @@ const fallbackSummary = {
     else refreshIcon.classList.remove('spinning');
   }
 
-  function normalizeLead(lead, index) {
+ function normalizeLead(lead, index) {
   const id = lead && lead.id != null ? lead.id : index + 1;
   return {
     id: id,
     name: lead.name || 'Unknown Lead',
+    company: lead.company || '',
     role: lead.role || '',
+    serviceInterest: lead.serviceInterest || '',
+    source: lead.source || 'Uploaded List',
     stage: lead.stage || 'New',
     priority: lead.priority || 'Warm',
     score: lead.score != null ? Number(lead.score) : 0,
     aiSummary: lead.aiSummary || '',
     lastContact: lead.lastContact || 'Unknown',
+    email: lead.email || '',
+    phone: lead.phone || '',
     linkedin: lead.linkedin || '',
+    website: lead.website || '',
     notes: lead.notes || '',
     message: lead.message || '',
     nextStep: lead.nextStep || '',
+    owner: lead.owner || '',
     offer: lead.offer || ''
   };
 }
@@ -907,7 +919,14 @@ const fallbackSummary = {
 
   function renderPipeline() {
    const stages = ['New', 'Reviewed', 'Qualified', 'Contacted', 'Booked', 'Closed'];
-    const stageColors = { New:'accent', Active:'amber', Qualified:'violet', Booked:'emerald', Closed:'navy' };
+    const stageColors = {
+  New: 'accent',
+  Reviewed: 'amber',
+  Qualified: 'violet',
+  Contacted: 'accent',
+  Booked: 'emerald',
+  Closed: 'navy'
+};
     const el = document.getElementById('pipelineBoard');
     if (!el) return;
 

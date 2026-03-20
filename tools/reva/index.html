@@ -440,323 +440,272 @@ html, body {
 
   <div id="toastContainer" class="fixed top-4 right-4 z-50 space-y-2"></div>
 
-  <script>
-    const emails = [
-      { id:1, sender:'Google Voice', subject:'Missed call from (512) 555-0147', category:'Missed Call', time:'2 min ago', status:'New', contact:'(512) 555-0147', summary:'Missed call received via Google Voice. No voicemail left.', suggestedTask:'Return call to (512) 555-0147' },
-      { id:2, sender:'Maria Chen', subject:'Quote request for bathroom renovation', category:'Lead', time:'18 min ago', status:'Sent to Make', contact:'maria.chen@email.com · (512) 555-0293', summary:'Requesting quote for master bathroom renovation.', suggestedTask:'Prepare bathroom renovation estimate for Maria Chen' },
-      { id:3, sender:'Google Voice', subject:'New voicemail from (737) 555-0812', category:'Voicemail', time:'45 min ago', status:'Task Created', contact:'(737) 555-0812', summary:'Caller wants to move ahead and schedule.', suggestedTask:'Schedule fence installation and call back' },
-      { id:4, sender:'James Whitfield', subject:'Re: Deck repair timeline?', category:'Inquiry', time:'1 hr ago', status:'Sent to Make', contact:'j.whitfield@gmail.com', summary:'Follow-up on deck repair estimate sent last week.', suggestedTask:'Reply with updated timeline' }
-    ];
+ <script>
+  const emails = [
+    { id:1, sender:'Google Voice', subject:'Missed call from (512) 555-0147', category:'Missed Call', time:'2 min ago', status:'New', contact:'(512) 555-0147', summary:'Missed call received via Google Voice. No voicemail left.', suggestedTask:'Return call to (512) 555-0147' },
+    { id:2, sender:'Maria Chen', subject:'Quote request for bathroom renovation', category:'Lead', time:'18 min ago', status:'Sent to Make', contact:'maria.chen@email.com · (512) 555-0293', summary:'Requesting quote for master bathroom renovation.', suggestedTask:'Prepare bathroom renovation estimate for Maria Chen' },
+    { id:3, sender:'Google Voice', subject:'New voicemail from (737) 555-0812', category:'Voicemail', time:'45 min ago', status:'Task Created', contact:'(737) 555-0812', summary:'Caller wants to move ahead and schedule.', suggestedTask:'Schedule fence installation and call back' },
+    { id:4, sender:'James Whitfield', subject:'Re: Deck repair timeline?', category:'Inquiry', time:'1 hr ago', status:'Sent to Make', contact:'j.whitfield@gmail.com', summary:'Follow-up on deck repair estimate sent last week.', suggestedTask:'Reply with updated timeline' }
+  ];
 
-    let currentView = 'dashboard';
+  let currentView = 'dashboard';
 
-    function categoryBadge(cat) {
-      const map = {
-        'Missed Call':'bg-danger-50 text-danger-500 border-danger-100',
-        'Voicemail':'bg-purple-50 text-purple-600 border-purple-100',
-        'Lead':'bg-success-50 text-success-600 border-success-100',
-        'Inquiry':'bg-accent-50 text-accent-600 border-accent-100'
-      };
-      return `<span class="inline-flex items-center px-2 py-0.5 rounded-full text-[11px] font-medium border ${map[cat] || 'bg-gray-100 text-gray-600 border-gray-200'}">${cat}</span>`;
-    }
+  function categoryBadge(cat) {
+    const map = {
+      'Missed Call':'bg-danger-50 text-danger-500 border-danger-100',
+      'Voicemail':'bg-purple-50 text-purple-600 border-purple-100',
+      'Lead':'bg-success-50 text-success-600 border-success-100',
+      'Inquiry':'bg-accent-50 text-accent-600 border-accent-100'
+    };
+    return `<span class="inline-flex items-center px-2 py-0.5 rounded-full text-[11px] font-medium border ${map[cat] || 'bg-gray-100 text-gray-600 border-gray-200'}">${cat}</span>`;
+  }
 
-    function statusBadge(st) {
-      const map = {
-        'New':'bg-accent-50 text-accent-600',
-        'Sent to Make':'bg-purple-50 text-purple-600',
-        'Task Created':'bg-success-50 text-success-600'
-      };
-      return `<span class="inline-flex items-center px-2 py-0.5 rounded-full text-[11px] font-medium ${map[st] || 'bg-gray-100 text-gray-600'}">${st}</span>`;
-    }
+  function statusBadge(st) {
+    const map = {
+      'New':'bg-accent-50 text-accent-600',
+      'Sent to Make':'bg-purple-50 text-purple-600',
+      'Task Created':'bg-success-50 text-success-600'
+    };
+    return `<span class="inline-flex items-center px-2 py-0.5 rounded-full text-[11px] font-medium ${map[st] || 'bg-gray-100 text-gray-600'}">${st}</span>`;
+  }
 
-    function renderDashRecentTable() {
-      const tbody = document.getElementById('dashRecentTable');
-      tbody.innerHTML = emails.map(e => `
-        <tr class="trow border-b border-gray-50 cursor-pointer" onclick="openDetail(${e.id})">
-          <td class="px-5 py-3 font-medium text-gray-800 whitespace-nowrap">${e.sender}</td>
-          <td class="px-3 py-3 text-gray-600 max-w-[220px] truncate">${e.subject}</td>
-          <td class="px-3 py-3">${categoryBadge(e.category)}</td>
-          <td class="px-3 py-3">${statusBadge(e.status)}</td>
-          <td class="px-3 py-3 text-gray-400 text-xs mono whitespace-nowrap">${e.time}</td>
-        </tr>
-      `).join('');
-    }
+  function renderDashRecentTable() {
+    const tbody = document.getElementById('dashRecentTable');
+    tbody.innerHTML = emails.map(e => `
+      <tr class="trow border-b border-gray-50 cursor-pointer" onclick="openDetail(${e.id})">
+        <td class="px-5 py-3 font-medium text-gray-800 whitespace-nowrap">${e.sender}</td>
+        <td class="px-3 py-3 text-gray-600 max-w-[220px] truncate">${e.subject}</td>
+        <td class="px-3 py-3">${categoryBadge(e.category)}</td>
+        <td class="px-3 py-3">${statusBadge(e.status)}</td>
+        <td class="px-3 py-3 text-gray-400 text-xs mono whitespace-nowrap">${e.time}</td>
+      </tr>
+    `).join('');
+  }
 
-    function renderGmailTable() {
-      const tbody = document.getElementById('gmailTable');
-      tbody.innerHTML = emails.map(e => `
-        <tr class="trow border-b border-gray-50 cursor-pointer" onclick="openDetail(${e.id})">
-          <td class="px-5 py-3 font-medium text-gray-800">${e.sender}</td>
-          <td class="px-3 py-3 text-gray-600 max-w-[220px] truncate">${e.subject}</td>
-          <td class="px-3 py-3">${categoryBadge(e.category)}</td>
-          <td class="px-3 py-3 text-gray-400 text-xs mono">${e.time}</td>
-          <td class="px-3 py-3">${statusBadge(e.status)}</td>
-        </tr>
-      `).join('');
-    }
+  function renderGmailTable() {
+    const tbody = document.getElementById('gmailTable');
+    tbody.innerHTML = emails.map(e => `
+      <tr class="trow border-b border-gray-50 cursor-pointer" onclick="openDetail(${e.id})">
+        <td class="px-5 py-3 font-medium text-gray-800">${e.sender}</td>
+        <td class="px-3 py-3 text-gray-600 max-w-[220px] truncate">${e.subject}</td>
+        <td class="px-3 py-3">${categoryBadge(e.category)}</td>
+        <td class="px-3 py-3 text-gray-400 text-xs mono">${e.time}</td>
+        <td class="px-3 py-3">${statusBadge(e.status)}</td>
+      </tr>
+    `).join('');
+  }
 
-    function openDetail(id) {
-      const e = emails.find(x => x.id === id);
-      if (!e) return;
-      document.getElementById('detailFrom').textContent = e.sender;
-      document.getElementById('detailSubject').textContent = e.subject;
-      document.getElementById('detailCategory').innerHTML = categoryBadge(e.category);
-      document.getElementById('detailContact').textContent = e.contact;
-      document.getElementById('detailSummary').textContent = e.summary;
-      document.getElementById('detailTask').textContent = e.suggestedTask;
+  function openDetail(id) {
+    const e = emails.find(x => x.id === id);
+    if (!e) return;
+    document.getElementById('detailFrom').textContent = e.sender;
+    document.getElementById('detailSubject').textContent = e.subject;
+    document.getElementById('detailCategory').innerHTML = categoryBadge(e.category);
+    document.getElementById('detailContact').textContent = e.contact;
+    document.getElementById('detailSummary').textContent = e.summary;
+    document.getElementById('detailTask').textContent = e.suggestedTask;
 
-      const panel = document.getElementById('detailPanel');
-      panel.classList.remove('hidden-panel', 'hidden');
-      panel.classList.add('visible-panel');
-      lucide.createIcons();
-    }
+    const panel = document.getElementById('detailPanel');
+    panel.classList.remove('hidden-panel', 'hidden');
+    panel.classList.add('visible-panel');
+    lucide.createIcons();
+  }
 
-    function closeDetailPanel() {
-      const panel = document.getElementById('detailPanel');
-      panel.classList.remove('visible-panel');
-      panel.classList.add('hidden-panel');
-    }
+  function closeDetailPanel() {
+    const panel = document.getElementById('detailPanel');
+    panel.classList.remove('visible-panel');
+    panel.classList.add('hidden-panel');
+  }
 
-    function navigate(view) {
-      currentView = view;
-      document.querySelectorAll('.view-section').forEach(s => s.classList.add('hidden'));
-      const target = document.getElementById('view-' + view);
-      if (target) target.classList.remove('hidden');
+  function navigate(view) {
+    currentView = view;
+    document.querySelectorAll('.view-section').forEach(s => s.classList.add('hidden'));
+    const target = document.getElementById('view-' + view);
+    if (target) target.classList.remove('hidden');
 
-      document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
-      const navBtn = document.querySelector(`[data-nav="${view}"]`);
-      if (navBtn) navBtn.classList.add('active');
+    document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
+    const navBtn = document.querySelector(`[data-nav="${view}"]`);
+    if (navBtn) navBtn.classList.add('active');
 
-      const titles = {
-        dashboard:'Dashboard',
-        gmail:'Gmail Intake',
-        leads:'Leads',
-        tasks:'Tasks',
-        completed:'Completed',
-        workflows:'Workflows',
-        settings:'Settings'
-      };
-      document.getElementById('pageTitle').textContent = titles[view] || 'Dashboard';
+    const titles = {
+      dashboard:'Dashboard',
+      gmail:'Gmail Intake',
+      leads:'Leads',
+      tasks:'Tasks',
+      completed:'Completed',
+      workflows:'Workflows',
+      settings:'Settings'
+    };
+    document.getElementById('pageTitle').textContent = titles[view] || 'Dashboard';
 
-      if (view === 'gmail') renderGmailTable();
+    if (view === 'gmail') renderGmailTable();
 
-      if (window.innerWidth < 1024) toggleMobileSidebar();
-    }
+    if (window.innerWidth < 1024) toggleMobileSidebar();
+  }
 
-    function toggleMobileSidebar() {
-      const sb = document.getElementById('sidebar');
-      const ov = document.getElementById('sidebarOverlay');
-      sb.classList.toggle('-translate-x-full');
-      sb.classList.toggle('translate-x-0');
-      ov.classList.toggle('show');
-    }
+  function toggleMobileSidebar() {
+    const sb = document.getElementById('sidebar');
+    const ov = document.getElementById('sidebarOverlay');
+    sb.classList.toggle('-translate-x-full');
+    sb.classList.toggle('translate-x-0');
+    ov.classList.toggle('show');
+  }
 
-    function doSync() {
-      const btn = document.getElementById('syncBtn');
-      btn.innerHTML = '<i data-lucide="loader-2" class="w-3.5 h-3.5 animate-spin"></i> Syncing...';
-      btn.disabled = true;
-      lucide.createIcons();
+  function doSync() {
+    const btn = document.getElementById('syncBtn');
+    btn.innerHTML = '<i data-lucide="loader-2" class="w-3.5 h-3.5 animate-spin"></i> Syncing...';
+    btn.disabled = true;
+    lucide.createIcons();
 
-      setTimeout(() => {
-        btn.innerHTML = '<i data-lucide="refresh-cw" class="w-3.5 h-3.5"></i> Sync';
-        btn.disabled = false;
-        lucide.createIcons();
-        showToast('Synced successfully', 'success');
-      }, 1200);
-    }
-
-    function showToast(msg, type='default') {
-      const container = document.getElementById('toastContainer');
-      const toast = document.createElement('div');
-      toast.className = `flex items-center gap-2 px-4 py-2.5 rounded-lg shadow-lg text-sm font-medium ${type === 'success' ? 'bg-success-600 text-white' : 'bg-navy-700 text-white'}`;
-      toast.innerHTML = `<i data-lucide="${type === 'success' ? 'check-circle' : 'info'}" class="w-4 h-4"></i>${msg}`;
-      container.appendChild(toast);
-      lucide.createIcons();
-      setTimeout(() => {
-        toast.style.opacity = '0';
-        toast.style.transition = 'opacity .3s';
-        setTimeout(() => toast.remove(), 300);
-      }, 2400);
-    }
-
-    function startGoogleAuth() {
-      const btn = document.getElementById('googleLoginBtn');
-      const label = document.getElementById('googleLoginLabel');
-      const error = document.getElementById('authError');
-
-      error.classList.add('hidden');
-      btn.disabled = true;
-      label.textContent = 'Connecting...';
-      btn.classList.add('opacity-80');
-
-      setTimeout(() => {
-        localStorage.setItem('revaAuth', 'true');
-        localStorage.setItem('revaUser', 'operations@company.com');
-        showApp();
-        showToast('Google connected successfully', 'success');
-      }, 1400);
-    }
-
-    function mockAuthError() {
-      const error = document.getElementById('authError');
-      error.classList.remove('hidden');
-    }
-
-    function logout() {
-      localStorage.removeItem('revaAuth');
-      localStorage.removeItem('revaUser');
-      showAuth();
-      showToast('Signed out', 'default');
-    }
-
-    function showAuth() {
-      document.getElementById('authScreen').classList.remove('hidden');
-      document.getElementById('appShell').classList.add('hidden');
-
-      const btn = document.getElementById('googleLoginBtn');
-      const label = document.getElementById('googleLoginLabel');
-      document.getElementById('authError').classList.add('hidden');
+    setTimeout(() => {
+      btn.innerHTML = '<i data-lucide="refresh-cw" class="w-3.5 h-3.5"></i> Sync';
       btn.disabled = false;
-      btn.classList.remove('opacity-80');
-      label.textContent = 'Sign in with Google';
       lucide.createIcons();
+      showToast('Synced successfully', 'success');
+    }, 1200);
+  }
+
+  function showToast(msg, type='default') {
+    const container = document.getElementById('toastContainer');
+    const toast = document.createElement('div');
+    toast.className = `flex items-center gap-2 px-4 py-2.5 rounded-lg shadow-lg text-sm font-medium ${type === 'success' ? 'bg-success-600 text-white' : 'bg-navy-700 text-white'}`;
+    toast.innerHTML = `<i data-lucide="${type === 'success' ? 'check-circle' : 'info'}" class="w-4 h-4"></i>${msg}`;
+    container.appendChild(toast);
+    lucide.createIcons();
+    setTimeout(() => {
+      toast.style.opacity = '0';
+      toast.style.transition = 'opacity .3s';
+      setTimeout(() => toast.remove(), 300);
+    }, 2400);
+  }
+
+  function logout() {
+    localStorage.removeItem('revaAuth');
+    localStorage.removeItem('revaUser');
+    showAuth();
+    showToast('Signed out', 'default');
+  }
+
+  function showAuth() {
+    document.getElementById('authScreen').classList.remove('hidden');
+    document.getElementById('appShell').classList.add('hidden');
+    resetGoogleBtn();
+    hideAuthError();
+    lucide.createIcons();
+  }
+
+  function showApp() {
+    document.getElementById('authScreen').classList.add('hidden');
+    document.getElementById('appShell').classList.remove('hidden');
+    renderDashRecentTable();
+    renderGmailTable();
+    navigate('dashboard');
+    lucide.createIcons();
+  }
+
+  function initApp() {
+    const isAuthed = localStorage.getItem('revaAuth') === 'true';
+    if (isAuthed) {
+      showApp();
+    } else {
+      showAuth();
+    }
+    lucide.createIcons();
+  }
+
+  /* =========================
+     REVA GOOGLE AUTH
+     ========================= */
+
+  const GOOGLE_CLIENT_ID = '572744257337-rgfnreps1sulrmse8c9bb6rmp2p77t7t.apps.googleusercontent.com';
+
+  const GOOGLE_SCOPES = [
+    'openid',
+    'email',
+    'profile',
+    'https://www.googleapis.com/auth/gmail.readonly'
+  ].join(' ');
+
+  let googleCodeClient = null;
+
+  window.addEventListener('load', () => {
+    if (!window.google || !google.accounts || !google.accounts.oauth2) {
+      console.error('Google SDK failed to load');
+      return;
     }
 
-    function showApp() {
-      document.getElementById('authScreen').classList.add('hidden');
-      document.getElementById('appShell').classList.remove('hidden');
-      renderDashRecentTable();
-      renderGmailTable();
-      navigate('dashboard');
-      lucide.createIcons();
-    }
-
-    function initApp() {
-      const isAuthed = localStorage.getItem('revaAuth') === 'true';
-      if (isAuthed) {
-        showApp();
-      } else {
-        showAuth();
+    googleCodeClient = google.accounts.oauth2.initCodeClient({
+      client_id: GOOGLE_CLIENT_ID,
+      scope: GOOGLE_SCOPES,
+      ux_mode: 'popup',
+      callback: handleGoogleAuth,
+      error_callback: (err) => {
+        console.error(err);
+        showAuthError('Authentication failed. Please try again.');
+        resetGoogleBtn();
       }
-      lucide.createIcons();
-    }
-
-    initApp();
-  </script>
-
-  <script>
-/* =========================
-   REVA GOOGLE AUTH (DROP-IN)
-   ========================= */
-
-const GOOGLE_CLIENT_ID = '572744257337-rgfnreps1sulrmse8c9bb6rmp2p77t7t.apps.googleusercontent.com';
-
-const GOOGLE_SCOPES = [
-  'openid',
-  'email',
-  'profile',
-  'https://www.googleapis.com/auth/gmail.readonly'
-].join(' ');
-
-let googleCodeClient = null;
-
-/* ---------- INIT ---------- */
-window.addEventListener('load', () => {
-  if (!window.google || !google.accounts || !google.accounts.oauth2) {
-    console.error('Google SDK failed to load');
-    return;
-  }
-
-  googleCodeClient = google.accounts.oauth2.initCodeClient({
-    client_id: GOOGLE_CLIENT_ID,
-    scope: GOOGLE_SCOPES,
-    ux_mode: 'popup',
-    callback: handleGoogleAuth,
-    error_callback: (err) => {
-      console.error(err);
-      showAuthError('Authentication failed. Please try again.');
-      resetGoogleBtn();
-    }
-  });
-});
-
-/* ---------- CLICK HANDLER ---------- */
-function startGoogleAuth() {
-  const btn = document.getElementById('googleLoginBtn');
-  const label = document.getElementById('googleLoginLabel');
-
-  hideAuthError();
-
-  btn.disabled = true;
-  btn.classList.add('opacity-80');
-  label.textContent = 'Connecting...';
-
-  if (!googleCodeClient) {
-    showAuthError('Google not ready. Refresh and try again.');
-    resetGoogleBtn();
-    return;
-  }
-
-  googleCodeClient.requestCode();
-}
-
-/* ---------- HANDLE RESPONSE ---------- */
-async function handleGoogleAuth(response) {
-  if (!response || !response.code) {
-    showAuthError('No authorization code returned.');
-    resetGoogleBtn();
-    return;
-  }
-
-  try {
-    const res = await fetch('/auth/google/exchange', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ code: response.code })
     });
+  });
 
-    if (!res.ok) throw new Error('Exchange failed');
+  function startGoogleAuth() {
+    const btn = document.getElementById('googleLoginBtn');
+    const label = document.getElementById('googleLoginLabel');
 
-    const data = await res.json();
+    hideAuthError();
+    btn.disabled = true;
+    btn.classList.add('opacity-80');
+    label.textContent = 'Connecting...';
 
-    /* TEMP SESSION (until backend session added) */
+    if (!googleCodeClient) {
+      showAuthError('Google not ready. Refresh and try again.');
+      resetGoogleBtn();
+      return;
+    }
+
+    googleCodeClient.requestCode();
+  }
+
+  async function handleGoogleAuth(response) {
+    console.log('GOOGLE RESPONSE:', response);
+
+    if (!response || !response.code) {
+      showAuthError('No authorization code returned.');
+      resetGoogleBtn();
+      return;
+    }
+
+    /* TEMP BYPASS: use this until your backend route works */
     localStorage.setItem('revaAuth', 'true');
-    localStorage.setItem('revaUser', data.email || 'operations@company.com');
+    localStorage.setItem('revaUser', 'operations@regencreatives.com');
 
     resetGoogleBtn();
     showApp();
-    showToast('Google connected successfully', 'success');
-
-  } catch (err) {
-    console.error(err);
-    showAuthError('Authentication failed.');
-    resetGoogleBtn();
+    showToast('Google popup worked. Backend not connected yet.', 'success');
   }
-}
 
-/* ---------- UI HELPERS ---------- */
-function resetGoogleBtn() {
-  const btn = document.getElementById('googleLoginBtn');
-  const label = document.getElementById('googleLoginLabel');
+  function resetGoogleBtn() {
+    const btn = document.getElementById('googleLoginBtn');
+    const label = document.getElementById('googleLoginLabel');
+    btn.disabled = false;
+    btn.classList.remove('opacity-80');
+    label.textContent = 'Sign in with Google';
+  }
 
-  btn.disabled = false;
-  btn.classList.remove('opacity-80');
-  label.textContent = 'Sign in with Google';
-}
+  function showAuthError(msg) {
+    const el = document.getElementById('authError');
+    el.textContent = msg;
+    el.classList.remove('hidden');
+  }
 
-function showAuthError(msg) {
-  const el = document.getElementById('authError');
-  el.textContent = msg;
-  el.classList.remove('hidden');
-}
+  function hideAuthError() {
+    document.getElementById('authError').classList.add('hidden');
+  }
 
-function hideAuthError() {
-  document.getElementById('authError').classList.add('hidden');
-}
+  function mockAuthError() {
+    showAuthError('Authentication failed. Please try again.');
+  }
 
-function mockAuthError() {
-  showAuthError('Authentication failed. Please try again.');
-}
+  initApp();
 </script>
 </body>
 </html>

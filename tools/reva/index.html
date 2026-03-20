@@ -666,22 +666,22 @@ html, body {
   }
 
   async function handleGoogleAuth(response) {
-    console.log('GOOGLE RESPONSE:', response);
+  console.log('GOOGLE RESPONSE:', response);
 
-    if (!response || !response.code) {
-      showAuthError('No authorization code returned.');
-      resetGoogleBtn();
-      return;
-    }
-
-    /* TEMP BYPASS: use this until your backend route works */
-    localStorage.setItem('revaAuth', 'true');
-    localStorage.setItem('revaUser', 'operations@regencreatives.com');
-
+  if (!response || !response.code) {
+    showAuthError('No authorization code returned.');
     resetGoogleBtn();
-    showApp();
-    showToast('Google popup worked. Backend not connected yet.', 'success');
+    return;
   }
+
+  /* TEMP BYPASS: use this until your backend route works */
+  localStorage.setItem('revaAuth', 'true');
+  localStorage.setItem('revaUser', 'operations@regencreatives.com');
+
+  resetGoogleBtn();
+  showApp();
+  showToast('Google popup worked. Backend not connected yet.', 'success');
+}
 
   function resetGoogleBtn() {
     const btn = document.getElementById('googleLoginBtn');

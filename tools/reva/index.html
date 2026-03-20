@@ -665,22 +665,24 @@ html, body {
     googleCodeClient.requestCode();
   }
 
-  async function handleGoogleAuth(response) {
-  console.log('GOOGLE RESPONSE:', response);
-
-  if (!response || !response.code) {
-    showAuthError('No authorization code returned.');
-    resetGoogleBtn();
+async function handleGoogleAuth(response) {
+  if (!response?.code) {
+    console.error('No authorization code returned.');
     return;
   }
 
-  /* TEMP BYPASS: use this until your backend route works */
-  localStorage.setItem('revaAuth', 'true');
-  localStorage.setItem('revaUser', 'operations@regencreatives.com');
+  const res = await fetch('https://hook.us2.make.com/8ckd7b5dik6xmp3ev8r62l75gda5gl3l', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({
+      code: response.code
+    })
+  });
 
-  resetGoogleBtn();
-  showApp();
-  showToast('Google popup worked. Backend not connected yet.', 'success');
+  const data = await res.json();
+  console.log(data);
 }
 
   function resetGoogleBtn() {

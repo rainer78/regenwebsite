@@ -616,75 +616,8 @@ html, body {
   /* =========================
      REVA GOOGLE AUTH
      ========================= */
-
-  const GOOGLE_CLIENT_ID = '572744257337-rgfnreps1sulrmse8c9bb6rmp2p77t7t.apps.googleusercontent.com';
-
-  const GOOGLE_SCOPES = [
-    'openid',
-    'email',
-    'profile',
-    'https://www.googleapis.com/auth/gmail.readonly'
-  ].join(' ');
-
-  let googleCodeClient = null;
-
-  window.addEventListener('load', () => {
-    if (!window.google || !google.accounts || !google.accounts.oauth2) {
-      console.error('Google SDK failed to load');
-      return;
-    }
-
-googleCodeClient = google.accounts.oauth2.initCodeClient({
-  client_id: GOOGLE_CLIENT_ID,
-  scope: GOOGLE_SCOPES,
-  ux_mode: 'popup',
-  redirect_uri: 'https://regencreatives.com/tools/reva/',
-  callback: handleGoogleAuth,
-  error_callback: (err) => {
-    console.error(err);
-    showAuthError('Authentication failed. Please try again.');
-    resetGoogleBtn();
-  }
-});
-
-  function startGoogleAuth() {
-    const btn = document.getElementById('googleLoginBtn');
-    const label = document.getElementById('googleLoginLabel');
-
-    hideAuthError();
-    btn.disabled = true;
-    btn.classList.add('opacity-80');
-    label.textContent = 'Connecting...';
-
-    if (!googleCodeClient) {
-      showAuthError('Google not ready. Refresh and try again.');
-      resetGoogleBtn();
-      return;
-    }
-
-    googleCodeClient.requestCode();
-  }
-
-async function handleGoogleAuth(response) {
-  if (!response?.code) {
-    console.error('No authorization code returned.');
-    return;
-  }
-
-  const res = await fetch('https://hook.us2.make.com/8ckd7b5dik6xmp3ev8r62l75gda5gl3l', {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json'
-    },
-    body: JSON.stringify({
-      code: response.code
-    })
-  });
-
-  const data = await res.json();
-  console.log(data);
-}
-
+const GOOGLE_CLIENT_ID = '572744257337-rgfnreps1sulrmse8c9bb6rmp2p77t7t.apps.googleusercontent.com'; const GOOGLE_SCOPES = [ 'openid', 'email', 'profile', 'https://www.googleapis.com/auth/gmail.readonly' ].join(' '); let googleCodeClient = null; window.addEventListener('load', () => { if (!window.google || !google.accounts || !google.accounts.oauth2) { console.error('Google SDK failed to load'); return; } googleCodeClient = google.accounts.oauth2.initCodeClient({ client_id: GOOGLE_CLIENT_ID, scope: GOOGLE_SCOPES, ux_mode: 'popup', callback: handleGoogleAuth, error_callback: (err) => { console.error(err); showAuthError('Authentication failed. Please try again.'); resetGoogleBtn(); } }); }); function startGoogleAuth() { const btn = document.getElementById('googleLoginBtn'); const label = document.getElementById('googleLoginLabel'); hideAuthError(); btn.disabled = true; btn.classList.add('opacity-80'); label.textContent = 'Connecting...'; if (!googleCodeClient) { showAuthError('Google not ready. Refresh and try again.'); resetGoogleBtn(); return; } googleCodeClient.requestCode(); } async function handleGoogleAuth(response) { if (!response?.code) { console.error('No authorization code returned.'); return; } const res = await fetch('https://hook.us2.make.com/8ckd7b5dik6xmp3ev8r62l75gda5gl3l', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ code: response.code }) }); const data = await res.json(); console.log(data); }
+  
   function resetGoogleBtn() {
     const btn = document.getElementById('googleLoginBtn');
     const label = document.getElementById('googleLoginLabel');

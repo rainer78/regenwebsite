@@ -634,18 +634,18 @@ html, body {
       return;
     }
 
-    googleCodeClient = google.accounts.oauth2.initCodeClient({
-      client_id: GOOGLE_CLIENT_ID,
-      scope: GOOGLE_SCOPES,
-      ux_mode: 'popup',
-      callback: handleGoogleAuth,
-      error_callback: (err) => {
-        console.error(err);
-        showAuthError('Authentication failed. Please try again.');
-        resetGoogleBtn();
-      }
-    });
-  });
+googleCodeClient = google.accounts.oauth2.initCodeClient({
+  client_id: GOOGLE_CLIENT_ID,
+  scope: GOOGLE_SCOPES,
+  ux_mode: 'popup',
+  redirect_uri: 'https://regencreatives.com/tools/reva/',
+  callback: handleGoogleAuth,
+  error_callback: (err) => {
+    console.error(err);
+    showAuthError('Authentication failed. Please try again.');
+    resetGoogleBtn();
+  }
+});
 
   function startGoogleAuth() {
     const btn = document.getElementById('googleLoginBtn');

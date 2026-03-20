@@ -1,1572 +1,599 @@
 <!doctype html>
 <html lang="en" class="h-full">
- <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>REVA OS | AI Lead Generation System</title>
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>REVA | Virtual Ops Agent</title>
   <script src="https://cdn.tailwindcss.com/3.4.17"></script>
   <script src="https://cdn.jsdelivr.net/npm/lucide@0.263.0/dist/umd/lucide.min.js"></script>
-  <script src="/_sdk/element_sdk.js"></script>
-  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&amp;family=Space+Mono:wght@400;700&amp;display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+
   <script>
     tailwind.config = {
       theme: {
         extend: {
           colors: {
-            navy: { 50: '#f0f3f9', 100: '#dce3f0', 200: '#b8c7e1', 300: '#8ba4cd', 400: '#5c7db5', 500: '#3d5f9a', 600: '#2d4a7c', 700: '#1e3561', 800: '#152847', 900: '#0d1b30', 950: '#080f1c' },
-            accent: { 50: '#eef4ff', 100: '#d9e6ff', 200: '#bcd4ff', 300: '#8ebaff', 400: '#5994ff', 500: '#3370ff', 600: '#1a56f5', 700: '#1342e1', 800: '#1636b6', 900: '#17318f' }
+            navy: { 50:'#f0f3f9',100:'#dce3f0',200:'#b8c7e1',300:'#8da4cc',400:'#6380b4',500:'#3d5a8a',600:'#1a2744',700:'#0f1a2e',800:'#0b1220',900:'#070c16' },
+            accent: { 50:'#eef5ff',100:'#d9e8ff',200:'#bcd8ff',300:'#8ec0ff',400:'#599eff',500:'#3478f6',600:'#2560eb',700:'#1d4fd8' },
+            success: { 50:'#ecfdf5',100:'#d1fae5',200:'#a7f3d0',300:'#6ee7b7',400:'#34d399',500:'#10b981',600:'#059669' },
+            warn: { 50:'#fffbeb',100:'#fef3c7',400:'#fbbf24',500:'#f59e0b' },
+            danger: { 50:'#fef2f2',100:'#fee2e2',400:'#f87171',500:'#ef4444' }
           }
         }
       }
     }
   </script>
+
   <style>
     * { font-family: 'DM Sans', sans-serif; }
-    .mono-font { font-family: 'Space Mono', monospace; }
+    .mono { font-family: 'JetBrains Mono', monospace; }
     html, body { height: 100%; margin: 0; }
-    .app-shell { height: 100%; overflow: hidden; }
-    .scroll-area { overflow-y: auto; overflow-x: hidden; }
-    .scroll-area::-webkit-scrollbar { width: 6px; }
-    .scroll-area::-webkit-scrollbar-track { background: transparent; }
-    .scroll-area::-webkit-scrollbar-thumb { background: #b8c7e1; border-radius: 3px; }
-    .card-lift { transition: transform 0.2s ease, box-shadow 0.2s ease; }
-    .card-lift:hover { transform: translateY(-2px); box-shadow: 0 8px 25px rgba(13,27,48,0.12); }
-    .fade-in { animation: fadeIn 0.4s ease forwards; opacity: 0; }
-    @keyframes fadeIn { to { opacity: 1; } }
-    .stagger-1 { animation-delay: 0.05s; }
-    .stagger-2 { animation-delay: 0.1s; }
-    .stagger-3 { animation-delay: 0.15s; }
-    .stagger-4 { animation-delay: 0.2s; }
-    .stagger-5 { animation-delay: 0.25s; }
-    .pulse-dot { animation: pulseDot 2s ease infinite; }
-    @keyframes pulseDot { 0%,100% { opacity: 1; } 50% { opacity: 0.4; } }
-    .refresh-icon { animation: spin 1s linear infinite; animation-play-state: paused; }
-    .refresh-icon.spinning { animation-play-state: running; }
-    @keyframes spin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
-    .sidebar-item:hover { background: rgba(51,112,255,0.08); }
-    .sidebar-item.active { background: rgba(51,112,255,0.12); color: #3370ff; border-right: 3px solid #3370ff; }
-    .sidebar-desktop { width: 64px; transition: width 0.3s ease; }
-    .sidebar-desktop.expanded { width: 256px; }
-    .sidebar-label { opacity: 0; width: 0; display: none; }
-    .sidebar-desktop.expanded .sidebar-label { opacity: 1; width: auto; display: inline; }
-    .sidebar-toggle { width: 20px; height: 20px; display: flex; align-items: center; justify-content: center; }
-    .sidebar-content { overflow: hidden; }
-    .tag-hot { background: #fef2f2; color: #dc2626; border: 1px solid #fecaca; }
-    .tag-warm { background: #fff7ed; color: #ea580c; border: 1px solid #fed7aa; }
-    .tag-cold { background: #eff6ff; color: #2563eb; border: 1px solid #bfdbfe; }
-    .progress-fill { transition: width 0.8s cubic-bezier(0.4, 0, 0.2, 1); }
-    .toast-msg {
-      position: fixed; bottom: 24px; left: 50%; transform: translateX(-50%);
-      background: #152847; color: white; padding: 10px 20px; border-radius: 10px;
-      font-size: 14px; font-weight: 500; z-index: 999; opacity: 0;
-      transition: opacity 0.3s ease; pointer-events: none;
+    ::-webkit-scrollbar { width: 6px; }
+    ::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 999px; }
+
+    @keyframes fadeInUp { from { opacity:0; transform:translateY(10px); } to { opacity:1; transform:translateY(0); } }
+    @keyframes pulse-dot { 0%,100% { opacity:1; } 50% { opacity:.4; } }
+    .anim-fade { animation: fadeInUp .35s ease both; }
+    .pulse-dot { animation: pulse-dot 2s ease-in-out infinite; }
+
+    .nav-item { transition: all .15s ease; }
+    .nav-item:hover { background: rgba(255,255,255,.06); }
+    .nav-item.active { background: rgba(52,120,246,.15); color: #8ec0ff; }
+    .nav-item.active .nav-icon { color: #599eff; }
+
+    .card-hover { transition: box-shadow .2s ease, transform .2s ease; }
+    .card-hover:hover { box-shadow: 0 10px 24px rgba(15,23,42,.06); transform: translateY(-1px); }
+
+    .trow:hover { background: #f8fafc; }
+
+    .btn-primary { background:#3478f6; color:#fff; transition:.15s ease; }
+    .btn-primary:hover { background:#2560eb; }
+    .btn-ghost { border:1px solid #e2e8f0; color:#475569; background:#fff; transition:.15s ease; }
+    .btn-ghost:hover { background:#f8fafc; }
+
+    .detail-panel { transition: transform .25s ease, opacity .25s ease; }
+    .detail-panel.hidden-panel { transform: translateX(100%); opacity: 0; pointer-events: none; }
+    .detail-panel.visible-panel { transform: translateX(0); opacity: 1; pointer-events: auto; }
+
+    .sidebar-overlay { display:none; }
+    @media (max-width:1023px) {
+      .sidebar-overlay.show { display:block; }
     }
-    .toast-msg.show { opacity: 1; }
-    .detail-panel { transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1); }
-    .pipeline-col { min-width: 220px; }
-    @media (max-width: 1024px) {
-      .sidebar-desktop { display: none; }
-      .mobile-header { display: flex !important; }
-    }
-    @media (min-width: 1025px) {
-      .mobile-header { display: none !important; }
-      .mobile-nav { display: none !important; }
-    }
-    .ai-panel-closed { height: 0 !important; opacity: 0 !important; }
-    .ai-panel-open { height: 500px !important; opacity: 1 !important; transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); }
-    .ai-toggle-btn.hidden { display: none !important; }
-    .ai-message { animation: slideUp 0.3s ease forwards; }
-    @keyframes slideUp { from { transform: translateY(10px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
   </style>
-  <style>body { box-sizing: border-box; }</style>
-  <script src="/_sdk/data_sdk.js" type="text/javascript"></script>
- </head>
- <body class="h-full bg-navy-50">
-  <div class="app-shell flex flex-col lg:flex-row w-full" id="appShell"><!-- Sidebar Desktop -->
-   <aside class="sidebar-desktop w-16 bg-navy-950 flex flex-col shrink-0" style="height:100%">
-    <div class="p-3 border-b border-navy-800 flex items-center justify-between">
-     <div class="flex items-center gap-3 sidebar-content">
-      <div class="w-9 h-9 rounded-xl bg-accent-600 flex items-center justify-center shrink-0"><i data-lucide="zap" class="w-5 h-5 text-white"></i>
-      </div>
-      <div class="sidebar-label">
-       <h1 class="text-white font-bold text-sm leading-tight" id="sidebarTitle">Interview Sprint OS</h1>
-       <p class="text-navy-400 text-xs" id="sidebarSubtitle">30-Day Outreach Sprint</p>
-      </div>
-     </div><button onclick="toggleSidebar()" class="text-navy-400 hover:text-navy-200 p-1 rounded-lg hover:bg-navy-800 transition-colors sidebar-toggle"> <i data-lucide="chevron-right" class="w-4 h-4"></i> </button>
-    </div>
-    <nav class="flex-1 py-4 scroll-area">
-     <div class="px-3 mb-2 sidebar-label">
-      <span class="text-navy-500 text-[10px] font-semibold uppercase tracking-widest px-3">Main</span>
-     </div><button class="sidebar-item active w-full flex items-center gap-3 px-3 py-2.5 text-sm text-navy-300 justify-center expanded:justify-start" data-view="dashboard" onclick="switchView('dashboard')" title="Dashboard"> <i data-lucide="layout-dashboard" class="w-4 h-4 shrink-0"></i> <span class="sidebar-label">Dashboard</span> </button> <button class="sidebar-item w-full flex items-center gap-3 px-3 py-2.5 text-sm text-navy-300 justify-center expanded:justify-start" data-view="queue" onclick="switchView('queue')" title="Action Queue"> <i data-lucide="list-checks" class="w-4 h-4 shrink-0"></i> <span class="sidebar-label">Action Queue</span> <span class="sidebar-label ml-auto bg-accent-600 text-white text-[10px] font-bold px-2 py-0.5 rounded-full">5</span> </button> <button class="sidebar-item w-full flex items-center gap-3 px-3 py-2.5 text-sm text-navy-300 justify-center expanded:justify-start" data-view="pipeline" onclick="switchView('pipeline')" title="Pipeline"> <i data-lucide="kanban" class="w-4 h-4 shrink-0"></i> <span class="sidebar-label">Pipeline</span> </button> <button class="sidebar-item w-full flex items-center gap-3 px-3 py-2.5 text-sm text-navy-300 justify-center expanded:justify-start" data-view="leads" onclick="switchView('leads')" title="Leads"> <i data-lucide="users" class="w-4 h-4 shrink-0"></i> <span class="sidebar-label">Leads</span> </button> <button class="sidebar-item w-full flex items-center gap-3 px-3 py-2.5 text-sm text-navy-300 justify-center expanded:justify-start" data-view="activity" onclick="switchView('activity')" title="Activity"> <i data-lucide="activity" class="w-4 h-4 shrink-0"></i> <span class="sidebar-label">Activity</span> </button>
-    </nav>
-    <div class="p-3 border-t border-navy-800 sidebar-label">
-     <div class="bg-navy-900 rounded-xl p-4">
-      <div class="flex items-center justify-between mb-2"><span class="text-navy-400 text-xs font-medium">Sprint Goal</span> <span class="mono-font text-accent-400 text-xs font-bold" id="sidebarGoalCount">7/10</span>
-      </div>
-      <div class="w-full bg-navy-700 rounded-full h-2">
-       <div class="bg-accent-500 h-2 rounded-full progress-fill" style="width:70%" id="sidebarProgress"></div>
-      </div>
-      <p class="text-navy-500 text-[10px] mt-2">18 days remaining</p>
-     </div>
-    </div>
-   </aside><!-- Mobile Header -->
-   <header class="mobile-header items-center justify-between bg-navy-950 px-4 py-3" style="display:none">
-    <div class="flex items-center gap-2">
-     <div class="w-8 h-8 rounded-lg bg-accent-600 flex items-center justify-center"><i data-lucide="zap" class="w-4 h-4 text-white"></i>
-     </div><span class="text-white font-bold text-sm">Sprint OS</span>
-    </div><button onclick="toggleMobileNav()" class="text-navy-300 p-1"> <i data-lucide="menu" class="w-5 h-5"></i> </button>
-   </header><!-- Mobile Nav -->
-   <nav class="mobile-nav hidden bg-navy-950 px-4 pb-3 border-b border-navy-800" id="mobileNav">
-    <div class="flex gap-2 flex-wrap"><button class="px-3 py-1.5 text-xs rounded-lg bg-accent-600 text-white" data-view="dashboard" onclick="switchView('dashboard')">Dashboard</button> <button class="px-3 py-1.5 text-xs rounded-lg text-navy-300 hover:bg-navy-800" data-view="queue" onclick="switchView('queue')">Queue</button> <button class="px-3 py-1.5 text-xs rounded-lg text-navy-300 hover:bg-navy-800" data-view="pipeline" onclick="switchView('pipeline')">Pipeline</button> <button class="px-3 py-1.5 text-xs rounded-lg text-navy-300 hover:bg-navy-800" data-view="leads" onclick="switchView('leads')">Leads</button> <button class="px-3 py-1.5 text-xs rounded-lg text-navy-300 hover:bg-navy-800" data-view="activity" onclick="switchView('activity')">Activity</button>
-    </div>
-   </nav><!-- Main Content -->
-   <main class="flex-1 flex flex-col overflow-hidden" style="height:100%"><!-- Top Bar -->
-    <header class="bg-white border-b border-navy-100 px-6 py-4 flex items-center justify-between shrink-0">
-     <div>
-      <h2 class="text-navy-900 font-bold text-lg" id="viewTitle">Dashboard</h2>
-      <p class="text-navy-400 text-xs mt-0.5">Wednesday, Jan 15, 2025 · Day 12 of 30</p>
-     </div>
-     <div class="flex items-center gap-3">
-      <div class="hidden sm:flex items-center gap-2 bg-emerald-50 text-emerald-700 text-xs font-medium px-3 py-1.5 rounded-full border border-emerald-200"><span class="w-2 h-2 rounded-full bg-emerald-500 pulse-dot"></span> Leads synced from your spreadsheet
-      </div><button onclick="openUploadModal()" class="flex items-center gap-1.5 text-xs font-medium text-white bg-accent-600 hover:bg-accent-700 px-3 py-1.5 rounded-lg transition-colors"> <i data-lucide="upload" class="w-3.5 h-3.5"></i> Upload Leads </button> <button onclick="handleRefresh()" class="flex items-center gap-1.5 text-xs font-medium text-navy-500 hover:text-accent-600 bg-navy-50 hover:bg-accent-50 px-3 py-1.5 rounded-lg transition-colors border border-navy-200"> <i data-lucide="refresh-cw" class="w-3.5 h-3.5 refresh-icon"></i> Refresh </button>
-     </div>
-    </header><!-- Content Area -->
-    <div class="flex-1 scroll-area"><!-- DASHBOARD VIEW -->
-     <div id="view-dashboard" class="p-6"><!-- Morning Briefing Header -->
-      <div class="mb-8">
-       <div class="flex items-baseline gap-3 mb-2">
-        <h2 class="text-4xl font-bold text-navy-900">Good morning</h2><span class="text-lg text-navy-400">Wednesday, January 15</span>
-       </div>
-       <p class="text-navy-500 text-sm">Here's your sprint status. You're on track — keep the momentum going.</p>
-      </div><!-- Today's Focus Section -->
-      <div class="mb-8">
-       <h3 class="text-sm font-bold text-navy-700 uppercase tracking-wider mb-4">Today's Focus</h3>
-       <div class="grid lg:grid-cols-2 gap-4"><!-- Goal Progress Card -->
-        <div class="bg-gradient-to-br from-accent-600 to-accent-700 rounded-3xl p-6 text-white card-lift fade-in stagger-1">
-         <div class="flex items-start justify-between mb-6">
-          <div>
-           <p class="text-accent-100 text-sm mb-1">Sprint Goal</p>
-           <p class="text-4xl font-bold">7 <span class="text-2xl text-accent-100">/</span> <span id="goalTarget2">10</span></p>
-           <p class="text-accent-200 text-xs font-medium mt-1">3 calls needed to hit goal</p>
-          </div>
-          <div class="w-14 h-14 rounded-2xl bg-white/20 flex items-center justify-center"><i data-lucide="target" class="w-7 h-7 text-white"></i>
-          </div>
-         </div>
-         <div class="w-full bg-white/20 rounded-full h-3 mb-3">
-          <div class="bg-white h-3 rounded-full progress-fill" style="width:70%" id="goalBar2"></div>
-         </div>
-         <div class="flex items-center justify-between">
-          <p class="text-accent-100 text-xs">18 days left in sprint</p><button onclick="switchView('queue')" class="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-white/20 hover:bg-white/30 text-white text-xs font-semibold transition-colors">Focus on queue <i data-lucide="arrow-right" class="w-3 h-3"></i></button>
-         </div>
-        </div><!-- AI Quick Actions Card -->
-        <div class="bg-gradient-to-br from-violet-50 to-violet-100 rounded-3xl p-6 border border-violet-200 card-lift fade-in stagger-2">
-         <div class="flex items-start justify-between mb-5">
-          <div>
-           <div class="flex items-center gap-2 mb-1">
-            <div class="w-6 h-6 rounded-lg bg-violet-600 flex items-center justify-center"><i data-lucide="sparkles" class="w-4 h-4 text-white"></i>
+</head>
+
+<body class="h-full bg-gray-50 overflow-hidden">
+
+  <!-- AUTH SCREEN -->
+  <section id="authScreen" class="hidden h-full w-full bg-gray-50">
+    <div class="min-h-full flex items-center justify-center px-6">
+      <div class="w-full max-w-md anim-fade">
+        <div class="bg-white border border-gray-100 rounded-3xl shadow-xl shadow-slate-200/40 p-8">
+          <div class="flex justify-center mb-6">
+            <div class="w-14 h-14 rounded-2xl bg-accent-500 flex items-center justify-center shadow-lg shadow-accent-500/20">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+                <path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z" fill="white"></path>
+              </svg>
             </div>
-            <p class="text-violet-700 text-xs font-bold uppercase tracking-wider">AI Quick Actions</p>
-           </div>
-           <p class="text-navy-900 font-bold text-lg">Let me handle these tasks</p>
           </div>
-          <div class="w-14 h-14 rounded-2xl bg-violet-600 flex items-center justify-center"><i data-lucide="zap" class="w-7 h-7 text-white"></i>
+
+          <div class="text-center">
+            <div class="text-3xl font-bold text-navy-700">REVA</div>
+            <div class="text-[11px] uppercase tracking-[0.25em] text-navy-400 mt-1">Virtual Ops Agent</div>
           </div>
-         </div>
-         <div class="space-y-2.5 mb-4"><button onclick="aiQuickAction('message hot leads')" class="w-full text-left px-3 py-2.5 rounded-xl bg-white/70 hover:bg-white text-violet-900 text-xs font-medium transition-colors flex items-center justify-between"> <span><i data-lucide="message-circle" class="w-3.5 h-3.5 inline-block mr-2"></i>Message hot leads</span> <i data-lucide="arrow-right" class="w-3.5 h-3.5"></i> </button> <button onclick="aiQuickAction('send booking links')" class="w-full text-left px-3 py-2.5 rounded-xl bg-white/70 hover:bg-white text-violet-900 text-xs font-medium transition-colors flex items-center justify-between"> <span><i data-lucide="send" class="w-3.5 h-3.5 inline-block mr-2"></i>Send booking links</span> <i data-lucide="arrow-right" class="w-3.5 h-3.5"></i> </button> <button onclick="aiQuickAction('prep follow-ups')" class="w-full text-left px-3 py-2.5 rounded-xl bg-white/70 hover:bg-white text-violet-900 text-xs font-medium transition-colors flex items-center justify-between"> <span><i data-lucide="refresh-cw" class="w-3.5 h-3.5 inline-block mr-2"></i>Prep follow-ups</span> <i data-lucide="arrow-right" class="w-3.5 h-3.5"></i> </button>
-         </div><button onclick="toggleAIPanel()" class="w-full flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl bg-violet-600 text-white text-sm font-semibold hover:bg-violet-700 transition-colors"> <i data-lucide="zap" class="w-4 h-4"></i> Open AI Assistant </button>
+
+          <div class="text-center mt-8">
+            <h1 class="text-2xl font-bold text-navy-700">Sign in to continue</h1>
+            <p class="text-sm text-gray-500 mt-2 leading-6">
+              Connect your Google account once to start monitoring inbox activity,
+              capturing leads, and organizing follow-up tasks.
+            </p>
+          </div>
+
+          <div class="mt-8 space-y-3">
+            <button id="googleLoginBtn" onclick="startGoogleAuth()" class="w-full rounded-xl px-4 py-3.5 bg-white border border-gray-200 hover:border-gray-300 hover:bg-gray-50 text-sm font-semibold text-gray-700 flex items-center justify-center gap-3 transition">
+              <svg width="18" height="18" viewBox="0 0 48 48">
+                <path fill="#FFC107" d="M43.6 20.5H42V20H24v8h11.3C33.7 32.7 29.3 36 24 36c-6.6 0-12-5.4-12-12S17.4 12 24 12c3 0 5.7 1.1 7.8 3l5.7-5.7C34 6.1 29.3 4 24 4 12.9 4 4 12.9 4 24s8.9 20 20 20 20-8.9 20-20c0-1.2-.1-2.3-.4-3.5z"></path>
+                <path fill="#FF3D00" d="M6.3 14.7l6.6 4.8C14.7 15.1 18.9 12 24 12c3 0 5.7 1.1 7.8 3l5.7-5.7C34 6.1 29.3 4 24 4c-7.7 0-14.3 4.3-17.7 10.7z"></path>
+                <path fill="#4CAF50" d="M24 44c5.2 0 9.9-2 13.3-5.2l-6.1-5.2c-2 1.5-4.4 2.4-7.2 2.4-5.3 0-9.8-3.3-11.4-8l-6.5 5C9.5 39.6 16.2 44 24 44z"></path>
+                <path fill="#1976D2" d="M43.6 20.5H42V20H24v8h11.3c-1.1 3.1-3.2 5.4-6 6.8l6.1 5.2C39.1 36.5 44 30.8 44 24c0-1.2-.1-2.3-.4-3.5z"></path>
+              </svg>
+              <span id="googleLoginLabel">Sign in with Google</span>
+            </button>
+
+            <button onclick="mockAuthError()" class="w-full rounded-xl px-4 py-3 text-sm font-medium text-gray-500 hover:text-gray-700 transition">
+              Preview error state
+            </button>
+          </div>
+
+          <div class="mt-6 flex items-start gap-2 text-xs text-gray-500">
+            <i data-lucide="shield-check" class="w-4 h-4 text-success-500 shrink-0 mt-0.5"></i>
+            <span>Secure OAuth connection. One-time setup. After sign-in, you will be redirected to your dashboard.</span>
+          </div>
+
+          <div id="authError" class="hidden mt-4 rounded-xl border border-danger-100 bg-danger-50 px-4 py-3 text-sm text-danger-500">
+            Authentication failed. Please try again.
+          </div>
         </div>
-       </div>
-      </div><!-- Snapshot Stats Section -->
-      <div class="mb-8">
-       <h3 class="text-sm font-bold text-navy-700 uppercase tracking-wider mb-4">Your Snapshot</h3>
-       <div class="grid grid-cols-2 lg:grid-cols-4 gap-3">
-        <button onclick="switchView('leads')" class="bg-white rounded-2xl p-4 border border-navy-100 card-lift fade-in stagger-1 hover:shadow-md hover:border-accent-200 transition-all text-left">
-         <div class="w-8 h-8 rounded-lg bg-accent-50 flex items-center justify-center mb-3"><i data-lucide="user-plus" class="w-4 h-4 text-accent-600"></i>
-         </div><p class="mono-font text-2xl font-bold text-navy-900">24</p><p class="text-navy-400 text-xs mt-1">Leads in pipeline</p>
-         <div class="flex items-center justify-between mt-2">
-          <p class="text-emerald-600 text-xs font-medium">+3 today</p><i data-lucide="arrow-right" class="w-3 h-3 text-accent-600"></i>
-         </div></button> <button onclick="switchView('queue')" class="bg-white rounded-2xl p-4 border border-navy-100 card-lift fade-in stagger-2 hover:shadow-md hover:border-amber-200 transition-all text-left">
-         <div class="w-8 h-8 rounded-lg bg-amber-50 flex items-center justify-center mb-3"><i data-lucide="message-circle" class="w-4 h-4 text-amber-600"></i>
-         </div><p class="mono-font text-2xl font-bold text-navy-900">5</p><p class="text-navy-400 text-xs mt-1">Need replies</p>
-         <div class="flex items-center justify-between mt-2">
-          <p class="text-amber-600 text-xs font-medium">Reply now</p><i data-lucide="arrow-right" class="w-3 h-3 text-amber-600"></i>
-         </div></button> <button onclick="switchView('queue')" class="bg-white rounded-2xl p-4 border border-navy-100 card-lift fade-in stagger-3 hover:shadow-md hover:border-violet-200 transition-all text-left">
-         <div class="w-8 h-8 rounded-lg bg-violet-50 flex items-center justify-center mb-3"><i data-lucide="star" class="w-4 h-4 text-violet-600"></i>
-         </div><p class="mono-font text-2xl font-bold text-navy-900">2</p><p class="text-navy-400 text-xs mt-1">Ready to book</p>
-         <div class="flex items-center justify-between mt-2">
-          <p class="text-violet-600 text-xs font-medium">Send links</p><i data-lucide="arrow-right" class="w-3 h-3 text-violet-600"></i>
-         </div></button> <button onclick="switchView('queue')" class="bg-white rounded-2xl p-4 border border-navy-100 card-lift fade-in stagger-4 hover:shadow-md hover:border-emerald-200 transition-all text-left">
-         <div class="w-8 h-8 rounded-lg bg-emerald-50 flex items-center justify-center mb-3"><i data-lucide="phone" class="w-4 h-4 text-emerald-600"></i>
-         </div><p class="mono-font text-2xl font-bold text-navy-900" id="kpiBooked">7</p><p class="text-navy-400 text-xs mt-1">Calls booked</p>
-         <div class="flex items-center justify-between mt-2">
-          <p class="text-emerald-600 text-xs font-medium">70% goal</p><i data-lucide="arrow-right" class="w-3 h-3 text-emerald-600"></i>
-         </div></button>
-       </div>
-      </div><!-- Main Content Grid -->
-      <div class="grid lg:grid-cols-3 gap-6"><!-- Priority Queue -->
-       <div class="lg:col-span-2">
-        <div class="flex items-center justify-between mb-4">
-         <div>
-          <h3 class="text-navy-900 font-bold text-sm">What to do right now</h3>
-          <p class="text-navy-400 text-xs mt-0.5">5 actions prioritized for you</p>
-         </div><button onclick="switchView('queue')" class="text-accent-600 text-xs font-medium hover:underline flex items-center gap-1"><i data-lucide="arrow-right" class="w-3 h-3"></i> See all</button>
-        </div>
-        <div class="space-y-3" id="dashboardActions"><!-- Populated by JS -->
-        </div>
-       </div><!-- Daily Digest -->
-       <div>
-        <div class="flex items-center justify-between mb-4">
-         <div>
-          <h3 class="text-navy-900 font-bold text-sm">This week so far</h3>
-          <p class="text-navy-400 text-xs mt-0.5">Recent highlights</p>
-         </div><button onclick="switchView('activity')" class="text-accent-600 text-xs font-medium hover:underline flex items-center gap-1"><i data-lucide="arrow-right" class="w-3 h-3"></i></button>
-        </div>
-        <div class="bg-white rounded-2xl border border-navy-100 divide-y divide-navy-50" id="dashboardActivity"><!-- Populated by JS -->
-        </div>
-       </div>
       </div>
-     </div><!-- QUEUE VIEW -->
-     <div id="view-queue" class="p-6 hidden">
-      <div class="flex items-center justify-between mb-6">
-       <div>
-        <h3 class="text-navy-900 font-bold">Action Queue</h3>
-        <p class="text-navy-400 text-xs mt-1">Prioritized tasks for today — work top to bottom</p>
-       </div>
-       <div class="flex gap-2"><button class="queue-filter active-filter px-3 py-1.5 text-xs font-medium rounded-lg bg-accent-600 text-white" onclick="filterQueue('all', this)">All</button> <button class="queue-filter px-3 py-1.5 text-xs font-medium rounded-lg bg-navy-50 text-navy-500 border border-navy-200" onclick="filterQueue('message', this)">Ready to Message</button> <button class="queue-filter px-3 py-1.5 text-xs font-medium rounded-lg bg-navy-50 text-navy-500 border border-navy-200" onclick="filterQueue('followup', this)">Follow-Up</button> <button class="queue-filter px-3 py-1.5 text-xs font-medium rounded-lg bg-navy-50 text-navy-500 border border-navy-200" onclick="filterQueue('book', this)">Ready to Book</button>
-       </div>
-      </div>
-      <div class="space-y-3" id="queueList"><!-- Populated by JS -->
-      </div>
-     </div><!-- PIPELINE VIEW -->
-     <div id="view-pipeline" class="p-6 hidden">
-      <div class="flex items-center justify-between mb-6">
-       <div>
-        <h3 class="text-navy-900 font-bold">Pipeline</h3>
-        <p class="text-navy-400 text-xs mt-1">Drag-free overview of all leads by stage</p>
-       </div>
-      </div>
-      <div class="flex gap-4 overflow-x-auto pb-4" id="pipelineBoard"><!-- Populated by JS -->
-      </div>
-     </div><!-- LEADS VIEW -->
-     <div id="view-leads" class="p-6 hidden">
-      <div class="flex items-center justify-between mb-6">
-       <div>
-        <h3 class="text-navy-900 font-bold">All Leads</h3>
-        <p class="text-navy-400 text-xs mt-1">Complete list of leads from your spreadsheet</p>
-       </div>
-       <div class="relative"><i data-lucide="search" class="w-4 h-4 text-navy-400 absolute left-3 top-1/2 -translate-y-1/2"></i> <input type="text" placeholder="Search leads..." id="leadSearch" oninput="searchLeads(this.value)" class="pl-9 pr-4 py-2 text-sm bg-white border border-navy-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-accent-200 focus:border-accent-400 w-64" aria-label="Search leads">
-       </div>
-      </div>
-      <div class="bg-white rounded-2xl border border-navy-100 overflow-hidden">
-       <table class="w-full text-sm">
-        <thead>
-         <tr class="bg-navy-50 text-navy-500 text-xs uppercase tracking-wider">
-          <th class="text-left px-5 py-3 font-semibold">Name</th>
-          <th class="text-left px-5 py-3 font-semibold hidden sm:table-cell">Role</th>
-          <th class="text-left px-5 py-3 font-semibold">Stage</th>
-          <th class="text-left px-5 py-3 font-semibold hidden md:table-cell">Priority</th>
-          <th class="text-left px-5 py-3 font-semibold hidden lg:table-cell">Last Contact</th>
-          <th class="px-5 py-3 font-semibold text-right">Action</th>
-         </tr>
-        </thead>
-        <tbody id="leadsTable" class="divide-y divide-navy-50"><!-- Populated by JS -->
-        </tbody>
-       </table>
-      </div>
-     </div><!-- ACTIVITY VIEW -->
-     <div id="view-activity" class="p-6 hidden">
-      <div class="mb-6">
-       <h3 class="text-navy-900 font-bold">Activity Feed</h3>
-       <p class="text-navy-400 text-xs mt-1">Everything that's happened in your sprint</p>
-      </div>
-      <div class="bg-white rounded-2xl border border-navy-100 divide-y divide-navy-50" id="activityFull"><!-- Populated by JS -->
-      </div>
-     </div>
     </div>
-   </main><!-- Lead Detail Panel -->
-   <div id="detailOverlay" class="fixed inset-0 bg-navy-950/40 z-40 hidden" onclick="closeDetail()"></div>
-   <aside id="detailPanel" class="detail-panel fixed top-0 right-0 h-full w-full max-w-md bg-white shadow-2xl z-50 flex flex-col translate-x-full" style="height:100%">
-    <div class="flex items-center justify-between p-5 border-b border-navy-100 shrink-0">
-     <h3 class="text-navy-900 font-bold text-sm">Lead Details</h3><button onclick="closeDetail()" class="text-navy-400 hover:text-navy-600 p-1 rounded-lg hover:bg-navy-50"> <i data-lucide="x" class="w-5 h-5"></i> </button>
-    </div>
-    <div class="flex-1 scroll-area p-5" id="detailContent"><!-- Populated by JS -->
-    </div>
-   </aside><!-- Toast -->
-   <div class="toast-msg" id="toast"></div><!-- Upload Modal -->
-   <div id="uploadOverlay" class="fixed inset-0 bg-navy-950/40 z-50 hidden flex items-center justify-center" onclick="if(event.target === this) closeUploadModal()">
-    <div class="bg-white rounded-3xl shadow-2xl w-full max-w-md mx-4 overflow-hidden">
-     <div class="flex items-center justify-between p-6 border-b border-navy-100">
-      <h3 class="text-navy-900 font-bold text-lg">Upload Leads</h3><button onclick="closeUploadModal()" class="text-navy-400 hover:text-navy-600 p-1 rounded-lg hover:bg-navy-50"><i data-lucide="x" class="w-5 h-5"></i></button>
-     </div>
-     <div class="p-6">
-      <p class="text-navy-600 text-sm mb-4">Upload a CSV, spreadsheet, or pasted list of leads to organize, score, and follow up inside your lead system.</p>
-      <div class="space-y-4">
-       <div class="border-2 border-dashed border-navy-200 rounded-xl p-6 text-center hover:bg-navy-50 transition-colors cursor-pointer" onclick="document.getElementById('fileInput').click()">
-        <div class="flex justify-center mb-2">
-         <div class="w-12 h-12 rounded-lg bg-accent-50 flex items-center justify-center"><i data-lucide="upload-cloud" class="w-6 h-6 text-accent-600"></i>
-         </div>
-        </div>
-        <p class="font-medium text-navy-900 text-sm">Drag and drop or click to upload</p>
-        <p class="text-navy-400 text-xs mt-1">CSV or Excel spreadsheet</p><input type="file" id="fileInput" class="hidden" accept=".csv,.xlsx" onchange="handleFileUpload(event)">
-       </div>
-       <div class="relative">
-        <div class="absolute inset-0 flex items-center">
-         <div class="w-full border-t border-navy-200"></div>
-        </div>
-        <div class="relative flex justify-center"><span class="bg-white px-2 text-navy-400 text-xs font-medium">OR</span>
-        </div>
-       </div>
-     <textarea
-  id="pasteArea"
-  class="w-full h-24 p-3 border border-navy-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-accent-200 focus:border-accent-400 resize-none font-mono text-xs"
-  placeholder="Paste lead data here...
-Name | Company | Email | Phone | Service Interest
-Afton Jones | Help Wanted Consulting | afton@example.com | 555-212-8890 | Lead workflow automation
-..."></textarea>
+  </section>
 
-<div class="flex gap-2">
-       
-       <div class="flex gap-2">
-        <button onclick="closeUploadModal()" class="flex-1 px-4 py-2.5 rounded-xl border-2 border-navy-200 text-navy-700 text-sm font-semibold hover:bg-navy-50 transition-colors">Cancel</button> <button onclick="processUpload()" class="flex-1 px-4 py-2.5 rounded-xl bg-accent-600 text-white text-sm font-semibold hover:bg-accent-700 transition-colors flex items-center justify-center gap-2"><i data-lucide="check" class="w-4 h-4"></i> Upload</button>
-       </div>
+  <!-- APP -->
+  <div id="appShell" class="hidden h-full w-full">
+    <div class="flex h-full w-full">
+      <div id="sidebarOverlay" class="sidebar-overlay fixed inset-0 bg-black/40 z-30" onclick="toggleMobileSidebar()"></div>
+
+      <aside id="sidebar" class="fixed lg:relative z-40 flex flex-col w-[240px] h-full bg-navy-700 text-white shrink-0 -translate-x-full lg:translate-x-0 transition-transform duration-200">
+        <div class="flex items-center gap-3 px-5 py-5 border-b border-white/10">
+          <div class="w-9 h-9 rounded-lg bg-accent-500 flex items-center justify-center">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+              <path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z" fill="white"></path>
+            </svg>
+          </div>
+          <div>
+            <div class="text-[15px] font-bold tracking-wide">REVA</div>
+            <div class="text-[10px] text-navy-300 uppercase tracking-widest">Virtual Ops Agent</div>
+          </div>
+        </div>
+
+        <nav class="flex-1 py-3 px-3 space-y-0.5 overflow-y-auto">
+          <button onclick="navigate('dashboard')" data-nav="dashboard" class="nav-item active w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm text-navy-200">
+            <i data-lucide="layout-dashboard" class="nav-icon w-[18px] h-[18px]"></i> Dashboard
+          </button>
+          <button onclick="navigate('gmail')" data-nav="gmail" class="nav-item w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm text-navy-200">
+            <i data-lucide="mail" class="nav-icon w-[18px] h-[18px]"></i> Gmail Intake
+          </button>
+          <button onclick="navigate('leads')" data-nav="leads" class="nav-item w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm text-navy-200">
+            <i data-lucide="users" class="nav-icon w-[18px] h-[18px]"></i> Leads
+          </button>
+          <button onclick="navigate('tasks')" data-nav="tasks" class="nav-item w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm text-navy-200">
+            <i data-lucide="check-square" class="nav-icon w-[18px] h-[18px]"></i> Tasks
+          </button>
+          <button onclick="navigate('completed')" data-nav="completed" class="nav-item w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm text-navy-200">
+            <i data-lucide="archive" class="nav-icon w-[18px] h-[18px]"></i> Completed
+          </button>
+          <button onclick="navigate('workflows')" data-nav="workflows" class="nav-item w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm text-navy-200">
+            <i data-lucide="git-branch" class="nav-icon w-[18px] h-[18px]"></i> Workflows
+          </button>
+          <div class="pt-4 pb-2 px-3"><div class="border-t border-white/10"></div></div>
+          <button onclick="navigate('settings')" data-nav="settings" class="nav-item w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm text-navy-200">
+            <i data-lucide="settings" class="nav-icon w-[18px] h-[18px]"></i> Settings
+          </button>
+        </nav>
+
+        <div class="px-4 py-4 border-t border-white/10">
+          <div class="flex items-center gap-2 text-xs">
+            <span class="w-2 h-2 rounded-full bg-success-400 pulse-dot"></span>
+            <span class="text-success-300 font-medium">Gmail Connected</span>
+          </div>
+          <div class="text-[10px] text-navy-400 mt-1">Monitoring incoming activity</div>
+          <div class="text-[10px] text-navy-400 mono">Last synced: 2 min ago</div>
+          <button onclick="logout()" class="mt-4 text-xs text-navy-200 hover:text-white transition inline-flex items-center gap-2">
+            <i data-lucide="log-out" class="w-3.5 h-3.5"></i> Sign Out
+          </button>
+        </div>
+      </aside>
+
+      <div class="flex-1 flex flex-col h-full min-w-0">
+        <header class="flex items-center justify-between h-[60px] px-4 lg:px-6 bg-white border-b border-gray-200 shrink-0">
+          <div class="flex items-center gap-3">
+            <button onclick="toggleMobileSidebar()" class="lg:hidden p-1.5 rounded-lg hover:bg-gray-100">
+              <i data-lucide="menu" class="w-5 h-5 text-gray-600"></i>
+            </button>
+            <div id="pageTitle" class="text-[15px] font-semibold text-navy-700">Dashboard</div>
+          </div>
+
+          <div class="flex items-center gap-2">
+            <div class="hidden sm:flex items-center gap-2 bg-gray-50 border border-gray-200 rounded-lg px-3 py-1.5 w-[220px]">
+              <i data-lucide="search" class="w-4 h-4 text-gray-400"></i>
+              <input type="text" placeholder="Search emails, tasks..." class="bg-transparent text-sm text-gray-700 outline-none flex-1 placeholder-gray-400">
+            </div>
+
+            <button onclick="doSync()" id="syncBtn" class="btn-ghost flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-medium">
+              <i data-lucide="refresh-cw" class="w-3.5 h-3.5"></i> Sync
+            </button>
+
+            <div class="flex items-center gap-1.5 bg-success-50 border border-success-200 rounded-lg px-3 py-1.5">
+              <span class="w-1.5 h-1.5 rounded-full bg-success-500 pulse-dot"></span>
+              <span class="text-xs font-medium text-success-700">Webhook Active</span>
+            </div>
+          </div>
+        </header>
+
+        <div class="flex flex-1 overflow-hidden">
+          <main class="flex-1 overflow-y-auto p-4 lg:p-6">
+
+            <div id="view-dashboard" class="view-section space-y-6">
+              <div>
+                <h1 class="text-xl font-bold text-navy-700">Welcome back, Operations</h1>
+                <p class="text-sm text-gray-500 mt-0.5">Here is what REVA captured today.</p>
+              </div>
+
+              <div class="grid grid-cols-2 lg:grid-cols-4 gap-4">
+                <div class="bg-white rounded-xl p-4 border border-gray-100 shadow-sm card-hover">
+                  <div class="flex items-center justify-between mb-3">
+                    <div class="w-9 h-9 rounded-lg bg-accent-50 flex items-center justify-center"><i data-lucide="mail" class="w-4 h-4 text-accent-500"></i></div>
+                    <span class="text-xs font-medium text-success-600 bg-success-50 px-2 py-0.5 rounded-full">+12</span>
+                  </div>
+                  <div class="text-2xl font-bold text-navy-700 mono">47</div>
+                  <div class="text-xs text-gray-500 mt-0.5">Emails Captured</div>
+                </div>
+
+                <div class="bg-white rounded-xl p-4 border border-gray-100 shadow-sm card-hover">
+                  <div class="flex items-center justify-between mb-3">
+                    <div class="w-9 h-9 rounded-lg bg-purple-50 flex items-center justify-center"><i data-lucide="users" class="w-4 h-4 text-purple-500"></i></div>
+                    <span class="text-xs font-medium text-success-600 bg-success-50 px-2 py-0.5 rounded-full">+5</span>
+                  </div>
+                  <div class="text-2xl font-bold text-navy-700 mono">18</div>
+                  <div class="text-xs text-gray-500 mt-0.5">Active Leads</div>
+                </div>
+
+                <div class="bg-white rounded-xl p-4 border border-gray-100 shadow-sm card-hover">
+                  <div class="flex items-center justify-between mb-3">
+                    <div class="w-9 h-9 rounded-lg bg-warn-50 flex items-center justify-center"><i data-lucide="check-square" class="w-4 h-4 text-warn-500"></i></div>
+                    <span class="text-xs font-medium text-warn-500 bg-warn-50 px-2 py-0.5 rounded-full">6 new</span>
+                  </div>
+                  <div class="text-2xl font-bold text-navy-700 mono">23</div>
+                  <div class="text-xs text-gray-500 mt-0.5">Open Tasks</div>
+                </div>
+
+                <div class="bg-white rounded-xl p-4 border border-gray-100 shadow-sm card-hover">
+                  <div class="flex items-center justify-between mb-3">
+                    <div class="w-9 h-9 rounded-lg bg-success-50 flex items-center justify-center"><i data-lucide="zap" class="w-4 h-4 text-success-500"></i></div>
+                    <span class="text-xs font-medium text-gray-500 bg-gray-100 px-2 py-0.5 rounded-full">100%</span>
+                  </div>
+                  <div class="text-2xl font-bold text-navy-700 mono">34</div>
+                  <div class="text-xs text-gray-500 mt-0.5">Webhooks Sent</div>
+                </div>
+              </div>
+
+              <div class="bg-white rounded-xl border border-gray-100 shadow-sm p-5">
+                <h3 class="text-sm font-semibold text-navy-700 mb-4">Automation Pipeline</h3>
+                <div class="flex items-center justify-center flex-wrap gap-3 text-xs text-gray-600">
+                  <div class="px-4 py-3 rounded-xl border border-danger-100 bg-danger-50">Gmail</div>
+                  <span class="text-gray-300">→</span>
+                  <div class="px-4 py-3 rounded-xl border border-accent-100 bg-accent-50">Parsing</div>
+                  <span class="text-gray-300">→</span>
+                  <div class="px-4 py-3 rounded-xl border border-purple-100 bg-purple-50">Make</div>
+                  <span class="text-gray-300">→</span>
+                  <div class="px-4 py-3 rounded-xl border border-success-100 bg-success-50">Tasks / Leads</div>
+                </div>
+              </div>
+
+              <div class="bg-white rounded-xl border border-gray-100 shadow-sm">
+                <div class="flex items-center justify-between px-5 py-3.5 border-b border-gray-100">
+                  <h3 class="text-sm font-semibold text-navy-700">Recent Activity</h3>
+                  <button onclick="navigate('gmail')" class="text-xs text-accent-500 font-medium hover:text-accent-700">View All →</button>
+                </div>
+                <div class="overflow-x-auto">
+                  <table class="w-full text-sm">
+                    <thead>
+                      <tr class="bg-gray-50/80 text-left text-xs text-gray-500 font-medium">
+                        <th class="px-5 py-2.5">Sender</th>
+                        <th class="px-3 py-2.5">Subject</th>
+                        <th class="px-3 py-2.5">Category</th>
+                        <th class="px-3 py-2.5">Status</th>
+                        <th class="px-3 py-2.5">Time</th>
+                      </tr>
+                    </thead>
+                    <tbody id="dashRecentTable"></tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+
+            <div id="view-gmail" class="view-section hidden space-y-5">
+              <div>
+                <h1 class="text-xl font-bold text-navy-700">Gmail Intake</h1>
+                <p class="text-sm text-gray-500 mt-0.5">All captured emails and notifications</p>
+              </div>
+              <div class="bg-white rounded-xl border border-gray-100 shadow-sm overflow-x-auto">
+                <table class="w-full text-sm">
+                  <thead>
+                    <tr class="bg-gray-50/80 text-left text-xs text-gray-500 font-medium">
+                      <th class="px-5 py-2.5">Sender</th>
+                      <th class="px-3 py-2.5">Subject</th>
+                      <th class="px-3 py-2.5">Category</th>
+                      <th class="px-3 py-2.5">Time</th>
+                      <th class="px-3 py-2.5">Status</th>
+                    </tr>
+                  </thead>
+                  <tbody id="gmailTable"></tbody>
+                </table>
+              </div>
+            </div>
+
+            <div id="view-leads" class="view-section hidden">
+              <h1 class="text-xl font-bold text-navy-700">Leads</h1>
+            </div>
+
+            <div id="view-tasks" class="view-section hidden">
+              <h1 class="text-xl font-bold text-navy-700">Tasks</h1>
+            </div>
+
+            <div id="view-completed" class="view-section hidden">
+              <h1 class="text-xl font-bold text-navy-700">Completed</h1>
+            </div>
+
+            <div id="view-workflows" class="view-section hidden">
+              <h1 class="text-xl font-bold text-navy-700">Workflows</h1>
+            </div>
+
+            <div id="view-settings" class="view-section hidden space-y-5">
+              <div>
+                <h1 class="text-xl font-bold text-navy-700">Settings</h1>
+                <p class="text-sm text-gray-500 mt-0.5">Configure your REVA instance</p>
+              </div>
+
+              <div class="bg-white rounded-xl border border-gray-100 shadow-sm p-5">
+                <h3 class="text-sm font-semibold text-navy-700 mb-1">Gmail Connection</h3>
+                <p class="text-xs text-gray-500 mb-4">OAuth-connected email and Google Voice</p>
+
+                <div class="bg-gray-50 rounded-lg p-4 mb-4 border border-gray-200">
+                  <div class="text-sm font-medium text-gray-800">operations@company.com</div>
+                  <div class="flex items-center gap-1.5 mt-1">
+                    <span class="w-1.5 h-1.5 rounded-full bg-success-500 pulse-dot"></span>
+                    <span class="text-xs text-success-600">Connected · Monitoring</span>
+                  </div>
+                  <div class="text-xs text-gray-500 mt-1">Last synced: 2 min ago</div>
+                </div>
+
+                <div class="flex gap-2">
+                  <button onclick="doSync()" class="btn-primary px-4 py-2 rounded-lg text-sm font-medium">Sync Now</button>
+                  <button onclick="showToast('Reconnect would open Google OAuth','default')" class="btn-ghost px-4 py-2 rounded-lg text-sm font-medium">Reconnect</button>
+                </div>
+              </div>
+            </div>
+
+          </main>
+
+          <aside id="detailPanel" class="detail-panel hidden-panel w-[320px] bg-white border-l border-gray-200 h-full overflow-y-auto shrink-0 hidden lg:block">
+            <div class="p-5">
+              <div class="flex items-center justify-between mb-4">
+                <h3 class="text-sm font-semibold text-navy-700">Email Details</h3>
+                <button onclick="closeDetailPanel()" class="p-1 rounded-lg hover:bg-gray-100">
+                  <i data-lucide="x" class="w-4 h-4 text-gray-400"></i>
+                </button>
+              </div>
+
+              <div class="space-y-4">
+                <div>
+                  <div class="text-xs text-gray-400 uppercase tracking-wide mb-1">From</div>
+                  <div id="detailFrom" class="text-sm font-medium text-gray-800">—</div>
+                </div>
+                <div>
+                  <div class="text-xs text-gray-400 uppercase tracking-wide mb-1">Subject</div>
+                  <div id="detailSubject" class="text-sm text-gray-700">—</div>
+                </div>
+                <div>
+                  <div class="text-xs text-gray-400 uppercase tracking-wide mb-1">Category</div>
+                  <div id="detailCategory">—</div>
+                </div>
+                <div>
+                  <div class="text-xs text-gray-400 uppercase tracking-wide mb-1">Extracted Contact</div>
+                  <div id="detailContact" class="text-sm text-gray-700">—</div>
+                </div>
+                <div>
+                  <div class="text-xs text-gray-400 uppercase tracking-wide mb-1">Summary</div>
+                  <div id="detailSummary" class="text-sm text-gray-600 leading-relaxed">—</div>
+                </div>
+                <div>
+                  <div class="text-xs text-gray-400 uppercase tracking-wide mb-1">Suggested Task</div>
+                  <div id="detailTask" class="text-sm text-gray-700 bg-accent-50 rounded-lg px-3 py-2 border border-accent-100">—</div>
+                </div>
+              </div>
+            </div>
+          </aside>
+        </div>
       </div>
-     </div>
     </div>
-   </div>
-  </div><!-- AI Assistant Panel -->
-  <div id="aiAssistantPanel" class="fixed bottom-6 right-6 w-96 max-w-[calc(100%-24px)] bg-white rounded-2xl shadow-2xl border border-navy-100 flex flex-col z-40 overflow-hidden ai-panel-closed" style="height: 0; opacity: 0;">
-   <div class="flex items-center justify-between p-4 bg-gradient-to-r from-accent-600 to-accent-700 text-white shrink-0 cursor-pointer" onclick="toggleAIPanel()">
-    <div class="flex items-center gap-2">
-     <div class="w-6 h-6 rounded-lg bg-white/20 flex items-center justify-center"><i data-lucide="zap" class="w-4 h-4 text-white"></i>
-     </div><span class="font-semibold text-sm">AI Assistant</span> <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
-    </div><button onclick="closeAIPanel()" class="text-white hover:bg-white/20 p-1 rounded-lg transition-colors"> <i data-lucide="x" class="w-4 h-4"></i> </button>
-   </div>
-   <div class="flex-1 scroll-area flex flex-col" id="aiChat" style="min-height: 250px; max-height: 400px;">
-    <div class="flex-1 flex items-end justify-center text-center p-4">
-     <div>
-      <div class="w-10 h-10 rounded-xl bg-accent-100 flex items-center justify-center mx-auto mb-2"><i data-lucide="sparkles" class="w-5 h-5 text-accent-600"></i>
-      </div>
-      <p class="text-navy-600 text-sm font-medium">Hi! I can help you complete tasks in your sprint.</p>
-      <p class="text-navy-400 text-xs mt-1">Try asking me to message a lead or update statuses.</p>
-     </div>
-    </div>
-   </div>
-   <div class="border-t border-navy-100 p-3 shrink-0">
-    <div class="flex gap-2"><input type="text" id="aiInput" placeholder="Ask me something..." class="flex-1 px-3 py-2 text-sm border border-navy-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-accent-200 focus:border-accent-400" onkeypress="if(event.key==='Enter') handleAIRequest()"> <button onclick="handleAIRequest()" class="px-3 py-2 bg-accent-600 text-white rounded-lg hover:bg-accent-700 transition-colors flex items-center justify-center"> <i data-lucide="send" class="w-4 h-4"></i> </button>
-    </div>
-   </div>
-  </div><!-- AI Assistant Toggle Button (mobile/small screens) --> <button id="aiToggleBtn" onclick="toggleAIPanel()" class="fixed bottom-6 right-6 w-14 h-14 rounded-full bg-gradient-to-br from-accent-600 to-accent-700 text-white shadow-lg flex items-center justify-center hover:shadow-xl transition-shadow z-40 ai-toggle-btn"> <i data-lucide="zap" class="w-6 h-6"></i> </button>
-<script>
-  // =========================
-  // Make-connected dashboard
-  // =========================
+  </div>
 
-  // 1) SET YOUR MAKE WEBHOOK URLS HERE
-  const MAKE_CONFIG = {
-    readUrl: 'https://hook.us2.make.com/REPLACE_WITH_YOUR_READ_WEBHOOK',
-    actionUrl: 'https://hook.us2.make.com/REPLACE_WITH_YOUR_ACTION_WEBHOOK'
-  };
+  <div id="toastContainer" class="fixed top-4 right-4 z-50 space-y-2"></div>
 
-  // 2) FALLBACK DATA
-const fallbackLeads = [
-  {
-    id: 1,
-    name: 'Afton Jones',
-    company: 'Help Wanted Consulting',
-    role: 'Founder',
-    serviceInterest: 'Lead workflow automation',
-    source: 'CCBB Event',
-    stage: 'Qualified',
-    priority: 'Hot',
-    score: 92,
-    lastContact: '2 hours ago',
-    email: 'afton@example.com',
-    phone: '(555) 212-8890',
-    linkedin: 'linkedin.com/in/aftonjones',
-    website: 'helpwantedconsulting.com',
-    notes: 'Interested in a white-label assessment and lead generation workflow tied to LinkedIn Sales Navigator and HubSpot.',
-    aiSummary: 'Strong fit. Established service business, clear operational pain point, and budget pathway already identified.',
-    message: 'Hi Afton, based on what you shared, I recommend starting with a white-label assessment paired with a simple lead intake and follow-up workflow. It would give you a cleaner pipeline and a repeatable way to qualify leads before you spend time chasing them. Would you like me to map the first version for you?',
-    nextStep: 'Send proposal and schedule review call',
-    owner: 'Lorraine'
-  },
-  {
-    id: 2,
-    name: 'Natasha Green',
-    company: 'Green Path Wellness',
-    role: 'Owner',
-    serviceInterest: 'Website lead capture',
-    source: 'Referral',
-    stage: 'Active',
-    priority: 'Warm',
-    score: 78,
-    lastContact: '1 day ago',
-    email: 'natasha@example.com',
-    phone: '(555) 310-4412',
-    linkedin: 'linkedin.com/in/natashagreen',
-    website: 'greenpathwellness.com',
-    notes: 'Needs stronger intake process and follow-up reminders.',
-    aiSummary: 'Good fit. Service business with soft systems and clear lead leakage.',
-    message: 'Hi Natasha, I took a look at the way leads are likely coming into your business right now. I see an opportunity to tighten intake, follow-up, and response speed so fewer prospects slip through. Would you be open to a quick call to review what that could look like?',
-    nextStep: 'Send first follow-up and booking link',
-    owner: 'Lorraine'
-  },
-  {
-    id: 3,
-    name: 'Josh Erickson',
-    company: 'Erickson Technical',
-    role: 'Founder',
-    serviceInterest: 'Pre-onboarding assessment workflow',
-    source: 'CCBB Event',
-    stage: 'New',
-    priority: 'Warm',
-    score: 74,
-    lastContact: '3 days ago',
-    email: 'josh@ericksontechnical.com',
-    phone: '',
-    linkedin: 'linkedin.com/in/josherickson',
-    website: 'ericksontechnical.com',
-    notes: 'Interested in how assessment-first onboarding could reduce friction with small business clients.',
-    aiSummary: 'Promising fit. Operational pain is real, but urgency is moderate.',
-    message: 'Hi Josh, I kept thinking about our conversation around onboarding friction. A short intake assessment before service delivery could probably reduce confusion and save time on both sides. If you want, I can sketch what that would look like for your business.',
-    nextStep: 'Send initial outreach',
-    owner: 'Lorraine'
-  },
-  {
-    id: 4,
-    name: 'Vinis Walker',
-    company: 'SkillSphere',
-    role: 'Founder',
-    serviceInterest: 'AI agent build',
-    source: 'Direct Inquiry',
-    stage: 'Active',
-    priority: 'Hot',
-    score: 88,
-    lastContact: 'Today',
-    email: '',
-    phone: '',
-    linkedin: 'linkedin.com/in/vinis-walker',
-    website: '',
-    notes: 'Inquired about building AI agents. High interest signal.',
-    aiSummary: 'High-fit inquiry. Direct interest in AI implementation and likely needs discovery.',
-    message: 'Hi Vinis, thanks again for reaching out. Based on your interest in AI agents, the first step is usually defining where the agent fits in the business, what task it owns, and what result it should improve. If helpful, I can walk you through that in a focused discovery call.',
-    nextStep: 'Send discovery call invitation',
-    owner: 'Lorraine'
-  }
-];
-
-  const fallbackActivities = [
-    { icon:'user-plus', text:'3 new leads processed from spreadsheet', time:'2 hours ago', color:'accent' },
-    { icon:'flame', text:'Sarah Chen marked as high priority', time:'2 hours ago', color:'red' },
-    { icon:'message-circle', text:'Follow-up message generated for Marcus Johnson', time:'3 hours ago', color:'amber' },
-    { icon:'calendar', text:'Elena Rodriguez booked a strategy call', time:'5 hours ago', color:'emerald' },
-    { icon:'star', text:'James Wright qualified — ready to book', time:'Yesterday', color:'violet' },
-    { icon:'send', text:'Initial outreach sent to David Kim', time:'Yesterday', color:'accent' },
-    { icon:'calendar', text:'Tom Baker booked a strategy call', time:'2 days ago', color:'emerald' },
-    { icon:'user-plus', text:'5 new leads processed from spreadsheet', time:'3 days ago', color:'accent' },
-    { icon:'flame', text:'Marcus Johnson moved to high priority', time:'3 days ago', color:'red' },
-    { icon:'check-circle', text:'Sprint Day 12 — on track for goal', time:'Today', color:'emerald' }
-  ];
-
-  const fallbackActionQueue = [
-  { leadId: 3, type: 'message', label: 'Initial Outreach', desc: 'Send first message to Josh Erickson' },
-  { leadId: 2, type: 'followup', label: 'Follow-Up Due', desc: 'Natasha Green needs a follow-up message' },
-  { leadId: 1, type: 'book', label: 'Consultation Ready', desc: 'Afton Jones is ready for proposal review' },
-  { leadId: 4, type: 'book', label: 'Consultation Ready', desc: 'Vinis Walker is ready for discovery call scheduling' }
-];
-
- const fallbackMeta = {
-  dashboardTitle: 'AI Lead Generation System',
-  dashboardSubtitle: 'Lead Intake, Scoring, and Follow-Up',
-  dayLabel: 'Thursday, March 19, 2026 · Daily Lead Review',
-  dateLabel: 'Thursday, March 19',
-  syncStatus: 'Leads synced from your uploaded list'
-};
-
-const fallbackSummary = {
-  goalCurrent: 6,
-  goalTarget: 15,
-  daysLeft: 12,
-  callsNeeded: 9,
-  kpis: {
-    leadsInPipeline: 42,
-    needReplies: 8,
-    readyToBook: 4,
-    callsBooked: 6,
-    newToday: 5
-  }
-};
-
-  // 3) DEFAULT CONFIG
-  const defaultConfig = {
-  dashboard_title: 'AI Lead Generation System',
-  dashboard_subtitle: 'Lead Intake, Scoring, and Follow-Up',
-  goal_target: '15',
-  offer_primary: 'Free Discovery Call',
-  offer_secondary: 'Service Consultation',
-  background_color: '#f0f3f9',
-  surface_color: '#ffffff',
-  text_color: '#0d1b30',
-  primary_action_color: '#3370ff',
-  secondary_action_color: '#2d4a7c',
-  font_family: 'DM Sans',
-  font_size: 14
-};
-
-  // 4) LIVE STATE
-  let leads = [];
-  let activities = [];
-  let actionQueue = [];
-  let dashboardMeta = {};
-  let dashboardSummary = {};
-  let completedActions = new Set();
-  let currentQueueFilter = 'all';
-  let aiPanelOpen = false;
-
-  // 5) HELPERS
-  function escapeHtml(text) {
-    const map = { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#039;' };
-    return String(text || '').replace(/[&<>"']/g, function(m) { return map[m]; });
-  }
-
-  function showToast(msg) {
-    const t = document.getElementById('toast');
-    t.textContent = msg;
-    t.classList.add('show');
-    setTimeout(function() {
-      t.classList.remove('show');
-    }, 2500);
-  }
-
-  function setRefreshState(isLoading) {
-    const refreshIcon = document.querySelector('.refresh-icon');
-    if (!refreshIcon) return;
-    if (isLoading) refreshIcon.classList.add('spinning');
-    else refreshIcon.classList.remove('spinning');
-  }
-
- function normalizeLead(lead, index) {
-  const id = lead && lead.id != null ? lead.id : index + 1;
-  return {
-    id: id,
-    name: lead.name || 'Unknown Lead',
-    company: lead.company || '',
-    role: lead.role || '',
-    serviceInterest: lead.serviceInterest || '',
-    source: lead.source || 'Uploaded List',
-    stage: lead.stage || 'New',
-    priority: lead.priority || 'Warm',
-    score: lead.score != null ? Number(lead.score) : 0,
-    aiSummary: lead.aiSummary || '',
-    lastContact: lead.lastContact || 'Unknown',
-    email: lead.email || '',
-    phone: lead.phone || '',
-    linkedin: lead.linkedin || '',
-    website: lead.website || '',
-    notes: lead.notes || '',
-    message: lead.message || '',
-    nextStep: lead.nextStep || '',
-    owner: lead.owner || '',
-    offer: lead.offer || ''
-  };
-}
-
-  function safeArray(arr) {
-    return Array.isArray(arr) ? arr : [];
-  }
-
-  function getLeadById(id) {
-    return leads.find(function(l) { return String(l.id) === String(id); });
-  }
-
-  // 6) MAKE API LAYER
-  async function fetchDashboardData() {
-  try {
-    setRefreshState(true);
-
-    const response = await fetch(MAKE_CONFIG.readUrl, {
-      method: 'GET',
-      headers: {
-        'Accept': 'application/json'
-      }
-    });
-
-    if (!response.ok) {
-      throw new Error('Dashboard fetch failed: ' + response.status);
-    }
-
-    const data = await response.json();
-
-    // Guard against empty or bad payloads
-    if (
-      !data ||
-      typeof data !== 'object' ||
-      (!Array.isArray(data.leads) &&
-       !Array.isArray(data.activities) &&
-       !Array.isArray(data.actionQueue))
-    ) {
-      throw new Error('Make returned an invalid dashboard payload');
-    }
-
-    applyDashboardData(data);
-    switchView('dashboard');
-    showToast('✓ Dashboard synced successfully');
-  } catch (error) {
-    console.error('fetchDashboardData error:', error);
-
-    // Keep the UI populated instead of blank
-    showFallbackData();
-    switchView('dashboard');
-    showToast('Using fallback data. Check Make webhook.');
-  } finally {
-    setRefreshState(false);
-  }
-}
-
-  async function sendActionToMake(action, payload) {
-    const body = Object.assign({ action: action }, payload || {});
-    try {
-      const response = await fetch(MAKE_CONFIG.actionUrl, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'Accept': 'application/json'
-        },
-        body: JSON.stringify(body)
-      });
-
-      if (!response.ok) {
-        throw new Error('Action failed: ' + response.status);
-      }
-
-      const result = await response.json();
-      return result;
-    } catch (error) {
-      console.error('sendActionToMake error:', action, error);
-      showToast('Action failed');
-      return null;
-    }
-  }
-
-  function applyDashboardData(data) {
-    const meta = data && data.meta ? data.meta : {};
-    const summary = data && data.summary ? data.summary : {};
-
-    dashboardMeta = Object.assign({}, fallbackMeta, meta);
-    dashboardSummary = {
-      goalCurrent: summary.goalCurrent != null ? Number(summary.goalCurrent) : fallbackSummary.goalCurrent,
-      goalTarget: summary.goalTarget != null ? Number(summary.goalTarget) : fallbackSummary.goalTarget,
-      daysLeft: summary.daysLeft != null ? Number(summary.daysLeft) : fallbackSummary.daysLeft,
-      callsNeeded: summary.callsNeeded != null ? Number(summary.callsNeeded) : fallbackSummary.callsNeeded,
-      kpis: Object.assign({}, fallbackSummary.kpis, summary.kpis || {})
-    };
-
-    leads = safeArray(data && data.leads).map(normalizeLead);
-    activities = safeArray(data && data.activities);
-    actionQueue = safeArray(data && data.actionQueue);
-
-    updateDashboardHeader();
-    updateSummaryCards();
-    renderDashboardActions();
-    renderDashboardActivity();
-    renderQueue(currentQueueFilter);
-    renderPipeline();
-    renderLeads(document.getElementById('leadSearch') ? document.getElementById('leadSearch').value : '');
-    renderActivityFull();
-    lucide.createIcons();
-  }
-
-  function showFallbackData() {
-    dashboardMeta = Object.assign({}, fallbackMeta);
-    dashboardSummary = JSON.parse(JSON.stringify(fallbackSummary));
-    leads = fallbackLeads.map(normalizeLead);
-    activities = fallbackActivities.slice();
-    actionQueue = fallbackActionQueue.slice();
-
-    updateDashboardHeader();
-    updateSummaryCards();
-    renderDashboardActions();
-    renderDashboardActivity();
-    renderQueue(currentQueueFilter);
-    renderPipeline();
-    renderLeads(document.getElementById('leadSearch') ? document.getElementById('leadSearch').value : '');
-    renderActivityFull();
-    lucide.createIcons();
-  }
-
-  // 7) UI UPDATE HELPERS
-  function updateDashboardHeader() {
-    const sidebarTitle = document.getElementById('sidebarTitle');
-    const sidebarSubtitle = document.getElementById('sidebarSubtitle');
-    const viewTitle = document.getElementById('viewTitle');
-
-    if (sidebarTitle) sidebarTitle.textContent = dashboardMeta.dashboardTitle || fallbackMeta.dashboardTitle;
-    if (sidebarSubtitle) sidebarSubtitle.textContent = dashboardMeta.dashboardSubtitle || fallbackMeta.dashboardSubtitle;
-    if (viewTitle && !document.getElementById('view-dashboard').classList.contains('hidden')) {
-      viewTitle.textContent = 'Dashboard';
-    }
-
-    const topBarDate = document.querySelector('header.bg-white p.text-navy-400');
-    if (topBarDate) topBarDate.textContent = dashboardMeta.dayLabel || fallbackMeta.dayLabel;
-
-    const greetingDate = document.querySelector('#view-dashboard .mb-8 span.text-lg');
-    if (greetingDate) greetingDate.textContent = dashboardMeta.dateLabel || fallbackMeta.dateLabel;
-
-    const syncBadgeText = document.querySelector('header .bg-emerald-50');
-    if (syncBadgeText) {
-      const badgeTextNode = Array.from(syncBadgeText.childNodes).find(function(node) {
-        return node.nodeType === Node.TEXT_NODE;
-      });
-      if (badgeTextNode) {
-        badgeTextNode.textContent = ' ' + (dashboardMeta.syncStatus || fallbackMeta.syncStatus);
-      }
-    }
-  }
-
-  function updateSummaryCards() {
-    const s = dashboardSummary || fallbackSummary;
-    const k = s.kpis || fallbackSummary.kpis;
-
-    const goalCurrent = Number(s.goalCurrent || 0);
-    const goalTarget = Number(s.goalTarget || 10);
-    const daysLeft = Number(s.daysLeft || 0);
-    const callsNeeded = Math.max(goalTarget - goalCurrent, 0);
-    const progressPercent = goalTarget > 0 ? Math.min((goalCurrent / goalTarget) * 100, 100) : 0;
-
-    const sidebarGoalCount = document.getElementById('sidebarGoalCount');
-    const sidebarProgress = document.getElementById('sidebarProgress');
-    const goalTargetEl = document.getElementById('goalTarget2');
-    const goalBar2 = document.getElementById('goalBar2');
-    const kpiBooked = document.getElementById('kpiBooked');
-
-    if (sidebarGoalCount) sidebarGoalCount.textContent = goalCurrent + '/' + goalTarget;
-    if (sidebarProgress) sidebarProgress.style.width = progressPercent + '%';
-    if (goalTargetEl) goalTargetEl.textContent = String(goalTarget);
-    if (goalBar2) goalBar2.style.width = progressPercent + '%';
-    if (kpiBooked) kpiBooked.textContent = String(k.callsBooked || 0);
-
-    const goalCardNumber = document.querySelector('.bg-gradient-to-br.from-accent-600.to-accent-700 .text-4xl.font-bold');
-    if (goalCardNumber) {
-      goalCardNumber.innerHTML = goalCurrent + ' <span class="text-2xl text-accent-100">/</span> <span id="goalTarget2">' + goalTarget + '</span>';
-    }
-
-    const goalCardSub = document.querySelector('.bg-gradient-to-br.from-accent-600.to-accent-700 .text-accent-200.text-xs.font-medium.mt-1');
-    if (goalCardSub) goalCardSub.textContent = callsNeeded + ' calls needed to hit goal';
-
-    const goalCardDays = document.querySelector('.bg-gradient-to-br.from-accent-600.to-accent-700 .text-accent-100.text-xs');
-    if (goalCardDays) goalCardDays.textContent = daysLeft + ' days left in sprint';
-
-    const sidebarDays = document.querySelector('.sidebar-label .bg-navy-900 .text-navy-500.text-\\[10px\\].mt-2');
-    if (sidebarDays) sidebarDays.textContent = daysLeft + ' days remaining';
-
-    updateSnapshotCards(k);
-    updateQueueBadge();
-    lucide.createIcons();
-  }
-
-  function updateSnapshotCards(kpis) {
-    const cards = document.querySelectorAll('#view-dashboard .grid.grid-cols-2.lg\\:grid-cols-4 > button');
-    if (!cards.length) return;
-
-    const values = [
-      { value: kpis.leadsInPipeline || 0, sub: '+' + (kpis.newToday || 0) + ' today' },
-      { value: kpis.needReplies || 0, sub: 'Reply now' },
-      { value: kpis.readyToBook || 0, sub: 'Send links' },
-      { value: kpis.callsBooked || 0, sub: buildGoalPercentText() }
+  <script>
+    const emails = [
+      { id:1, sender:'Google Voice', subject:'Missed call from (512) 555-0147', category:'Missed Call', time:'2 min ago', status:'New', contact:'(512) 555-0147', summary:'Missed call received via Google Voice. No voicemail left.', suggestedTask:'Return call to (512) 555-0147' },
+      { id:2, sender:'Maria Chen', subject:'Quote request for bathroom renovation', category:'Lead', time:'18 min ago', status:'Sent to Make', contact:'maria.chen@email.com · (512) 555-0293', summary:'Requesting quote for master bathroom renovation.', suggestedTask:'Prepare bathroom renovation estimate for Maria Chen' },
+      { id:3, sender:'Google Voice', subject:'New voicemail from (737) 555-0812', category:'Voicemail', time:'45 min ago', status:'Task Created', contact:'(737) 555-0812', summary:'Caller wants to move ahead and schedule.', suggestedTask:'Schedule fence installation and call back' },
+      { id:4, sender:'James Whitfield', subject:'Re: Deck repair timeline?', category:'Inquiry', time:'1 hr ago', status:'Sent to Make', contact:'j.whitfield@gmail.com', summary:'Follow-up on deck repair estimate sent last week.', suggestedTask:'Reply with updated timeline' }
     ];
 
-    cards.forEach(function(card, index) {
-      const numberEl = card.querySelector('.mono-font');
-      const subEl = card.querySelector('.flex.items-center.justify-between p');
-      if (numberEl && values[index]) numberEl.textContent = String(values[index].value);
-      if (subEl && values[index]) subEl.textContent = values[index].sub;
-    });
-  }
+    let currentView = 'dashboard';
 
-  function buildGoalPercentText() {
-    const s = dashboardSummary || fallbackSummary;
-    const current = Number(s.goalCurrent || 0);
-    const target = Number(s.goalTarget || 10);
-    const percent = target > 0 ? Math.round((current / target) * 100) : 0;
-    return percent + '% goal';
-  }
-
-  function updateQueueBadge() {
-    const queueBtns = document.querySelectorAll('[data-view="queue"]');
-    const pendingCount = actionQueue.filter(function(a) {
-      const key = String(a.leadId) + String(a.type);
-      return !completedActions.has(key);
-    }).length;
-
-    queueBtns.forEach(function(btn) {
-      const badge = btn.querySelector('.bg-accent-600.text-white');
-      if (badge) badge.textContent = String(pendingCount);
-    });
-  }
-
-  // 8) RENDER FUNCTIONS
-  function renderDashboardActions() {
-    const el = document.getElementById('dashboardActions');
-    if (!el) return;
-
-    const top3 = actionQueue.slice(0, 3);
-    el.innerHTML = top3.map(function(a, i) {
-      const lead = getLeadById(a.leadId);
-      if (!lead) return '';
-
-      const typeColors = {
-        message:'bg-accent-50 text-accent-700 border-accent-200',
-        followup:'bg-amber-50 text-amber-700 border-amber-200',
-        book:'bg-emerald-50 text-emerald-700 border-emerald-200'
+    function categoryBadge(cat) {
+      const map = {
+        'Missed Call':'bg-danger-50 text-danger-500 border-danger-100',
+        'Voicemail':'bg-purple-50 text-purple-600 border-purple-100',
+        'Lead':'bg-success-50 text-success-600 border-success-100',
+        'Inquiry':'bg-accent-50 text-accent-600 border-accent-100'
       };
-
-      const completed = completedActions.has(String(a.leadId) + String(a.type));
-      const messagePreview = lead.message ? '"' + escapeHtml(lead.message.substring(0, 80)) + (lead.message.length > 80 ? '..."' : '"') : 'No message yet';
-
-      return '<div class="bg-white rounded-2xl border border-navy-100 p-4 card-lift fade-in stagger-' + (i + 1) + ' ' + (completed ? 'opacity-50' : '') + '">' +
-        '<div class="flex items-start justify-between gap-4">' +
-          '<div class="flex-1 min-w-0">' +
-            '<div class="flex items-center gap-2 mb-2">' +
-              '<span class="text-[10px] font-semibold px-2 py-0.5 rounded-full border ' + (typeColors[a.type] || typeColors.followup) + '">' + escapeHtml(a.label || 'Action') + '</span>' +
-              (completed ? '<span class="text-[10px] font-semibold px-2 py-0.5 rounded-full bg-emerald-100 text-emerald-700">✓ Done</span>' : '') +
-            '</div>' +
-            '<p class="font-semibold text-navy-900 text-sm">' + escapeHtml(lead.name) + ' <span class="font-normal text-navy-400">· ' + escapeHtml(lead.role) + '</span></p>' +
-            '<p class="text-navy-500 text-xs mt-1 truncate">' + messagePreview + '</p>' +
-          '</div>' +
-          '<div class="flex gap-2 shrink-0">' +
-            (lead.message ? '<button onclick="copyMessage(\'' + String(lead.id) + '\')" class="text-xs font-medium px-3 py-1.5 rounded-lg border border-navy-200 text-navy-600 hover:bg-navy-50 transition-colors flex items-center gap-1"><i data-lucide="copy" class="w-3 h-3"></i> Copy</button>' : '') +
-            '<button onclick="openDetail(\'' + String(lead.id) + '\')" class="text-xs font-medium px-3 py-1.5 rounded-lg bg-accent-600 text-white hover:bg-accent-700 transition-colors">View</button>' +
-          '</div>' +
-        '</div>' +
-      '</div>';
-    }).join('');
-
-    lucide.createIcons();
-  }
-
-  function renderDashboardActivity() {
-    const el = document.getElementById('dashboardActivity');
-    if (!el) return;
-
-    const colorMap = {
-      accent:'text-accent-600 bg-accent-50',
-      red:'text-red-500 bg-red-50',
-      amber:'text-amber-600 bg-amber-50',
-      emerald:'text-emerald-600 bg-emerald-50',
-      violet:'text-violet-600 bg-violet-50'
-    };
-
-    el.innerHTML = activities.slice(0, 6).map(function(a) {
-      return '<div class="flex items-center gap-3 px-4 py-3">' +
-        '<div class="w-7 h-7 rounded-lg ' + (colorMap[a.color] || colorMap.accent) + ' flex items-center justify-center shrink-0">' +
-          '<i data-lucide="' + escapeHtml(a.icon || 'activity') + '" class="w-3.5 h-3.5"></i>' +
-        '</div>' +
-        '<div class="flex-1 min-w-0">' +
-          '<p class="text-navy-700 text-xs">' + escapeHtml(a.text || '') + '</p>' +
-          '<p class="text-navy-400 text-[10px] mt-0.5">' + escapeHtml(a.time || '') + '</p>' +
-        '</div>' +
-      '</div>';
-    }).join('');
-
-    lucide.createIcons();
-  }
-
-  function renderQueue(filter) {
-    currentQueueFilter = filter || currentQueueFilter || 'all';
-
-    const el = document.getElementById('queueList');
-    if (!el) return;
-
-    const filtered = currentQueueFilter === 'all'
-      ? actionQueue
-      : actionQueue.filter(function(a) { return a.type === currentQueueFilter; });
-
-    const typeColors = {
-      message:'bg-accent-50 text-accent-700 border-accent-200',
-      followup:'bg-amber-50 text-amber-700 border-amber-200',
-      book:'bg-emerald-50 text-emerald-700 border-emerald-200'
-    };
-
-    el.innerHTML = filtered.map(function(a, i) {
-      const lead = getLeadById(a.leadId);
-      if (!lead) return '';
-
-      const completed = completedActions.has(String(a.leadId) + String(a.type));
-
-      return '<div class="bg-white rounded-2xl border border-navy-100 p-5 card-lift fade-in ' + (completed ? 'opacity-50' : '') + '" style="animation-delay:' + (i * 0.05) + 's">' +
-        '<div class="flex flex-col sm:flex-row sm:items-start justify-between gap-4">' +
-          '<div class="flex-1 min-w-0">' +
-            '<div class="flex items-center gap-2 mb-2 flex-wrap">' +
-              '<span class="text-[10px] font-semibold px-2 py-0.5 rounded-full border ' + (typeColors[a.type] || typeColors.followup) + '">' + escapeHtml(a.label || 'Action') + '</span>' +
-              '<span class="tag-' + escapeHtml(String(lead.priority || 'warm').toLowerCase()) + ' text-[10px] font-semibold px-2 py-0.5 rounded-full">' + escapeHtml(lead.priority) + '</span>' +
-              (completed ? '<span class="text-[10px] font-semibold px-2 py-0.5 rounded-full bg-emerald-100 text-emerald-700">✓ Completed</span>' : '') +
-            '</div>' +
-            '<p class="font-semibold text-navy-900">' + escapeHtml(lead.name) + '</p>' +
-            '<p class="text-navy-500 text-xs mt-0.5">' + escapeHtml(lead.role) + ' · ' + escapeHtml(lead.stage) + ' · Last contact: ' + escapeHtml(lead.lastContact) + '</p>' +
-            (lead.message ? '<div class="mt-3 bg-navy-50 rounded-xl p-3 border border-navy-100"><p class="text-navy-600 text-xs italic leading-relaxed">"' + escapeHtml(lead.message.substring(0, 140)) + (lead.message.length > 140 ? '...' : '') + '"</p></div>' : '') +
-          '</div>' +
-          '<div class="flex gap-2 shrink-0 flex-wrap sm:flex-nowrap">' +
-            (lead.message ? '<button onclick="copyMessage(\'' + String(lead.id) + '\')" class="text-xs font-medium px-3 py-2 rounded-xl border border-navy-200 text-navy-600 hover:bg-navy-50 transition-colors flex items-center gap-1.5"><i data-lucide="copy" class="w-3.5 h-3.5"></i> Copy Message</button>' : '') +
-            '<button onclick="openDetail(\'' + String(lead.id) + '\')" class="text-xs font-medium px-3 py-2 rounded-xl border border-navy-200 text-navy-600 hover:bg-navy-50 transition-colors flex items-center gap-1.5"><i data-lucide="eye" class="w-3.5 h-3.5"></i> View Lead</button>' +
-            (!completed ? '<button onclick="markComplete(\'' + String(lead.id) + '\', \'' + String(a.type) + '\')" class="text-xs font-medium px-3 py-2 rounded-xl bg-emerald-600 text-white hover:bg-emerald-700 transition-colors flex items-center gap-1.5"><i data-lucide="check" class="w-3.5 h-3.5"></i> Done</button>' : '') +
-          '</div>' +
-        '</div>' +
-      '</div>';
-    }).join('');
-
-    lucide.createIcons();
-  }
-
-  function renderPipeline() {
-   const stages = ['New', 'Reviewed', 'Qualified', 'Contacted', 'Booked', 'Closed'];
-    const stageColors = {
-  New: 'accent',
-  Reviewed: 'amber',
-  Qualified: 'violet',
-  Contacted: 'accent',
-  Booked: 'emerald',
-  Closed: 'navy'
-};
-    const el = document.getElementById('pipelineBoard');
-    if (!el) return;
-
-    el.innerHTML = stages.map(function(stage) {
-      const stageLeads = leads.filter(function(l) { return l.stage === stage; });
-      const c = stageColors[stage];
-
-      return '<div class="pipeline-col flex-1">' +
-        '<div class="flex items-center gap-2 mb-3">' +
-          '<span class="w-2.5 h-2.5 rounded-full bg-' + c + '-500"></span>' +
-          '<h4 class="text-navy-900 font-semibold text-sm">' + stage + '</h4>' +
-          '<span class="mono-font text-navy-400 text-xs">' + stageLeads.length + '</span>' +
-        '</div>' +
-        '<div class="space-y-2.5">' +
-          stageLeads.map(function(l) {
-            return '<div class="bg-white rounded-xl border border-navy-100 p-3.5 card-lift cursor-pointer" onclick="openDetail(\'' + String(l.id) + '\')">' +
-              '<div class="flex items-start justify-between mb-2">' +
-                '<p class="font-semibold text-navy-900 text-sm">' + escapeHtml(l.name) + '</p>' +
-                '<span class="tag-' + escapeHtml(String(l.priority || 'warm').toLowerCase()) + ' text-[9px] font-semibold px-1.5 py-0.5 rounded-full">' + escapeHtml(l.priority) + '</span>' +
-              '</div>' +
-              '<p class="text-navy-500 text-xs">' + escapeHtml(l.role) + '</p>' +
-              '<p class="text-navy-400 text-[10px] mt-2"><i data-lucide="clock" class="w-3 h-3 inline-block mr-1" style="vertical-align: -2px"></i>' + escapeHtml(l.lastContact) + '</p>' +
-            '</div>';
-          }).join('') +
-        '</div>' +
-      '</div>';
-    }).join('');
-
-    lucide.createIcons();
-  }
-
-  function renderLeads(filter) {
-    const el = document.getElementById('leadsTable');
-    if (!el) return;
-
-    const query = String(filter || '').toLowerCase();
-    const filtered = query
-      ? leads.filter(function(l) {
-          return String(l.name).toLowerCase().includes(query) || String(l.role).toLowerCase().includes(query);
-        })
-      : leads;
-
-    el.innerHTML = filtered.map(function(l) {
-      return '<tr class="hover:bg-navy-50/50 transition-colors">' +
-        '<td class="px-5 py-3.5"><p class="font-semibold text-navy-900">' + escapeHtml(l.name) + '</p></td>' +
-        '<td class="px-5 py-3.5 text-navy-500 hidden sm:table-cell">' + escapeHtml(l.role) + '</td>' +
-        '<td class="px-5 py-3.5"><span class="text-xs font-medium px-2 py-1 rounded-lg bg-navy-50 text-navy-600">' + escapeHtml(l.stage) + '</span></td>' +
-        '<td class="px-5 py-3.5 hidden md:table-cell"><span class="tag-' + escapeHtml(String(l.priority || 'warm').toLowerCase()) + ' text-[10px] font-semibold px-2 py-0.5 rounded-full">' + escapeHtml(l.priority) + '</span></td>' +
-        '<td class="px-5 py-3.5 text-navy-400 text-xs hidden lg:table-cell">' + escapeHtml(l.lastContact) + '</td>' +
-        '<td class="px-5 py-3.5 text-right"><button onclick="openDetail(\'' + String(l.id) + '\')" class="text-xs font-medium text-accent-600 hover:underline">View →</button></td>' +
-      '</tr>';
-    }).join('');
-  }
-
-  function renderActivityFull() {
-    const el = document.getElementById('activityFull');
-    if (!el) return;
-
-    const colorMap = {
-      accent:'text-accent-600 bg-accent-50',
-      red:'text-red-500 bg-red-50',
-      amber:'text-amber-600 bg-amber-50',
-      emerald:'text-emerald-600 bg-emerald-50',
-      violet:'text-violet-600 bg-violet-50'
-    };
-
-    el.innerHTML = activities.map(function(a) {
-      return '<div class="flex items-center gap-3 px-5 py-4">' +
-        '<div class="w-8 h-8 rounded-lg ' + (colorMap[a.color] || colorMap.accent) + ' flex items-center justify-center shrink-0">' +
-          '<i data-lucide="' + escapeHtml(a.icon || 'activity') + '" class="w-4 h-4"></i>' +
-        '</div>' +
-        '<div class="flex-1 min-w-0">' +
-          '<p class="text-navy-700 text-sm">' + escapeHtml(a.text || '') + '</p>' +
-          '<p class="text-navy-400 text-xs mt-0.5">' + escapeHtml(a.time || '') + '</p>' +
-        '</div>' +
-      '</div>';
-    }).join('');
-
-    lucide.createIcons();
-  }
-
-  // 9) VIEW + NAVIGATION
-  function switchView(view) {
-    document.querySelectorAll('[id^="view-"]').forEach(function(v) {
-      v.classList.add('hidden');
-    });
-
-    const nextView = document.getElementById('view-' + view);
-    if (nextView) nextView.classList.remove('hidden');
-
-    document.querySelectorAll('.sidebar-item').forEach(function(b) {
-      b.classList.remove('active');
-    });
-
-    document.querySelectorAll('.sidebar-item[data-view="' + view + '"]').forEach(function(b) {
-      b.classList.add('active');
-    });
-
-    const titles = {
-      dashboard:'Dashboard',
-      queue:'Action Queue',
-      pipeline:'Pipeline',
-      leads:'All Leads',
-      activity:'Activity Feed'
-    };
-
-    const viewTitle = document.getElementById('viewTitle');
-    if (viewTitle) viewTitle.textContent = titles[view] || 'Dashboard';
-
-    if (view === 'queue') renderQueue(currentQueueFilter);
-    if (view === 'pipeline') renderPipeline();
-    if (view === 'leads') renderLeads(document.getElementById('leadSearch') ? document.getElementById('leadSearch').value : '');
-    if (view === 'activity') renderActivityFull();
-
-    const mobileNav = document.getElementById('mobileNav');
-    if (mobileNav) mobileNav.classList.add('hidden');
-
-    document.querySelectorAll('.mobile-nav button').forEach(function(b) {
-      b.className = b.dataset.view === view
-        ? 'px-3 py-1.5 text-xs rounded-lg bg-accent-600 text-white'
-        : 'px-3 py-1.5 text-xs rounded-lg text-navy-300 hover:bg-navy-800';
-    });
-  }
-
-  function toggleMobileNav() {
-    const nav = document.getElementById('mobileNav');
-    if (nav) nav.classList.toggle('hidden');
-  }
-
-  function filterQueue(filter, btn) {
-    currentQueueFilter = filter;
-    document.querySelectorAll('.queue-filter').forEach(function(b) {
-      b.className = 'queue-filter px-3 py-1.5 text-xs font-medium rounded-lg bg-navy-50 text-navy-500 border border-navy-200';
-    });
-    if (btn) {
-      btn.className = 'queue-filter active-filter px-3 py-1.5 text-xs font-medium rounded-lg bg-accent-600 text-white';
-    }
-    renderQueue(filter);
-  }
-
-  function searchLeads(val) {
-    renderLeads(val);
-  }
-
-  function toggleSidebar() {
-    const sidebar = document.querySelector('.sidebar-desktop');
-    if (!sidebar) return;
-
-    sidebar.classList.toggle('expanded');
-    const btn = document.querySelector('.sidebar-toggle i');
-    if (btn) {
-      if (sidebar.classList.contains('expanded')) {
-        btn.setAttribute('data-lucide', 'chevron-left');
-      } else {
-        btn.setAttribute('data-lucide', 'chevron-right');
-      }
-    }
-    lucide.createIcons();
-  }
-
-  // 10) DETAIL PANEL
- function openDetail(leadId) {
-  const lead = getLeadById(leadId);
-  if (!lead) return;
-
-  const linkedinUrl = lead.linkedin
-    ? (String(lead.linkedin).startsWith('http') ? lead.linkedin : 'https://' + lead.linkedin)
-    : '';
-
-  document.getElementById('detailContent').innerHTML =
-    '<div class="flex items-center gap-4 mb-6">' +
-      '<div class="w-14 h-14 rounded-2xl bg-gradient-to-br from-accent-500 to-accent-700 flex items-center justify-center text-white font-bold text-lg">' +
-        escapeHtml(lead.name.split(' ').map(function(n){ return n[0]; }).join('')) +
-      '</div>' +
-      '<div>' +
-        '<h4 class="font-bold text-navy-900 text-lg">' + escapeHtml(lead.name) + '</h4>' +
-        '<p class="text-navy-500 text-sm">' + escapeHtml(lead.role) + '</p>' +
-      '</div>' +
-    '</div>' +
-
-    '<div class="mb-5">' +
-      '<p class="text-navy-400 text-[10px] uppercase font-semibold tracking-wider mb-2">AI Fit Summary</p>' +
-      '<div class="bg-violet-50 rounded-xl p-4 border border-violet-100">' +
-        '<p class="text-violet-900 text-sm leading-relaxed">' + escapeHtml(lead.aiSummary || 'No summary available yet.') + '</p>' +
-      '</div>' +
-    '</div>' +
-
-    '<div class="grid grid-cols-2 gap-3 mb-6">' +
-      '<div class="bg-navy-50 rounded-xl p-3">' +
-        '<p class="text-navy-400 text-[10px] uppercase font-semibold tracking-wider mb-1">Stage</p>' +
-        '<p class="text-navy-900 font-semibold text-sm">' + escapeHtml(lead.stage) + '</p>' +
-      '</div>' +
-      '<div class="bg-navy-50 rounded-xl p-3">' +
-        '<p class="text-navy-400 text-[10px] uppercase font-semibold tracking-wider mb-1">Priority</p>' +
-        '<span class="tag-' + escapeHtml(String(lead.priority || 'warm').toLowerCase()) + ' text-xs font-semibold px-2 py-0.5 rounded-full">' + escapeHtml(lead.priority) + '</span>' +
-      '</div>' +
-      '<div class="bg-navy-50 rounded-xl p-3">' +
-        '<p class="text-navy-400 text-[10px] uppercase font-semibold tracking-wider mb-1">Last Contact</p>' +
-        '<p class="text-navy-900 font-semibold text-sm">' + escapeHtml(lead.lastContact) + '</p>' +
-      '</div>' +
-      '<div class="bg-navy-50 rounded-xl p-3">' +
-        '<p class="text-navy-400 text-[10px] uppercase font-semibold tracking-wider mb-1">Fit Score</p>' +
-        '<p class="text-navy-900 font-semibold text-sm">' + escapeHtml(String(lead.score || 0)) + '/100</p>' +
-      '</div>' +
-      '<div class="bg-navy-50 rounded-xl p-3 col-span-2">' +
-        '<p class="text-navy-400 text-[10px] uppercase font-semibold tracking-wider mb-1">LinkedIn</p>' +
-        (linkedinUrl
-          ? '<a href="' + escapeHtml(linkedinUrl) + '" target="_blank" rel="noopener noreferrer" class="text-accent-600 text-sm font-medium hover:underline flex items-center gap-1"><i data-lucide="external-link" class="w-3 h-3"></i> Profile</a>'
-          : '<p class="text-navy-400 text-sm">Not available</p>') +
-      '</div>' +
-    '</div>' +
-
-    '<div class="mb-5">' +
-      '<p class="text-navy-400 text-[10px] uppercase font-semibold tracking-wider mb-2">Notes</p>' +
-      '<p class="text-navy-700 text-sm leading-relaxed bg-navy-50 rounded-xl p-3">' + escapeHtml(lead.notes || 'No notes available.') + '</p>' +
-    '</div>' +
-
-    '<div class="mb-5">' +
-      '<p class="text-navy-400 text-[10px] uppercase font-semibold tracking-wider mb-2">Suggested Outreach</p>' +
-      '<div class="bg-accent-50 rounded-xl p-4 border border-accent-100">' +
-        '<p class="text-navy-800 text-sm leading-relaxed italic">' + escapeHtml(lead.message || 'No outreach drafted yet.') + '</p>' +
-      '</div>' +
-    '</div>' +
-
-    '<div class="mb-5">' +
-      '<p class="text-navy-400 text-[10px] uppercase font-semibold tracking-wider mb-2">Recommended Next Step</p>' +
-      '<div class="flex items-center gap-3 bg-emerald-50 rounded-xl p-3 border border-emerald-100">' +
-        '<i data-lucide="arrow-right-circle" class="w-5 h-5 text-emerald-600 shrink-0"></i>' +
-        '<p class="text-emerald-800 text-sm font-medium">' + escapeHtml(lead.nextStep || 'No next step available.') + '</p>' +
-      '</div>' +
-    '</div>' +
-
-    '<div class="flex flex-col gap-2.5">' +
-      (lead.message
-        ? '<button onclick="copyMessage(\'' + String(lead.id) + '\')" class="w-full flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl bg-accent-600 text-white text-sm font-semibold hover:bg-accent-700 transition-colors"><i data-lucide="copy" class="w-4 h-4"></i> Copy Message</button>'
-        : '') +
-      '<button onclick="updateLeadStatusPrompt(\'' + String(lead.id) + '\')" class="w-full flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl border-2 border-navy-200 text-navy-700 text-sm font-semibold hover:bg-navy-50 transition-colors"><i data-lucide="refresh-cw" class="w-4 h-4"></i> Update Status</button>' +
-      '<button onclick="sendSingleBookingLink(\'' + String(lead.id) + '\')" class="w-full flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl bg-emerald-600 text-white text-sm font-semibold hover:bg-emerald-700 transition-colors"><i data-lucide="send" class="w-4 h-4"></i> Send Booking Link</button>' +
-    '</div>';
-
-  document.getElementById('detailOverlay').classList.remove('hidden');
-  document.getElementById('detailPanel').classList.remove('translate-x-full');
-  lucide.createIcons();
-}
-
-  function closeDetail() {
-    document.getElementById('detailOverlay').classList.add('hidden');
-    document.getElementById('detailPanel').classList.add('translate-x-full');
-  }
-
-  async function updateLeadStatusPrompt(leadId) {
-    const lead = getLeadById(leadId);
-    if (!lead) return;
-
-    const nextStage = prompt('Move ' + lead.name + ' to what stage?', lead.stage || 'Active');
-    if (!nextStage) return;
-
-    const result = await sendActionToMake('update_status', {
-      leadId: leadId,
-      stage: nextStage
-    });
-
-    if (result && result.success) {
-      if (result.data) applyDashboardData(result.data);
-      else await fetchDashboardData();
-      showToast('Status updated');
-      closeDetail();
-    }
-  }
-
-  // 11) ACTIONS
-  async function copyMessage(leadId) {
-    const lead = getLeadById(leadId);
-    if (!lead || !lead.message) return;
-
-    try {
-      await navigator.clipboard.writeText(lead.message);
-      showToast('Message copied to clipboard');
-    } catch (error) {
-      console.error('Clipboard error:', error);
-      showToast('Could not copy message');
-    }
-  }
-
-  async function markComplete(leadId, type) {
-    const result = await sendActionToMake('mark_complete', {
-      leadId: leadId,
-      type: type
-    });
-
-    if (result && result.success) {
-      completedActions.add(String(leadId) + String(type));
-      if (result.data) applyDashboardData(result.data);
-      else await fetchDashboardData();
-      showToast('Task marked as complete');
-    }
-  }
-
-  async function handleRefresh() {
-    showToast('Syncing leads from spreadsheet...');
-    await fetchDashboardData();
-  }
-
-  function openUploadModal() {
-    document.getElementById('uploadOverlay').classList.remove('hidden');
-    lucide.createIcons();
-  }
-
-  function closeUploadModal() {
-    document.getElementById('uploadOverlay').classList.add('hidden');
-    document.getElementById('pasteArea').value = '';
-    document.getElementById('fileInput').value = '';
-  }
-
-  function handleFileUpload(event) {
-    const file = event.target.files[0];
-    if (file) {
-      showToast('File "' + file.name + '" selected. Click Upload to continue.');
-    }
-  }
-
-  async function processUpload() {
-    const pasteData = document.getElementById('pasteArea').value.trim();
-    const fileInput = document.getElementById('fileInput');
-    const fileSelected = fileInput.files.length > 0;
-
-    if (!pasteData && !fileSelected) {
-      showToast('Please paste data or select a file');
-      return;
+      return `<span class="inline-flex items-center px-2 py-0.5 rounded-full text-[11px] font-medium border ${map[cat] || 'bg-gray-100 text-gray-600 border-gray-200'}">${cat}</span>`;
     }
 
-    if (fileSelected) {
-      showToast('For now, use pasted lead data. File parsing can be added later.');
-      return;
+    function statusBadge(st) {
+      const map = {
+        'New':'bg-accent-50 text-accent-600',
+        'Sent to Make':'bg-purple-50 text-purple-600',
+        'Task Created':'bg-success-50 text-success-600'
+      };
+      return `<span class="inline-flex items-center px-2 py-0.5 rounded-full text-[11px] font-medium ${map[st] || 'bg-gray-100 text-gray-600'}">${st}</span>`;
     }
 
-    const result = await sendActionToMake('upload_leads_text', {
-      rawText: pasteData
-    });
-
-    if (result && result.success) {
-      closeUploadModal();
-      if (result.data) applyDashboardData(result.data);
-      else await fetchDashboardData();
-      showToast('✓ Leads uploaded successfully');
-    }
-  }
-
-  async function sendSingleBookingLink(leadId) {
-    const result = await sendActionToMake('send_booking_link', {
-      leadId: leadId
-    });
-
-    if (result && result.success) {
-      if (result.data) applyDashboardData(result.data);
-      else await fetchDashboardData();
-      showToast('Booking link sent');
-      closeDetail();
-    }
-  }
-
-  async function sendBookingLinks() {
-    const readyToBook = leads
-      .filter(function(l) { return l.stage === 'Qualified' || l.stage === 'Booked'; })
-      .map(function(l) { return l.id; });
-
-    const result = await sendActionToMake('send_booking_links', {
-      leadIds: readyToBook
-    });
-
-    if (result && result.success) {
-      if (result.data) applyDashboardData(result.data);
-      else await fetchDashboardData();
-      showToast('✓ Booking links sent');
-      closeAIPanel();
-      switchView('queue');
-    }
-  }
-
-  async function prepareHotLeads() {
-    const hotLeadIds = leads
-      .filter(function(l) { return l.priority === 'Hot'; })
-      .map(function(l) { return l.id; });
-
-    const result = await sendActionToMake('prepare_hot_leads', {
-      leadIds: hotLeadIds
-    });
-
-    if (result && result.success) {
-      if (result.data) applyDashboardData(result.data);
-      else await fetchDashboardData();
-      showToast('✓ Hot lead messages prepared');
-      closeAIPanel();
-      switchView('queue');
-    }
-  }
-
-  async function copyNextMessage() {
-    const hotLead = leads.find(function(l) {
-      return l.priority === 'Hot' && l.message;
-    });
-
-    if (!hotLead) {
-      showToast('No hot lead message available');
-      return;
+    function renderDashRecentTable() {
+      const tbody = document.getElementById('dashRecentTable');
+      tbody.innerHTML = emails.map(e => `
+        <tr class="trow border-b border-gray-50 cursor-pointer" onclick="openDetail(${e.id})">
+          <td class="px-5 py-3 font-medium text-gray-800 whitespace-nowrap">${e.sender}</td>
+          <td class="px-3 py-3 text-gray-600 max-w-[220px] truncate">${e.subject}</td>
+          <td class="px-3 py-3">${categoryBadge(e.category)}</td>
+          <td class="px-3 py-3">${statusBadge(e.status)}</td>
+          <td class="px-3 py-3 text-gray-400 text-xs mono whitespace-nowrap">${e.time}</td>
+        </tr>
+      `).join('');
     }
 
-    await copyMessage(hotLead.id);
-  }
-
-  // 12) AI ASSISTANT
-  function toggleAIPanel() {
-    aiPanelOpen = !aiPanelOpen;
-    const panel = document.getElementById('aiAssistantPanel');
-    const btn = document.getElementById('aiToggleBtn');
-
-    if (aiPanelOpen) {
-      panel.classList.remove('ai-panel-closed');
-      panel.classList.add('ai-panel-open');
-      btn.classList.add('hidden');
-      document.getElementById('aiInput').focus();
-    } else {
-      panel.classList.add('ai-panel-closed');
-      panel.classList.remove('ai-panel-open');
-      btn.classList.remove('hidden');
-    }
-  }
-
-  function closeAIPanel() {
-    aiPanelOpen = false;
-    const panel = document.getElementById('aiAssistantPanel');
-    const btn = document.getElementById('aiToggleBtn');
-    panel.classList.add('ai-panel-closed');
-    panel.classList.remove('ai-panel-open');
-    btn.classList.remove('hidden');
-  }
-
-  function generateAIResponse(userMsg) {
-  const lower = String(userMsg || '').toLowerCase();
-
-  if (lower.includes('qualified') || lower.includes('best leads') || lower.includes('message')) {
-    return {
-      message: 'I found qualified leads that are ready for outreach. I can prepare the next message for you.',
-      action: 'prepareQualifiedLeads()',
-      buttonText: 'Prepare Outreach'
-    };
-  }
-
-  if (lower.includes('follow') || lower.includes('follow-up') || lower.includes('remind')) {
-    return {
-      message: 'I found leads that need follow-up. I can prepare follow-up messages now.',
-      action: 'prepareFollowUps()',
-      buttonText: 'Prepare Follow-Ups'
-    };
-  }
-
-  if (lower.includes('book') || lower.includes('booking') || lower.includes('consultation') || lower.includes('calendar')) {
-    return {
-      message: 'I found leads that are ready to book. I can send booking links now.',
-      action: 'sendBookingLinks()',
-      buttonText: 'Send Booking Links'
-    };
-  }
-
-  if (lower.includes('summary') || lower.includes('today') || lower.includes('dashboard') || lower.includes('progress')) {
-    const s = dashboardSummary || fallbackSummary;
-    return {
-      message: 'You have ' + (s.kpis.leadsInPipeline || 0) + ' total leads, ' + (s.kpis.needReplies || 0) + ' follow-ups due, and ' + (s.kpis.callsBooked || 0) + ' consultations booked.',
-      action: 'switchView("dashboard"); closeAIPanel();',
-      buttonText: 'View Dashboard'
-    };
-  }
-
-  return {
-    message: 'I can help you review uploaded leads, prepare outreach, write follow-ups, send booking links, or update lead stages.',
-    action: null,
-    buttonText: ''
-  };
-}
-
-  function handleAIRequest() {
-    const input = document.getElementById('aiInput');
-    const msg = input.value.trim();
-    if (!msg) return;
-
-    const chatEl = document.getElementById('aiChat');
-    const isDefaultState = chatEl.innerHTML.indexOf('Hi! I can help') !== -1;
-
-    if (isDefaultState) {
-      chatEl.innerHTML = '';
+    function renderGmailTable() {
+      const tbody = document.getElementById('gmailTable');
+      tbody.innerHTML = emails.map(e => `
+        <tr class="trow border-b border-gray-50 cursor-pointer" onclick="openDetail(${e.id})">
+          <td class="px-5 py-3 font-medium text-gray-800">${e.sender}</td>
+          <td class="px-3 py-3 text-gray-600 max-w-[220px] truncate">${e.subject}</td>
+          <td class="px-3 py-3">${categoryBadge(e.category)}</td>
+          <td class="px-3 py-3 text-gray-400 text-xs mono">${e.time}</td>
+          <td class="px-3 py-3">${statusBadge(e.status)}</td>
+        </tr>
+      `).join('');
     }
 
-    const userMsgEl = document.createElement('div');
-    userMsgEl.className = 'flex justify-end mb-3 ai-message px-4 pt-3';
-    userMsgEl.innerHTML = '<div class="bg-accent-600 text-white rounded-2xl px-4 py-2.5 max-w-xs text-sm">' + escapeHtml(msg) + '</div>';
-    chatEl.appendChild(userMsgEl);
-    input.value = '';
+    function openDetail(id) {
+      const e = emails.find(x => x.id === id);
+      if (!e) return;
+      document.getElementById('detailFrom').textContent = e.sender;
+      document.getElementById('detailSubject').textContent = e.subject;
+      document.getElementById('detailCategory').innerHTML = categoryBadge(e.category);
+      document.getElementById('detailContact').textContent = e.contact;
+      document.getElementById('detailSummary').textContent = e.summary;
+      document.getElementById('detailTask').textContent = e.suggestedTask;
 
-    setTimeout(function() {
-      const response = generateAIResponse(msg);
-      const aiMsgEl = document.createElement('div');
-      aiMsgEl.className = 'flex justify-start mb-3 ai-message px-4 pt-3';
-
-      const buttonHtml = response.action
-        ? '<button onclick="' + response.action.replace(/"/g, '&quot;') + '" class="mt-2 px-3 py-1.5 text-xs font-medium bg-accent-600 text-white rounded-lg hover:bg-accent-700 transition-colors">' + escapeHtml(response.buttonText) + '</button>'
-        : '';
-
-      aiMsgEl.innerHTML =
-        '<div class="bg-navy-50 text-navy-800 rounded-2xl px-4 py-2.5 max-w-xs text-sm">' +
-          '<p class="mb-2">' + escapeHtml(response.message) + '</p>' +
-          buttonHtml +
-        '</div>';
-
-      chatEl.appendChild(aiMsgEl);
-      chatEl.scrollTop = chatEl.scrollHeight;
+      const panel = document.getElementById('detailPanel');
+      panel.classList.remove('hidden-panel', 'hidden');
+      panel.classList.add('visible-panel');
       lucide.createIcons();
-    }, 500);
-  }
-
-  function aiQuickAction(action) {
-    if (!aiPanelOpen) toggleAIPanel();
-    const input = document.getElementById('aiInput');
-    input.value = action.charAt(0).toUpperCase() + action.slice(1);
-    setTimeout(function() {
-      handleAIRequest();
-    }, 150);
-  }
-
-  // 13) ELEMENT SDK CONFIG
-  function applyConfig(config) {
-    const c = Object.assign({}, defaultConfig, config || {});
-    const titleEls = document.querySelectorAll('#sidebarTitle, [data-cfg="title"]');
-    titleEls.forEach(function(el) { el.textContent = c.dashboard_title; });
-
-    const subEls = document.querySelectorAll('#sidebarSubtitle, [data-cfg="subtitle"]');
-    subEls.forEach(function(el) { el.textContent = c.dashboard_subtitle; });
-
-    document.getElementById('appShell').style.backgroundColor = c.background_color;
-    document.querySelectorAll('.bg-white').forEach(function(el) {
-      el.style.backgroundColor = c.surface_color;
-    });
-    document.body.style.color = c.text_color;
-
-    const fontStack = c.font_family + ", 'DM Sans', sans-serif";
-    document.body.style.fontFamily = fontStack;
-
-    document.querySelectorAll('h1,h2,h3,h4,p,span,button,td,th,a,input,textarea').forEach(function(el) {
-      if (!el.classList.contains('mono-font')) el.style.fontFamily = fontStack;
-    });
-
-    document.body.style.fontSize = (c.font_size || 14) + 'px';
-  }
-
-  if (window.elementSdk && typeof window.elementSdk.init === 'function') {
-  window.elementSdk.init({
-    defaultConfig: defaultConfig,
-    onConfigChange: async function(config) { applyConfig(config); },
-    mapToCapabilities: function(config) {
-      return {
-        recolorables: [
-          { get: function() { return config.background_color || defaultConfig.background_color; }, set: function(v) { config.background_color = v; window.elementSdk.setConfig({ background_color: v }); } },
-          { get: function() { return config.surface_color || defaultConfig.surface_color; }, set: function(v) { config.surface_color = v; window.elementSdk.setConfig({ surface_color: v }); } },
-          { get: function() { return config.text_color || defaultConfig.text_color; }, set: function(v) { config.text_color = v; window.elementSdk.setConfig({ text_color: v }); } },
-          { get: function() { return config.primary_action_color || defaultConfig.primary_action_color; }, set: function(v) { config.primary_action_color = v; window.elementSdk.setConfig({ primary_action_color: v }); } },
-          { get: function() { return config.secondary_action_color || defaultConfig.secondary_action_color; }, set: function(v) { config.secondary_action_color = v; window.elementSdk.setConfig({ secondary_action_color: v }); } }
-        ],
-        borderables: [],
-        fontEditable: {
-          get: function() { return config.font_family || defaultConfig.font_family; },
-          set: function(v) { config.font_family = v; window.elementSdk.setConfig({ font_family: v }); }
-        },
-        fontSizeable: {
-          get: function() { return config.font_size || defaultConfig.font_size; },
-          set: function(v) { config.font_size = v; window.elementSdk.setConfig({ font_size: v }); }
-        }
-      };
-    },
-    mapToEditPanelValues: function(config) {
-      return new Map([
-        ['dashboard_title', config.dashboard_title || defaultConfig.dashboard_title],
-        ['dashboard_subtitle', config.dashboard_subtitle || defaultConfig.dashboard_subtitle],
-        ['goal_target', config.goal_target || defaultConfig.goal_target],
-        ['offer_primary', config.offer_primary || defaultConfig.offer_primary],
-        ['offer_secondary', config.offer_secondary || defaultConfig.offer_secondary]
-      ]);
     }
-  });
-}
-    
-async function prepareQualifiedLeads() {
-  const qualifiedLeadIds = leads
-    .filter(function(l) { return l.stage === 'Qualified' || l.priority === 'Hot'; })
-    .map(function(l) { return l.id; });
 
-  const result = await sendActionToMake('prepare_qualified_leads', {
-    leadIds: qualifiedLeadIds
-  });
+    function closeDetailPanel() {
+      const panel = document.getElementById('detailPanel');
+      panel.classList.remove('visible-panel');
+      panel.classList.add('hidden-panel');
+    }
 
-  if (result && result.success) {
-    if (result.data) applyDashboardData(result.data);
-    else await fetchDashboardData();
-    showToast('✓ Outreach prepared for qualified leads');
-    closeAIPanel();
-    switchView('queue');
-  }
-}
+    function navigate(view) {
+      currentView = view;
+      document.querySelectorAll('.view-section').forEach(s => s.classList.add('hidden'));
+      const target = document.getElementById('view-' + view);
+      if (target) target.classList.remove('hidden');
 
-async function prepareFollowUps() {
-  const followUpLeadIds = leads
-    .filter(function(l) { return l.stage === 'Contacted' || l.stage === 'Active'; })
-    .map(function(l) { return l.id; });
+      document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
+      const navBtn = document.querySelector(`[data-nav="${view}"]`);
+      if (navBtn) navBtn.classList.add('active');
 
-  const result = await sendActionToMake('prepare_followups', {
-    leadIds: followUpLeadIds
-  });
+      const titles = {
+        dashboard:'Dashboard',
+        gmail:'Gmail Intake',
+        leads:'Leads',
+        tasks:'Tasks',
+        completed:'Completed',
+        workflows:'Workflows',
+        settings:'Settings'
+      };
+      document.getElementById('pageTitle').textContent = titles[view] || 'Dashboard';
 
-  if (result && result.success) {
-    if (result.data) applyDashboardData(result.data);
-    else await fetchDashboardData();
-    showToast('✓ Follow-up messages prepared');
-    closeAIPanel();
-    switchView('queue');
-  }
-}
-  // 14) INITIALIZE
+      if (view === 'gmail') renderGmailTable();
 
-  async function initDashboard() {
-    lucide.createIcons();
-    applyConfig(defaultConfig);
+      if (window.innerWidth < 1024) toggleMobileSidebar();
+    }
 
-    // Paint the UI immediately so the dashboard is never blank
-    showFallbackData();
-    switchView('dashboard');
+    function toggleMobileSidebar() {
+      const sb = document.getElementById('sidebar');
+      const ov = document.getElementById('sidebarOverlay');
+      sb.classList.toggle('-translate-x-full');
+      sb.classList.toggle('translate-x-0');
+      ov.classList.toggle('show');
+    }
 
-    // Then try to load live data from Make
-    await fetchDashboardData();
-  }
+    function doSync() {
+      const btn = document.getElementById('syncBtn');
+      btn.innerHTML = '<i data-lucide="loader-2" class="w-3.5 h-3.5 animate-spin"></i> Syncing...';
+      btn.disabled = true;
+      lucide.createIcons();
 
-  initDashboard();
-</script>
- <script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'9ddcb6c113a4291e',t:'MTc3Mzc1ODAxOC4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script>
- </body>
+      setTimeout(() => {
+        btn.innerHTML = '<i data-lucide="refresh-cw" class="w-3.5 h-3.5"></i> Sync';
+        btn.disabled = false;
+        lucide.createIcons();
+        showToast('Synced successfully', 'success');
+      }, 1200);
+    }
+
+    function showToast(msg, type='default') {
+      const container = document.getElementById('toastContainer');
+      const toast = document.createElement('div');
+      toast.className = `flex items-center gap-2 px-4 py-2.5 rounded-lg shadow-lg text-sm font-medium ${type === 'success' ? 'bg-success-600 text-white' : 'bg-navy-700 text-white'}`;
+      toast.innerHTML = `<i data-lucide="${type === 'success' ? 'check-circle' : 'info'}" class="w-4 h-4"></i>${msg}`;
+      container.appendChild(toast);
+      lucide.createIcons();
+      setTimeout(() => {
+        toast.style.opacity = '0';
+        toast.style.transition = 'opacity .3s';
+        setTimeout(() => toast.remove(), 300);
+      }, 2400);
+    }
+
+    function startGoogleAuth() {
+      const btn = document.getElementById('googleLoginBtn');
+      const label = document.getElementById('googleLoginLabel');
+      const error = document.getElementById('authError');
+
+      error.classList.add('hidden');
+      btn.disabled = true;
+      label.textContent = 'Connecting...';
+      btn.classList.add('opacity-80');
+
+      setTimeout(() => {
+        localStorage.setItem('revaAuth', 'true');
+        localStorage.setItem('revaUser', 'operations@company.com');
+        showApp();
+        showToast('Google connected successfully', 'success');
+      }, 1400);
+    }
+
+    function mockAuthError() {
+      const error = document.getElementById('authError');
+      error.classList.remove('hidden');
+    }
+
+    function logout() {
+      localStorage.removeItem('revaAuth');
+      localStorage.removeItem('revaUser');
+      showAuth();
+      showToast('Signed out', 'default');
+    }
+
+    function showAuth() {
+      document.getElementById('authScreen').classList.remove('hidden');
+      document.getElementById('appShell').classList.add('hidden');
+
+      const btn = document.getElementById('googleLoginBtn');
+      const label = document.getElementById('googleLoginLabel');
+      document.getElementById('authError').classList.add('hidden');
+      btn.disabled = false;
+      btn.classList.remove('opacity-80');
+      label.textContent = 'Sign in with Google';
+      lucide.createIcons();
+    }
+
+    function showApp() {
+      document.getElementById('authScreen').classList.add('hidden');
+      document.getElementById('appShell').classList.remove('hidden');
+      renderDashRecentTable();
+      renderGmailTable();
+      navigate('dashboard');
+      lucide.createIcons();
+    }
+
+    function initApp() {
+      const isAuthed = localStorage.getItem('revaAuth') === 'true';
+      if (isAuthed) {
+        showApp();
+      } else {
+        showAuth();
+      }
+      lucide.createIcons();
+    }
+
+    initApp();
+  </script>
+</body>
 </html>

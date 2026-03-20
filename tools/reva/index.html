@@ -7,6 +7,7 @@
   <script src="https://cdn.tailwindcss.com/3.4.17"></script>
   <script src="https://cdn.jsdelivr.net/npm/lucide@0.263.0/dist/umd/lucide.min.js"></script>
   <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <script src="https://accounts.google.com/gsi/client" async defer></script>
 
   <script>
     tailwind.config = {
@@ -95,11 +96,11 @@ html, body {
 
         <!-- Logo -->
         <div class="flex justify-center mb-6">
-          <div class="w-16 h-16 rounded-2xl bg-rose-400 flex items-center justify-center shadow-lg shadow-purple-500/30">
+          <div class="w-16 h-16 rounded-2xl bg-rose-900 flex items-center justify-center shadow-lg shadow-purple-500/30">
             <img 
               src="https://regencreatives.com/img/regenlogo.svg"
               alt="REVA Logo"
-              class="w-12 h-12"
+              class="w-10 h-10"
             />
           </div>
         </div>
@@ -108,7 +109,7 @@ html, body {
         <h1 class="text-2xl font-bold text-slate-800 tracking-wide">
           REVA
         </h1>
-        <p class="text-xs tracking-[0.25em] text-blue-400 mt-2">
+        <p class="text-xs tracking-[0.25em] text-slate-400 mt-2">
           BUSINESS OPERATIONS HUB
         </p>
 
@@ -642,5 +643,120 @@ html, body {
 
     initApp();
   </script>
+
+  <script>
+/* =========================
+   REVA GOOGLE AUTH (DROP-IN)
+   ========================= */
+
+const GOOGLE_CLIENT_ID = '572744257337-rgfnreps1sulrmse8c9bb6rmp2p77t7t.apps.googleusercontent.com';
+
+const GOOGLE_SCOPES = [
+  'openid',
+  'email',
+  'profile',
+  'https://www.googleapis.com/auth/gmail.readonly'
+].join(' ');
+
+let googleCodeClient = null;
+
+/* ---------- INIT ---------- */
+window.addEventListener('load', () => {
+  if (!window.google || !google.accounts || !google.accounts.oauth2) {
+    console.error('Google SDK failed to load');
+    return;
+  }
+
+  googleCodeClient = google.accounts.oauth2.initCodeClient({
+    client_id: GOOGLE_CLIENT_ID,
+    scope: GOOGLE_SCOPES,
+    ux_mode: 'popup',
+    callback: handleGoogleAuth,
+    error_callback: (err) => {
+      console.error(err);
+      showAuthError('Authentication failed. Please try again.');
+      resetGoogleBtn();
+    }
+  });
+});
+
+/* ---------- CLICK HANDLER ---------- */
+function startGoogleAuth() {
+  const btn = document.getElementById('googleLoginBtn');
+  const label = document.getElementById('googleLoginLabel');
+
+  hideAuthError();
+
+  btn.disabled = true;
+  btn.classList.add('opacity-80');
+  label.textContent = 'Connecting...';
+
+  if (!googleCodeClient) {
+    showAuthError('Google not ready. Refresh and try again.');
+    resetGoogleBtn();
+    return;
+  }
+
+  googleCodeClient.requestCode();
+}
+
+/* ---------- HANDLE RESPONSE ---------- */
+async function handleGoogleAuth(response) {
+  if (!response || !response.code) {
+    showAuthError('No authorization code returned.');
+    resetGoogleBtn();
+    return;
+  }
+
+  try {
+    const res = await fetch('/auth/google/exchange', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ code: response.code })
+    });
+
+    if (!res.ok) throw new Error('Exchange failed');
+
+    const data = await res.json();
+
+    /* TEMP SESSION (until backend session added) */
+    localStorage.setItem('revaAuth', 'true');
+    localStorage.setItem('revaUser', data.email || 'operations@company.com');
+
+    resetGoogleBtn();
+    showApp();
+    showToast('Google connected successfully', 'success');
+
+  } catch (err) {
+    console.error(err);
+    showAuthError('Authentication failed.');
+    resetGoogleBtn();
+  }
+}
+
+/* ---------- UI HELPERS ---------- */
+function resetGoogleBtn() {
+  const btn = document.getElementById('googleLoginBtn');
+  const label = document.getElementById('googleLoginLabel');
+
+  btn.disabled = false;
+  btn.classList.remove('opacity-80');
+  label.textContent = 'Sign in with Google';
+}
+
+function showAuthError(msg) {
+  const el = document.getElementById('authError');
+  el.textContent = msg;
+  el.classList.remove('hidden');
+}
+
+function hideAuthError() {
+  document.getElementById('authError').classList.add('hidden');
+}
+
+function mockAuthError() {
+  showAuthError('Authentication failed. Please try again.');
+}
+</script>
 </body>
 </html>

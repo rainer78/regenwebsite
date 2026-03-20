@@ -1,0 +1,47 @@
+<svg width="1024" height="1024" viewBox="0 0 1024 1024" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="bg" x1="64" y1="64" x2="960" y2="960" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#F2ECEC"/>
+      <stop offset="1" stop-color="#D8D1D3"/>
+    </linearGradient>
+    <radialGradient id="shadowGrad" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse" gradientTransform="translate(385 827) rotate(78) scale(306 231)">
+      <stop stop-color="#5A5366" stop-opacity="0.35"/>
+      <stop offset="1" stop-color="#5A5366" stop-opacity="0"/>
+    </radialGradient>
+    <linearGradient id="bubbleGrad" x1="248" y1="164" x2="793" y2="860" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#FF7D72"/>
+      <stop offset="1" stop-color="#EA5A4E"/>
+    </linearGradient>
+    <filter id="bubbleShadow" x="126" y="107" width="780" height="803" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
+      <feDropShadow dx="-8" dy="10" stdDeviation="10" flood-color="#8A3342" flood-opacity="0.16"/>
+    </filter>
+    <filter id="rShadow" x="290" y="283" width="458" height="495" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
+      <feDropShadow dx="-12" dy="20" stdDeviation="14" flood-color="#8D0000" flood-opacity="0.38"/>
+    </filter>
+    <filter id="innerGlow" x="206" y="96" width="650" height="795" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
+      <feGaussianBlur stdDeviation="16" result="blur"/>
+    </filter>
+  </defs>
+
+  <rect width="1024" height="1024" fill="url(#bg)"/>
+  <ellipse cx="368" cy="829" rx="298" ry="188" fill="url(#shadowGrad)"/>
+
+  <!-- speech bubble -->
+  <g filter="url(#bubbleShadow)">
+    <path d="M757.17 98.88C763.649 96.8304 770.399 101.973 769.863 108.744C769.543 112.779 768.886 116.774 767.902 120.697L738.022 239.816C736.809 244.652 738.373 249.756 742.107 253.059C815.447 317.933 862 412.758 862 518.451C862 714.29 703.29 873 507.451 873C311.611 873 152.902 714.29 152.902 518.451C152.902 322.611 311.611 163.902 507.451 163.902C554.27 163.902 598.97 172.973 639.901 189.452L757.17 98.88Z" fill="url(#bubbleGrad)"/>
+    <path d="M757.17 98.88C763.649 96.8304 770.399 101.973 769.863 108.744C769.543 112.779 768.886 116.774 767.902 120.697L738.022 239.816C736.809 244.652 738.373 249.756 742.107 253.059C815.447 317.933 862 412.758 862 518.451C862 714.29 703.29 873 507.451 873C311.611 873 152.902 714.29 152.902 518.451C152.902 322.611 311.611 163.902 507.451 163.902C554.27 163.902 598.97 172.973 639.901 189.452L757.17 98.88Z" stroke="#E2554E" stroke-width="8"/>
+  </g>
+
+  <!-- subtle highlight -->
+  <path d="M267 376C316 283 424 216 553 198C574 195 581 223 561 229C464 258 377 311 317 393C306 407 290 402 278 394C267 388 261 380 267 376Z" fill="#FFA39B" fill-opacity="0.22"/>
+  <path d="M742 112L719 215C716 227 729 236 739 229C747 224 753 214 756 203L776 123C780 108 757 99 742 112Z" fill="#FFA59D" fill-opacity="0.35"/>
+
+  <!-- center R -->
+  <g filter="url(#rShadow)">
+    <text x="512" y="724" text-anchor="middle" font-size="560" font-weight="900" font-family="Arial Black, Inter, Helvetica, Arial, sans-serif" fill="#F2ECE9">R</text>
+  </g>
+  <text x="512" y="714" text-anchor="middle" font-size="560" font-weight="900" font-family="Arial Black, Inter, Helvetica, Arial, sans-serif" fill="#F4EEEB">R</text>
+
+  <!-- slight top edge highlight on R -->
+  <path d="M391 328H550C632 328 691 382 691 447C691 500 655 542 596 565L691 699C699 711 690 726 676 726H598C591 726 585 722 581 716L500 586H463V709C463 719 455 727 445 727H373C363 727 355 719 355 709V364C355 344 371 328 391 328ZM463 415V500H536C575 500 597 477 597 447C597 424 576 415 544 415H463Z" fill="white" fill-opacity="0.07"/>
+</svg>

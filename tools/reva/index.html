@@ -633,14 +633,19 @@ function startGoogleAuth() { const btn = document.getElementById('googleLoginBtn
 
 
 async function handleGoogleAuth(response) {
+  console.log('STEP 1: handleGoogleAuth fired');
+  console.log('STEP 2: Google response received:', response);
+
   if (!response?.code) {
-    console.error('No authorization code returned.');
+    console.error('STEP 3: No authorization code returned.');
     showAuthError?.('No authorization code returned.');
     resetGoogleBtn?.();
     return;
   }
 
   try {
+    console.log('STEP 4: Sending code to Make webhook...');
+
     const res = await fetch('https://hook.us2.make.com/8ckd7b5dik6xmp3ev8r62l75gda5gl3l', {
       method: 'POST',
       headers: {
@@ -649,26 +654,31 @@ async function handleGoogleAuth(response) {
       body: JSON.stringify({ code: response.code })
     });
 
+    console.log('STEP 5: Fetch completed. HTTP status:', res.status);
+
     const rawText = await res.text();
-    console.log('Raw OAuth response:', rawText);
+    console.log('STEP 6: Raw response text:', rawText);
 
     let data;
     try {
       data = JSON.parse(rawText);
+      console.log('STEP 7: Parsed JSON:', data);
     } catch (parseErr) {
-      console.error('Backend returned non-JSON:', rawText);
-      showAuthError?.('Backend error. Check Make scenario output.');
+      console.error('STEP 7 FAILED: Response was not valid JSON');
+      console.error(parseErr);
+      showAuthError?.('Backend error. Response was not valid JSON.');
       resetGoogleBtn?.();
       return;
     }
 
-    console.log('OAuth result:', data);
-
     if (!res.ok || !data.ok) {
+      console.error('STEP 8 FAILED: Backend returned failure:', data);
       showAuthError?.(data?.error || 'Authentication failed.');
       resetGoogleBtn?.();
       return;
     }
+
+    console.log('STEP 9: Storing auth state');
 
     localStorage.setItem('revaAuth', 'true');
     localStorage.setItem('revaUser', data.email || '');
@@ -676,12 +686,16 @@ async function handleGoogleAuth(response) {
     localStorage.setItem('revaHasRefreshToken', String(!!data.hasRefreshToken));
     localStorage.setItem('revaLastSync', 'Just connected');
 
+    console.log('STEP 10: Showing app');
+
     resetGoogleBtn?.();
     showApp?.();
     hydrateAuthUI?.();
     showToast?.(`Connected as ${data.email}`, 'success');
+
+    console.log('STEP 11: Auth flow complete');
   } catch (err) {
-    console.error('OAuth request failed:', err);
+    console.error('STEP X FAILED: OAuth request failed:', err);
     showAuthError?.('Authentication failed. Please try again.');
     resetGoogleBtn?.();
   }

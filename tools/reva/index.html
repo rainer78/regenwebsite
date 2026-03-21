@@ -617,7 +617,9 @@ html, body {
      REVA GOOGLE AUTH
      ========================= */
 const GOOGLE_CLIENT_ID = '572744257337-rgfnreps1sulrmse8c9bb6rmp2p77t7t.apps.googleusercontent.com'; const GOOGLE_SCOPES = [ 'openid', 'email', 'profile', 'https://www.googleapis.com/auth/gmail.readonly' ].join(' '); let googleCodeClient = null; window.addEventListener('load', () => { if (!window.google || !google.accounts || !google.accounts.oauth2) { console.error('Google SDK failed to load'); return; } googleCodeClient = google.accounts.oauth2.initCodeClient({ client_id: GOOGLE_CLIENT_ID, scope: GOOGLE_SCOPES, ux_mode: 'popup',redirect_uri: 'https://regencreatives.com/tools/reva/', callback: handleGoogleAuth, error_callback: (err) => { console.error(err); showAuthError('Authentication failed. Please try again.'); resetGoogleBtn(); } }); }); function startGoogleAuth() { const btn = document.getElementById('googleLoginBtn'); const label = document.getElementById('googleLoginLabel'); hideAuthError(); btn.disabled = true; btn.classList.add('opacity-80'); label.textContent = 'Connecting...'; if (!googleCodeClient) { showAuthError('Google not ready. Refresh and try again.'); resetGoogleBtn(); return; } googleCodeClient.requestCode(); } 
- async function handleGoogleAuth(response) {
+
+
+   async function handleGoogleAuth(response) {
   if (!response?.code) {
     console.error('No authorization code returned.');
     showAuthError?.('No authorization code returned.');
@@ -634,22 +636,10 @@ const GOOGLE_CLIENT_ID = '572744257337-rgfnreps1sulrmse8c9bb6rmp2p77t7t.apps.goo
       body: JSON.stringify({ code: response.code })
     });
 
-    const text = await res.text();
-    let data;
-
-    try {
-      data = JSON.parse(text);
-    } catch (parseErr) {
-      console.error('Backend did not return valid JSON:', text);
-      showAuthError?.('Authentication failed. Invalid server response.');
-      resetGoogleBtn?.();
-      return;
-    }
-
+    const data = await res.json();
     console.log('OAuth result:', data);
 
     if (!res.ok || !data.ok) {
-      console.error('Authentication failed:', data);
       showAuthError?.(data?.error || 'Authentication failed.');
       resetGoogleBtn?.();
       return;
@@ -658,7 +648,7 @@ const GOOGLE_CLIENT_ID = '572744257337-rgfnreps1sulrmse8c9bb6rmp2p77t7t.apps.goo
     localStorage.setItem('revaAuth', 'true');
     localStorage.setItem('revaUser', data.email || '');
     localStorage.setItem('revaUserName', data.name || '');
-    localStorage.setItem('revaUserPhoto', data.picture || '');
+    localStorage.setItem('revaHasRefreshToken', String(!!data.hasRefreshToken));
 
     resetGoogleBtn?.();
     showApp?.();
@@ -669,6 +659,7 @@ const GOOGLE_CLIENT_ID = '572744257337-rgfnreps1sulrmse8c9bb6rmp2p77t7t.apps.goo
     resetGoogleBtn?.();
   }
 }
+   
   function resetGoogleBtn() {
     const btn = document.getElementById('googleLoginBtn');
     const label = document.getElementById('googleLoginLabel');

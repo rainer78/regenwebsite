@@ -632,7 +632,7 @@ const GOOGLE_SCOPES = [ 'openid', 'email', 'profile', 'https://www.googleapis.co
 function startGoogleAuth() { const btn = document.getElementById('googleLoginBtn'); const label = document.getElementById('googleLoginLabel'); hideAuthError(); btn.disabled = true; btn.classList.add('opacity-80'); label.textContent = 'Connecting...'; if (!googleCodeClient) { showAuthError('Google not ready. Refresh and try again.'); resetGoogleBtn(); return; } googleCodeClient.requestCode(); } 
 
 
-   async function handleGoogleAuth(response) {
+async function handleGoogleAuth(response) {
   if (!response?.code) {
     console.error('No authorization code returned.');
     showAuthError?.('No authorization code returned.');
@@ -649,7 +649,19 @@ function startGoogleAuth() { const btn = document.getElementById('googleLoginBtn
       body: JSON.stringify({ code: response.code })
     });
 
-    const data = await res.json();
+    const rawText = await res.text();
+    console.log('Raw OAuth response:', rawText);
+
+    let data;
+    try {
+      data = JSON.parse(rawText);
+    } catch (parseErr) {
+      console.error('Backend returned non-JSON:', rawText);
+      showAuthError?.('Backend error. Check Make scenario output.');
+      resetGoogleBtn?.();
+      return;
+    }
+
     console.log('OAuth result:', data);
 
     if (!res.ok || !data.ok) {
@@ -666,7 +678,7 @@ function startGoogleAuth() { const btn = document.getElementById('googleLoginBtn
 
     resetGoogleBtn?.();
     showApp?.();
-    hydrateAuthUI();
+    hydrateAuthUI?.();
     showToast?.(`Connected as ${data.email}`, 'success');
   } catch (err) {
     console.error('OAuth request failed:', err);

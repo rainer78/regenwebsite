@@ -452,24 +452,24 @@ html, body {
   <div id="toastContainer" class="fixed top-4 right-4 z-50 space-y-2"></div>
 
  <script>
-  const emails = [
-    { id:1, sender:'Google Voice', subject:'Missed call from (512) 555-0147', category:'Missed Call', time:'2 min ago', status:'New', contact:'(512) 555-0147', summary:'Missed call received via Google Voice. No voicemail left.', suggestedTask:'Return call to (512) 555-0147' },
-    { id:2, sender:'Maria Chen', subject:'Quote request for bathroom renovation', category:'Lead', time:'18 min ago', status:'Sent to Make', contact:'maria.chen@email.com · (512) 555-0293', summary:'Requesting quote for master bathroom renovation.', suggestedTask:'Prepare bathroom renovation estimate for Maria Chen' },
-    { id:3, sender:'Google Voice', subject:'New voicemail from (737) 555-0812', category:'Voicemail', time:'45 min ago', status:'Task Created', contact:'(737) 555-0812', summary:'Caller wants to move ahead and schedule.', suggestedTask:'Schedule fence installation and call back' },
-    { id:4, sender:'James Whitfield', subject:'Re: Deck repair timeline?', category:'Inquiry', time:'1 hr ago', status:'Sent to Make', contact:'j.whitfield@gmail.com', summary:'Follow-up on deck repair estimate sent last week.', suggestedTask:'Reply with updated timeline' }
-  ];
-
-  let currentView = 'dashboard';
+ let currentView = 'dashboard';
 
   function categoryBadge(cat) {
-    const map = {
-      'Missed Call':'bg-danger-50 text-danger-500 border-danger-100',
-      'Voicemail':'bg-purple-50 text-purple-600 border-purple-100',
-      'Lead':'bg-success-50 text-success-600 border-success-100',
-      'Inquiry':'bg-accent-50 text-accent-600 border-accent-100'
-    };
-    return `<span class="inline-flex items-center px-2 py-0.5 rounded-full text-[11px] font-medium border ${map[cat] || 'bg-gray-100 text-gray-600 border-gray-200'}">${cat}</span>`;
-  }
+  const map = {
+    'Missed Call': 'bg-danger-50 text-danger-500 border-danger-100',
+    'Voicemail': 'bg-purple-50 text-purple-600 border-purple-100',
+    'Lead': 'bg-success-50 text-success-600 border-success-100',
+    'Inquiry': 'bg-accent-50 text-accent-600 border-accent-100'
+  };
+
+  const style = map[cat] || 'bg-gray-100 text-gray-600 border-gray-200';
+
+  return `
+    <span class="inline-flex items-center px-2 py-0.5 rounded-full text-[11px] font-medium border ${style}">
+      ${escapeHtml(cat)}
+    </span>
+  `;
+}
 
   function statusBadge(st) {
     const map = {
@@ -930,7 +930,7 @@ async function handleGoogleAuth(response) {
       <tr class="border-t border-gray-100">
         <td class="px-5 py-3 text-gray-700">${sender}</td>
         <td class="px-3 py-3 text-gray-700">${subject}</td>
-        <td class="px-3 py-3">${renderCategoryBadge(category)}</td>
+        <td class="px-3 py-3">${CategoryBadge(category)}</td>
         <td class="px-3 py-3 text-gray-500">${time}</td>
         <td class="px-3 py-3">${renderStatusBadge(status)}</td>
       </tr>
@@ -961,7 +961,7 @@ function getStatusFromCategory(category) {
   }
 }
 
-function renderCategoryBadge(category) {
+function CategoryBadge(category) {
   const styles = {
     'Missed Call': 'bg-red-50 text-red-500',
     'Voicemail': 'bg-purple-50 text-purple-500',

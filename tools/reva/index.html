@@ -686,12 +686,22 @@ async function handleGoogleAuth(response) {
     localStorage.setItem('revaHasRefreshToken', String(!!data.hasRefreshToken));
     localStorage.setItem('revaLastSync', 'Just connected');
 
+    const grantedScopes = (data.scope || '').split(/\s+/).filter(Boolean);
+    const hasGmailReadonly = grantedScopes.includes('https://www.googleapis.com/auth/gmail.readonly');
+
+    localStorage.setItem('revaHasGmailScope', String(hasGmailReadonly));
+
+
     console.log('STEP 10: Showing app');
 
     resetGoogleBtn?.();
     showApp?.();
     hydrateAuthUI?.();
-    showToast?.(`Connected as ${data.email}`, 'success');
+    if (hasGmailReadonly) {
+      showToast?.(`Connected as ${data.email}`, 'success');
+    } else {
+      showToast?.(`Connected as ${data.email}, but Gmail access is incomplete`, 'warning');
+    }
 
     console.log('STEP 11: Auth flow complete');
   } catch (err) {
@@ -724,6 +734,7 @@ async function handleGoogleAuth(response) {
   const email = localStorage.getItem('revaUser') || '';
   const name = localStorage.getItem('revaUserName') || 'User';
   const hasRefreshToken = localStorage.getItem('revaHasRefreshToken') === 'true';
+   const hasGmailScope = localStorage.getItem('revaHasGmailScope') === 'true';
   const lastSync = localStorage.getItem('revaLastSync') || '—';
 
   const appShell = document.getElementById('appShell');
@@ -753,9 +764,15 @@ async function handleGoogleAuth(response) {
   }
 
   if (settingsStatus) {
-    settingsStatus.textContent = hasRefreshToken
-      ? 'Connected · Ready for sync'
-      : 'Connected · Reconnect needed';
+    if (gmailReady) {
+      settingsStatus.textContent = 'Connected · Gmail intake ready';
+    } else if (hasGmailScope && !hasRefreshToken) {
+      settingsStatus.textContent = 'Connected · Refresh token missing';
+    } else if (!hasGmailScope) {
+      settingsStatus.textContent = 'Connected · Gmail permission missing';
+    } else {
+      settingsStatus.textContent = 'Connected · Setup incomplete';
+    }
   }
 
   if (settingsLastSync) {
@@ -763,26 +780,39 @@ async function handleGoogleAuth(response) {
   }
 
   if (sidebarConnectionText) {
-    sidebarConnectionText.textContent = hasRefreshToken
+    sidebarConnectionText.textContent = gmailReady
       ? 'Gmail Connected'
-      : 'Connected, reconnect needed';
+      : 'Gmail Setup Incomplete';
   }
 
   if (sidebarConnectionSubtext) {
-    sidebarConnectionSubtext.textContent = hasRefreshToken
-      ? 'Ready to monitor incoming activity'
-      : 'Inbox access is incomplete';
+    if (gmailReady) {
+      sidebarConnectionSubtext.textContent = 'Ready to monitor incoming activity';
+    } else if (hasGmailScope && !hasRefreshToken) {
+      sidebarConnectionSubtext.textContent = 'Reconnect required to keep access active';
+    } else if (!hasGmailScope) {
+      sidebarConnectionSubtext.textContent = 'Gmail permission was not granted';
+    } else {
+      sidebarConnectionSubtext.textContent = 'Inbox access is incomplete';
+    }
   }
 
-  if (sidebarLastSync) {
+ if (sidebarLastSync) {
     sidebarLastSync.textContent = `Last synced: ${lastSync}`;
   }
 
   if (authStatusBanner) {
     authStatusBanner.classList.remove('hidden');
-    authStatusBanner.textContent = hasRefreshToken
-      ? `Connected as ${email}`
-      : `Connected as ${email}, but reconnect is needed`;
+
+    if (gmailReady) {
+      authStatusBanner.textContent = `Connected as ${email}`;
+    } else if (hasGmailScope && !hasRefreshToken) {
+      authStatusBanner.textContent = `Connected as ${email}, but reconnect is needed`;
+    } else if (!hasGmailScope) {
+      authStatusBanner.textContent = `Connected as ${email}, but Gmail permission is missing`;
+    } else {
+      authStatusBanner.textContent = `Connected as ${email}, but setup is incomplete`;
+    }
   }
 }
 

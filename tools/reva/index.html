@@ -235,8 +235,7 @@ html, body {
           <div class="flex items-center gap-2">
             <div class="hidden sm:flex items-center gap-2 bg-gray-50 border border-gray-200 rounded-lg px-3 py-1.5 w-[220px]">
               <i data-lucide="search" class="w-4 h-4 text-gray-400"></i>
-              <input type="text" placeholder="Search emails, tasks..." class="bg-transparent text-sm text-gray-700 outline-none flex-1 placeholder-gray-400">
-            </div>
+              emails
 
             <button onclick="doSync()" id="syncBtn" class="btn-ghost flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-medium">
               <i data-lucide="refresh-cw" class="w-3.5 h-3.5"></i> Sync
@@ -480,47 +479,127 @@ html, body {
     return `<span class="inline-flex items-center px-2 py-0.5 rounded-full text-[11px] font-medium ${map[st] || 'bg-gray-100 text-gray-600'}">${st}</span>`;
   }
 
-  function renderDashRecentTable() {
-    const tbody = document.getElementById('dashRecentTable');
-    tbody.innerHTML = emails.map(e => `
-      <tr class="trow border-b border-gray-50 cursor-pointer" onclick="openDetail(${e.id})">
-        <td class="px-5 py-3 font-medium text-gray-800 whitespace-nowrap">${e.sender}</td>
-        <td class="px-3 py-3 text-gray-600 max-w-[220px] truncate">${e.subject}</td>
-        <td class="px-3 py-3">${categoryBadge(e.category)}</td>
-        <td class="px-3 py-3">${statusBadge(e.status)}</td>
-        <td class="px-3 py-3 text-gray-400 text-xs mono whitespace-nowrap">${e.time}</td>
+  let currentEmailItems = [];
+
+   function getCategoryFromSubject(subject) {
+  const s = String(subject).toLowerCase();
+
+  if (s.includes('missed call')) return 'Missed Call';
+  if (s.includes('voicemail')) return 'Voicemail';
+  if (s.includes('quote') || s.includes('estimate')) return 'Lead';
+
+  return 'Inquiry';
+}
+
+function getStatusFromCategory(category) {
+  switch (category) {
+    case 'Missed Call':
+      return 'New';
+    case 'Voicemail':
+      return 'Task Created';
+    case 'Lead':
+      return 'Sent to Make';
+    default:
+      return 'Sent to Make';
+  }
+}
+
+function escapeHtml(value) {
+  return String(value)
+    .replaceAll('&', '&amp;')
+    .replaceAll('<', '&lt;')
+    .replaceAll('>', '&gt;')
+    .replaceAll('"', '&quot;')
+    .replaceAll("'", '&#39;');
+}
+
+function renderDashRecentTable(emailList = []) {
+  currentEmailItems = Array.isArray(emailList) ? emailList : [];
+
+  const tbody = document.getElementById('dashRecentTable');
+  if (!tbody) return;
+
+  if (!currentEmailItems.length) {
+    tbody.innerHTML = `
+      <tr>
+        <td colspan="5" class="px-5 py-4 text-center text-gray-400">
+          No recent activity yet
+        </td>
       </tr>
-    `).join('');
+    `;
+    return;
   }
 
-  function renderGmailTable() {
-    const tbody = document.getElementById('gmailTable');
-    tbody.innerHTML = emails.map(e => `
-      <tr class="trow border-b border-gray-50 cursor-pointer" onclick="openDetail(${e.id})">
-        <td class="px-5 py-3 font-medium text-gray-800">${e.sender}</td>
-        <td class="px-3 py-3 text-gray-600 max-w-[220px] truncate">${e.subject}</td>
-        <td class="px-3 py-3">${categoryBadge(e.category)}</td>
-        <td class="px-3 py-3 text-gray-400 text-xs mono">${e.time}</td>
-        <td class="px-3 py-3">${statusBadge(e.status)}</td>
+  tbody.innerHTML = currentEmailItems.slice(0, 4).map((e, index) => `
+    <tr class="trow border-b border-gray-50 cursor-pointer" onclick="openDetail(${index})">
+      <td class="px-5 py-3 font-medium text-gray-800 whitespace-nowrap">${escapeHtml(e.sender || '—')}</td>
+      <td class="px-3 py-3 text-gray-600 max-w-[220px] truncate">${escapeHtml(e.subject || '—')}</td>
+      <td class="px-3 py-3">${categoryBadge(e.category || getCategoryFromSubject(e.subject || ''))}</td>
+      <td class="px-3 py-3">${statusBadge(e.status || getStatusFromCategory(e.category || getCategoryFromSubject(e.subject || '')))}</td>
+      <td class="px-3 py-3 text-gray-400 text-xs mono whitespace-nowrap">${escapeHtml(e.time || '—')}</td>
+    </tr>
+  `).join('');
+}
+
+function renderGmailTable(emailList = []) {
+  currentEmailItems = Array.isArray(emailList) ? emailList : [];
+
+  const tbody = document.getElementById('gmailTable');
+  if (!tbody) return;
+
+  if (!currentEmailItems.length) {
+    tbody.innerHTML = `
+      <tr>
+        <td colspan="5" class="px-5 py-6 text-center text-gray-400">
+          No captured emails or notifications yet
+        </td>
       </tr>
-    `).join('');
+    `;
+    return;
   }
 
-  function openDetail(id) {
-    const e = emails.find(x => x.id === id);
-    if (!e) return;
-    document.getElementById('detailFrom').textContent = e.sender;
-    document.getElementById('detailSubject').textContent = e.subject;
-    document.getElementById('detailCategory').innerHTML = categoryBadge(e.category);
-    document.getElementById('detailContact').textContent = e.contact;
-    document.getElementById('detailSummary').textContent = e.summary;
-    document.getElementById('detailTask').textContent = e.suggestedTask;
+  tbody.innerHTML = currentEmailItems.map((e, index) => `
+    <tr class="trow border-b border-gray-50 cursor-pointer" onclick="openDetail(${index})">
+      <td class="px-5 py-3 font-medium text-gray-800">${escapeHtml(e.sender || '—')}</td>
+      <td class="px-3 py-3 text-gray-600 max-w-[220px] truncate">${escapeHtml(e.subject || '—')}</td>
+      <td class="px-3 py-3">${categoryBadge(e.category || getCategoryFromSubject(e.subject || ''))}</td>
+      <td class="px-3 py-3 text-gray-400 text-xs mono">${escapeHtml(e.time || '—')}</td>
+      <td class="px-3 py-3">${statusBadge(e.status || getStatusFromCategory(e.category || getCategoryFromSubject(e.subject || '')))}</td>
+    </tr>
+  `).join('');
+}
 
-    const panel = document.getElementById('detailPanel');
-    panel.classList.remove('hidden-panel', 'hidden');
-    panel.classList.add('visible-panel');
-    lucide.createIcons();
-  }
+function openDetail(index) {
+  const e = currentEmailItems[index];
+  if (!e) return;
+
+  const category = e.category || getCategoryFromSubject(e.subject || '');
+  const contact = e.contact || e.sender || '—';
+  const summary = e.summary || 'No summary available yet.';
+  const suggestedTask = e.suggestedTask || 'No suggested task yet.';
+
+  document.getElementById('detailFrom').textContent = e.sender || '—';
+  document.getElementById('detailSubject').textContent = e.subject || '—';
+  document.getElementById('detailCategory').innerHTML = categoryBadge(category);
+  document.getElementById('detailContact').textContent = contact;
+  document.getElementById('detailSummary').textContent = summary;
+  document.getElementById('detailTask').textContent = suggestedTask;
+
+  const panel = document.getElementById('detailPanel');
+  if (!panel) return;
+
+  panel.classList.remove('hidden-panel', 'hidden');
+  panel.classList.add('visible-panel');
+  lucide.createIcons();
+}
+
+function closeDetailPanel() {
+  const panel = document.getElementById('detailPanel');
+  if (!panel) return;
+
+  panel.classList.remove('visible-panel');
+  panel.classList.add('hidden-panel');
+}
 
   function closeDetailPanel() {
     const panel = document.getElementById('detailPanel');
@@ -611,8 +690,8 @@ function logout() {
   function showApp() {
     document.getElementById('authScreen').classList.add('hidden');
     document.getElementById('appShell').classList.remove('hidden');
-    renderDashRecentTable();
-    renderGmailTable();
+    renderDashRecentTable([]);
+    renderGmailTable([]);
     navigate('dashboard');
     lucide.createIcons();
   }
@@ -920,7 +999,7 @@ async function handleGoogleAuth(response) {
     `;
   }
 }
-   function renderGmailTable(emails) {
+  function renderGmailTable(emails) {
   const table = document.getElementById('gmailTable');
 
   if (!table) return;

@@ -352,7 +352,13 @@ html, body {
                       <th class="px-3 py-2.5">Status</th>
                     </tr>
                   </thead>
-                  <tbody id="gmailTable"></tbody>
+                  <tbody id="gmailTable">
+  <tr>
+    <td colspan="5" class="px-5 py-6 text-center text-gray-400">
+      No captured emails or notifications yet
+    </td>
+  </tr>
+</tbody>
                 </table>
               </div>
             </div>
@@ -651,7 +657,10 @@ async function handleGoogleAuth(response) {
       headers: {
         'Content-Type': 'application/json'
       },
-      body: JSON.stringify({ code: response.code })
+      body: JSON.stringify({
+  action: 'login',
+  code: response.code
+})
     });
 
     console.log('STEP 5: Fetch completed. HTTP status:', res.status);
@@ -814,7 +823,190 @@ async function handleGoogleAuth(response) {
       authStatusBanner.textContent = `Connected as ${email}, but setup is incomplete`;
     }
   }
+
+   async function loadGmailIntake() {
+  const table = document.getElementById('gmailTable');
+
+  if (!table) return;
+
+  table.innerHTML = `
+    <tr>
+      <td colspan="5" class="px-5 py-6 text-center text-gray-400">
+        Loading Gmail intake...
+      </td>
+    </tr>
+  `;
+
+  try {
+    const email = localStorage.getItem('revaUser') || '';
+
+    if (!email) {
+      table.innerHTML = `
+        <tr>
+          <td colspan="5" class="px-5 py-6 text-center text-red-500">
+            No connected user found
+          </td>
+        </tr>
+      `;
+      return;
+    }
+
+    const res = await fetch('https://hook.us2.make.com/8ckd7b5dik6xmp3ev8r62l75gda5gl3l', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        action: 'get_gmail',
+        email: email
+      })
+    });
+
+    const rawText = await res.text();
+
+    let data;
+    try {
+      data = JSON.parse(rawText);
+    } catch (err) {
+      console.error('Gmail intake response was not valid JSON:', rawText);
+      table.innerHTML = `
+        <tr>
+          <td colspan="5" class="px-5 py-6 text-center text-red-500">
+            Gmail intake returned invalid data
+          </td>
+        </tr>
+      `;
+      return;
+    }
+
+    if (!res.ok || !data.ok) {
+      console.error('Gmail intake request failed:', data);
+      table.innerHTML = `
+        <tr>
+          <td colspan="5" class="px-5 py-6 text-center text-red-500">
+            Unable to load Gmail intake
+          </td>
+        </tr>
+      `;
+      return;
+    }
+
+    renderGmailTable(data.emails || []);
+  } catch (err) {
+    console.error('Failed to load Gmail intake:', err);
+    table.innerHTML = `
+      <tr>
+        <td colspan="5" class="px-5 py-6 text-center text-red-500">
+          Failed to load Gmail intake
+        </td>
+      </tr>
+    `;
+  }
 }
+   function renderGmailTable(emails) {
+  const table = document.getElementById('gmailTable');
+
+  if (!table) return;
+
+  if (!emails.length) {
+    table.innerHTML = `
+      <tr>
+        <td colspan="5" class="px-5 py-6 text-center text-gray-400">
+          No captured emails or notifications yet
+        </td>
+      </tr>
+    `;
+    return;
+  }
+
+  table.innerHTML = emails.map(email => {
+    const sender = escapeHtml(email.sender || '—');
+    const subject = escapeHtml(email.subject || '—');
+    const category = escapeHtml(email.category || getCategoryFromSubject(email.subject || ''));
+    const time = escapeHtml(email.time || '—');
+    const status = escapeHtml(email.status || getStatusFromCategory(category));
+
+    return `
+      <tr class="border-t border-gray-100">
+        <td class="px-5 py-3 text-gray-700">${sender}</td>
+        <td class="px-3 py-3 text-gray-700">${subject}</td>
+        <td class="px-3 py-3">${renderCategoryBadge(category)}</td>
+        <td class="px-3 py-3 text-gray-500">${time}</td>
+        <td class="px-3 py-3">${renderStatusBadge(status)}</td>
+      </tr>
+    `;
+  }).join('');
+}
+
+   function getCategoryFromSubject(subject) {
+  const s = String(subject).toLowerCase();
+
+  if (s.includes('missed call')) return 'Missed Call';
+  if (s.includes('voicemail')) return 'Voicemail';
+  if (s.includes('quote') || s.includes('estimate')) return 'Lead';
+
+  return 'Inquiry';
+}
+
+function getStatusFromCategory(category) {
+  switch (category) {
+    case 'Missed Call':
+      return 'New';
+    case 'Voicemail':
+      return 'Task Created';
+    case 'Lead':
+      return 'Sent to Make';
+    default:
+      return 'Sent to Make';
+  }
+}
+
+function renderCategoryBadge(category) {
+  const styles = {
+    'Missed Call': 'bg-red-50 text-red-500',
+    'Voicemail': 'bg-purple-50 text-purple-500',
+    'Lead': 'bg-green-50 text-green-500',
+    'Inquiry': 'bg-blue-50 text-blue-500'
+  };
+
+  const style = styles[category] || 'bg-gray-100 text-gray-500';
+
+  return `
+    <span class="inline-flex rounded-full px-2.5 py-1 text-xs font-medium ${style}">
+      ${escapeHtml(category)}
+    </span>
+  `;
+}
+
+function renderStatusBadge(status) {
+  const styles = {
+    'New': 'bg-blue-50 text-blue-500',
+    'Task Created': 'bg-green-50 text-green-500',
+    'Sent to Make': 'bg-purple-50 text-purple-500'
+  };
+
+  const style = styles[status] || 'bg-gray-100 text-gray-500';
+
+  return `
+    <span class="inline-flex rounded-full px-2.5 py-1 text-xs font-medium ${style}">
+      ${escapeHtml(status)}
+    </span>
+  `;
+}
+
+function escapeHtml(value) {
+  return String(value)
+    .replaceAll('&', '&amp;')
+    .replaceAll('<', '&lt;')
+    .replaceAll('>', '&gt;')
+    .replaceAll('"', '&quot;')
+    .replaceAll("'", '&#39;');
+}
+
+
+   
+}
+   
 
   initApp();
 </script>

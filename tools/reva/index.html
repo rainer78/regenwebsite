@@ -834,13 +834,15 @@ async function handleGoogleAuth(response) {
     document.getElementById('authError').classList.add('hidden');
   }
 
- function hydrateAuthUI() {
+function hydrateAuthUI() {
   const isAuthed = localStorage.getItem('revaAuth') === 'true';
   const email = localStorage.getItem('revaUser') || '';
   const name = localStorage.getItem('revaUserName') || 'User';
   const hasRefreshToken = localStorage.getItem('revaHasRefreshToken') === 'true';
-   const hasGmailScope = localStorage.getItem('revaHasGmailScope') === 'true';
+  const hasGmailScope = localStorage.getItem('revaHasGmailScope') === 'true';
   const lastSync = localStorage.getItem('revaLastSync') || '—';
+
+  const gmailReady = isAuthed && hasRefreshToken && hasGmailScope;
 
   const appShell = document.getElementById('appShell');
   const dashboardWelcome = document.getElementById('dashboardWelcome');
@@ -902,7 +904,7 @@ async function handleGoogleAuth(response) {
     }
   }
 
- if (sidebarLastSync) {
+  if (sidebarLastSync) {
     sidebarLastSync.textContent = `Last synced: ${lastSync}`;
   }
 
@@ -919,6 +921,7 @@ async function handleGoogleAuth(response) {
       authStatusBanner.textContent = `Connected as ${email}, but setup is incomplete`;
     }
   }
+}
 
    async function loadGmailIntake() {
   const table = document.getElementById('gmailTable');

@@ -641,19 +641,68 @@ function closeDetailPanel() {
     ov.classList.toggle('show');
   }
 
-  function doSync() {
-    const btn = document.getElementById('syncBtn');
+  async function doSync() {
+  const btn = document.getElementById('syncBtn');
+
+  if (btn) {
     btn.innerHTML = '<i data-lucide="loader-2" class="w-3.5 h-3.5 animate-spin"></i> Syncing...';
     btn.disabled = true;
     lucide.createIcons();
+  }
 
-    setTimeout(() => {
+  try {
+    const email = localStorage.getItem('revaUser') || '';
+
+    if (!email) {
+      throw new Error('No connected user found.');
+    }
+
+    const res = await fetch('https://hook.us2.make.com/8ckd7b5dik6xmp3ev8r62l75gda5gl3l', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        action: 'get_gmail',
+        email: email
+      })
+    });
+
+    const rawText = await res.text();
+
+    let data;
+    try {
+      data = JSON.parse(rawText);
+    } catch (err) {
+      console.error('Sync response was not valid JSON:', rawText);
+      throw new Error('Sync returned invalid data.');
+    }
+
+    if (!res.ok || !data.ok) {
+      console.error('Sync failed:', data);
+      throw new Error(data?.error || 'Unable to sync Gmail intake.');
+    }
+
+    const emails = data.emails || [];
+
+    renderGmailTable(emails);
+    renderDashRecentTable(emails);
+
+    localStorage.setItem('revaLastSync', new Date().toLocaleString());
+    hydrateAuthUI();
+
+    showToast('Synced successfully', 'success');
+  } catch (err) {
+    console.error('doSync failed:', err);
+    showToast(err.message || 'Sync failed', 'error');
+  } finally {
+    if (btn) {
       btn.innerHTML = '<i data-lucide="refresh-cw" class="w-3.5 h-3.5"></i> Sync';
       btn.disabled = false;
       lucide.createIcons();
-      showToast('Synced successfully', 'success');
-    }, 1200);
+    }
   }
+
 
   function showToast(msg, type='default') {
     const container = document.getElementById('toastContainer');

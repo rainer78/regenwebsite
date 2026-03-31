@@ -583,7 +583,7 @@
 
         <!-- Results -->
         
-      <div id="assessmentResults" class="hidden">
+     <div id="assessmentResults" class="hidden">
   <div class="rounded-3xl bg-black text-white p-8">
     <p class="text-sm uppercase tracking-[0.18em] text-white/60">Assessment result</p>
 
@@ -594,73 +594,41 @@
     <div class="mt-6 flex flex-wrap items-center gap-6">
       <div class="relative h-24 w-24">
         <svg viewBox="0 0 36 36" class="h-24 w-24">
-          <path
-            d="M18 2.0845
-               a 15.9155 15.9155 0 0 1 0 31.831
-               a 15.9155 15.9155 0 0 1 0 -31.831"
-            fill="none"
-            stroke="currentColor"
-            class="text-white/15"
-            stroke-width="3.5"
-          />
-          <path
-            id="resultCircle"
-            d="M18 2.0845
-               a 15.9155 15.9155 0 0 1 0 31.831
-               a 15.9155 15.9155 0 0 1 0 -31.831"
-            fill="none"
-            stroke="currentColor"
-            class="text-amber-300"
-            stroke-width="3.5"
-            stroke-linecap="round"
-            stroke-dasharray="0 100"
-          />
+          <path d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" fill="none" stroke="currentColor" class="text-white/15" stroke-width="3.5" />
+          <path id="resultCircle" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" fill="none" stroke="currentColor" class="text-amber-300" stroke-width="3.5" stroke-linecap="round" stroke-dasharray="0 100" />
         </svg>
-
-        <div
-          id="resultScore"
-          class="absolute inset-0 flex items-center justify-center text-lg font-semibold"
-        >
-          0%
-        </div>
+        <div id="resultScore" class="absolute inset-0 flex items-center justify-center text-lg font-semibold">0%</div>
       </div>
 
       <div>
         <div class="text-sm text-white/60">Tier</div>
-        <div
-          id="resultTier"
-          class="mt-1 inline-flex items-center rounded-xl bg-white/10 px-4 py-2 text-sm font-semibold text-white"
-        >
-          Developing
-        </div>
+        <div id="resultTier" class="mt-1 inline-flex items-center rounded-xl bg-white/10 px-4 py-2 text-sm font-semibold text-white">Developing</div>
       </div>
     </div>
 
     <div class="mt-8 grid gap-4">
       <div class="rounded-2xl bg-white/10 p-5">
-        <div class="text-xs font-semibold uppercase tracking-wide text-white/55">
-          What this means
-        </div>
+        <div class="text-xs font-semibold uppercase tracking-wide text-white/55">What this means</div>
         <p id="resultSummary" class="mt-2 text-sm leading-relaxed text-white/80">
           Your business has some structure in place, but implementation should begin with one focused workflow.
         </p>
       </div>
 
-      <div class="rounded-2xl bg-white text-black p-5">
-        <div class="text-xs font-semibold uppercase tracking-wide text-black/50">
-          What to do first
-        </div>
+      <div class="rounded-2xl bg-white text-black p-6 border-l-8 border-[#DD6665]">
+        <div class="text-xs font-bold uppercase tracking-wide text-[#DD6665]">Your Recommended Strategy</div>
+        <h4 id="recommendedSessionTitle" class="mt-2 text-xl font-semibold">Identifying your bottleneck...</h4>
         <p id="resultRecommendation" class="mt-2 text-sm leading-relaxed text-black/75">
-          Start with one contained system such as lead follow-up, intake, or scheduling before expanding further.
+          Based on your answers, we recommend starting with a 2-hour session to audit your specific workflows.
         </p>
+        <a href="#strategy-sessions" class="mt-5 inline-flex w-full items-center justify-center rounded-xl bg-black px-6 py-3 text-sm font-medium text-white hover:opacity-90 transition">
+          Book This Strategy Session
+        </a>
       </div>
 
       <div class="rounded-2xl border border-white/15 bg-white/5 p-5">
-        <div class="text-xs font-semibold uppercase tracking-wide text-white/55">
-          What happens next
-        </div>
+        <div class="text-xs font-semibold uppercase tracking-wide text-white/55">What happens next</div>
         <p id="resultNextAction" class="mt-2 text-sm leading-relaxed text-white/80">
-          We will send your result by email along with the right next step for your business. If you want help identifying the best first workflow to automate, Regen Creatives can review your result and recommend a practical starting point.
+          We have sent your full Readiness Guide to your email. You can use that guide to prepare your business for automation, or book the session above to have us build the roadmap with you.
         </p>
       </div>
     </div>
@@ -2222,56 +2190,70 @@
   }
 
   function calculateResults() {
-  const totalScore = answers.reduce((sum, answerIndex, idx) => {
-    const option = questions[idx].options[answerIndex];
-    return sum + (option ? option.score : 0);
-  }, 0);
+    const totalScore = answers.reduce((sum, answerIndex, idx) => {
+      const option = questions[idx].options[answerIndex];
+      return sum + (option ? option.score : 0);
+    }, 0);
 
-  const maxScore = questions.length * 2;
-  const percent = Math.round((totalScore / maxScore) * 100);
+    // --- NEW LOGIC: CATEGORY SCORING ---
+    // Mapping question IDs to categories to find specific pain points
+    const leadHandlingScore = (answers[0] || 0) + (answers[1] || 0); // Q1 & Q2
+    const adminScore = (answers[2] || 0) + (answers[3] || 0);        // Q3 & Q4
+    
+    const maxScore = questions.length * 2;
+    const percent = Math.round((totalScore / maxScore) * 100);
 
-  let tier = "";
-  let readinessStatus = "";
-  let summary = "";
-  let recommendation = "";
-  let nextAction = "";
-  let guide = "";
+    let tier = "";
+    let readinessStatus = "";
+    let summary = "";
+    let recommendationTitle = ""; // New field
+    let recommendation = "";
+    let nextAction = "";
 
-  if (totalScore <= 5) {
-    tier = "Not Ready Yet";
-    readinessStatus = "not_ready";
-    summary = "Your business needs stronger operating structure before automation will produce reliable results.";
-    recommendation = "Begin by tightening one core process such as lead response, scheduling, or follow-up. Document the steps, remove inconsistency, and create a repeatable workflow.";
-    nextAction = "We will email your result and send you a practical readiness guide. Once your foundation is stronger, Regen Creatives can help you identify the first workflow to implement.";
-    guide = "Before You Implement AI: A Small Business Readiness Guide";
-  } else if (totalScore <= 11) {
-    tier = "Developing";
-    readinessStatus = "developing";
-    summary = "Your business has some useful structure in place, but it is not ready for broad automation yet. The best approach is to begin with one contained workflow.";
-    recommendation = "Choose one process that creates regular friction, such as lead follow-up, client intake, or scheduling. Tighten that workflow first, then automate it before expanding.";
-    nextAction = "We will email your result and recommend a strong starting point. If you want help identifying the first workflow to automate, Regen Creatives can review your result and suggest a practical next move.";
-    guide = "The Best First Automation Guide";
-  } else {
-    tier = "Ready for Implementation";
-    readinessStatus = "ready";
-    summary = "Your business has enough structure and consistency to begin AI implementation now.";
-    recommendation = "Identify the most repetitive and time-sensitive workflow in your business and implement there first. That is usually where the fastest operational gain appears.";
-    nextAction = "We will email your result and recommended implementation direction. If you are ready to move forward, the next step is to review the workflow you want to automate first.";
-    guide = "AI Implementation Strategy Call";
+    // 1. Determine Tier based on Total Score
+    if (percent <= 40) {
+      tier = "Not Ready Yet";
+      readinessStatus = "not_ready";
+      summary = "Your business needs a stronger operating structure before automation will produce reliable results.";
+    } else if (percent <= 75) {
+      tier = "Developing";
+      readinessStatus = "developing";
+      summary = "You have a solid foundation, but manual tasks are likely eating your growth time.";
+    } else {
+      tier = "Ready for Implementation";
+      readinessStatus = "ready";
+      summary = "Your business is structurally sound and ready for high-level AI integration.";
+    }
+
+    // 2. Determine STRATEGIC RECOMMENDATION based on Category Pain Points
+    if (leadHandlingScore <= 1) {
+      // Priority 1: Lead Intake Issues
+      recommendationTitle = "Never-Miss-A-Lead Strategy Session";
+      recommendation = "Inquiries are leaking out of your business. We recommend a 2-hour session to automate your response and booking systems immediately.";
+    } else if (adminScore <= 1 || percent <= 75) {
+      // Priority 2: Admin/Documentation Issues
+      recommendationTitle = "10-Hour Time Recovery Session";
+      recommendation = "You're doing too much manual heavy lifting. Let's find the 10 hours a week you're losing to paperwork and scheduling admin.";
+    } else {
+      // Priority 3: Ready for the big guns
+      recommendationTitle = "AI Business Roadmap Session";
+      recommendation = "You're ready to scale. This session will map out the custom AI agents and advanced automations that will lead your industry.";
+    }
+
+    nextAction = "We have sent your full Readiness Guide to your inbox. You can use that guide to prepare, or book the specific session recommended above to have us build the roadmap with you.";
+
+    return {
+      totalScore,
+      maxScore,
+      percent,
+      tier,
+      readinessStatus,
+      summary,
+      recommendationTitle, // Return the new title
+      recommendation,
+      nextAction
+    };
   }
-
-  return {
-    totalScore,
-    maxScore,
-    percent,
-    tier,
-    readinessStatus,
-    summary,
-    recommendation,
-    nextAction,
-    guide
-  };
-}
 
   function showGate() {
     latestResults = calculateResults();
@@ -2291,6 +2273,10 @@
   resultCircle.setAttribute("stroke-dasharray", `${results.percent} 100`);
   resultTier.textContent = results.tier;
   resultSummary.textContent = results.summary;
+  // Inject the specific Strategy Session title
+    const recTitleEl = document.getElementById("recommendedSessionTitle");
+    if(recTitleEl) recTitleEl.textContent = results.recommendationTitle;
+    
   resultRecommendation.textContent = results.recommendation;
   resultNextAction.textContent = results.nextAction;
 

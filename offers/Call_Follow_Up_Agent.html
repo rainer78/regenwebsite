@@ -1,0 +1,59 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Simple Leads Agent | Regen Creatives</title>
+    <link rel="stylesheet" href="https://regencreatives.com/brand.css">
+    <style>
+        body { font-family: 'Inter', sans-serif; margin: 0; background: #fff; color: #111827; }
+        .hero { padding: 100px 20px; text-align: center; background: #F8FAFC; border-bottom: 1px solid #e2e8f0; }
+        .badge { background: #E8F5E9; color: #2E7D32; padding: 6px 16px; border-radius: 99px; font-weight: 700; font-size: 12px; text-transform: uppercase; }
+        .container { max-width: 800px; margin: auto; padding: 60px 20px; }
+        .feature-list { list-style: none; padding: 0; }
+        .feature-list li { padding: 15px 0; border-bottom: 1px solid #f1f5f9; display: flex; align-items: center; }
+        .feature-list li::before { content: "✓"; color: #2E7D32; font-weight: bold; margin-right: 15px; }
+        .cta-box { background: #0B1731; color: white; padding: 40px; border-radius: 20px; text-align: center; margin-top: 40px; }
+        .btn { display: inline-block; background: #1085D2; color: white; padding: 16px 32px; border-radius: 8px; text-decoration: none; font-weight: 700; margin-top: 20px; }
+        .footer { text-align: center; padding: 40px; font-size: 12px; color: #64748b; }
+    </style>
+</head>
+<body>
+  <section class="hero" style="background: #E3F2FD;">
+    <span class="badge" style="background: #BBDEFB; color: #1565C0;">Revenue Recovery</span>
+    <h1 style="font-size: 48px; margin-top: 20px;">Turn Missed Calls into Booked Jobs</h1>
+    <p style="font-size: 20px; color: #1e3a8a; max-width: 600px; margin: 20px auto;">When you can't pick up the phone, our system instantly texts the caller to keep the lead from calling your competitor.</p>
+</section>
+
+<div class="container">
+    <h2>The "Call Follow-Up" System</h2>
+    <p>A prospect calls. You’re unavailable. Instead of a dead-end voicemail, they immediately receive a text: <em>"Hi, it's Regen Creatives! I'm with a client—how can I help you today?"</em></p>
+    
+    <ul class="feature-list">
+        <li><strong>Missed Call Recovery:</strong> Automatically triggers a text conversation the moment a call is missed.</li>
+        <li><strong>Intelligent Intake:</strong> AI gathers project details via text while the lead is still "hot."</li>
+        <li><strong>Live Dashboard:</strong> See all active text conversations in one central view.</li>
+        <li><strong>Seamless Handoff:</strong> Get a notification once the AI has gathered the necessary info so you can call back with confidence.</li>
+    </ul>
+
+    <div class="cta-box" style="background: #1565C0;">
+        <h3>Secure Your Missed Calls</h3>
+        <div style="font-size: 32px; font-weight: 800; margin: 10px 0;">$149<span style="font-size: 16px; font-weight: 400;">/mo</span></div>
+        <a href="#" class="btn" style="background: #000;">Deploy Call System</a>
+    </div>
+</div>  
+
+    <footer class="footer">
+        <p id="last-updated" style="text-transform: uppercase; letter-spacing: 0.16em; margin-bottom: 10px;"></p>
+        <div>Regen Creatives © 2026</div>
+    </footer>
+
+    <script>
+        (function() {
+            const d = new Date();
+            const m = d.toLocaleString('default', { month: 'long' });
+            document.getElementById('last-updated').textContent = `Last updated: ${m} ${d.getFullYear()} · Systems Edition`;
+        })();
+    </script>
+</body>
+</html>

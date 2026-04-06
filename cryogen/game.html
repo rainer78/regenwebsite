@@ -1,0 +1,762 @@
+import { useMemo, useRef, useState } from "react";
+import { Image as ImageIcon, Pencil, Save, Upload, Plus, Trash2, Eye } from "lucide-react";
+
+const initialData = {
+  game: {
+    title: "YOUR GAME TITLE",
+    tagline: "A quiet routine. A wrong feeling. A shift that should have ended hours ago.",
+    genre: "Narrative Horror / Psychological Tension / Indie",
+    status: "In Development",
+    description:
+      "This site is a creative shell for your game. Replace the text, swap the images, and plug in your own atmosphere, story fragments, mechanics, and media.",
+    hook:
+      "A familiar job becomes increasingly unsettling as the player notices small details that do not belong.",
+    heroImage: "",
+    heroButtonPrimaryLabel: "Explore the World",
+    heroButtonPrimaryHref: "#story",
+    heroButtonSecondaryLabel: "View Creative Slots",
+    heroButtonSecondaryHref: "#media",
+  },
+  featureCards: [
+    {
+      title: "Routine as Gameplay",
+      text: "Use this section to explain the normal loop of the job, task, or environment your player repeats.",
+    },
+    {
+      title: "Slow-Build Dread",
+      text: "Describe how the game creates tension through repetition, silence, subtle changes, and player observation.",
+    },
+    {
+      title: "Player Choice & Consequence",
+      text: "Add notes about branching moments, hidden clues, multiple endings, or small decisions that alter the experience.",
+    },
+  ],
+  storyBlocks: [
+    {
+      label: "Premise",
+      text: "Write the setup here. Who is the player? What ordinary role are they performing? What seems normal at first?",
+    },
+    {
+      label: "Setting",
+      text: "Describe the place. A diner, motel, gas station, office, church basement, night shift warehouse, or something stranger.",
+    },
+    {
+      label: "Disturbance",
+      text: "Explain the first sign that something is wrong. Keep it small. Small is what makes it creep.",
+    },
+  ],
+  writingNotes: [
+    "Use this panel for theme, symbolism, hidden meanings, or the emotional question beneath the plot.",
+    "Examples: duty versus instinct, routine versus reality, survival versus obedience, silence versus truth.",
+    "This is also a good place for content warnings, tone references, and one-sentence elevator pitch copy.",
+  ],
+  characterCards: [
+    {
+      name: "Main Character",
+      role: "Player Character",
+      desc: "Add your protagonist details here. Include their job, personality, and what they may be hiding.",
+      image: "",
+    },
+    {
+      name: "Coworker / Supervisor",
+      role: "Support or Threat",
+      desc: "Use this slot for the person who explains the rules, breaks them, or pretends nothing is wrong.",
+      image: "",
+    },
+    {
+      name: "Customer / Visitor",
+      role: "Source of Unease",
+      desc: "Add a character whose presence changes the emotional temperature of the room.",
+      image: "",
+    },
+  ],
+  mechanics: [
+    "Order taking / item handling / task completion",
+    "Environmental observation and clue spotting",
+    "Dialogue choices with subtle consequences",
+    "Timed routines and interruptions",
+    "Multiple endings or hidden narrative branches",
+    "Inventory, notes, recordings, or found objects",
+  ],
+  mediaItems: [
+    { label: "Hero key art or title image", image: "" },
+    { label: "Gameplay screenshot 1", image: "" },
+    { label: "Gameplay screenshot 2", image: "" },
+    { label: "Character art or environment concept", image: "" },
+  ],
+  soundtrackNotes: [
+    "Ambient hum",
+    "Room tone",
+    "Mechanical sounds",
+    "Audio distortion",
+    "Sparse piano or analog synth",
+  ],
+  trailer: {
+    embedUrl: "",
+    title: "Embed your preview",
+    placeholder: "Paste a YouTube embed URL or leave blank during staging.",
+  },
+  devlog: [
+    {
+      date: "Update 01",
+      note: "Add your first development note here. Example: core loop defined, first environment blocked out, title chosen.",
+    },
+    {
+      date: "Update 02",
+      note: "Use this for story changes, art updates, soundtrack progress, demo milestones, or playtest notes.",
+    },
+    {
+      date: "Update 03",
+      note: "Keep this section current. It makes the project feel alive and gives visitors a reason to return.",
+    },
+  ],
+  cta: {
+    label: "Call to Action",
+    headline:
+      "Replace this section with your Steam wishlist link, demo signup, newsletter, or release announcement.",
+    primaryLabel: "Primary Button",
+    primaryHref: "#",
+    secondaryLabel: "Secondary Button",
+    secondaryHref: "#",
+  },
+};
+
+function SectionTitle({ eyebrow, title, editable = false, onEyebrowChange, onTitleChange }) {
+  return (
+    <div className="mb-10 max-w-2xl">
+      {editable ? (
+        <>
+          <input
+            value={eyebrow}
+            onChange={(e) => onEyebrowChange(e.target.value)}
+            className="w-full bg-transparent text-sm uppercase tracking-[0.3em] text-neutral-500 outline-none"
+          />
+          <input
+            value={title}
+            onChange={(e) => onTitleChange(e.target.value)}
+            className="mt-3 w-full bg-transparent text-3xl font-semibold text-white outline-none md:text-4xl"
+          />
+        </>
+      ) : (
+        <>
+          <p className="text-sm uppercase tracking-[0.3em] text-neutral-500">{eyebrow}</p>
+          <h2 className="mt-3 text-3xl font-semibold md:text-4xl">{title}</h2>
+        </>
+      )}
+    </div>
+  );
+}
+
+function TextInput({ label, value, onChange, multiline = false }) {
+  const shared =
+    "mt-1 w-full rounded-xl border border-white/10 bg-neutral-900 px-3 py-2 text-sm text-white outline-none focus:border-white/30";
+
+  return (
+    <label className="block text-sm text-neutral-300">
+      <span>{label}</span>
+      {multiline ? (
+        <textarea value={value} onChange={(e) => onChange(e.target.value)} rows={4} className={shared} />
+      ) : (
+        <input value={value} onChange={(e) => onChange(e.target.value)} className={shared} />
+      )}
+    </label>
+  );
+}
+
+function ArrayEditor({ title, items, onAdd, onRemove, renderItem }) {
+  return (
+    <div className="rounded-2xl border border-white/10 bg-neutral-950 p-4">
+      <div className="mb-4 flex items-center justify-between gap-3">
+        <h3 className="text-sm font-semibold uppercase tracking-[0.2em] text-neutral-400">{title}</h3>
+        <button
+          type="button"
+          onClick={onAdd}
+          className="inline-flex items-center gap-2 rounded-xl border border-white/10 px-3 py-2 text-sm text-white hover:bg-white/5"
+        >
+          <Plus className="h-4 w-4" /> Add
+        </button>
+      </div>
+      <div className="space-y-4">{items.map((item, index) => renderItem(item, index, onRemove))}</div>
+    </div>
+  );
+}
+
+function ImageField({ value, onChange, label }) {
+  const inputRef = useRef(null);
+
+  const handleFile = (file) => {
+    if (!file) return;
+    const reader = new FileReader();
+    reader.onload = () => onChange(String(reader.result));
+    reader.readAsDataURL(file);
+  };
+
+  return (
+    <div className="space-y-2">
+      <div className="flex items-center justify-between gap-3">
+        <span className="text-sm text-neutral-300">{label}</span>
+        <div className="flex gap-2">
+          <button
+            type="button"
+            onClick={() => inputRef.current?.click()}
+            className="inline-flex items-center gap-2 rounded-xl border border-white/10 px-3 py-2 text-sm text-white hover:bg-white/5"
+          >
+            <Upload className="h-4 w-4" /> Upload
+          </button>
+          {value ? (
+            <button
+              type="button"
+              onClick={() => onChange("")}
+              className="inline-flex items-center gap-2 rounded-xl border border-white/10 px-3 py-2 text-sm text-white hover:bg-white/5"
+            >
+              <Trash2 className="h-4 w-4" /> Clear
+            </button>
+          ) : null}
+        </div>
+      </div>
+      <input
+        ref={inputRef}
+        type="file"
+        accept="image/*"
+        className="hidden"
+        onChange={(e) => handleFile(e.target.files?.[0])}
+      />
+      <div className="overflow-hidden rounded-2xl border border-dashed border-white/10 bg-neutral-900">
+        {value ? (
+          <img src={value} alt={label} className="h-40 w-full object-cover" />
+        ) : (
+          <div className="flex h-40 items-center justify-center text-neutral-500">
+            <div className="text-center">
+              <ImageIcon className="mx-auto h-8 w-8" />
+              <p className="mt-2 text-sm">No image selected</p>
+            </div>
+          </div>
+        )}
+      </div>
+    </div>
+  );
+}
+
+export default function GameCreativeWebsite() {
+  const [data, setData] = useState(initialData);
+  const [editMode, setEditMode] = useState(true);
+  const [savedMessage, setSavedMessage] = useState("");
+
+  const updateGame = (key, value) =>
+    setData((prev) => ({
+      ...prev,
+      game: { ...prev.game, [key]: value },
+    }));
+
+  const trailerEmbedUrl = useMemo(() => {
+    const raw = data.trailer.embedUrl?.trim();
+    if (!raw) return "";
+    if (raw.includes("/embed/")) return raw;
+    const match = raw.match(/(?:v=|youtu\.be\/)([\w-]{6,})/);
+    return match ? `https://www.youtube.com/embed/${match[1]}` : raw;
+  }, [data.trailer.embedUrl]);
+
+  const exportJson = () => {
+    const blob = new Blob([JSON.stringify(data, null, 2)], { type: "application/json" });
+    const url = URL.createObjectURL(blob);
+    const link = document.createElement("a");
+    link.href = url;
+    link.download = "game-site-content.json";
+    link.click();
+    URL.revokeObjectURL(url);
+    setSavedMessage("Content JSON exported.");
+    setTimeout(() => setSavedMessage(""), 2500);
+  };
+
+  const updateArrayItem = (key, index, field, value) => {
+    setData((prev) => ({
+      ...prev,
+      [key]: prev[key].map((item, i) => (i === index ? { ...item, [field]: value } : item)),
+    }));
+  };
+
+  const updateStringArrayItem = (key, index, value) => {
+    setData((prev) => ({
+      ...prev,
+      [key]: prev[key].map((item, i) => (i === index ? value : item)),
+    }));
+  };
+
+  const addObjectItem = (key, item) => setData((prev) => ({ ...prev, [key]: [...prev[key], item] }));
+  const addStringItem = (key, item) => setData((prev) => ({ ...prev, [key]: [...prev[key], item] }));
+  const removeItem = (key, index) =>
+    setData((prev) => ({
+      ...prev,
+      [key]: prev[key].filter((_, i) => i !== index),
+    }));
+
+  return (
+    <div className="min-h-screen bg-neutral-950 text-neutral-100">
+      <div className="sticky top-0 z-50 border-b border-white/10 bg-neutral-950/90 backdrop-blur">
+        <div className="mx-auto flex max-w-7xl items-center justify-between gap-4 px-4 py-3 md:px-6">
+          <div>
+            <p className="text-xs uppercase tracking-[0.3em] text-neutral-500">Game Site Builder</p>
+            <h1 className="text-lg font-semibold">WYSIWYG staging editor</h1>
+          </div>
+          <div className="flex flex-wrap items-center gap-2">
+            <button
+              type="button"
+              onClick={() => setEditMode((prev) => !prev)}
+              className="inline-flex items-center gap-2 rounded-xl border border-white/10 px-4 py-2 text-sm hover:bg-white/5"
+            >
+              {editMode ? <Eye className="h-4 w-4" /> : <Pencil className="h-4 w-4" />}
+              {editMode ? "Preview mode" : "Edit mode"}
+            </button>
+            <button
+              type="button"
+              onClick={exportJson}
+              className="inline-flex items-center gap-2 rounded-xl bg-white px-4 py-2 text-sm font-medium text-black"
+            >
+              <Save className="h-4 w-4" /> Export content
+            </button>
+          </div>
+        </div>
+        {savedMessage ? <div className="px-6 pb-3 text-sm text-emerald-400">{savedMessage}</div> : null}
+      </div>
+
+      {editMode ? (
+        <div className="border-b border-white/10 bg-white/[0.03]">
+          <div className="mx-auto grid max-w-7xl gap-6 px-4 py-6 md:grid-cols-2 md:px-6 xl:grid-cols-3">
+            <div className="rounded-2xl border border-white/10 bg-neutral-950 p-4">
+              <h3 className="mb-4 text-sm font-semibold uppercase tracking-[0.2em] text-neutral-400">Hero</h3>
+              <div className="space-y-3">
+                <TextInput label="Title" value={data.game.title} onChange={(v) => updateGame("title", v)} />
+                <TextInput label="Tagline" value={data.game.tagline} onChange={(v) => updateGame("tagline", v)} multiline />
+                <TextInput label="Genre" value={data.game.genre} onChange={(v) => updateGame("genre", v)} />
+                <TextInput label="Status" value={data.game.status} onChange={(v) => updateGame("status", v)} />
+                <TextInput label="Description" value={data.game.description} onChange={(v) => updateGame("description", v)} multiline />
+                <TextInput label="Hook" value={data.game.hook} onChange={(v) => updateGame("hook", v)} multiline />
+                <TextInput
+                  label="Primary button label"
+                  value={data.game.heroButtonPrimaryLabel}
+                  onChange={(v) => updateGame("heroButtonPrimaryLabel", v)}
+                />
+                <TextInput
+                  label="Primary button link"
+                  value={data.game.heroButtonPrimaryHref}
+                  onChange={(v) => updateGame("heroButtonPrimaryHref", v)}
+                />
+                <TextInput
+                  label="Secondary button label"
+                  value={data.game.heroButtonSecondaryLabel}
+                  onChange={(v) => updateGame("heroButtonSecondaryLabel", v)}
+                />
+                <TextInput
+                  label="Secondary button link"
+                  value={data.game.heroButtonSecondaryHref}
+                  onChange={(v) => updateGame("heroButtonSecondaryHref", v)}
+                />
+                <ImageField label="Hero image" value={data.game.heroImage} onChange={(v) => updateGame("heroImage", v)} />
+              </div>
+            </div>
+
+            <ArrayEditor
+              title="Feature cards"
+              items={data.featureCards}
+              onAdd={() => addObjectItem("featureCards", { title: "New feature", text: "Describe this feature." })}
+              onRemove={(index) => removeItem("featureCards", index)}
+              renderItem={(item, index, onRemove) => (
+                <div key={index} className="rounded-xl border border-white/10 p-3">
+                  <div className="mb-3 flex justify-end">
+                    <button type="button" onClick={() => onRemove(index)} className="text-neutral-400 hover:text-white">
+                      <Trash2 className="h-4 w-4" />
+                    </button>
+                  </div>
+                  <div className="space-y-3">
+                    <TextInput label="Title" value={item.title} onChange={(v) => updateArrayItem("featureCards", index, "title", v)} />
+                    <TextInput label="Text" value={item.text} onChange={(v) => updateArrayItem("featureCards", index, "text", v)} multiline />
+                  </div>
+                </div>
+              )}
+            />
+
+            <ArrayEditor
+              title="Story blocks"
+              items={data.storyBlocks}
+              onAdd={() => addObjectItem("storyBlocks", { label: "New block", text: "Add story detail here." })}
+              onRemove={(index) => removeItem("storyBlocks", index)}
+              renderItem={(item, index, onRemove) => (
+                <div key={index} className="rounded-xl border border-white/10 p-3">
+                  <div className="mb-3 flex justify-end">
+                    <button type="button" onClick={() => onRemove(index)} className="text-neutral-400 hover:text-white">
+                      <Trash2 className="h-4 w-4" />
+                    </button>
+                  </div>
+                  <div className="space-y-3">
+                    <TextInput label="Label" value={item.label} onChange={(v) => updateArrayItem("storyBlocks", index, "label", v)} />
+                    <TextInput label="Text" value={item.text} onChange={(v) => updateArrayItem("storyBlocks", index, "text", v)} multiline />
+                  </div>
+                </div>
+              )}
+            />
+
+            <ArrayEditor
+              title="Writing notes"
+              items={data.writingNotes}
+              onAdd={() => addStringItem("writingNotes", "Add a new writing note.")}
+              onRemove={(index) => removeItem("writingNotes", index)}
+              renderItem={(item, index, onRemove) => (
+                <div key={index} className="rounded-xl border border-white/10 p-3">
+                  <div className="mb-3 flex justify-end">
+                    <button type="button" onClick={() => onRemove(index)} className="text-neutral-400 hover:text-white">
+                      <Trash2 className="h-4 w-4" />
+                    </button>
+                  </div>
+                  <TextInput label={`Note ${index + 1}`} value={item} onChange={(v) => updateStringArrayItem("writingNotes", index, v)} multiline />
+                </div>
+              )}
+            />
+
+            <ArrayEditor
+              title="Characters"
+              items={data.characterCards}
+              onAdd={() =>
+                addObjectItem("characterCards", {
+                  name: "New character",
+                  role: "Role",
+                  desc: "Describe this character.",
+                  image: "",
+                })
+              }
+              onRemove={(index) => removeItem("characterCards", index)}
+              renderItem={(item, index, onRemove) => (
+                <div key={index} className="rounded-xl border border-white/10 p-3">
+                  <div className="mb-3 flex justify-end">
+                    <button type="button" onClick={() => onRemove(index)} className="text-neutral-400 hover:text-white">
+                      <Trash2 className="h-4 w-4" />
+                    </button>
+                  </div>
+                  <div className="space-y-3">
+                    <TextInput label="Name" value={item.name} onChange={(v) => updateArrayItem("characterCards", index, "name", v)} />
+                    <TextInput label="Role" value={item.role} onChange={(v) => updateArrayItem("characterCards", index, "role", v)} />
+                    <TextInput label="Description" value={item.desc} onChange={(v) => updateArrayItem("characterCards", index, "desc", v)} multiline />
+                    <ImageField label="Character image" value={item.image} onChange={(v) => updateArrayItem("characterCards", index, "image", v)} />
+                  </div>
+                </div>
+              )}
+            />
+
+            <ArrayEditor
+              title="Mechanics"
+              items={data.mechanics}
+              onAdd={() => addStringItem("mechanics", "Describe another mechanic.")}
+              onRemove={(index) => removeItem("mechanics", index)}
+              renderItem={(item, index, onRemove) => (
+                <div key={index} className="rounded-xl border border-white/10 p-3">
+                  <div className="mb-3 flex justify-end">
+                    <button type="button" onClick={() => onRemove(index)} className="text-neutral-400 hover:text-white">
+                      <Trash2 className="h-4 w-4" />
+                    </button>
+                  </div>
+                  <TextInput label={`Mechanic ${index + 1}`} value={item} onChange={(v) => updateStringArrayItem("mechanics", index, v)} multiline />
+                </div>
+              )}
+            />
+
+            <ArrayEditor
+              title="Media gallery"
+              items={data.mediaItems}
+              onAdd={() => addObjectItem("mediaItems", { label: "New media slot", image: "" })}
+              onRemove={(index) => removeItem("mediaItems", index)}
+              renderItem={(item, index, onRemove) => (
+                <div key={index} className="rounded-xl border border-white/10 p-3">
+                  <div className="mb-3 flex justify-end">
+                    <button type="button" onClick={() => onRemove(index)} className="text-neutral-400 hover:text-white">
+                      <Trash2 className="h-4 w-4" />
+                    </button>
+                  </div>
+                  <div className="space-y-3">
+                    <TextInput label="Label" value={item.label} onChange={(v) => updateArrayItem("mediaItems", index, "label", v)} />
+                    <ImageField label="Gallery image" value={item.image} onChange={(v) => updateArrayItem("mediaItems", index, "image", v)} />
+                  </div>
+                </div>
+              )}
+            />
+
+            <ArrayEditor
+              title="Sound notes"
+              items={data.soundtrackNotes}
+              onAdd={() => addStringItem("soundtrackNotes", "New sound note")}
+              onRemove={(index) => removeItem("soundtrackNotes", index)}
+              renderItem={(item, index, onRemove) => (
+                <div key={index} className="rounded-xl border border-white/10 p-3">
+                  <div className="mb-3 flex justify-end">
+                    <button type="button" onClick={() => onRemove(index)} className="text-neutral-400 hover:text-white">
+                      <Trash2 className="h-4 w-4" />
+                    </button>
+                  </div>
+                  <TextInput label={`Sound note ${index + 1}`} value={item} onChange={(v) => updateStringArrayItem("soundtrackNotes", index, v)} />
+                </div>
+              )}
+            />
+
+            <div className="rounded-2xl border border-white/10 bg-neutral-950 p-4">
+              <h3 className="mb-4 text-sm font-semibold uppercase tracking-[0.2em] text-neutral-400">Trailer</h3>
+              <div className="space-y-3">
+                <TextInput
+                  label="Section title"
+                  value={data.trailer.title}
+                  onChange={(v) => setData((prev) => ({ ...prev, trailer: { ...prev.trailer, title: v } }))}
+                />
+                <TextInput
+                  label="Embed or YouTube URL"
+                  value={data.trailer.embedUrl}
+                  onChange={(v) => setData((prev) => ({ ...prev, trailer: { ...prev.trailer, embedUrl: v } }))}
+                />
+                <TextInput
+                  label="Placeholder text"
+                  value={data.trailer.placeholder}
+                  onChange={(v) => setData((prev) => ({ ...prev, trailer: { ...prev.trailer, placeholder: v } }))}
+                  multiline
+                />
+              </div>
+            </div>
+
+            <ArrayEditor
+              title="Devlog"
+              items={data.devlog}
+              onAdd={() => addObjectItem("devlog", { date: "New update", note: "Write update here." })}
+              onRemove={(index) => removeItem("devlog", index)}
+              renderItem={(item, index, onRemove) => (
+                <div key={index} className="rounded-xl border border-white/10 p-3">
+                  <div className="mb-3 flex justify-end">
+                    <button type="button" onClick={() => onRemove(index)} className="text-neutral-400 hover:text-white">
+                      <Trash2 className="h-4 w-4" />
+                    </button>
+                  </div>
+                  <div className="space-y-3">
+                    <TextInput label="Date / label" value={item.date} onChange={(v) => updateArrayItem("devlog", index, "date", v)} />
+                    <TextInput label="Note" value={item.note} onChange={(v) => updateArrayItem("devlog", index, "note", v)} multiline />
+                  </div>
+                </div>
+              )}
+            />
+
+            <div className="rounded-2xl border border-white/10 bg-neutral-950 p-4">
+              <h3 className="mb-4 text-sm font-semibold uppercase tracking-[0.2em] text-neutral-400">Call to action</h3>
+              <div className="space-y-3">
+                <TextInput label="Label" value={data.cta.label} onChange={(v) => setData((prev) => ({ ...prev, cta: { ...prev.cta, label: v } }))} />
+                <TextInput label="Headline" value={data.cta.headline} onChange={(v) => setData((prev) => ({ ...prev, cta: { ...prev.cta, headline: v } }))} multiline />
+                <TextInput label="Primary button label" value={data.cta.primaryLabel} onChange={(v) => setData((prev) => ({ ...prev, cta: { ...prev.cta, primaryLabel: v } }))} />
+                <TextInput label="Primary button link" value={data.cta.primaryHref} onChange={(v) => setData((prev) => ({ ...prev, cta: { ...prev.cta, primaryHref: v } }))} />
+                <TextInput label="Secondary button label" value={data.cta.secondaryLabel} onChange={(v) => setData((prev) => ({ ...prev, cta: { ...prev.cta, secondaryLabel: v } }))} />
+                <TextInput label="Secondary button link" value={data.cta.secondaryHref} onChange={(v) => setData((prev) => ({ ...prev, cta: { ...prev.cta, secondaryHref: v } }))} />
+              </div>
+            </div>
+          </div>
+        </div>
+      ) : null}
+
+      <section className="relative overflow-hidden border-b border-white/10">
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_top,rgba(255,255,255,0.09),transparent_45%)]" />
+        <div className="mx-auto max-w-7xl px-6 py-20 md:px-10 md:py-28">
+          <div className="grid items-center gap-10 lg:grid-cols-2">
+            <div>
+              <p className="mb-4 inline-flex rounded-full border border-white/15 px-3 py-1 text-xs uppercase tracking-[0.25em] text-neutral-300">
+                {data.game.genre} • {data.game.status}
+              </p>
+              <h1 className="max-w-3xl text-5xl font-semibold tracking-tight md:text-7xl">{data.game.title}</h1>
+              <p className="mt-6 max-w-2xl text-lg leading-8 text-neutral-300 md:text-xl">{data.game.tagline}</p>
+              <p className="mt-6 max-w-2xl text-base leading-7 text-neutral-400">{data.game.description}</p>
+              <div className="mt-8 flex flex-wrap gap-4">
+                <a href={data.game.heroButtonPrimaryHref} className="rounded-2xl bg-white px-5 py-3 text-sm font-medium text-black transition hover:opacity-90">
+                  {data.game.heroButtonPrimaryLabel}
+                </a>
+                <a href={data.game.heroButtonSecondaryHref} className="rounded-2xl border border-white/15 px-5 py-3 text-sm font-medium text-white transition hover:bg-white/5">
+                  {data.game.heroButtonSecondaryLabel}
+                </a>
+              </div>
+            </div>
+
+            <div className="relative">
+              <div className="aspect-[4/5] rounded-[2rem] border border-white/10 bg-neutral-900 p-5 shadow-2xl">
+                {data.game.heroImage ? (
+                  <img src={data.game.heroImage} alt="Hero art" className="h-full w-full rounded-[1.5rem] object-cover" />
+                ) : (
+                  <div className="flex h-full items-center justify-center rounded-[1.5rem] border border-dashed border-white/15 bg-neutral-950 text-center text-neutral-500">
+                    <div className="max-w-xs px-6">
+                      <p className="text-sm uppercase tracking-[0.3em] text-neutral-500">Replace Me</p>
+                      <p className="mt-3 text-lg text-neutral-400">Hero Image / Poster Art / Animated Teaser Frame</p>
+                    </div>
+                  </div>
+                )}
+              </div>
+              <div className="absolute -bottom-5 -left-5 w-40 rounded-2xl border border-white/10 bg-black/50 p-4 backdrop-blur">
+                <p className="text-xs uppercase tracking-[0.25em] text-neutral-500">Core Hook</p>
+                <p className="mt-2 text-sm text-neutral-300">{data.game.hook}</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section className="mx-auto max-w-7xl px-6 py-16 md:px-10" id="features">
+        <SectionTitle eyebrow="Game Feel" title="What this experience is built to do" />
+        <div className="grid gap-6 md:grid-cols-3">
+          {data.featureCards.map((item, index) => (
+            <div key={`${item.title}-${index}`} className="rounded-[2rem] border border-white/10 bg-white/5 p-6">
+              <h3 className="text-xl font-medium">{item.title}</h3>
+              <p className="mt-3 leading-7 text-neutral-300">{item.text}</p>
+            </div>
+          ))}
+        </div>
+      </section>
+
+      <section className="border-y border-white/10 bg-white/[0.03]" id="story">
+        <div className="mx-auto max-w-7xl px-6 py-16 md:px-10">
+          <div className="grid gap-10 lg:grid-cols-[1.1fr_0.9fr]">
+            <div>
+              <SectionTitle eyebrow="Story Framework" title="Build the unease before the reveal" />
+              <div className="mt-8 space-y-5">
+                {data.storyBlocks.map((block, index) => (
+                  <div key={`${block.label}-${index}`} className="rounded-[1.75rem] border border-white/10 bg-neutral-950 p-6">
+                    <p className="text-sm uppercase tracking-[0.25em] text-neutral-500">{block.label}</p>
+                    <p className="mt-3 leading-7 text-neutral-300">{block.text}</p>
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            <div className="rounded-[2rem] border border-white/10 bg-neutral-950 p-6">
+              <p className="text-sm uppercase tracking-[0.25em] text-neutral-500">Writing Notes</p>
+              <div className="mt-4 space-y-4 text-neutral-300">
+                {data.writingNotes.map((note, index) => (
+                  <p key={index}>{note}</p>
+                ))}
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section className="mx-auto max-w-7xl px-6 py-16 md:px-10" id="characters">
+        <SectionTitle eyebrow="Characters" title="The people who make the room feel wrong" />
+        <div className="grid gap-6 md:grid-cols-3">
+          {data.characterCards.map((person, index) => (
+            <div key={`${person.name}-${index}`} className="rounded-[2rem] border border-white/10 bg-white/5 p-6">
+              <div className="mb-5 aspect-[4/3] overflow-hidden rounded-[1.25rem] border border-dashed border-white/15 bg-neutral-950">
+                {person.image ? (
+                  <img src={person.image} alt={person.name} className="h-full w-full object-cover" />
+                ) : (
+                  <div className="flex h-full items-center justify-center text-center text-neutral-500">Portrait / Sprite / Concept Art</div>
+                )}
+              </div>
+              <p className="text-sm uppercase tracking-[0.25em] text-neutral-500">{person.role}</p>
+              <h3 className="mt-2 text-xl font-medium">{person.name}</h3>
+              <p className="mt-3 leading-7 text-neutral-300">{person.desc}</p>
+            </div>
+          ))}
+        </div>
+      </section>
+
+      <section className="border-y border-white/10 bg-white/[0.03]" id="mechanics">
+        <div className="mx-auto max-w-7xl px-6 py-16 md:px-10">
+          <div className="grid gap-10 lg:grid-cols-2">
+            <div>
+              <SectionTitle eyebrow="Mechanics" title="Systems you can shape around your idea" />
+            </div>
+            <div className="grid gap-4 sm:grid-cols-2">
+              {data.mechanics.map((item, index) => (
+                <div key={`${item}-${index}`} className="rounded-[1.5rem] border border-white/10 bg-neutral-950 p-5 text-neutral-300">
+                  {item}
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section className="mx-auto max-w-7xl px-6 py-16 md:px-10" id="media">
+        <SectionTitle eyebrow="Creative Slots" title="Drop in your assets and the site starts breathing" />
+        <div className="grid gap-6 sm:grid-cols-2 xl:grid-cols-4">
+          {data.mediaItems.map((item, index) => (
+            <div key={`${item.label}-${index}`} className="rounded-[2rem] border border-white/10 bg-white/5 p-4">
+              <div className="aspect-[4/5] overflow-hidden rounded-[1.5rem] border border-dashed border-white/15 bg-neutral-950">
+                {item.image ? (
+                  <img src={item.image} alt={item.label} className="h-full w-full object-cover" />
+                ) : (
+                  <div className="flex h-full items-center justify-center px-4 text-center text-neutral-500">{item.label}</div>
+                )}
+              </div>
+            </div>
+          ))}
+        </div>
+      </section>
+
+      <section className="border-y border-white/10 bg-white/[0.03]">
+        <div className="mx-auto max-w-7xl px-6 py-16 md:px-10">
+          <div className="grid gap-10 lg:grid-cols-[1fr_1fr]">
+            <div className="rounded-[2rem] border border-white/10 bg-neutral-950 p-6">
+              <p className="text-sm uppercase tracking-[0.3em] text-neutral-500">Sound Direction</p>
+              <h2 className="mt-3 text-2xl font-semibold">Audio notes</h2>
+              <div className="mt-6 flex flex-wrap gap-3">
+                {data.soundtrackNotes.map((note, index) => (
+                  <span key={`${note}-${index}`} className="rounded-full border border-white/10 px-4 py-2 text-sm text-neutral-300">
+                    {note}
+                  </span>
+                ))}
+              </div>
+              <p className="mt-6 leading-7 text-neutral-300">
+                Use this area for composer notes, soundtrack themes, diegetic sound ideas, or links to teaser tracks.
+              </p>
+            </div>
+
+            <div className="rounded-[2rem] border border-white/10 bg-neutral-950 p-6">
+              <p className="text-sm uppercase tracking-[0.3em] text-neutral-500">Trailer / Demo</p>
+              <h2 className="mt-3 text-2xl font-semibold">{data.trailer.title}</h2>
+              <div className="mt-6 aspect-video overflow-hidden rounded-[1.5rem] border border-dashed border-white/15 bg-black">
+                {trailerEmbedUrl ? (
+                  <iframe
+                    title="Game trailer"
+                    src={trailerEmbedUrl}
+                    className="h-full w-full"
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                    allowFullScreen
+                  />
+                ) : (
+                  <div className="flex h-full items-center justify-center px-6 text-center text-neutral-500">
+                    {data.trailer.placeholder}
+                  </div>
+                )}
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section className="mx-auto max-w-7xl px-6 py-16 md:px-10" id="devlog">
+        <SectionTitle eyebrow="Development Log" title="Track progress in public" />
+        <div className="space-y-5">
+          {data.devlog.map((entry, index) => (
+            <div key={`${entry.date}-${index}`} className="rounded-[2rem] border border-white/10 bg-white/5 p-6">
+              <p className="text-sm uppercase tracking-[0.25em] text-neutral-500">{entry.date}</p>
+              <p className="mt-3 leading-7 text-neutral-300">{entry.note}</p>
+            </div>
+          ))}
+        </div>
+      </section>
+
+      <section className="border-t border-white/10">
+        <div className="mx-auto max-w-7xl px-6 py-16 md:px-10">
+          <div className="rounded-[2rem] border border-white/10 bg-white/[0.04] p-8 md:p-10">
+            <p className="text-sm uppercase tracking-[0.3em] text-neutral-500">{data.cta.label}</p>
+            <h2 className="mt-3 max-w-3xl text-3xl font-semibold md:text-4xl">{data.cta.headline}</h2>
+            <div className="mt-8 flex flex-wrap gap-4">
+              <a href={data.cta.primaryHref} className="rounded-2xl bg-white px-5 py-3 text-sm font-medium text-black">
+                {data.cta.primaryLabel}
+              </a>
+              <a href={data.cta.secondaryHref} className="rounded-2xl border border-white/15 px-5 py-3 text-sm font-medium text-white">
+                {data.cta.secondaryLabel}
+              </a>
+            </div>
+          </div>
+        </div>
+      </section>
+    </div>
+  );
+}

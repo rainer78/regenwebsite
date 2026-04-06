@@ -1,0 +1,1523 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>AutoSite AI | The Autonomous Alternative to WordPress & Wix</title>
+    <meta name="keywords" content="Autonomous Web Content, AI Website, Automated SEO, WordPress Alternative, Webflow Automation">
+<meta name="description" content="Stop searching for how to update WordPress or Wix. AutoSite AI creates the world's first autonomous websites that update themselves based on your social activity.">
+  <script src="https://cdn.tailwindcss.com"></script>
+<style>
+@keyframes autosite-marquee {
+  0% {
+    transform: translateX(0);
+  }
+
+  100% {
+    transform: translateX(-50%);
+  }
+}
+
+.animate-autosite-marquee {
+  animation: autosite-marquee 32s linear infinite;
+}
+
+.animate-autosite-marquee:hover {
+  animation-play-state: paused;
+}
+.answer-card {
+  width: 100%;
+  text-align: left;
+  border-radius: 1rem;
+  border: 1px solid rgba(167,196,218,0.4);
+  background: white;
+  padding: 1rem 1.25rem;
+  transition: 0.2s ease;
+  cursor: pointer;
+  position: relative;
+}
+
+.answer-card:hover,
+.answer-card.is-selected {
+  border-color: #1085D2;
+  background: rgba(16,133,210,0.05);
+}
+
+.answer-card.is-selected::after {
+  content: "✓";
+  position: absolute;
+  right: 14px;
+  top: 14px;
+  font-weight: 700;
+  color: #1085D2;
+}
+
+.answer-title {
+  display: block;
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: #0B1731;
+}
+
+.answer-copy {
+  display: block;
+  margin-top: 0.35rem;
+  font-size: 0.85rem;
+  color: #64748b;
+  line-height: 1.5;
+}
+
+  </style>
+
+    
+</head>
+<body class="m-0 bg-[#0B1731]">
+  <section class="relative isolate overflow-hidden bg-gradient-to-b from-[#0B1731] via-[#0B1731] to-[#1085D2]/20 min-h-screen flex flex-col">
+    
+    <div class="absolute inset-0 opacity-30 pointer-events-none">
+      <div class="absolute -left-24 top-1/4 h-96 w-96 rounded-full bg-white/10 blur-[120px]"></div>
+      <div class="absolute right-0 bottom-0 h-[500px] w-[500px] rounded-full bg-[#1085D2]/30 blur-[150px]"></div>
+    </div>
+
+   <header class="relative z-50">
+  <div class="mx-auto flex max-w-7xl items-center justify-between px-6 py-6 lg:px-8">
+    <a href="#" class="flex items-center gap-4 group">
+      <div class="relative flex h-12 w-12 items-center justify-center overflow-hidden rounded-xl bg-[#0B1731] border border-white/10 shadow-xl group-hover:scale-105 transition-transform">
+        <img 
+          src="./img/autosite_logo_2026_logo.png" 
+          alt="AutoSite AI Logo" 
+          class="h-full w-full object-cover"
+        />
+      </div>
+      <div class="flex flex-col">
+        <span class="text-xl font-bold tracking-tight text-white leading-none">AUTOSITE AI</span>
+        <span class="text-[10px] font-bold tracking-[0.2em] text-[#1085D2] uppercase mt-1">Autonomous Web Content</span>
+      </div>
+    </a>
+
+    <nav class="hidden items-center gap-10 text-[11px] font-bold uppercase tracking-[0.15em] text-white/60 md:flex">
+      <a href="#features" class="transition hover:text-[#1085D2]">The Tech</a>
+      <a href="#use-cases" class="transition hover:text-[#1085D2]">Use Cases</a>
+      <a href="#pricing" class="transition hover:text-[#1085D2]">Pricing</a>
+      <a href="#faq" class="transition hover:text-[#1085D2]">FAQ</a>
+    </nav>
+
+    <div class="flex items-center gap-4">
+      <a href="#request-demo" class="hidden sm:block text-sm font-bold text-white/80 hover:text-white transition px-4">Log In</a>
+      <a href="#request-demo" class="rounded-xl bg-[#1085D2] px-6 py-3 text-sm font-bold text-white shadow-lg shadow-[#1085D2]/20 transition hover:brightness-110 active:scale-95">
+        Try AutoSite AI
+      </a> 
+    </div>
+  </div>
+</header>
+
+
+      
+
+    <div class="relative z-10 mx-auto max-w-7xl px-6 lg:px-8 flex-grow flex flex-col items-center justify-center py-20 text-center">
+      <div class="inline-flex items-center rounded-full border border-white/10 bg-white/5 px-4 py-1.5 mb-8 backdrop-blur-sm">
+        <span class="flex h-2 w-2 rounded-full bg-emerald-400 mr-3 animate-pulse"></span>
+        <span class="text-xs font-bold uppercase tracking-widest text-white/90">Early Adopter Access Open</span>
+      </div>
+
+      <h1 class="text-5xl font-bold tracking-tight text-white sm:text-7xl lg:max-w-4xl leading-[1.1]">
+        Your website should <span class="text-[#1085D2]">keep up</span> with your business.
+      </h1>
+
+      <p class="mt-8 max-w-2xl text-lg leading-8 text-slate-300">
+        Stop letting your website gather dust. AutoSite AI detects your latest social activity and project wins, automatically publishing them as structured website updates. 
+      </p>
+
+      <div class="mt-12 flex flex-col sm:flex-row items-center justify-center gap-6">
+        <a href="#readiness-form" class="w-full sm:w-auto rounded-2xl bg-[#1085D2] px-10 py-5 text-base font-bold text-white shadow-2xl shadow-[#1085D2]/40 transition hover:brightness-110 active:scale-95">
+          Put Your Site on Autopilot
+        </a>
+        <a href="#how-it-works" class="group flex items-center gap-2 text-base font-bold text-white">
+          See how it works 
+          <svg class="h-5 w-5 transition-transform group-hover:translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M13 7l5 5m0 0l-5 5m5-5H6"/></svg>
+        </a>
+      </div>
+
+      <div class="mt-24 w-full opacity-50">
+        <p class="text-xs font-bold uppercase tracking-[0.2em] text-white/40 mb-8">Works with your favorite platforms</p>
+        <div class="flex flex-wrap justify-center items-center gap-8 md:gap-16 grayscale invert">
+          <img src="https://upload.wikimedia.org/wikipedia/commons/b/b8/2021_Facebook_icon.svg" alt="Facebook" class="h-6">
+          <img src="https://upload.wikimedia.org/wikipedia/commons/a/a5/Instagram_icon.png" alt="Instagram" class="h-6">
+          <img src="https://upload.wikimedia.org/wikipedia/commons/8/81/LinkedIn_icon.svg" alt="LinkedIn" class="h-6">
+          <img src="https://upload.wikimedia.org/wikipedia/commons/c/c2/GitHub_Invertocat_Logo.svg" alt="GitHub" class="h-6">
+          <img src="https://upload.wikimedia.org/wikipedia/commons/d/d5/Slack_icon_2019.svg" alt="Slack" class="h-6">
+        </div>
+      </div>
+    </div>
+  </section>
+
+ 
+
+  <!-- Platform Integration Carousel 
+<div class="mt-16 border-t border-[#A7C4DA]/20 pt-10">
+  <p class="mb-10 text-center text-[10px] font-bold uppercase tracking-[0.3em] text-[#A7C4DA]/60">
+    AutoSite AI syncs with your active channels
+  </p>
+
+  <div class="relative overflow-hidden">
+    <div class="pointer-events-none absolute inset-y-0 left-0 z-10 w-32 bg-gradient-to-r from-[#0B1731] to-transparent"></div>
+
+    <div class="pointer-events-none absolute inset-y-0 right-0 z-10 w-32 bg-gradient-to-l from-[#1085D2]/20 via-[#0B1731] to-transparent md:from-[#0B1731]"></div>
+
+    <div class="flex w-max animate-autosite-marquee items-center gap-16 whitespace-nowrap">
+      
+      <div class="flex items-center gap-16 grayscale opacity-40 hover:grayscale-0 hover:opacity-100 transition-all duration-500">
+        <img src="/logos/linkedin.svg" alt="LinkedIn" class="h-6 w-auto" />
+        <img src="/logos/instagram.svg" alt="Instagram" class="h-6 w-auto" />
+        <img src="/logos/facebook.svg" alt="Facebook" class="h-6 w-auto" />
+        <img src="/logos/x.svg" alt="X" class="h-5 w-auto" />
+        <img src="/logos/youtube.svg" alt="YouTube" class="h-6 w-auto" />
+        <img src="/logos/tiktok.svg" alt="TikTok" class="h-6 w-auto" />
+        <img src="https://www.vonigo.com/wp-content/uploads/2022/04/Screen-Shot-2022-04-06-at-1.32.38-PM.png" alt="Google" class="h-6 w-auto brightness-0 invert" />
+        <img src="/logos/pinterest.svg" alt="Pinterest" class="h-6 w-auto" />
+      </div>
+
+      <div class="flex items-center gap-16 grayscale opacity-40 hover:grayscale-0 hover:opacity-100 transition-all duration-500">
+        <img src="/logos/linkedin.svg" alt="LinkedIn" class="h-6 w-auto" />
+        <img src="/logos/instagram.svg" alt="Instagram" class="h-6 w-auto" />
+        <img src="/logos/facebook.svg" alt="Facebook" class="h-6 w-auto" />
+        <img src="/logos/x.svg" alt="X" class="h-5 w-auto" />
+        <img src="/logos/youtube.svg" alt="YouTube" class="h-6 w-auto" />
+        <img src="/logos/tiktok.svg" alt="TikTok" class="h-6 w-auto" />
+        <img src="https://www.vonigo.com/wp-content/uploads/2022/04/Screen-Shot-2022-04-06-at-1.32.38-PM.png" alt="Google" class="h-6 w-auto brightness-0 invert" />
+        <img src="/logos/pinterest.svg" alt="Pinterest" class="h-6 w-auto" />
+      </div>
+
+    </div>
+  </div>
+</div> -->
+      
+
+
+   <section id="autonomous-website" class="bg-white py-24">
+  <div class="mx-auto max-w-4xl px-6 lg:px-8">
+    <span class="inline-flex items-center rounded-full border border-[#1085D2]/20 bg-[#1085D2]/5 px-4 py-1 text-xs font-bold uppercase tracking-widest text-[#1085D2]">
+      The New Standard
+    </span>
+
+    <h2 class="mt-6 text-4xl font-bold tracking-tight text-[#0B1731] sm:text-5xl">
+      What is an <span class="text-[#1085D2]">Autonomous</span> Website?
+    </h2>
+
+    <div class="mt-10 space-y-8 text-lg leading-relaxed text-slate-600">
+      <p>
+        An autonomous website is a living digital entity that keeps itself current by mirroring your real-world business activity. Instead of a "static brochure" that sits gathering dust, your site detects updates from your social feeds, reviews, and project logs, converting them into polished website content instantly.
+      </p>
+      
+      <div class="grid md:grid-cols-2 gap-8 mt-12">
+        <div class="border-l-4 border-[#1085D2] pl-6">
+          <h4 class="font-bold text-[#0B1731]">No More Manual Edits</h4>
+          <p class="text-sm mt-2 text-slate-500">Forget logging into complex builders. If you can send a text or post a photo, your website is already updated.</p>
+        </div>
+        <div class="border-l-4 border-[#A7C4DA] pl-6">
+          <h4 class="font-bold text-[#0B1731]">Real-Time Credibility</h4>
+          <p class="text-sm mt-2 text-slate-500">Show prospects you are active <strong>today</strong>, not just when you launched the site three years ago.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="mt-12 rounded-[2rem] border border-[#A7C4DA]/30 bg-[#F8FBFD] p-8 shadow-sm">
+      <h3 class="text-xl font-bold text-[#0B1731] flex items-center gap-2">
+        <svg class="w-6 h-6 text-[#1085D2]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
+        Why Autonomy Wins in 2026
+      </h3>
+      <p class="mt-4 text-base leading-7 text-slate-600">
+        Google's algorithms now prioritize <strong>"Freshness Signals."</strong> A site that publishes relevant updates automatically signals that your business is evolving. AutoSite AI maintains this signal 24/7 without you ever touching a line of code.
+      </p>
+    </div>
+  </div>
+</section>
+
+<section id="latest-updates" class="bg-slate-50 py-24 border-y border-slate-200">
+  <div class="mx-auto max-w-7xl px-6 lg:px-8">
+    
+    <div class="mx-auto max-w-3xl text-center">
+      <div class="mb-6 flex items-center justify-center gap-2 text-xs font-bold uppercase tracking-[0.2em] text-[#1085D2]">
+        <span class="relative flex h-2 w-2">
+          <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#1085D2] opacity-75"></span>
+          <span class="relative inline-flex rounded-full h-2 w-2 bg-[#1085D2]"></span>
+        </span>
+        Live Activity Feed
+      </div>
+
+      <h2 class="text-4xl font-bold tracking-tight text-[#0B1731] sm:text-5xl">
+        AutoSite AI in action.
+      </h2>
+
+      <p class="mt-6 text-lg text-slate-600">
+        These updates were generated automatically. As you work, AutoSite AI listens, learns, and publishes.
+      </p>
+    </div>
+
+    <div class="mt-16 grid grid-cols-1 gap-8 lg:grid-cols-3">
+
+      <article class="flex flex-col rounded-3xl border border-slate-200 bg-white p-8 shadow-sm hover:shadow-md transition">
+        <div class="flex justify-between items-start mb-6">
+          <span class="rounded-full bg-slate-100 px-3 py-1 text-[10px] font-bold text-slate-500 uppercase">From LinkedIn</span>
+          <p class="text-xs font-semibold text-slate-400">March 14, 2026</p>
+        </div>
+        <h3 class="text-xl font-bold text-[#0B1731] leading-snug">
+          New website automation services now live
+        </h3>
+        <p class="mt-4 text-sm leading-relaxed text-slate-600 flex-grow">
+          We've officially expanded our sync capabilities. Solo operators can now bridge the gap between social engagement and professional site freshness.
+        </p>
+        <div class="mt-6 pt-6 border-t border-slate-100 flex items-center gap-2">
+          <div class="w-2 h-2 rounded-full bg-green-500"></div>
+          <span class="text-[10px] font-bold text-slate-400 uppercase tracking-widest">Verified Auto-Update</span>
+        </div>
+      </article>
+
+      <article class="flex flex-col rounded-3xl border border-slate-200 bg-white p-8 shadow-sm hover:shadow-md transition">
+        <div class="flex justify-between items-start mb-6">
+          <span class="rounded-full bg-slate-100 px-3 py-1 text-[10px] font-bold text-slate-500 uppercase">From Google Reviews</span>
+          <p class="text-xs font-semibold text-slate-400">March 10, 2026</p>
+        </div>
+        <h3 class="text-xl font-bold text-[#0B1731] leading-snug">
+          Recent business activity is powering real results
+        </h3>
+        <p class="mt-4 text-sm leading-relaxed text-slate-600 flex-grow">
+          Client feedback is now an automated testimonial engine. Every 5-star review becomes a fresh SEO signal on your homepage within minutes.
+        </p>
+        <div class="mt-6 pt-6 border-t border-slate-100 flex items-center gap-2">
+          <div class="w-2 h-2 rounded-full bg-green-500"></div>
+          <span class="text-[10px] font-bold text-slate-400 uppercase tracking-widest">Verified Auto-Update</span>
+        </div>
+      </article>
+
+      <article class="flex flex-col rounded-3xl border border-slate-200 bg-white p-8 shadow-sm hover:shadow-md transition">
+        <div class="flex justify-between items-start mb-6">
+          <span class="rounded-full bg-slate-100 px-3 py-1 text-[10px] font-bold text-slate-500 uppercase">From IG Feed</span>
+          <p class="text-xs font-semibold text-slate-400">March 02, 2026</p>
+        </div>
+        <h3 class="text-xl font-bold text-[#0B1731] leading-snug">
+          Zero-maintenance SEO for service providers
+        </h3>
+        <p class="mt-4 text-sm leading-relaxed text-slate-600 flex-grow">
+          Freshness is the #1 ranking factor for local businesses. AutoSite AI ensures your "Last Updated" date is always today.
+        </p>
+        <div class="mt-6 pt-6 border-t border-slate-100 flex items-center gap-2">
+          <div class="w-2 h-2 rounded-full bg-green-500"></div>
+          <span class="text-[10px] font-bold text-slate-400 uppercase tracking-widest">Verified Auto-Update</span>
+        </div>
+      </article>
+
+    </div>
+
+    <div class="mx-auto mt-16 max-w-4xl rounded-3xl bg-[#0B1731] p-10 text-white shadow-2xl">
+      <div class="flex flex-col md:flex-row gap-8 items-center">
+        <div class="text-4xl">🚀</div>
+        <div>
+          <h3 class="text-2xl font-bold mb-2">The "Freshness" Advantage</h3>
+          <p class="text-slate-300 leading-relaxed">
+            Search engines reward activity. By publishing these small, structured updates, AutoSite AI creates a "Heartbeat" for your domain. This proves to Google that your business is operating, communicating, and ready for new customers.
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <div class="mt-12 text-center">
+      <a href="#signup" class="inline-flex items-center rounded-2xl bg-[#1085D2] px-10 py-5 text-white font-bold shadow-xl hover:scale-105 transition duration-300">
+        Launch Your Own Auto-Updating Site
+      </a>
+    </div>
+
+  </div>
+</section>
+
+    <section id="compare" class="bg-white py-24 border-t border-slate-100">
+  <div class="mx-auto max-w-7xl px-6 lg:px-8">
+    <div class="text-center mb-16">
+      <h2 class="text-3xl font-bold tracking-tight text-[#0B1731] sm:text-4xl">The "Manual" Era is Over.</h2>
+      <p class="mt-4 text-slate-600">Still struggling with <b>WordPress, Wix, or Squarespace</b>? See why solo founders are switching.</p>
+    </div>
+
+    <div class="grid md:grid-cols-2 gap-0 rounded-3xl overflow-hidden border border-slate-200 shadow-2xl">
+      <div class="bg-slate-50 p-10">
+        <h3 class="text-xl font-bold text-slate-400 mb-6 uppercase tracking-widest">The Manual Way (Old)</h3>
+        <ul class="space-y-4">
+          <li class="flex items-start gap-3 text-slate-500 line-through">
+            <svg class="h-6 w-6 text-red-400 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
+            Updating WordPress plugins & themes
+          </li>
+          <li class="flex items-start gap-3 text-slate-500 line-through">
+            <svg class="h-6 w-6 text-red-400 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
+            Dragging & dropping boxes in Wix
+          </li>
+          <li class="flex items-start gap-3 text-slate-500 line-through">
+            <svg class="h-6 w-6 text-red-400 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
+            Writing blog posts from scratch
+          </li>
+        </ul>
+      </div>
+
+      <div class="bg-[#0B1731] p-10 text-white">
+        <h3 class="text-xl font-bold text-[#1085D2] mb-6 uppercase tracking-widest text-shadow-glow">The Autonomous Way (2026)</h3>
+        <ul class="space-y-4">
+          <li class="flex items-start gap-3">
+            <svg class="h-6 w-6 text-emerald-400 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
+            <b>Zero-Touch:</b> Updates happen while you sleep.
+          </li>
+          <li class="flex items-start gap-3">
+            <svg class="h-6 w-6 text-emerald-400 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
+            <b>Social Sync:</b> Post to IG; site updates instantly.
+          </li>
+          <li class="flex items-start gap-3">
+            <svg class="h-6 w-6 text-emerald-400 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
+            <b>AI Polish:</b> Professional SEO copy, automatically.
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+    <!-- How It Works Section -->
+<section id="how-it-works" class="relative overflow-hidden bg-white py-24 sm:py-32">
+  <div class="mx-auto max-w-7xl px-6 lg:px-8">
+
+    <div class="mx-auto max-w-3xl text-center">
+      <span class="inline-flex items-center rounded-full border border-[#1085D2]/20 bg-[#1085D2]/5 px-4 py-1 text-xs font-bold uppercase tracking-widest text-[#1085D2]">
+        The Pipeline
+      </span>
+      <h2 class="mt-6 text-4xl font-bold tracking-tight text-[#0B1731] sm:text-5xl">
+        From social post to <span class="text-[#1085D2]">site update</span> in seconds.
+      </h2>
+      <p class="mt-6 text-lg leading-8 text-slate-600">
+        AutoSite AI bridges the gap between where you talk to customers and where you represent your brand. No manual entry, no passwords to manage, no "website chores."
+      </p>
+    </div>
+
+    <div class="mt-20">
+      <div class="grid grid-cols-1 gap-8 lg:grid-cols-4">
+
+        <div class="group relative rounded-[2rem] border border-slate-200 bg-white p-8 transition-all hover:border-[#1085D2]/50 hover:shadow-xl">
+          <div class="flex h-14 w-14 items-center justify-center rounded-2xl bg-[#0B1731] text-xl font-bold text-white transition-transform group-hover:scale-110">
+            1
+          </div>
+          <h3 class="mt-6 text-xl font-bold text-[#0B1731]">
+            Connect Your Feed
+          </h3>
+          <p class="mt-4 text-sm leading-relaxed text-slate-500">
+            Link your LinkedIn, Instagram, or Google profile. AutoSite AI securely "listens" for new activity without ever needing your account passwords.
+          </p>
+        </div>
+
+        <div class="group relative rounded-[2rem] border border-slate-200 bg-white p-8 transition-all hover:border-[#1085D2]/50 hover:shadow-xl">
+          <div class="flex h-14 w-14 items-center justify-center rounded-2xl bg-[#1085D2] text-xl font-bold text-white transition-transform group-hover:scale-110">
+            2
+          </div>
+          <h3 class="mt-6 text-xl font-bold text-[#0B1731]">
+            Smart Filtering
+          </h3>
+          <p class="mt-4 text-sm leading-relaxed text-slate-500">
+            Our AI identifies "High-Value Signals"—new projects, customer reviews, or service updates—while ignoring the noise of daily social chatter.
+          </p>
+        </div>
+
+        <div class="group relative rounded-[2rem] border border-slate-200 bg-white p-8 transition-all hover:border-[#1085D2]/50 hover:shadow-xl">
+          <div class="flex h-14 w-14 items-center justify-center rounded-2xl bg-[#0B1731] text-xl font-bold text-white transition-transform group-hover:scale-110">
+            3
+          </div>
+          <h3 class="mt-6 text-xl font-bold text-[#0B1731]">
+            Content Crafting
+          </h3>
+          <p class="mt-4 text-sm leading-relaxed text-slate-500">
+            Your raw post is rewritten into professional, SEO-optimized website copy. We handle the headlines, the meta-tags, and the formatting.
+          </p>
+        </div>
+
+        <div class="group relative rounded-[2rem] border border-[#1085D2]/30 bg-slate-50 p-8 transition-all hover:shadow-xl">
+          <div class="flex h-14 w-14 items-center justify-center rounded-2xl bg-green-600 text-xl font-bold text-white transition-transform group-hover:scale-110">
+            4
+          </div>
+          <h3 class="mt-6 text-xl font-bold text-[#0B1731]">
+            Instant Sync
+          </h3>
+          <p class="mt-4 text-sm leading-relaxed text-slate-500">
+            The update is pushed to your GitHub-backed site and deployed via Cloudflare in milliseconds. Your site is always current, 24/7.
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <div class="mx-auto mt-20 max-w-5xl rounded-[2.5rem] bg-[#0B1731] p-12 text-white shadow-2xl relative overflow-hidden">
+      <div class="absolute top-0 right-0 -mr-20 -mt-20 h-64 w-64 rounded-full bg-[#1085D2]/20 blur-3xl"></div>
+      
+      <div class="relative z-10 flex flex-col md:flex-row gap-10 items-center">
+        <div class="flex-1">
+          <h3 class="text-3xl font-bold leading-tight">
+            Stop choosing between <span class="text-[#1085D2]">running your business</span> and updating your site.
+          </h3>
+          <p class="mt-4 text-lg text-slate-300">
+            A website shouldn't be a second job. AutoSite AI ensures your digital presence grows at the same speed as your real-world reputation.
+          </p>
+        </div>
+        <div class="flex-shrink-0">
+          <a href="#pricing" class="inline-flex items-center justify-center rounded-2xl bg-[#1085D2] px-8 py-4 text-lg font-bold text-white transition hover:scale-105 hover:bg-[#1085D2]/90">
+            Pick Your Plan
+          </a>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+      
+  <section id="features" class="bg-white py-24 sm:py-32">
+  <div class="mx-auto max-w-7xl px-6 lg:px-8">
+    
+    <div class="mx-auto max-w-3xl text-center">
+      <span class="inline-flex items-center rounded-full border border-[#1085D2]/20 bg-[#1085D2]/5 px-4 py-1 text-xs font-bold uppercase tracking-widest text-[#1085D2]">
+        Core Capabilities
+      </span>
+      <h2 class="mt-6 text-4xl font-bold tracking-tight text-[#0B1731] sm:text-5xl">
+        Built for operators, <br class="hidden md:block">not web developers.
+      </h2>
+      <p class="mt-6 text-lg leading-8 text-slate-600">
+        AutoSite AI is the invisible bridge between your daily work and your digital storefront. We handle the technical heavy lifting so you can stay focused on the water.
+      </p>
+    </div>
+
+    <div class="mt-16 grid grid-cols-1 gap-8 md:grid-cols-2 xl:grid-cols-3">
+
+      <div class="group rounded-[2rem] border border-slate-200 bg-white p-8 transition-all duration-300 hover:border-[#1085D2]/30 hover:shadow-xl">
+        <div class="flex h-12 w-12 items-center justify-center rounded-2xl bg-[#0B1731] text-white transition-transform group-hover:rotate-6">
+          <svg class="h-6 w-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.758-4.899a4 4 0 005.656 0l4-4a4 4 0 00-5.656-5.656l-1.1 1.1"/>
+          </svg>
+        </div>
+        <h3 class="mt-6 text-xl font-bold text-[#0B1731]">Omni-Channel Sync</h3>
+        <p class="mt-3 text-sm leading-7 text-slate-500">
+          We monitor LinkedIn, Instagram, and Google Reviews simultaneously. One post on social media becomes a verified update on your site in seconds.
+        </p>
+      </div>
+
+      <div class="group rounded-[2rem] border border-slate-200 bg-white p-8 transition-all duration-300 hover:border-[#1085D2]/30 hover:shadow-xl">
+        <div class="flex h-12 w-12 items-center justify-center rounded-2xl bg-[#1085D2] text-white transition-transform group-hover:rotate-6">
+          <svg class="h-6 w-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"/>
+          </svg>
+        </div>
+        <h3 class="mt-6 text-xl font-bold text-[#0B1731]">Context-Aware Content</h3>
+        <p class="mt-3 text-sm leading-7 text-slate-500">
+          Our AI doesn't just "copy-paste." It rewrites social captions into professional website copy, ensuring your brand stays polished and consistent.
+        </p>
+      </div>
+
+      <div class="group rounded-[2rem] border border-slate-200 bg-white p-8 transition-all duration-300 hover:border-[#1085D2]/30 hover:shadow-xl">
+        <div class="flex h-12 w-12 items-center justify-center rounded-2xl bg-[#0B1731] text-white transition-transform group-hover:rotate-6">
+          <svg class="h-6 w-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"/>
+          </svg>
+        </div>
+        <h3 class="mt-6 text-xl font-bold text-[#0B1731]">SEO Freshness Engine</h3>
+        <p class="mt-3 text-sm leading-7 text-slate-500">
+          Search engines reward activity. By continuously publishing small updates, you signal to Google that your business is active and authoritative.
+        </p>
+      </div>
+
+      <div class="group rounded-[2rem] border border-slate-200 bg-white p-8 transition-all duration-300 hover:border-[#1085D2]/30 hover:shadow-xl">
+        <div class="flex h-12 w-12 items-center justify-center rounded-2xl bg-[#A7C4DA] text-[#0B1731] transition-transform group-hover:rotate-6">
+          <svg class="h-6 w-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/>
+          </svg>
+        </div>
+        <h3 class="mt-6 text-xl font-bold text-[#0B1731]">Zero-Touch Deployment</h3>
+        <p class="mt-3 text-sm leading-7 text-slate-500">
+          No login screens. No "Submit for Review." No technical debt. Your updates go from your brain to your domain without any intermediate steps.
+        </p>
+      </div>
+
+      <div class="group rounded-[2rem] border border-slate-200 bg-white p-8 transition-all duration-300 hover:border-[#1085D2]/30 hover:shadow-xl">
+        <div class="flex h-12 w-12 items-center justify-center rounded-2xl bg-[#1085D2] text-white transition-transform group-hover:rotate-6">
+          <svg class="h-6 w-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/>
+          </svg>
+        </div>
+        <h3 class="mt-6 text-xl font-bold text-[#0B1731]">Instant Trust Signals</h3>
+        <p class="mt-3 text-sm leading-7 text-slate-500">
+          When prospects land on your site and see an update from "2 hours ago," they know you're in business. That immediate credibility wins more jobs.
+        </p>
+      </div>
+
+      <div class="group rounded-[2rem] border border-slate-200 bg-white p-8 transition-all duration-300 hover:border-[#1085D2]/30 hover:shadow-xl">
+        <div class="flex h-12 w-12 items-center justify-center rounded-2xl bg-[#0B1731] text-white transition-transform group-hover:rotate-6">
+          <svg class="h-6 w-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"/>
+          </svg>
+        </div>
+        <h3 class="mt-6 text-xl font-bold text-[#0B1731]">Maintenance-Free</h3>
+        <p class="mt-3 text-sm leading-7 text-slate-500">
+          Powered by GitHub and Cloudflare. No plugins to update, no servers to crash, and no "WordPress update" notifications ever again.
+        </p>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+    <!-- Use Cases Section -->
+<section id="use-cases" class="bg-[#F8FBFD] py-24 sm:py-32">
+  <div class="mx-auto max-w-7xl px-6 lg:px-8">
+
+    <div class="mx-auto max-w-3xl text-center">
+      <span class="inline-flex items-center rounded-full border border-[#1085D2]/20 bg-[#1085D2]/5 px-4 py-1 text-xs font-bold uppercase tracking-widest text-[#1085D2]">
+        Verticals
+      </span>
+
+      <h2 class="mt-6 text-4xl font-bold tracking-tight text-[#0B1731] sm:text-5xl">
+        Designed for the <span class="text-[#1085D2]">Active</span> Business.
+      </h2>
+
+      <p class="mt-6 text-lg leading-8 text-slate-600">
+        If you are out in the field, on a call, or creating content, you shouldn't have to worry about your website. AutoSite AI works where you work.
+      </p>
+    </div>
+
+    <div class="mt-16 grid grid-cols-1 gap-8 lg:grid-cols-3">
+
+      <div class="group rounded-[2rem] border border-slate-200 bg-white p-10 transition-all duration-300 hover:border-[#1085D2]/30 hover:shadow-xl">
+        <div class="flex h-12 w-12 items-center justify-center rounded-2xl bg-[#0B1731] text-white transition-transform group-hover:-rotate-6">
+          <svg class="h-6 w-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"/>
+          </svg>
+        </div>
+
+        <h3 class="mt-8 text-2xl font-bold text-[#0B1731]">Service Experts</h3>
+        <p class="mt-4 text-sm leading-relaxed text-slate-500 italic">"I’m too busy in the field to blog."</p>
+        <p class="mt-4 text-base leading-7 text-slate-600">
+          Contractors, landscapers, and tradespeople post photos of their work to Instagram daily. AutoSite AI harvests those posts to create a "Recent Projects" gallery that keeps the phone ringing.
+        </p>
+        <div class="mt-6 flex items-center gap-2 text-[#1085D2] font-bold text-xs uppercase tracking-widest">
+          <span>Perfect for Contractors</span>
+        </div>
+      </div>
+
+      <div class="group rounded-[2rem] border border-slate-200 bg-white p-10 transition-all duration-300 hover:border-[#1085D2]/30 hover:shadow-xl">
+        <div class="flex h-12 w-12 items-center justify-center rounded-2xl bg-[#1085D2] text-white transition-transform group-hover:-rotate-6">
+          <svg class="h-6 w-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/>
+          </svg>
+        </div>
+
+        <h3 class="mt-8 text-2xl font-bold text-[#0B1731]">Solo Consultants</h3>
+        <p class="mt-4 text-sm leading-relaxed text-slate-500 italic">"My website looks like I retired in 2022."</p>
+        <p class="mt-4 text-base leading-7 text-slate-600">
+          Coaches and speakers share insights on LinkedIn every morning. AutoSite AI turns those thoughts into an SEO-friendly "Insights" feed, ensuring your expertise is always visible to new prospects.
+        </p>
+        <div class="mt-6 flex items-center gap-2 text-[#1085D2] font-bold text-xs uppercase tracking-widest">
+          <span>Perfect for Speakers</span>
+        </div>
+      </div>
+
+      <div class="group rounded-[2rem] border border-slate-200 bg-white p-10 transition-all duration-300 hover:border-[#1085D2]/30 hover:shadow-xl">
+        <div class="flex h-12 w-12 items-center justify-center rounded-2xl bg-[#A7C4DA] text-[#0B1731] transition-transform group-hover:-rotate-6">
+          <svg class="h-6 w-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"/>
+          </svg>
+        </div>
+
+        <h3 class="mt-8 text-2xl font-bold text-[#0B1731]">Creative Teams</h3>
+        <p class="mt-4 text-sm leading-relaxed text-slate-500 italic">"We don't have time for a webmaster."</p>
+        <p class="mt-4 text-base leading-7 text-slate-600">
+          Small agencies and boutiques stay active on social media to build community. AutoSite AI ensures that same energy is reflected on their primary domain without any extra headcount.
+        </p>
+        <div class="mt-6 flex items-center gap-2 text-[#1085D2] font-bold text-xs uppercase tracking-widest">
+          <span>Perfect for Agencies</span>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+      
+
+<!-- Request Demo Section REVA-Style AutoSite AI Assessment -->
+<section id="request-demo" class="bg-[#0B1731] py-24 sm:py-32 relative overflow-hidden">
+  <div class="absolute top-0 left-1/2 -translate-x-1/2 w-full h-full bg-[radial-gradient(circle_at_center,_var(--tw-gradient-stops))] from-[#1085D2]/10 via-transparent to-transparent"></div>
+
+  <div class="relative z-10 mx-auto max-w-3xl px-6 lg:px-8">
+    <div class="overflow-hidden rounded-[2.5rem] border border-white/10 bg-white shadow-2xl">
+      
+      <div class="bg-[#0B1731] px-8 py-10 sm:px-12">
+        <span class="inline-flex items-center rounded-full bg-[#1085D2]/20 px-3 py-1 text-xs font-bold uppercase tracking-widest text-[#1085D2]">
+          Qualification
+        </span>
+        <h2 class="mt-4 text-3xl font-bold text-white sm:text-4xl">
+          Is your business ready for <span class="text-[#1085D2]">Autopilot</span>?
+        </h2>
+        <p class="mt-4 text-base leading-7 text-slate-300">
+          This 90-second check analyzes your current online activity to determine if AutoSite AI can successfully automate your presence today.
+        </p>
+      </div>
+
+      <div class="px-8 pt-8 sm:px-12">
+        <div class="flex items-center justify-between">
+          <p id="stepLabel" class="text-xs font-bold uppercase tracking-tighter text-[#1085D2]">
+            Step 1 of 8
+          </p>
+          <div class="flex gap-1">
+             <div class="h-1.5 w-8 rounded-full bg-[#1085D2]"></div>
+             <div class="h-1.5 w-8 rounded-full bg-slate-100"></div>
+             <div class="h-1.5 w-8 rounded-full bg-slate-100"></div>
+             </div>
+        </div>
+      </div>
+
+      <div class="px-8 py-10 sm:px-12">
+        <form id="autositeAssessmentForm" class="space-y-8">
+
+          <div class="assessment-step transition-all duration-500" data-step="1">
+            <div class="mb-8">
+              <h3 class="text-2xl font-bold text-[#0B1731]">
+                Where is your business most active?
+              </h3>
+              <p class="mt-2 text-sm text-slate-500">
+                Select the primary channel where you share work or updates.
+              </p>
+            </div>
+
+            <div class="grid gap-4">
+              <button type="button" class="group flex items-center justify-between w-full text-left p-5 rounded-2xl border-2 border-slate-100 hover:border-[#1085D2] hover:bg-[#1085D2]/5 transition-all" data-name="activityChannels" data-value="multi">
+                <div>
+                  <span class="block font-bold text-[#0B1731]">Multi-Channel</span>
+                  <span class="block text-xs text-slate-500">Instagram, LinkedIn, and Google Business</span>
+                </div>
+                <div class="h-6 w-6 rounded-full border-2 border-slate-200 group-hover:border-[#1085D2]"></div>
+              </button>
+
+              <button type="button" class="group flex items-center justify-between w-full text-left p-5 rounded-2xl border-2 border-slate-100 hover:border-[#1085D2] hover:bg-[#1085D2]/5 transition-all" data-name="activityChannels" data-value="single">
+                <div>
+                  <span class="block font-bold text-[#0B1731]">One Dedicated Hub</span>
+                  <span class="block text-xs text-slate-500">We focus everything on one platform</span>
+                </div>
+                <div class="h-6 w-6 rounded-full border-2 border-slate-200 group-hover:border-[#1085D2]"></div>
+              </button>
+            </div>
+            <input type="hidden" name="activityChannels" required>
+          </div>
+
+          <div id="assessmentNav" class="flex items-center justify-between border-t border-slate-100 pt-10">
+            <button type="button" id="prevBtn" class="invisible text-sm font-bold text-slate-400 hover:text-[#0B1731] transition">
+              ← Back
+            </button>
+            <button type="button" id="nextBtn" class="rounded-xl bg-[#0B1731] px-8 py-4 text-sm font-bold text-white shadow-lg transition hover:scale-105 active:scale-95">
+              Continue
+            </button>
+            <button type="submit" id="submitBtn" class="hidden rounded-xl bg-[#1085D2] px-8 py-4 text-sm font-bold text-white shadow-lg transition hover:scale-105 active:scale-95">
+              Analyze My Results
+            </button>
+          </div>
+        </form>
+
+        </div>
+    </div>
+  </div>
+</section>
+
+
+
+
+
+
+
+    <!-- Pricing Section -->
+<section id="pricing" class="bg-[#FEFFFF] py-24">
+  <div class="mx-auto max-w-7xl px-6 lg:px-8">
+
+    <div class="mx-auto max-w-3xl text-center">
+      <span class="inline-flex items-center rounded-full border border-[#1085D2]/20 bg-[#1085D2]/5 px-4 py-1 text-sm font-medium text-[#1085D2]">
+        Plans & Access
+      </span>
+
+      <h2 class="mt-6 text-4xl font-bold tracking-tight text-[#0B1731] sm:text-5xl">
+        Pricing built for <span class="text-[#1085D2]">growth</span>.
+      </h2>
+
+      <p class="mt-4 text-lg leading-8 text-slate-600">
+        Stop paying for manual web updates. Choose the rhythm that fits your business activity.
+      </p>
+    </div>
+
+    <div class="mt-16 grid grid-cols-1 gap-8 lg:grid-cols-3">
+
+      <div class="rounded-[2rem] border border-slate-200 bg-white p-10 shadow-sm flex flex-col">
+        <h3 class="text-lg font-bold text-[#0B1731]">Solo Canoer</h3>
+        <p class="mt-2 text-sm text-slate-500">Perfect for independent consultants.</p>
+
+        <p class="mt-6 text-5xl font-bold text-[#0B1731]">
+          $49<span class="text-lg font-medium text-slate-400">/mo</span>
+        </p>
+
+        <ul class="mt-8 space-y-4 text-sm text-slate-600 flex-grow">
+          <li class="flex items-center gap-3">
+            <svg class="h-5 w-5 text-emerald-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"/></svg>
+            1 Social Media Source
+          </li>
+          <li class="flex items-center gap-3">
+            <svg class="h-5 w-5 text-emerald-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"/></svg>
+            4 Automated Updates /mo
+          </li>
+          <li class="flex items-center gap-3 text-slate-400 italic">
+            <svg class="h-5 w-5 text-slate-300" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"/></svg>
+            Standard AI Processing
+          </li>
+        </ul>
+
+        <a href="#request-demo" class="mt-10 block rounded-xl border-2 border-[#0B1731] px-6 py-3 text-center text-sm font-bold text-[#0B1731] transition hover:bg-[#0B1731] hover:text-white">
+          Get Started
+        </a>
+      </div>
+
+      <div class="relative rounded-[2rem] border-2 border-[#1085D2] bg-white p-10 shadow-xl flex flex-col scale-105 z-10">
+        <div class="absolute -top-4 left-1/2 -translate-x-1/2 rounded-full bg-[#1085D2] px-4 py-1 text-xs font-bold uppercase tracking-widest text-white">
+          Most Popular
+        </div>
+        <h3 class="text-lg font-bold text-[#0B1731]">Small Team</h3>
+        <p class="mt-2 text-sm text-slate-500">For active, service-based businesses.</p>
+
+        <p class="mt-6 text-5xl font-bold text-[#0B1731]">
+          $99<span class="text-lg font-medium text-slate-400">/mo</span>
+        </p>
+
+        <ul class="mt-8 space-y-4 text-sm text-slate-600 flex-grow">
+          <li class="flex items-center gap-3 font-semibold text-[#0B1731]">
+            <svg class="h-5 w-5 text-[#1085D2]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"/></svg>
+            3 Social Media Sources
+          </li>
+          <li class="flex items-center gap-3">
+            <svg class="h-5 w-5 text-[#1085D2]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"/></svg>
+            12 Automated Updates /mo
+          </li>
+          <li class="flex items-center gap-3">
+            <svg class="h-5 w-5 text-[#1085D2]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"/></svg>
+            Priority AI Rewrite Engine
+          </li>
+          <li class="flex items-center gap-3">
+            <svg class="h-5 w-5 text-[#1085D2]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"/></svg>
+            Google Review Sync
+          </li>
+        </ul>
+
+        <a href="#request-demo" class="mt-10 block rounded-xl bg-[#1085D2] px-6 py-3 text-center text-sm font-bold text-white shadow-lg shadow-[#1085D2]/30 transition hover:brightness-110">
+          Activate AutoSite AI
+        </a>
+      </div>
+
+      <div class="rounded-[2rem] border border-slate-200 bg-[#0B1731] p-10 text-white flex flex-col">
+        <h3 class="text-lg font-bold">Founder's Special</h3>
+        <p class="mt-2 text-sm text-slate-400">Pay once. Own it forever.</p>
+
+        <p class="mt-6 text-5xl font-bold text-white">
+          $697
+        </p>
+        <p class="text-xs mt-1 text-slate-400 uppercase tracking-widest font-bold">One-Time Payment</p>
+
+        <ul class="mt-8 space-y-4 text-sm text-slate-300 flex-grow">
+          <li class="flex items-center gap-3">
+            <svg class="h-5 w-5 text-[#1085D2]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"/></svg>
+            Lifetime Platform Access
+          </li>
+          <li class="flex items-center gap-3">
+            <svg class="h-5 w-5 text-[#1085D2]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"/></svg>
+            20 Updates /mo (Forever)
+          </li>
+          <li class="flex items-center gap-3">
+            <svg class="h-5 w-5 text-[#1085D2]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"/></svg>
+            All Future Pro Features
+          </li>
+        </ul>
+
+        <a href="#request-demo" class="mt-10 block rounded-xl bg-white/10 px-6 py-3 text-center text-sm font-bold text-white transition hover:bg-white/20">
+          Claim Lifetime Slot
+        </a>
+      </div>
+    </div>
+
+    <div class="mt-16 rounded-[2.5rem] bg-[#F8FBFD] p-8 sm:p-12 border border-slate-100 shadow-sm">
+  <div class="flex flex-col lg:flex-row gap-10 items-center">
+    <div class="lg:w-2/3">
+      <h3 class="text-2xl font-bold text-[#0B1731]">Need more than just updates?</h3>
+      <p class="mt-4 text-slate-600 leading-relaxed">
+        For businesses with complex operations, we build <b>Custom AI Workflows</b> that act as a silent back-office. From <b>automated lead routing</b> that puts customers in your CRM instantly, to <b>AI-generated case studies</b> that turn your rough project notes into professional sales assets.
+      </p>
+      <div class="mt-6 flex items-center gap-4">
+        <span class="inline-flex items-center rounded-full bg-[#1085D2]/10 px-3 py-1 text-xs font-bold text-[#1085D2] uppercase tracking-wider">
+          Custom Enterprise
+        </span>
+        <p class="text-sm font-bold text-[#0B1731]">
+          Implementation starts at $1,200
+        </p>
+      </div>
+    </div>
+    <div class="lg:w-1/3 w-full text-center">
+      <a href="#request-demo" class="inline-flex items-center justify-center w-full lg:w-auto rounded-xl border-2 border-[#1085D2] px-8 py-4 text-sm font-bold text-[#1085D2] hover:bg-[#1085D2] hover:text-white transition-all transform hover:scale-105">
+        Inquire About Custom Workflows
+      </a>
+    </div>
+  </div>
+</div>
+
+<p class="mt-10 text-center text-xs text-slate-400">
+  *<b>Founder's Lifetime Access</b> is strictly limited to the first 100 signups. Once reached, this offer will be retired. All monthly plans include a 14-day "No-Questions-Asked" money-back guarantee.
+</p>
+</section>
+    
+     
+<!-- FAQ Section -->
+<section id="faq" class="bg-[#F8FBFD] py-24 sm:py-32">
+  <div class="mx-auto max-w-4xl px-6 lg:px-8">
+
+    <div class="mx-auto max-w-3xl text-center">
+      <span class="inline-flex items-center rounded-full border border-[#1085D2]/20 bg-[#1085D2]/5 px-4 py-1 text-xs font-bold uppercase tracking-widest text-[#1085D2]">
+        The Fine Print
+      </span>
+      <h2 class="mt-6 text-4xl font-bold tracking-tight text-[#0B1731] sm:text-5xl">
+        Common Questions
+      </h2>
+      <p class="mt-4 text-lg leading-8 text-slate-600">
+        Everything you need to know before putting your website on autopilot.
+      </p>
+    </div>
+
+    <div class="mt-16 space-y-4">
+
+        <details class="group rounded-[1.5rem] border border-slate-200 bg-white p-6 transition-all hover:border-[#1085D2]/30 shadow-sm">
+        <summary class="flex cursor-pointer list-none items-center justify-between text-left text-lg font-bold text-[#0B1731]">
+          How do I update my website with AutoSite AI?
+          <span class="ml-4 flex h-8 w-8 items-center justify-center rounded-full bg-[#1085D2]/10 text-[#1085D2] transition-transform group-open:rotate-45">
+            <svg class="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M12 6v12m6-6H6"/></svg>
+          </span>
+        </summary>
+        <div class="mt-4 text-base leading-7 text-slate-600 border-t border-slate-50 pt-4">
+          Unlike <b>WordPress</b> or <b>Webflow</b>, you don't. You simply post to your social channels or close a project. Our AI detects the activity, rewrites it into professional copy, and updates your site for you automatically.
+        </div>
+      </details>
+
+      <details class="group rounded-[1.5rem] border border-slate-200 bg-white p-6 transition-all hover:border-[#1085D2]/30 shadow-sm" open>
+        <summary class="flex cursor-pointer list-none items-center justify-between text-left text-lg font-bold text-[#0B1731]">
+          How is this different from Wix, Squarespace, or Shopify?
+          <span class="ml-4 flex h-8 w-8 items-center justify-center rounded-full bg-[#1085D2]/10 text-[#1085D2] transition-transform group-open:rotate-45">
+            <svg class="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M12 6v12m6-6H6"/></svg>
+          </span>
+        </summary>
+        <div class="mt-4 text-base leading-7 text-slate-600 border-t border-slate-50 pt-4">
+          Platforms like <b>Wix and Shopify</b> only sell you a <i>builder</i>—a static tool that requires <b>you</b> to do all the work. Most of these sites go stale within months because business owners are too busy to edit them. 
+          <br><br>
+          <b>AutoSite AI</b> is different: it’s an active engine. While Google rewards "Freshness," most manual sites lose rankings over time. AutoSite AI ensures your site stays <b>updated daily</b> with your latest activity, signaling to search engines that you are an active, authoritative business without you ever lifting a finger.
+        </div>
+      </details>
+
+     <details class="group rounded-[1.5rem] border border-slate-200 bg-white p-6 transition-all hover:border-[#1085D2]/30 shadow-sm">
+        <summary class="flex cursor-pointer list-none items-center justify-between text-left text-lg font-bold text-[#0B1731]">
+          Can I use this with my existing WordPress, Wix, or Shopify site?
+          <span class="ml-4 flex h-8 w-8 items-center justify-center rounded-full bg-[#1085D2]/10 text-[#1085D2] transition-transform group-open:rotate-45">
+            <svg class="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M12 6v12m6-6H6"/></svg>
+          </span>
+        </summary>
+        <div class="mt-4 text-base leading-7 text-slate-600 border-t border-slate-50 pt-4">
+          Absolutely. We offer two paths: We can <b>fully migrate</b> your site to our high-performance autonomous platform, OR we can <b>integrate AutoSite AI</b> directly into your existing <b>WordPress, Wix, or Shopify</b> setup. We take your current content and "upgrade" it with our autonomous engine so your site starts updating itself without you ever having to touch a web editor again.
+        </div>
+      </details>
+
+      <details class="group rounded-[1.5rem] border border-slate-200 bg-white p-6 transition-all hover:border-[#1085D2]/30 shadow-sm">
+        <summary class="flex cursor-pointer list-none items-center justify-between text-left text-lg font-bold text-[#0B1731]">
+          Does this replace my Web Designer?
+          <span class="ml-4 flex h-8 w-8 items-center justify-center rounded-full bg-[#1085D2]/10 text-[#1085D2] transition-transform group-open:rotate-45">
+            <svg class="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M12 6v12m6-6H6"/></svg>
+          </span>
+        </summary>
+        <div class="mt-4 text-base leading-7 text-slate-600 border-t border-slate-50 pt-4">
+          No. Think of AutoSite AI as your **Website Manager**, not your designer. Your designer builds the house; AutoSite AI makes sure the lights are on and the front yard is clean by keeping the content fresh and relevant.
+        </div>
+      </details>
+
+      <details class="group rounded-[1.5rem] border border-slate-200 bg-white p-6 transition-all hover:border-[#1085D2]/30 shadow-sm">
+  <summary class="flex cursor-pointer list-none items-center justify-between text-left text-lg font-bold text-[#0B1731]">
+    Do I need to be a "tech person" to set this up?
+    <span class="ml-4 flex h-8 w-8 items-center justify-center rounded-full bg-[#1085D2]/10 text-[#1085D2] transition-transform group-open:rotate-45">
+      <svg class="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M12 6v12m6-6H6"/></svg>
+    </span>
+  </summary>
+  <div class="mt-4 text-base leading-7 text-slate-600 border-t border-slate-50 pt-4">
+    Not at all. We built AutoSite AI specifically for <b>operators, not developers</b>. 
+    <br><br>
+    Our team handles the initial "Bridge Connection" to your existing <b>WordPress, Wix, or Shopify</b> site. Once that one-time link is established, your website begins listening to your business activity automatically. No coding, no manual maintenance, and no technical headaches on your end—ever.
+  </div>
+</details>
+
+     <details class="group rounded-[1.5rem] border border-slate-200 bg-white p-6 transition-all hover:border-[#1085D2]/30 shadow-sm">
+  <summary class="flex cursor-pointer list-none items-center justify-between text-left text-lg font-bold text-[#0B1731]">
+    How does an "Autonomous" site actually grow my business?
+    <span class="ml-4 flex h-8 w-8 items-center justify-center rounded-full bg-[#1085D2]/10 text-[#1085D2] transition-transform group-open:rotate-45">
+      <svg class="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M12 6v12m6-6H6"/></svg>
+    </span>
+  </summary>
+  <div class="mt-4 text-base leading-7 text-slate-600 border-t border-slate-50 pt-4">
+    In 2026, a static website is a "dead" website. When a potential customer lands on your page and sees a portfolio project or a client win from <b>this morning</b>, it creates instant authority. 
+    <br><br>
+    Most business owners lose leads because their site looks like a "ghost town." AutoSite AI ensures your digital storefront always reflects your real-world hustle. By showing prospects that you are active and available <b>right now</b>, you build the immediate trust required to turn a casual visitor into a high-value client—all without you ever having to "sit down and blog."
+  </div>
+</details>
+
+      <details class="group rounded-[1.5rem] border border-slate-200 bg-white p-6 transition-all hover:border-[#1085D2]/30 shadow-sm">
+  <summary class="flex cursor-pointer list-none items-center justify-between text-left text-lg font-bold text-[#0B1731]">
+    Will I still have total control over what is published?
+    <span class="ml-4 flex h-8 w-8 items-center justify-center rounded-full bg-[#1085D2]/10 text-[#1085D2] transition-transform group-open:rotate-45">
+      <svg class="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M12 6v12m6-6H6"/></svg>
+    </span>
+  </summary>
+  <div class="mt-4 text-base leading-7 text-slate-600 border-t border-slate-50 pt-4">
+    <b>100%.</b> We know your reputation is your most valuable asset. While the system is designed to save you time, it never goes "rogue." 
+    <br><br>
+    You can choose your level of involvement: 
+    <ul class="mt-4 space-y-2 list-disc pl-5">
+      <li><b>Full Autopilot:</b> For those who want hands-free growth.</li>
+      <li><b>Review First:</b> You receive a quick mobile notification or email to "Approve" or "Edit" a post before it ever goes live.</li>
+    </ul>
+    <br>
+    Think of the AI as a <b>highly-trained junior copywriter</b>—it does the heavy lifting, but you always have the final say on the "Publish" button.
+  </div>
+</details>
+
+    <details class="group rounded-[1.5rem] border border-slate-200 bg-white p-6 transition-all hover:border-[#1085D2]/30 shadow-sm">
+  <summary class="flex cursor-pointer list-none items-center justify-between text-left text-lg font-bold text-[#0B1731]">
+    Which plan is right for my current business stage?
+    <span class="ml-4 flex h-8 w-8 items-center justify-center rounded-full bg-[#1085D2]/10 text-[#1085D2] transition-transform group-open:rotate-45">
+      <svg class="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M12 6v12m6-6H6"/></svg>
+    </span>
+  </summary>
+  <div class="mt-4 text-base leading-7 text-slate-600 border-t border-slate-50 pt-4">
+    We designed our tiers to grow with your activity level:
+    <ul class="mt-4 space-y-3">
+      <li><b>Solo Canoer:</b> Perfect if you're an independent consultant who posts once a week to LinkedIn or Instagram to stay top-of-mind.</li>
+      <li><b>Small Team:</b> Best for active businesses that post across multiple platforms and want their <b>Google Reviews</b> to sync automatically to build massive "social proof" on their site.</li>
+      <li><b>Founder's Special:</b> For the visionary who wants to lock in the lowest possible price forever. You get 20 updates a month—more than enough for a high-growth brand—and you'll never see another bill from us.</li>
+    </ul>
+  </div>
+</details>
+
+<details class="group rounded-[1.5rem] border border-slate-200 bg-white p-6 transition-all hover:border-[#1085D2]/30 shadow-sm">
+  <summary class="flex cursor-pointer list-none items-center justify-between text-left text-lg font-bold text-[#0B1731]">
+    What’s the "catch" with the Lifetime Founder plan?
+    <span class="ml-4 flex h-8 w-8 items-center justify-center rounded-full bg-[#1085D2]/10 text-[#1085D2] transition-transform group-open:rotate-45">
+      <svg class="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M12 6v12m6-6H6"/></svg>
+    </span>
+  </summary>
+  <div class="mt-4 text-base leading-7 text-slate-600 border-t border-slate-50 pt-4">
+    The only "catch" is that it’s strictly limited. We are offering this <b>one-time buyout</b> to the first <b>100 Founders</b> who join us. This group helps shape the future of our autonomous engine, and in exchange, you’ll never pay a monthly subscription fee—ever. 
+    <br><br>
+    <span class="text-[#1085D2] font-bold">Once the 100th slot is claimed, this plan will be retired forever</span> and AutoSite AI will move to a standard monthly subscription. It’s our way of rewarding the early adopters who help us build the new standard for the autonomous web.
+  </div>
+</details>
+
+    <details class="group rounded-[1.5rem] border border-slate-200 bg-white p-6 transition-all hover:border-[#1085D2]/30 shadow-sm">
+  <summary class="flex cursor-pointer list-none items-center justify-between text-left text-lg font-bold text-[#0B1731]">
+    Can I build custom automations beyond the standard plan?
+    <span class="ml-4 flex h-8 w-8 items-center justify-center rounded-full bg-[#1085D2]/10 text-[#1085D2] transition-transform group-open:rotate-45">
+      <svg class="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M12 6v12m6-6H6"/></svg>
+    </span>
+  </summary>
+  <div class="mt-4 text-base leading-7 text-slate-600 border-t border-slate-50 pt-4">
+    <b>Yes.</b> While our Core and Standard plans are designed to handle 90% of a solopreneur's needs out-of-the-box, we know that as your business grows, your needs change. 
+    <br><br>
+    Whether you want to connect a custom CRM, trigger specialized email sequences from site updates, or build a unique industry-specific workflow, our <b>Custom Engine</b> can be tailored to your specific goals. If you can dream of a way to save more time, we can likely automate it. 
+    <br><br>
+    <a href="#contact" class="text-[#1085D2] font-bold hover:underline">Chat with us about a custom workflow &rarr;</a>
+  </div>
+</details>
+
+      <details class="group rounded-[1.5rem] border border-slate-200 bg-white p-6 transition-all hover:border-[#1085D2]/30 shadow-sm">
+  <summary class="flex cursor-pointer list-none items-center justify-between text-left text-lg font-bold text-[#0B1731]">
+    What counts as an "Automated Update"?
+    <span class="ml-4 flex h-8 w-8 items-center justify-center rounded-full bg-[#1085D2]/10 text-[#1085D2] transition-transform group-open:rotate-45">
+      <svg class="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M12 6v12m6-6H6"/></svg>
+    </span>
+  </summary>
+  <div class="mt-4 text-base leading-7 text-slate-600 border-t border-slate-50 pt-4">
+    An update is any time our AI takes a raw signal—like a LinkedIn post, an Instagram photo, or a new 5-star Google Review—and transforms it into a polished, SEO-optimized section on your website. 
+    <br><br>
+    While the <b>Solo</b> plan keeps your site "alive" weekly, the <b>Small Team</b> and <b>Founder</b> plans allow for a much higher "heartbeat," making your business look incredibly active and dominant in your local market.
+  </div>
+</details>
+
+    <details class="group rounded-[1.5rem] border border-slate-200 bg-white p-6 transition-all hover:border-[#1085D2]/30 shadow-sm">
+  <summary class="flex cursor-pointer list-none items-center justify-between text-left text-lg font-bold text-[#0B1731]">
+    What is the "Priority AI Rewrite Engine" in the Small Team plan?
+    <span class="ml-4 flex h-8 w-8 items-center justify-center rounded-full bg-[#1085D2]/10 text-[#1085D2] transition-transform group-open:rotate-45">
+      <svg class="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M12 6v12m6-6H6"/></svg>
+    </span>
+  </summary>
+  <div class="mt-4 text-base leading-7 text-slate-600 border-t border-slate-50 pt-4">
+    The Priority Engine goes beyond simple summaries. It uses advanced deep-learning to "read between the lines" of your activity, crafting longer-form project case studies and more nuanced blog-style updates. It’s designed for businesses that want their website to sound like it has a <b>dedicated content marketing team</b> working 24/7.
+  </div>
+</details>
+
+    
+
+    </div>
+
+    <div class="mt-16 text-center">
+      <p class="mb-6 text-sm text-slate-500 font-medium">Still have questions?</p>
+      <a
+        href="#request-demo"
+        class="group inline-flex items-center justify-center gap-2 rounded-2xl bg-[#0B1731] px-8 py-4 text-base font-bold text-white transition hover:bg-[#1085D2] shadow-xl"
+      >
+        Request a Demo
+        <svg class="h-4 w-4 transition-transform group-hover:translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M14 5l7 7m0 0l-7 7m7-7H3"/></svg>
+      </a>
+    </div>
+
+  </div>
+</section>
+
+
+   <!-- Footer -->
+
+      <footer class="bg-[#0B1731] text-[#A7C4DA] py-20">
+  <div class="mx-auto max-w-7xl px-6 lg:px-8">
+    <div class="grid grid-cols-1 gap-12 lg:grid-cols-4">
+
+      <div class="col-span-1 lg:col-span-1">
+        <div class="flex items-center gap-2">
+          <div class="h-8 w-8 rounded-lg bg-[#1085D2] flex items-center justify-center font-bold text-white text-xs">AS</div>
+          <h3 class="text-xl font-bold text-white tracking-tight">AutoSite AI</h3>
+        </div>
+        <p class="mt-6 text-sm leading-6 text-slate-400">
+          The autonomous content engine for service businesses. We bridge the gap between your daily activity and your digital storefront.
+        </p>
+      </div>
+
+      <div class="grid grid-cols-2 gap-8 col-span-1 lg:col-span-2">
+        <div>
+          <h4 class="text-xs font-bold uppercase tracking-widest text-white">Product</h4>
+          <ul class="mt-6 space-y-4 text-sm font-medium">
+            <li><a href="#how-it-works" class="transition hover:text-[#1085D2]">How It Works</a></li>
+            <li><a href="#pricing" class="transition hover:text-[#1085D2]">Pricing Plans</a></li>
+            <li><a href="#faq" class="transition hover:text-[#1085D2]">Common FAQ</a></li>
+          </ul>
+        </div>
+        <div>
+          <h4 class="text-xs font-bold uppercase tracking-widest text-white">Legal</h4>
+          <ul class="mt-6 space-y-4 text-sm font-medium">
+            <li><button onclick="document.getElementById('privacyModal').classList.remove('hidden'); document.getElementById('privacyModal').classList.add('flex')" class="transition hover:text-[#1085D2]">Privacy Policy</button></li>
+            <li><button onclick="document.getElementById('termsModal').classList.remove('hidden'); document.getElementById('termsModal').classList.add('flex')" class="transition hover:text-[#1085D2]">Terms of Service</button></li>
+           
+          </ul>
+        </div>
+      </div>
+
+      <div class="rounded-2xl bg-white/5 p-6 border border-white/10">
+        <h4 class="text-sm font-bold text-white">Ready to go live?</h4>
+        <p class="mt-2 text-xs text-slate-400 leading-5">
+          Join the first 100 early adopters and secure your lifetime access.
+        </p>
+        <a href="#request-demo" class="mt-4 flex w-full items-center justify-center rounded-xl bg-[#1085D2] px-4 py-3 text-sm font-bold text-white transition hover:scale-105 active:scale-95 shadow-lg shadow-[#1085D2]/20">
+          Request a Demo
+        </a>
+      </div>
+    </div>
+
+    <div class="mt-16 border-t border-white/10 pt-8 flex flex-col items-center justify-between gap-6 text-xs font-medium md:flex-row">
+      <p class="text-slate-500">
+        © 2026 <span class="text-white">AutoSite AI</span>. Built with precision by <span class="text-[#1085D2]">Regen Creatives</span>.
+      </p>
+      
+      <div class="flex items-center gap-6">
+        <a href="#" class="text-slate-400 hover:text-white transition">LinkedIn</a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<div id="privacyModal" class="fixed inset-0 z-[100] hidden items-center justify-center bg-[#0B1731]/90 backdrop-blur-md p-4">
+  <div class="relative max-h-[85vh] w-full max-w-2xl overflow-hidden rounded-[2rem] bg-white shadow-2xl animate-in fade-in zoom-in duration-300">
+    <div class="flex items-center justify-between border-b border-slate-100 px-8 py-6">
+      <h2 class="text-xl font-bold text-[#0B1731]">Privacy Policy</h2>
+      <button onclick="this.closest('#privacyModal').classList.add('hidden')" class="rounded-full bg-slate-100 p-2 text-slate-500 hover:bg-red-50 hover:text-red-500 transition">
+        <svg class="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M6 18L18 6M6 6l12 12"/></svg>
+      </button>
+    </div>
+    <div class="overflow-y-auto px-8 py-8 text-sm leading-relaxed text-slate-600">
+      <p class="mb-4">Last Updated: March 2026</p>
+      <h3 class="text-lg font-bold text-[#0B1731] mb-2">1. Data Sovereignty</h3>
+      <p class="mb-6">At AutoSite AI, we believe your data is yours. We only monitor the public business channels you explicitly connect (Instagram, LinkedIn, etc.) to generate website updates.</p>
+      
+      <h3 class="text-lg font-bold text-[#0B1731] mb-2">2. Usage Rights</h3>
+      <p class="mb-6">We do not sell your business data to third parties. Our AI models are used strictly to transform your activity into structured HTML content for your site.</p>
+      
+      <h3 class="text-lg font-bold text-[#0B1731] mb-2">3. Security</h3>
+      <p>All API connections are encrypted via enterprise-grade SSL. Access to your CMS is limited to the specific content blocks designated for AutoSite updates.</p>
+    </div>
+  </div>
+</div>
+
+
+
+
+      
+   <script>
+  (function () {
+    const form = document.getElementById("autositeAssessmentForm");
+    const steps = Array.from(document.querySelectorAll(".assessment-step"));
+    const stepLabel = document.getElementById("stepLabel");
+    const stepHint = document.getElementById("stepHint");
+    const progressBar = document.getElementById("progressBar");
+    const prevBtn = document.getElementById("prevBtn");
+    const nextBtn = document.getElementById("nextBtn");
+    const submitBtn = document.getElementById("submitBtn");
+
+    const approvedResult = document.getElementById("approvedResult");
+    const declinedResult = document.getElementById("declinedResult");
+    const guideForm = document.getElementById("guideForm");
+    const guideSuccess = document.getElementById("guideSuccess");
+    const demoScheduleLink = document.getElementById("demoScheduleLink");
+    const automationApprovedNote = document.getElementById("automationApprovedNote");
+
+    const ASSESSMENT_WEBHOOK_URL = "YOUR_ASSESSMENT_WEBHOOK_URL";
+    const GUIDE_WEBHOOK_URL = "YOUR_GUIDE_WEBHOOK_URL";
+    const SCHEDULER_BASE_URL = "https://your-scheduler-link.com/";
+
+    let currentStep = 0;
+    const totalSteps = steps.length;
+
+    const hints = [
+      "Quick business fit check",
+      "Understanding your posting rhythm",
+      "Checking website freshness",
+      "Finding the real mismatch",
+      "Seeing where leads come from",
+      "Spotting automation opportunities",
+      "Identifying your best automation use case",
+      "Final details"
+    ];
+
+    function updateStepUI() {
+      steps.forEach((step, index) => {
+        step.classList.toggle("hidden", index !== currentStep);
+      });
+
+      stepLabel.textContent = `Step ${currentStep + 1} of ${totalSteps}`;
+      stepHint.textContent = hints[currentStep] || "";
+      progressBar.style.width = `${((currentStep + 1) / totalSteps) * 100}%`;
+
+      prevBtn.classList.toggle("hidden", currentStep === 0);
+      nextBtn.classList.toggle("hidden", currentStep === totalSteps - 1);
+      submitBtn.classList.toggle("hidden", currentStep !== totalSteps - 1);
+    }
+
+    function validateStep(stepIndex) {
+      const step = steps[stepIndex];
+      const requiredFields = Array.from(step.querySelectorAll("[required]"));
+
+      for (const field of requiredFields) {
+        const value = typeof field.value === "string" ? field.value.trim() : field.value;
+
+        if (!value) {
+          field.focus();
+          return false;
+        }
+      }
+
+      return true;
+    }
+
+    function scoreAssessment(formData) {
+      let score = 0;
+
+      if (formData.activityChannels === "multi") score += 3;
+      if (formData.activityChannels === "single") score += 2;
+      if (formData.activityChannels === "rarely-post") score -= 3;
+
+      if (formData.postingFrequency === "several-week") score += 3;
+      if (formData.postingFrequency === "weekly") score += 3;
+      if (formData.postingFrequency === "monthly") score += 1;
+      if (formData.postingFrequency === "rarely") score -= 3;
+
+      if (formData.websiteUpdateTiming === "last-week") score -= 2;
+      if (formData.websiteUpdateTiming === "last-month") score += 0;
+      if (formData.websiteUpdateTiming === "last-six-months") score += 2;
+      if (formData.websiteUpdateTiming === "dont-remember") score += 3;
+
+      if (formData.fitStatement === "ideal") score += 4;
+      if (formData.fitStatement === "site-updated") score -= 1;
+      if (formData.fitStatement === "social-only") score -= 4;
+
+      if (formData.leadHandling === "website-form") score += 3;
+      if (formData.leadHandling === "email") score += 2;
+      if (formData.leadHandling === "phone") score += 1;
+      if (formData.leadHandling === "social-dm") score += 1;
+      if (formData.leadHandling === "google-messages") score += 1;
+
+      const hardFail =
+        formData.activityChannels === "rarely-post" ||
+        formData.postingFrequency === "rarely" ||
+        formData.fitStatement === "social-only";
+
+      const approved = !hardFail && score >= 8;
+
+      const automationInterested =
+        formData.automationNeedLevel === "many" ||
+        ["lead-capture", "ai-responses", "followups", "crm-tools"].includes(formData.automationPriority);
+
+      return {
+        score,
+        approved,
+        automationInterested
+      };
+    }
+
+    function clearResultViews() {
+      approvedResult?.classList.add("hidden");
+      declinedResult?.classList.add("hidden");
+      automationApprovedNote?.classList.add("hidden");
+      guideSuccess?.classList.add("hidden");
+    }
+
+    function buildAssessmentPayload(formData, result) {
+      return {
+        event_type: "assessment_submission",
+        submitted_at: new Date().toISOString(),
+        source: "autosite_ai_readiness_check",
+        version: "v2",
+        contact: {
+          name: formData.name || "",
+          email: formData.email || "",
+          business_name: formData.businessName || "",
+          website_url: formData.websiteUrl || ""
+        },
+        assessment: {
+          activity_channels: formData.activityChannels || "",
+          posting_frequency: formData.postingFrequency || "",
+          website_update_timing: formData.websiteUpdateTiming || "",
+          fit_statement: formData.fitStatement || "",
+          lead_handling: formData.leadHandling || "",
+          automation_need_level: formData.automationNeedLevel || "",
+          automation_priority: formData.automationPriority || ""
+        },
+        result: {
+          score: result.score,
+          approved: result.approved,
+          status: result.approved ? "approved" : "not_ready",
+          automation_interested: result.automationInterested
+        },
+        segmentation: {
+          lead_type: result.approved ? "demo_candidate" : "nurture_candidate",
+          automation_segment: result.automationInterested ? "custom_automation_opportunity" : "standard_plan_only",
+          follow_up_path: result.approved
+            ? (result.automationInterested ? "demo_plus_automation_review" : "standard_demo")
+            : "readiness_nurture"
+        }
+      };
+    }
+
+    function buildGuidePayload(guideData) {
+      return {
+        event_type: "readiness_guide_request",
+        submitted_at: new Date().toISOString(),
+        source: "autosite_ai_readiness_guide",
+        version: "v2",
+        contact: {
+          email: guideData.guideEmail || ""
+        },
+        follow_up: {
+          follow_up_in_days: 90,
+          status: "guide_requested"
+        }
+      };
+    }
+
+    async function postToWebhook(url, payload) {
+      if (!url || url.includes("YOUR_")) {
+        console.warn("Webhook URL not set. Payload not sent.", payload);
+        return;
+      }
+
+      try {
+        const response = await fetch(url, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json"
+          },
+          body: JSON.stringify(payload)
+        });
+
+        if (!response.ok) {
+          throw new Error(`Webhook failed with status ${response.status}`);
+        }
+      } catch (error) {
+        console.error("Webhook error:", error);
+      }
+    }
+
+    function buildSchedulerUrl(formData, result) {
+      const params = new URLSearchParams({
+        name: formData.name || "",
+        email: formData.email || "",
+        business: formData.businessName || "",
+        website: formData.websiteUrl || "",
+        assessment_status: result.approved ? "approved" : "not_ready",
+        automation_interest: result.automationInterested ? "yes" : "no",
+        automation_priority: formData.automationPriority || "",
+        automation_need_level: formData.automationNeedLevel || ""
+      });
+
+      return `${SCHEDULER_BASE_URL}?${params.toString()}`;
+    }
+
+    document.querySelectorAll(".answer-card").forEach((card) => {
+      card.addEventListener("click", function () {
+        const name = this.dataset.name;
+        const value = this.dataset.value;
+        const step = this.closest(".assessment-step");
+        const hiddenInput = step?.querySelector(`input[name="${name}"]`);
+
+        if (!hiddenInput) return;
+
+        step.querySelectorAll(`.answer-card[data-name="${name}"]`).forEach((btn) => {
+          btn.classList.remove("is-selected");
+        });
+
+        this.classList.add("is-selected");
+        hiddenInput.value = value;
+      });
+    });
+
+    prevBtn?.addEventListener("click", function () {
+      if (currentStep > 0) {
+        currentStep -= 1;
+        updateStepUI();
+      }
+    });
+
+    nextBtn?.addEventListener("click", function () {
+      if (!validateStep(currentStep)) return;
+
+      if (currentStep < totalSteps - 1) {
+        currentStep += 1;
+        updateStepUI();
+      }
+    });
+
+    form?.addEventListener("submit", async function (event) {
+      event.preventDefault();
+
+      if (!validateStep(currentStep)) return;
+
+      clearResultViews();
+
+      const formData = Object.fromEntries(new FormData(form).entries());
+      const result = scoreAssessment(formData);
+      const payload = buildAssessmentPayload(formData, result);
+
+      if (demoScheduleLink) {
+        demoScheduleLink.href = buildSchedulerUrl(formData, result);
+      }
+
+      form.classList.add("hidden");
+      document.getElementById("assessmentNav")?.classList.add("hidden");
+      steps.forEach((step) => step.classList.add("hidden"));
+
+      if (stepLabel) stepLabel.textContent = "Assessment Complete";
+      if (stepHint) stepHint.textContent = "Your result is ready";
+      if (progressBar) progressBar.style.width = "100%";
+
+      if (result.approved) {
+        approvedResult?.classList.remove("hidden");
+
+        if (result.automationInterested) {
+          automationApprovedNote?.classList.remove("hidden");
+        }
+      } else {
+        const guideEmailField = document.getElementById("guideEmail");
+        if (guideEmailField && formData.email) {
+          guideEmailField.value = formData.email;
+        }
+
+        declinedResult?.classList.remove("hidden");
+      }
+
+      await postToWebhook(ASSESSMENT_WEBHOOK_URL, payload);
+    });
+
+    guideForm?.addEventListener("submit", async function (event) {
+      event.preventDefault();
+
+      const guideData = Object.fromEntries(new FormData(guideForm).entries());
+      const payload = buildGuidePayload(guideData);
+
+      guideSuccess?.classList.remove("hidden");
+
+      await postToWebhook(GUIDE_WEBHOOK_URL, payload);
+    });
+
+    updateStepUI();
+  })();
+</script>
+
+<script>
+  (function () {
+    const openButtons = document.querySelectorAll("[data-modal-open]");
+    const closeButtons = document.querySelectorAll("[data-modal-close]");
+
+    function openModal(id) {
+      const modal = document.getElementById(id);
+      if (!modal) return;
+
+      modal.classList.remove("hidden");
+      modal.classList.add("flex");
+      document.body.classList.add("overflow-hidden");
+    }
+
+    function closeModal(id) {
+      const modal = document.getElementById(id);
+      if (!modal) return;
+
+      modal.classList.add("hidden");
+      modal.classList.remove("flex");
+      document.body.classList.remove("overflow-hidden");
+    }
+
+    openButtons.forEach((button) => {
+      button.addEventListener("click", () => {
+        openModal(button.getAttribute("data-modal-open"));
+      });
+    });
+
+    closeButtons.forEach((button) => {
+      button.addEventListener("click", () => {
+        closeModal(button.getAttribute("data-modal-close"));
+      });
+    });
+
+    document.querySelectorAll("[id$='Modal']").forEach((modal) => {
+      modal.addEventListener("click", (event) => {
+        if (event.target === modal) {
+          closeModal(modal.id);
+        }
+      });
+    });
+
+    document.addEventListener("keydown", (event) => {
+      if (event.key === "Escape") {
+        document.querySelectorAll("[id$='Modal']").forEach((modal) => {
+          if (!modal.classList.contains("hidden")) {
+            closeModal(modal.id);
+          }
+        });
+      }
+    });
+  })();
+</script>
+
+      
+</body>
+</html>

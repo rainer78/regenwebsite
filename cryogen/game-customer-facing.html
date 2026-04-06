@@ -1,0 +1,374 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Game Website</title>
+  <style>
+    :root{
+      --bg:#0a0a0a;
+      --panel:#121212;
+      --line:rgba(255,255,255,.10);
+      --line-2:rgba(255,255,255,.16);
+      --text:#f5f5f5;
+      --muted:#b3b3b3;
+      --soft:#8a8a8a;
+      --white:#fff;
+      --black:#000;
+      --shadow:0 20px 50px rgba(0,0,0,.35);
+      --max:1200px;
+    }
+    *{box-sizing:border-box}
+    html{scroll-behavior:smooth}
+    body{
+      margin:0;
+      background:var(--bg);
+      color:var(--text);
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      line-height:1.5;
+    }
+    a{color:inherit;text-decoration:none}
+    img{max-width:100%;display:block}
+    .container{max-width:var(--max);margin:0 auto;padding:0 24px}
+    .section{padding:72px 0}
+    .border-top{border-top:1px solid var(--line)}
+    .border-bottom{border-bottom:1px solid var(--line)}
+    .panel{background:var(--panel);border:1px solid var(--line);border-radius:22px}
+    .panel-soft{background:rgba(255,255,255,.03);border:1px solid var(--line);border-radius:22px}
+    .eyebrow{font-size:.76rem;letter-spacing:.28em;text-transform:uppercase;color:var(--soft);margin:0 0 10px}
+    h1,h2,h3,p{margin:0}
+    h1{font-size:clamp(2.75rem,6vw,5.25rem);line-height:1;letter-spacing:-.03em}
+    h2{font-size:clamp(2rem,4vw,3rem);line-height:1.08;letter-spacing:-.02em}
+    h3{font-size:1.2rem}
+    p.lead{font-size:clamp(1.05rem,1.8vw,1.35rem);color:#d5d5d5;line-height:1.75}
+    p.body{color:var(--muted);line-height:1.85}    .hero{
+      position:relative;overflow:hidden;border-bottom:1px solid var(--line);
+      background:
+        radial-gradient(circle at top, rgba(255,255,255,.09), transparent 42%),
+        linear-gradient(180deg, rgba(255,255,255,.02), rgba(255,255,255,0));
+    }
+    .hero-grid{display:grid;gap:40px;grid-template-columns:1.1fr .9fr;align-items:center;padding:88px 0 106px}
+    .badge{
+      display:inline-flex;border:1px solid var(--line-2);border-radius:999px;padding:8px 12px;
+      font-size:.78rem;letter-spacing:.22em;text-transform:uppercase;color:#ddd;margin-bottom:18px
+    }
+    .hero-copy .lead{margin-top:24px;max-width:680px}
+    .hero-copy .body{margin-top:20px;max-width:680px}
+    .hero-actions{display:flex;gap:14px;flex-wrap:wrap;margin-top:28px}
+    .btn{
+      appearance:none;border:1px solid var(--line-2);background:transparent;color:var(--text);
+      padding:14px 18px;border-radius:16px;cursor:pointer;transition:.2s ease;display:inline-flex;align-items:center;gap:8px
+    }
+    .btn:hover{background:rgba(255,255,255,.05)}
+    .btn-primary{background:var(--white);color:var(--black);border-color:var(--white);font-weight:600}
+    .btn-primary:hover{opacity:.92;background:var(--white)}
+    .hero-media{position:relative}
+    .hero-frame{aspect-ratio:4/5;padding:18px;border:1px solid var(--line);border-radius:36px;background:#151515;box-shadow:var(--shadow)}
+    .hero-frame-inner{
+      height:100%;border-radius:28px;border:1px dashed var(--line-2);background:#0f0f0f;overflow:hidden;
+      display:flex;align-items:center;justify-content:center;text-align:center;color:var(--soft);padding:24px
+    }
+    .hero-frame-inner img{width:100%;height:100%;object-fit:cover}
+    .hook-card{
+      position:absolute;left:-16px;bottom:-16px;width:min(260px,65%);padding:16px;border-radius:20px;
+      border:1px solid var(--line);background:rgba(0,0,0,.5);backdrop-filter:blur(12px);box-shadow:var(--shadow)
+    }
+    .hook-card p:last-child{margin-top:8px;color:#d7d7d7;font-size:.95rem}
+    .section-title{max-width:760px;margin-bottom:34px}
+    .cards-3{display:grid;gap:20px;grid-template-columns:repeat(3,1fr)}
+    .cards-4{display:grid;gap:20px;grid-template-columns:repeat(4,1fr)}
+    .card{padding:24px}
+    .card p{margin-top:12px;color:var(--muted);line-height:1.8}
+    .story-grid{display:grid;gap:32px;grid-template-columns:1.1fr .9fr}
+    .story-stack{display:grid;gap:18px}
+    .story-block{padding:24px}
+    .story-block p:last-child{margin-top:12px;color:var(--muted);line-height:1.8}
+    .notes-card{padding:24px}
+    .notes-list{display:grid;gap:14px;margin-top:18px}
+    .notes-list p{color:var(--muted)}
+    .character-card .portrait{
+      aspect-ratio:4/3;border:1px dashed var(--line-2);border-radius:20px;overflow:hidden;background:#111;
+      display:flex;align-items:center;justify-content:center;text-align:center;color:var(--soft);margin-bottom:18px
+    }
+    .character-card .portrait img{width:100%;height:100%;object-fit:cover}
+    .character-card .role{font-size:.78rem;text-transform:uppercase;letter-spacing:.22em;color:var(--soft)}
+    .character-card h3{margin-top:8px}
+    .character-card p:last-child{margin-top:12px}
+    .mechanics-grid{display:grid;gap:32px;grid-template-columns:1fr 1fr;align-items:start}
+    .mechanics-list{display:grid;gap:14px;grid-template-columns:repeat(2,1fr)}
+    .mechanic{padding:18px 20px;color:#d4d4d4}
+    .media-card{padding:16px}
+    .media-box{
+      aspect-ratio:4/5;border:1px dashed var(--line-2);border-radius:24px;background:#111;overflow:hidden;
+      display:flex;align-items:center;justify-content:center;text-align:center;color:var(--soft);padding:18px
+    }
+    .media-box img{width:100%;height:100%;object-fit:cover}
+    .sound-grid{display:grid;gap:14px;grid-template-columns:repeat(5,1fr)}
+    .sound-chip{padding:16px 18px;border-radius:16px;border:1px solid var(--line);background:#111;color:#d6d6d6;text-align:center}
+    .video-shell{
+      border:1px solid var(--line);border-radius:28px;overflow:hidden;background:#111;min-height:420px;
+      display:flex;align-items:center;justify-content:center;text-align:center;color:var(--soft);padding:24px
+    }
+    .video-shell iframe{width:100%;aspect-ratio:16/9;border:none;display:block}
+    .devlog-list{display:grid;gap:18px}
+    .devlog-item{padding:22px}
+    .devlog-item .date{font-size:.78rem;text-transform:uppercase;letter-spacing:.22em;color:var(--soft);margin-bottom:10px}
+    .devlog-item p:last-child{color:var(--muted)}
+    .cta-card{padding:30px;text-align:center}
+    .cta-card h2{max-width:880px;margin:10px auto 0}
+    .cta-card .hero-actions{justify-content:center}
+    .footer{padding:28px 0 50px;color:var(--soft);font-size:.95rem}
+    .error{padding:72px 24px;text-align:center}
+    .error .panel{max-width:760px;margin:0 auto;padding:32px}
+    code{font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace}
+    @media (max-width: 980px){
+      .hero-grid,.story-grid,.mechanics-grid{grid-template-columns:1fr}
+      .cards-3{grid-template-columns:1fr}
+      .cards-4{grid-template-columns:repeat(2,1fr)}
+      .sound-grid{grid-template-columns:repeat(2,1fr)}
+      .hook-card{position:static;width:100%;margin-top:16px}
+    }
+    @media (max-width: 720px){
+      .container{padding:0 18px}
+      .section{padding:56px 0}
+      .hero-grid{padding:66px 0 82px}
+      .cards-4,.mechanics-list,.sound-grid{grid-template-columns:1fr}
+      .btn{width:100%;justify-content:center}
+      .hero-actions{width:100%}
+    }
+  </style>
+</head>
+<body>  <main id="siteRoot">
+    <div class="error">
+      <div class="panel">
+        <h2>Loading site content...</h2>
+        <p class="body" style="margin-top:14px;">If this hangs forever, your JSON file is missing or the server is not serving it from the same folder.</p>
+      </div>
+    </div>
+  </main>
+
+  <script>
+    function escapeHtml(str) {
+      return String(str ?? "").replace(/[&<>"']/g, s => ({
+        "&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"
+      }[s]));
+    }
+
+    function normalizeYoutubeUrl(raw) {
+      const value = (raw || "").trim();
+      if (!value) return "";
+      if (value.includes("/embed/")) return value;
+      const match = value.match(/(?:v=|youtu\.be\/)([\w-]{6,})/);
+      return match ? `https://www.youtube.com/embed/${match[1]}` : value;
+    }
+
+    function sectionTitle(eyebrow, title) {
+      return `
+        <div class="section-title">
+          <p class="eyebrow">${escapeHtml(eyebrow)}</p>
+          <h2>${escapeHtml(title)}</h2>
+        </div>
+      `;
+    }
+
+    function renderSite(data) {
+      const trailerUrl = normalizeYoutubeUrl(data?.trailer?.embedUrl || "");
+      return `
+        <section class="hero">
+          <div class="container">
+            <div class="hero-grid">
+              <div class="hero-copy">
+                <p class="badge">${escapeHtml(data.game.genre)} • ${escapeHtml(data.game.status)}</p>
+                <h1>${escapeHtml(data.game.title)}</h1>
+                <p class="lead">${escapeHtml(data.game.tagline)}</p>
+                <p class="body">${escapeHtml(data.game.description)}</p>
+                <div class="hero-actions">
+                  <a href="${escapeHtml(data.game.heroButtonPrimaryHref)}" class="btn btn-primary">${escapeHtml(data.game.heroButtonPrimaryLabel)}</a>
+                  <a href="${escapeHtml(data.game.heroButtonSecondaryHref)}" class="btn">${escapeHtml(data.game.heroButtonSecondaryLabel)}</a>
+                </div>
+              </div>
+              <div class="hero-media">
+                <div class="hero-frame">
+                  <div class="hero-frame-inner">
+                    ${data.game.heroImage
+                      ? `<img src="${escapeHtml(data.game.heroImage)}" alt="Hero art" />`
+                      : `<div><p class="eyebrow">Replace Me</p><p>Hero Image / Poster Art / Animated Teaser Frame</p></div>`
+                    }
+                  </div>
+                </div>
+                <div class="hook-card">
+                  <p class="eyebrow">Core Hook</p>
+                  <p>${escapeHtml(data.game.hook)}</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section class="section">
+          <div class="container">
+            ${sectionTitle("Game Feel", "What this experience is built to do")}
+            <div class="cards-3">
+              ${(data.featureCards || []).map(item => `
+                <div class="panel-soft card">
+                  <h3>${escapeHtml(item.title)}</h3>
+                  <p>${escapeHtml(item.text)}</p>
+                </div>
+              `).join("")}
+            </div>
+          </div>
+        </section>
+
+        <section class="section border-top border-bottom" id="story" style="background:rgba(255,255,255,.03)">
+          <div class="container">
+            <div class="story-grid">
+              <div>
+                ${sectionTitle("Story Framework", "Build the unease before the reveal")}
+                <div class="story-stack">
+                  ${(data.storyBlocks || []).map(block => `
+                    <div class="panel story-block">
+                      <p class="eyebrow">${escapeHtml(block.label)}</p>
+                      <p>${escapeHtml(block.text)}</p>
+                    </div>
+                  `).join("")}
+                </div>
+              </div>
+              <div class="panel notes-card">
+                <p class="eyebrow">Writing Notes</p>
+                <div class="notes-list">
+                  ${(data.writingNotes || []).map(note => `<p>${escapeHtml(note)}</p>`).join("")}
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section class="section" id="characters">
+          <div class="container">
+            ${sectionTitle("Characters", "The people who make the room feel wrong")}
+            <div class="cards-3">
+              ${(data.characterCards || []).map(person => `
+                <div class="panel-soft card character-card">
+                  <div class="portrait">
+                    ${person.image
+                      ? `<img src="${escapeHtml(person.image)}" alt="${escapeHtml(person.name)}" />`
+                      : `Portrait / Sprite / Concept Art`
+                    }
+                  </div>
+                  <p class="role">${escapeHtml(person.role)}</p>
+                  <h3>${escapeHtml(person.name)}</h3>
+                  <p>${escapeHtml(person.desc)}</p>
+                </div>
+              `).join("")}
+            </div>
+          </div>
+        </section>
+
+        <section class="section border-top border-bottom" id="mechanics" style="background:rgba(255,255,255,.03)">
+          <div class="container">
+            <div class="mechanics-grid">
+              <div>${sectionTitle("Mechanics", "Systems you can shape around your idea")}</div>
+              <div class="mechanics-list">
+                ${(data.mechanics || []).map(item => `<div class="panel mechanic">${escapeHtml(item)}</div>`).join("")}
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section class="section" id="media">
+          <div class="container">
+            ${sectionTitle("Creative Slots", "Drop in your assets and the site starts breathing")}
+            <div class="cards-4">
+              ${(data.mediaItems || []).map(item => `
+                <div class="panel-soft media-card">
+                  <div class="media-box">
+                    ${item.image ? `<img src="${escapeHtml(item.image)}" alt="${escapeHtml(item.label)}" />` : escapeHtml(item.label)}
+                  </div>
+                </div>
+              `).join("")}
+            </div>
+          </div>
+        </section>
+
+        <section class="section border-top border-bottom" style="background:rgba(255,255,255,.03)">
+          <div class="container">
+            ${sectionTitle("Sound and Mood", "A short palette for the atmosphere")}
+            <div class="sound-grid">
+              ${(data.soundtrackNotes || []).map(item => `<div class="sound-chip">${escapeHtml(item)}</div>`).join("")}
+            </div>
+          </div>
+        </section>
+
+        <section class="section" id="trailer">
+          <div class="container">
+            ${sectionTitle("Preview", data.trailer.title)}
+            <div class="video-shell">
+              ${trailerUrl
+                ? `<iframe src="${escapeHtml(trailerUrl)}" allowfullscreen title="${escapeHtml(data.trailer.title)}"></iframe>`
+                : `<div>${escapeHtml(data.trailer.placeholder)}</div>`
+              }
+            </div>
+          </div>
+        </section>
+
+        <section class="section border-top border-bottom" style="background:rgba(255,255,255,.03)">
+          <div class="container">
+            ${sectionTitle("Devlog", "Keep the project alive while it is still growing")}
+            <div class="devlog-list">
+              ${(data.devlog || []).map(item => `
+                <div class="panel devlog-item">
+                  <div class="date">${escapeHtml(item.date)}</div>
+                  <p>${escapeHtml(item.note)}</p>
+                </div>
+              `).join("")}
+            </div>
+          </div>
+        </section>
+
+        <section class="section">
+          <div class="container">
+            <div class="panel-soft cta-card">
+              <p class="eyebrow">${escapeHtml(data.cta.label)}</p>
+              <h2>${escapeHtml(data.cta.headline)}</h2>
+              <div class="hero-actions">
+                <a href="${escapeHtml(data.cta.primaryHref)}" class="btn btn-primary">${escapeHtml(data.cta.primaryLabel)}</a>
+                <a href="${escapeHtml(data.cta.secondaryHref)}" class="btn">${escapeHtml(data.cta.secondaryLabel)}</a>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <footer class="footer">
+          <div class="container">Static website shell powered by a separate JSON content file.</div>
+        </footer>
+      `;
+    }
+
+    async function boot() {
+      const root = document.getElementById("siteRoot");
+      try {
+        const response = await fetch("./game-site-content.json", { cache: "no-store" });
+        if (!response.ok) {
+          throw new Error("Could not load game-site-content.json");
+        }
+        const data = await response.json();
+        root.innerHTML = renderSite(data);
+      } catch (error) {
+        root.innerHTML = `
+          <div class="error">
+            <div class="panel">
+              <h2>This page is temporarily unavailable</h2>
+              <p class="body" style="margin-top:14px;">
+                The site content could not be loaded right now. Please try again shortly.
+              </p>
+            </div>
+          </div>
+        `;
+      }
+    }
+
+    boot();
+  </script>
+</body>
+</html>

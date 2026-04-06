@@ -1,762 +1,1102 @@
-import { useMemo, useRef, useState } from "react";
-import { Image as ImageIcon, Pencil, Save, Upload, Plus, Trash2, Eye } from "lucide-react";
 
-const initialData = {
-  game: {
-    title: "YOUR GAME TITLE",
-    tagline: "A quiet routine. A wrong feeling. A shift that should have ended hours ago.",
-    genre: "Narrative Horror / Psychological Tension / Indie",
-    status: "In Development",
-    description:
-      "This site is a creative shell for your game. Replace the text, swap the images, and plug in your own atmosphere, story fragments, mechanics, and media.",
-    hook:
-      "A familiar job becomes increasingly unsettling as the player notices small details that do not belong.",
-    heroImage: "",
-    heroButtonPrimaryLabel: "Explore the World",
-    heroButtonPrimaryHref: "#story",
-    heroButtonSecondaryLabel: "View Creative Slots",
-    heroButtonSecondaryHref: "#media",
-  },
-  featureCards: [
-    {
-      title: "Routine as Gameplay",
-      text: "Use this section to explain the normal loop of the job, task, or environment your player repeats.",
-    },
-    {
-      title: "Slow-Build Dread",
-      text: "Describe how the game creates tension through repetition, silence, subtle changes, and player observation.",
-    },
-    {
-      title: "Player Choice & Consequence",
-      text: "Add notes about branching moments, hidden clues, multiple endings, or small decisions that alter the experience.",
-    },
-  ],
-  storyBlocks: [
-    {
-      label: "Premise",
-      text: "Write the setup here. Who is the player? What ordinary role are they performing? What seems normal at first?",
-    },
-    {
-      label: "Setting",
-      text: "Describe the place. A diner, motel, gas station, office, church basement, night shift warehouse, or something stranger.",
-    },
-    {
-      label: "Disturbance",
-      text: "Explain the first sign that something is wrong. Keep it small. Small is what makes it creep.",
-    },
-  ],
-  writingNotes: [
-    "Use this panel for theme, symbolism, hidden meanings, or the emotional question beneath the plot.",
-    "Examples: duty versus instinct, routine versus reality, survival versus obedience, silence versus truth.",
-    "This is also a good place for content warnings, tone references, and one-sentence elevator pitch copy.",
-  ],
-  characterCards: [
-    {
-      name: "Main Character",
-      role: "Player Character",
-      desc: "Add your protagonist details here. Include their job, personality, and what they may be hiding.",
-      image: "",
-    },
-    {
-      name: "Coworker / Supervisor",
-      role: "Support or Threat",
-      desc: "Use this slot for the person who explains the rules, breaks them, or pretends nothing is wrong.",
-      image: "",
-    },
-    {
-      name: "Customer / Visitor",
-      role: "Source of Unease",
-      desc: "Add a character whose presence changes the emotional temperature of the room.",
-      image: "",
-    },
-  ],
-  mechanics: [
-    "Order taking / item handling / task completion",
-    "Environmental observation and clue spotting",
-    "Dialogue choices with subtle consequences",
-    "Timed routines and interruptions",
-    "Multiple endings or hidden narrative branches",
-    "Inventory, notes, recordings, or found objects",
-  ],
-  mediaItems: [
-    { label: "Hero key art or title image", image: "" },
-    { label: "Gameplay screenshot 1", image: "" },
-    { label: "Gameplay screenshot 2", image: "" },
-    { label: "Character art or environment concept", image: "" },
-  ],
-  soundtrackNotes: [
-    "Ambient hum",
-    "Room tone",
-    "Mechanical sounds",
-    "Audio distortion",
-    "Sparse piano or analog synth",
-  ],
-  trailer: {
-    embedUrl: "",
-    title: "Embed your preview",
-    placeholder: "Paste a YouTube embed URL or leave blank during staging.",
-  },
-  devlog: [
-    {
-      date: "Update 01",
-      note: "Add your first development note here. Example: core loop defined, first environment blocked out, title chosen.",
-    },
-    {
-      date: "Update 02",
-      note: "Use this for story changes, art updates, soundtrack progress, demo milestones, or playtest notes.",
-    },
-    {
-      date: "Update 03",
-      note: "Keep this section current. It makes the project feel alive and gives visitors a reason to return.",
-    },
-  ],
-  cta: {
-    label: "Call to Action",
-    headline:
-      "Replace this section with your Steam wishlist link, demo signup, newsletter, or release announcement.",
-    primaryLabel: "Primary Button",
-    primaryHref: "#",
-    secondaryLabel: "Secondary Button",
-    secondaryHref: "#",
-  },
-};
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Game Site Builder | Standalone HTML</title>
+  <style>
+    :root{
+      --bg:#0a0a0a;
+      --panel:#121212;
+      --panel-2:#171717;
+      --line:rgba(255,255,255,.10);
+      --line-2:rgba(255,255,255,.16);
+      --text:#f5f5f5;
+      --muted:#b3b3b3;
+      --soft:#8a8a8a;
+      --white:#fff;
+      --black:#000;
+      --accent:#ffffff;
+      --radius-xl:28px;
+      --radius-lg:22px;
+      --radius-md:16px;
+      --shadow:0 20px 50px rgba(0,0,0,.35);
+      --max:1200px;
+    }
 
-function SectionTitle({ eyebrow, title, editable = false, onEyebrowChange, onTitleChange }) {
-  return (
-    <div className="mb-10 max-w-2xl">
-      {editable ? (
-        <>
-          <input
-            value={eyebrow}
-            onChange={(e) => onEyebrowChange(e.target.value)}
-            className="w-full bg-transparent text-sm uppercase tracking-[0.3em] text-neutral-500 outline-none"
-          />
-          <input
-            value={title}
-            onChange={(e) => onTitleChange(e.target.value)}
-            className="mt-3 w-full bg-transparent text-3xl font-semibold text-white outline-none md:text-4xl"
-          />
-        </>
-      ) : (
-        <>
-          <p className="text-sm uppercase tracking-[0.3em] text-neutral-500">{eyebrow}</p>
-          <h2 className="mt-3 text-3xl font-semibold md:text-4xl">{title}</h2>
-        </>
-      )}
+    *{box-sizing:border-box}
+    html{scroll-behavior:smooth}
+    body{
+      margin:0;
+      background:var(--bg);
+      color:var(--text);
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      line-height:1.5;
+    }
+
+    a{color:inherit;text-decoration:none}
+    img{max-width:100%;display:block}
+    button,input,textarea{font:inherit}
+
+    .container{max-width:var(--max);margin:0 auto;padding:0 24px}
+    .section{padding:72px 0}
+    .border-top{border-top:1px solid var(--line)}
+    .border-bottom{border-bottom:1px solid var(--line)}
+    .panel{
+      background:var(--panel);
+      border:1px solid var(--line);
+      border-radius:var(--radius-lg);
+    }
+    .panel-soft{
+      background:rgba(255,255,255,.03);
+      border:1px solid var(--line);
+      border-radius:var(--radius-lg);
+    }
+    .eyebrow{
+      font-size:.76rem;
+      letter-spacing:.28em;
+      text-transform:uppercase;
+      color:var(--soft);
+      margin:0 0 10px;
+    }
+    h1,h2,h3,p{margin:0}
+    h1{
+      font-size:clamp(2.75rem,6vw,5.25rem);
+      line-height:1;
+      letter-spacing:-.03em;
+    }
+    h2{
+      font-size:clamp(2rem,4vw,3rem);
+      line-height:1.08;
+      letter-spacing:-.02em;
+    }
+    h3{font-size:1.2rem}
+    p.lead{
+      font-size:clamp(1.05rem,1.8vw,1.35rem);
+      color:#d5d5d5;
+      line-height:1.75;
+    }
+    p.body{
+      color:var(--muted);
+      line-height:1.85;
+    }
+
+    .topbar{
+      position:sticky;top:0;z-index:50;
+      backdrop-filter: blur(12px);
+      background:rgba(10,10,10,.88);
+      border-bottom:1px solid var(--line);
+    }
+    .topbar-inner{
+      max-width:var(--max);
+      margin:0 auto;
+      padding:14px 24px;
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      gap:16px;
+      flex-wrap:wrap;
+    }
+    .topbar-title small{
+      display:block;
+      font-size:.76rem;
+      letter-spacing:.28em;
+      text-transform:uppercase;
+      color:var(--soft);
+      margin-bottom:2px;
+    }
+    .topbar-actions{display:flex;gap:10px;flex-wrap:wrap}
+    .btn{
+      appearance:none;
+      border:1px solid var(--line-2);
+      background:transparent;
+      color:var(--text);
+      padding:12px 16px;
+      border-radius:16px;
+      cursor:pointer;
+      transition:.2s ease;
+      display:inline-flex;
+      align-items:center;
+      gap:8px;
+    }
+    .btn:hover{background:rgba(255,255,255,.05)}
+    .btn-primary{
+      background:var(--white);
+      color:var(--black);
+      border-color:var(--white);
+      font-weight:600;
+    }
+    .btn-primary:hover{opacity:.92;background:var(--white)}
+    .btn-hero{padding:14px 18px}
+    .save-msg{padding:0 24px 12px;color:#74d399;font-size:.95rem;display:none}
+
+    .editor-shell{
+      border-bottom:1px solid var(--line);
+      background:rgba(255,255,255,.03);
+      display:block;
+    }
+    .editor-shell.hidden{display:none}
+    .editor-grid{
+      max-width:var(--max);
+      margin:0 auto;
+      padding:24px;
+      display:grid;
+      gap:20px;
+      grid-template-columns:repeat(auto-fit,minmax(310px,1fr));
+    }
+    .editor-card{
+      background:#111;
+      border:1px solid var(--line);
+      border-radius:22px;
+      padding:18px;
+    }
+    .editor-card h4{
+      margin:0 0 14px;
+      text-transform:uppercase;
+      letter-spacing:.2em;
+      font-size:.78rem;
+      color:var(--soft);
+    }
+    .field{margin-bottom:12px}
+    .field label{
+      display:block;
+      font-size:.92rem;
+      color:#d6d6d6;
+      margin-bottom:6px;
+    }
+    .field input,.field textarea{
+      width:100%;
+      background:#1a1a1a;
+      color:var(--text);
+      border:1px solid var(--line);
+      border-radius:14px;
+      padding:11px 12px;
+      outline:none;
+    }
+    .field textarea{min-height:90px;resize:vertical}
+    .field input:focus,.field textarea:focus{border-color:rgba(255,255,255,.25)}
+    .array-item{
+      border:1px solid var(--line);
+      border-radius:16px;
+      padding:12px;
+      margin-bottom:12px;
+      background:#121212;
+    }
+    .array-head{
+      display:flex;justify-content:flex-end;margin-bottom:8px;
+    }
+    .icon-btn{
+      border:none;background:transparent;color:var(--muted);cursor:pointer;font-size:1rem;
+    }
+    .icon-btn:hover{color:var(--white)}
+    .sub-actions{display:flex;justify-content:flex-end}
+    .upload-preview{
+      border:1px dashed var(--line);
+      border-radius:18px;
+      overflow:hidden;
+      min-height:160px;
+      background:#161616;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      color:var(--soft);
+      text-align:center;
+      padding:18px;
+      margin-top:8px;
+    }
+    .upload-preview img{width:100%;height:200px;object-fit:cover}
+    .inline-actions{display:flex;gap:8px;flex-wrap:wrap}
+    .small-btn{
+      border:1px solid var(--line);
+      background:transparent;
+      color:var(--text);
+      border-radius:12px;
+      padding:10px 12px;
+      cursor:pointer;
+    }
+    .small-btn:hover{background:rgba(255,255,255,.05)}
+
+    .hero{
+      position:relative;
+      overflow:hidden;
+      border-bottom:1px solid var(--line);
+      background:
+        radial-gradient(circle at top, rgba(255,255,255,.09), transparent 42%),
+        linear-gradient(180deg, rgba(255,255,255,.02), rgba(255,255,255,0));
+    }
+    .hero-grid{
+      display:grid;
+      gap:40px;
+      grid-template-columns:1.1fr .9fr;
+      align-items:center;
+      padding:88px 0 106px;
+    }
+    .badge{
+      display:inline-flex;
+      border:1px solid var(--line-2);
+      border-radius:999px;
+      padding:8px 12px;
+      font-size:.78rem;
+      letter-spacing:.22em;
+      text-transform:uppercase;
+      color:#ddd;
+      margin-bottom:18px;
+    }
+    .hero-copy .lead{margin-top:24px;max-width:680px}
+    .hero-copy .body{margin-top:20px;max-width:680px}
+    .hero-actions{display:flex;gap:14px;flex-wrap:wrap;margin-top:28px}
+    .hero-media{position:relative}
+    .hero-frame{
+      aspect-ratio:4/5;
+      padding:18px;
+      border:1px solid var(--line);
+      border-radius:36px;
+      background:#151515;
+      box-shadow:var(--shadow);
+    }
+    .hero-frame-inner{
+      height:100%;
+      border-radius:28px;
+      border:1px dashed var(--line-2);
+      background:#0f0f0f;
+      overflow:hidden;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      text-align:center;
+      color:var(--soft);
+      padding:24px;
+    }
+    .hero-frame-inner img{width:100%;height:100%;object-fit:cover}
+    .hook-card{
+      position:absolute;
+      left:-16px;
+      bottom:-16px;
+      width:min(260px,65%);
+      padding:16px;
+      border-radius:20px;
+      border:1px solid var(--line);
+      background:rgba(0,0,0,.5);
+      backdrop-filter:blur(12px);
+      box-shadow:var(--shadow);
+    }
+    .hook-card p:last-child{margin-top:8px;color:#d7d7d7;font-size:.95rem}
+
+    .section-title{max-width:760px;margin-bottom:34px}
+    .cards-3{display:grid;gap:20px;grid-template-columns:repeat(3,1fr)}
+    .cards-4{display:grid;gap:20px;grid-template-columns:repeat(4,1fr)}
+    .card{padding:24px}
+    .card p{margin-top:12px;color:var(--muted);line-height:1.8}
+
+    .story-grid{display:grid;gap:32px;grid-template-columns:1.1fr .9fr}
+    .story-stack{display:grid;gap:18px}
+    .story-block{padding:24px}
+    .story-block p:last-child{margin-top:12px;color:var(--muted);line-height:1.8}
+    .notes-card{padding:24px}
+    .notes-list{display:grid;gap:14px;margin-top:18px}
+    .notes-list p{color:var(--muted)}
+
+    .character-card .portrait{
+      aspect-ratio:4/3;
+      border:1px dashed var(--line-2);
+      border-radius:20px;
+      overflow:hidden;
+      background:#111;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      text-align:center;
+      color:var(--soft);
+      margin-bottom:18px;
+    }
+    .character-card .portrait img{width:100%;height:100%;object-fit:cover}
+    .character-card .role{font-size:.78rem;text-transform:uppercase;letter-spacing:.22em;color:var(--soft)}
+    .character-card h3{margin-top:8px}
+    .character-card p:last-child{margin-top:12px}
+
+    .mechanics-grid{
+      display:grid;
+      gap:32px;
+      grid-template-columns:1fr 1fr;
+      align-items:start;
+    }
+    .mechanics-list{
+      display:grid;
+      gap:14px;
+      grid-template-columns:repeat(2,1fr);
+    }
+    .mechanic{padding:18px 20px;color:#d4d4d4}
+
+    .media-card{padding:16px}
+    .media-box{
+      aspect-ratio:4/5;
+      border:1px dashed var(--line-2);
+      border-radius:24px;
+      background:#111;
+      overflow:hidden;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      text-align:center;
+      color:var(--soft);
+      padding:18px;
+    }
+    .media-box img{width:100%;height:100%;object-fit:cover}
+
+    .sound-grid{
+      display:grid;gap:14px;grid-template-columns:repeat(5,1fr)
+    }
+    .sound-chip{
+      padding:16px 18px;
+      border-radius:16px;
+      border:1px solid var(--line);
+      background:#111;
+      color:#d6d6d6;
+      text-align:center;
+    }
+
+    .trailer-wrap{
+      display:grid;
+      gap:28px;
+      grid-template-columns:1fr;
+    }
+    .video-shell{
+      border:1px solid var(--line);
+      border-radius:28px;
+      overflow:hidden;
+      background:#111;
+      min-height:420px;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      text-align:center;
+      color:var(--soft);
+      padding:24px;
+    }
+    .video-shell iframe{width:100%;aspect-ratio:16/9;border:none;display:block}
+
+    .devlog-list{display:grid;gap:18px}
+    .devlog-item{padding:22px}
+    .devlog-item .date{
+      font-size:.78rem;
+      text-transform:uppercase;
+      letter-spacing:.22em;
+      color:var(--soft);
+      margin-bottom:10px;
+    }
+    .devlog-item p:last-child{color:var(--muted)}
+
+    .cta-card{
+      padding:30px;
+      text-align:center;
+    }
+    .cta-card h2{max-width:880px;margin:10px auto 0}
+    .cta-card .hero-actions{justify-content:center}
+
+    .footer{
+      padding:28px 0 50px;
+      color:var(--soft);
+      font-size:.95rem;
+    }
+
+    @media (max-width: 980px){
+      .hero-grid,.story-grid,.mechanics-grid{grid-template-columns:1fr}
+      .cards-3{grid-template-columns:1fr}
+      .cards-4{grid-template-columns:repeat(2,1fr)}
+      .sound-grid{grid-template-columns:repeat(2,1fr)}
+      .hook-card{position:static;width:100%;margin-top:16px}
+    }
+
+    @media (max-width: 720px){
+      .container{padding:0 18px}
+      .topbar-inner,.editor-grid{padding-left:18px;padding-right:18px}
+      .section{padding:56px 0}
+      .hero-grid{padding:66px 0 82px}
+      .cards-4,.mechanics-list,.sound-grid{grid-template-columns:1fr}
+      .btn,.btn-hero,.small-btn{width:100%;justify-content:center}
+      .topbar-actions,.hero-actions,.inline-actions{width:100%}
+    }
+  </style>
+</head>
+<body>
+  <div class="topbar">
+    <div class="topbar-inner">
+      <div class="topbar-title">
+        <small>Game Site Builder</small>
+        <strong>WYSIWYG staging editor</strong>
+      </div>
+      <div class="topbar-actions">
+        <button class="btn" id="toggleModeBtn">Preview mode</button>
+        <button class="btn btn-primary" id="exportBtn">Export content</button>
+      </div>
     </div>
-  );
-}
+    <div class="save-msg" id="saveMsg">Content JSON exported.</div>
+  </div>
 
-function TextInput({ label, value, onChange, multiline = false }) {
-  const shared =
-    "mt-1 w-full rounded-xl border border-white/10 bg-neutral-900 px-3 py-2 text-sm text-white outline-none focus:border-white/30";
+  <div class="editor-shell" id="editorShell">
+    <div class="editor-grid" id="editorGrid"></div>
+  </div>
 
-  return (
-    <label className="block text-sm text-neutral-300">
-      <span>{label}</span>
-      {multiline ? (
-        <textarea value={value} onChange={(e) => onChange(e.target.value)} rows={4} className={shared} />
-      ) : (
-        <input value={value} onChange={(e) => onChange(e.target.value)} className={shared} />
-      )}
-    </label>
-  );
-}
+  <main id="siteRoot"></main>
 
-function ArrayEditor({ title, items, onAdd, onRemove, renderItem }) {
-  return (
-    <div className="rounded-2xl border border-white/10 bg-neutral-950 p-4">
-      <div className="mb-4 flex items-center justify-between gap-3">
-        <h3 className="text-sm font-semibold uppercase tracking-[0.2em] text-neutral-400">{title}</h3>
-        <button
-          type="button"
-          onClick={onAdd}
-          className="inline-flex items-center gap-2 rounded-xl border border-white/10 px-3 py-2 text-sm text-white hover:bg-white/5"
-        >
-          <Plus className="h-4 w-4" /> Add
-        </button>
-      </div>
-      <div className="space-y-4">{items.map((item, index) => renderItem(item, index, onRemove))}</div>
-    </div>
-  );
-}
+  <script>
+    const initialData = {
+      game: {
+        title: "YOUR GAME TITLE",
+        tagline: "A quiet routine. A wrong feeling. A shift that should have ended hours ago.",
+        genre: "Narrative Horror / Psychological Tension / Indie",
+        status: "In Development",
+        description:
+          "This site is a creative shell for your game. Replace the text, swap the images, and plug in your own atmosphere, story fragments, mechanics, and media.",
+        hook:
+          "A familiar job becomes increasingly unsettling as the player notices small details that do not belong.",
+        heroImage: "",
+        heroButtonPrimaryLabel: "Explore the World",
+        heroButtonPrimaryHref: "#story",
+        heroButtonSecondaryLabel: "View Creative Slots",
+        heroButtonSecondaryHref: "#media"
+      },
+      featureCards: [
+        {
+          title: "Routine as Gameplay",
+          text: "Use this section to explain the normal loop of the job, task, or environment your player repeats."
+        },
+        {
+          title: "Slow-Build Dread",
+          text: "Describe how the game creates tension through repetition, silence, subtle changes, and player observation."
+        },
+        {
+          title: "Player Choice & Consequence",
+          text: "Add notes about branching moments, hidden clues, multiple endings, or small decisions that alter the experience."
+        }
+      ],
+      storyBlocks: [
+        {
+          label: "Premise",
+          text: "Write the setup here. Who is the player? What ordinary role are they performing? What seems normal at first?"
+        },
+        {
+          label: "Setting",
+          text: "Describe the place. A diner, motel, gas station, office, church basement, night shift warehouse, or something stranger."
+        },
+        {
+          label: "Disturbance",
+          text: "Explain the first sign that something is wrong. Keep it small. Small is what makes it creep."
+        }
+      ],
+      writingNotes: [
+        "Use this panel for theme, symbolism, hidden meanings, or the emotional question beneath the plot.",
+        "Examples: duty versus instinct, routine versus reality, survival versus obedience, silence versus truth.",
+        "This is also a good place for content warnings, tone references, and one-sentence elevator pitch copy."
+      ],
+      characterCards: [
+        {
+          name: "Main Character",
+          role: "Player Character",
+          desc: "Add your protagonist details here. Include their job, personality, and what they may be hiding.",
+          image: ""
+        },
+        {
+          name: "Coworker / Supervisor",
+          role: "Support or Threat",
+          desc: "Use this slot for the person who explains the rules, breaks them, or pretends nothing is wrong.",
+          image: ""
+        },
+        {
+          name: "Customer / Visitor",
+          role: "Source of Unease",
+          desc: "Add a character whose presence changes the emotional temperature of the room.",
+          image: ""
+        }
+      ],
+      mechanics: [
+        "Order taking / item handling / task completion",
+        "Environmental observation and clue spotting",
+        "Dialogue choices with subtle consequences",
+        "Timed routines and interruptions",
+        "Multiple endings or hidden narrative branches",
+        "Inventory, notes, recordings, or found objects"
+      ],
+      mediaItems: [
+        { label: "Hero key art or title image", image: "" },
+        { label: "Gameplay screenshot 1", image: "" },
+        { label: "Gameplay screenshot 2", image: "" },
+        { label: "Character art or environment concept", image: "" }
+      ],
+      soundtrackNotes: [
+        "Ambient hum",
+        "Room tone",
+        "Mechanical sounds",
+        "Audio distortion",
+        "Sparse piano or analog synth"
+      ],
+      trailer: {
+        embedUrl: "",
+        title: "Embed your preview",
+        placeholder: "Paste a YouTube embed URL or leave blank during staging."
+      },
+      devlog: [
+        {
+          date: "Update 01",
+          note: "Add your first development note here. Example: core loop defined, first environment blocked out, title chosen."
+        },
+        {
+          date: "Update 02",
+          note: "Use this for story changes, art updates, soundtrack progress, demo milestones, or playtest notes."
+        },
+        {
+          date: "Update 03",
+          note: "Keep this section current. It makes the project feel alive and gives visitors a reason to return."
+        }
+      ],
+      cta: {
+        label: "Call to Action",
+        headline:
+          "Replace this section with your Steam wishlist link, demo signup, newsletter, or release announcement.",
+        primaryLabel: "Primary Button",
+        primaryHref: "#",
+        secondaryLabel: "Secondary Button",
+        secondaryHref: "#"
+      }
+    };
 
-function ImageField({ value, onChange, label }) {
-  const inputRef = useRef(null);
+    let data = JSON.parse(JSON.stringify(initialData));
+    let editMode = true;
 
-  const handleFile = (file) => {
-    if (!file) return;
-    const reader = new FileReader();
-    reader.onload = () => onChange(String(reader.result));
-    reader.readAsDataURL(file);
-  };
+    const siteRoot = document.getElementById("siteRoot");
+    const editorGrid = document.getElementById("editorGrid");
+    const editorShell = document.getElementById("editorShell");
+    const saveMsg = document.getElementById("saveMsg");
+    const toggleModeBtn = document.getElementById("toggleModeBtn");
+    const exportBtn = document.getElementById("exportBtn");
 
-  return (
-    <div className="space-y-2">
-      <div className="flex items-center justify-between gap-3">
-        <span className="text-sm text-neutral-300">{label}</span>
-        <div className="flex gap-2">
-          <button
-            type="button"
-            onClick={() => inputRef.current?.click()}
-            className="inline-flex items-center gap-2 rounded-xl border border-white/10 px-3 py-2 text-sm text-white hover:bg-white/5"
-          >
-            <Upload className="h-4 w-4" /> Upload
-          </button>
-          {value ? (
-            <button
-              type="button"
-              onClick={() => onChange("")}
-              className="inline-flex items-center gap-2 rounded-xl border border-white/10 px-3 py-2 text-sm text-white hover:bg-white/5"
-            >
-              <Trash2 className="h-4 w-4" /> Clear
-            </button>
-          ) : null}
+    function escapeHtml(str) {
+      return String(str ?? "").replace(/[&<>"']/g, s => ({
+        "&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"
+      }[s]));
+    }
+
+    function normalizeYoutubeUrl(raw) {
+      const value = (raw || "").trim();
+      if (!value) return "";
+      if (value.includes("/embed/")) return value;
+      const match = value.match(/(?:v=|youtu\.be\/)([\w-]{6,})/);
+      return match ? `https://www.youtube.com/embed/${match[1]}` : value;
+    }
+
+    function showSavedMessage(text) {
+      saveMsg.textContent = text;
+      saveMsg.style.display = "block";
+      clearTimeout(showSavedMessage._timer);
+      showSavedMessage._timer = setTimeout(() => {
+        saveMsg.style.display = "none";
+      }, 2500);
+    }
+
+    function setByPath(obj, path, value) {
+      const parts = path.split(".");
+      let current = obj;
+      for (let i = 0; i < parts.length - 1; i++) current = current[parts[i]];
+      current[parts[parts.length - 1]] = value;
+    }
+
+    function updateField(path, value) {
+      setByPath(data, path, value);
+      render();
+    }
+
+    function removeArrayItem(key, index) {
+      data[key].splice(index, 1);
+      render();
+    }
+
+    function addArrayItem(key, item) {
+      data[key].push(item);
+      render();
+    }
+
+    function updateArrayItem(key, index, field, value) {
+      data[key][index][field] = value;
+      render();
+    }
+
+    function updateStringArrayItem(key, index, value) {
+      data[key][index] = value;
+      render();
+    }
+
+    function readImage(file, callback) {
+      if (!file) return;
+      const reader = new FileReader();
+      reader.onload = e => callback(String(e.target.result || ""));
+      reader.readAsDataURL(file);
+    }
+
+    function field(label, value, onInput, multiline = false) {
+      return `
+        <div class="field">
+          <label>${escapeHtml(label)}</label>
+          ${multiline
+            ? `<textarea data-input="1">${escapeHtml(value)}</textarea>`
+            : `<input data-input="1" value="${escapeHtml(value)}" />`
+          }
         </div>
-      </div>
-      <input
-        ref={inputRef}
-        type="file"
-        accept="image/*"
-        className="hidden"
-        onChange={(e) => handleFile(e.target.files?.[0])}
-      />
-      <div className="overflow-hidden rounded-2xl border border-dashed border-white/10 bg-neutral-900">
-        {value ? (
-          <img src={value} alt={label} className="h-40 w-full object-cover" />
-        ) : (
-          <div className="flex h-40 items-center justify-center text-neutral-500">
-            <div className="text-center">
-              <ImageIcon className="mx-auto h-8 w-8" />
-              <p className="mt-2 text-sm">No image selected</p>
-            </div>
+      `.trim();
+    }
+
+    function imageField(label, value, onUploadKey, onClear) {
+      return `
+        <div class="field">
+          <label>${escapeHtml(label)}</label>
+          <div class="inline-actions">
+            <button class="small-btn" type="button" data-upload="${escapeHtml(onUploadKey)}">Upload</button>
+            ${value ? `<button class="small-btn" type="button" data-clear="${escapeHtml(onClear)}">Clear</button>` : ""}
           </div>
-        )}
-      </div>
-    </div>
-  );
-}
-
-export default function GameCreativeWebsite() {
-  const [data, setData] = useState(initialData);
-  const [editMode, setEditMode] = useState(true);
-  const [savedMessage, setSavedMessage] = useState("");
-
-  const updateGame = (key, value) =>
-    setData((prev) => ({
-      ...prev,
-      game: { ...prev.game, [key]: value },
-    }));
-
-  const trailerEmbedUrl = useMemo(() => {
-    const raw = data.trailer.embedUrl?.trim();
-    if (!raw) return "";
-    if (raw.includes("/embed/")) return raw;
-    const match = raw.match(/(?:v=|youtu\.be\/)([\w-]{6,})/);
-    return match ? `https://www.youtube.com/embed/${match[1]}` : raw;
-  }, [data.trailer.embedUrl]);
-
-  const exportJson = () => {
-    const blob = new Blob([JSON.stringify(data, null, 2)], { type: "application/json" });
-    const url = URL.createObjectURL(blob);
-    const link = document.createElement("a");
-    link.href = url;
-    link.download = "game-site-content.json";
-    link.click();
-    URL.revokeObjectURL(url);
-    setSavedMessage("Content JSON exported.");
-    setTimeout(() => setSavedMessage(""), 2500);
-  };
-
-  const updateArrayItem = (key, index, field, value) => {
-    setData((prev) => ({
-      ...prev,
-      [key]: prev[key].map((item, i) => (i === index ? { ...item, [field]: value } : item)),
-    }));
-  };
-
-  const updateStringArrayItem = (key, index, value) => {
-    setData((prev) => ({
-      ...prev,
-      [key]: prev[key].map((item, i) => (i === index ? value : item)),
-    }));
-  };
-
-  const addObjectItem = (key, item) => setData((prev) => ({ ...prev, [key]: [...prev[key], item] }));
-  const addStringItem = (key, item) => setData((prev) => ({ ...prev, [key]: [...prev[key], item] }));
-  const removeItem = (key, index) =>
-    setData((prev) => ({
-      ...prev,
-      [key]: prev[key].filter((_, i) => i !== index),
-    }));
-
-  return (
-    <div className="min-h-screen bg-neutral-950 text-neutral-100">
-      <div className="sticky top-0 z-50 border-b border-white/10 bg-neutral-950/90 backdrop-blur">
-        <div className="mx-auto flex max-w-7xl items-center justify-between gap-4 px-4 py-3 md:px-6">
-          <div>
-            <p className="text-xs uppercase tracking-[0.3em] text-neutral-500">Game Site Builder</p>
-            <h1 className="text-lg font-semibold">WYSIWYG staging editor</h1>
-          </div>
-          <div className="flex flex-wrap items-center gap-2">
-            <button
-              type="button"
-              onClick={() => setEditMode((prev) => !prev)}
-              className="inline-flex items-center gap-2 rounded-xl border border-white/10 px-4 py-2 text-sm hover:bg-white/5"
-            >
-              {editMode ? <Eye className="h-4 w-4" /> : <Pencil className="h-4 w-4" />}
-              {editMode ? "Preview mode" : "Edit mode"}
-            </button>
-            <button
-              type="button"
-              onClick={exportJson}
-              className="inline-flex items-center gap-2 rounded-xl bg-white px-4 py-2 text-sm font-medium text-black"
-            >
-              <Save className="h-4 w-4" /> Export content
-            </button>
-          </div>
-        </div>
-        {savedMessage ? <div className="px-6 pb-3 text-sm text-emerald-400">{savedMessage}</div> : null}
-      </div>
-
-      {editMode ? (
-        <div className="border-b border-white/10 bg-white/[0.03]">
-          <div className="mx-auto grid max-w-7xl gap-6 px-4 py-6 md:grid-cols-2 md:px-6 xl:grid-cols-3">
-            <div className="rounded-2xl border border-white/10 bg-neutral-950 p-4">
-              <h3 className="mb-4 text-sm font-semibold uppercase tracking-[0.2em] text-neutral-400">Hero</h3>
-              <div className="space-y-3">
-                <TextInput label="Title" value={data.game.title} onChange={(v) => updateGame("title", v)} />
-                <TextInput label="Tagline" value={data.game.tagline} onChange={(v) => updateGame("tagline", v)} multiline />
-                <TextInput label="Genre" value={data.game.genre} onChange={(v) => updateGame("genre", v)} />
-                <TextInput label="Status" value={data.game.status} onChange={(v) => updateGame("status", v)} />
-                <TextInput label="Description" value={data.game.description} onChange={(v) => updateGame("description", v)} multiline />
-                <TextInput label="Hook" value={data.game.hook} onChange={(v) => updateGame("hook", v)} multiline />
-                <TextInput
-                  label="Primary button label"
-                  value={data.game.heroButtonPrimaryLabel}
-                  onChange={(v) => updateGame("heroButtonPrimaryLabel", v)}
-                />
-                <TextInput
-                  label="Primary button link"
-                  value={data.game.heroButtonPrimaryHref}
-                  onChange={(v) => updateGame("heroButtonPrimaryHref", v)}
-                />
-                <TextInput
-                  label="Secondary button label"
-                  value={data.game.heroButtonSecondaryLabel}
-                  onChange={(v) => updateGame("heroButtonSecondaryLabel", v)}
-                />
-                <TextInput
-                  label="Secondary button link"
-                  value={data.game.heroButtonSecondaryHref}
-                  onChange={(v) => updateGame("heroButtonSecondaryHref", v)}
-                />
-                <ImageField label="Hero image" value={data.game.heroImage} onChange={(v) => updateGame("heroImage", v)} />
-              </div>
-            </div>
-
-            <ArrayEditor
-              title="Feature cards"
-              items={data.featureCards}
-              onAdd={() => addObjectItem("featureCards", { title: "New feature", text: "Describe this feature." })}
-              onRemove={(index) => removeItem("featureCards", index)}
-              renderItem={(item, index, onRemove) => (
-                <div key={index} className="rounded-xl border border-white/10 p-3">
-                  <div className="mb-3 flex justify-end">
-                    <button type="button" onClick={() => onRemove(index)} className="text-neutral-400 hover:text-white">
-                      <Trash2 className="h-4 w-4" />
-                    </button>
-                  </div>
-                  <div className="space-y-3">
-                    <TextInput label="Title" value={item.title} onChange={(v) => updateArrayItem("featureCards", index, "title", v)} />
-                    <TextInput label="Text" value={item.text} onChange={(v) => updateArrayItem("featureCards", index, "text", v)} multiline />
-                  </div>
-                </div>
-              )}
-            />
-
-            <ArrayEditor
-              title="Story blocks"
-              items={data.storyBlocks}
-              onAdd={() => addObjectItem("storyBlocks", { label: "New block", text: "Add story detail here." })}
-              onRemove={(index) => removeItem("storyBlocks", index)}
-              renderItem={(item, index, onRemove) => (
-                <div key={index} className="rounded-xl border border-white/10 p-3">
-                  <div className="mb-3 flex justify-end">
-                    <button type="button" onClick={() => onRemove(index)} className="text-neutral-400 hover:text-white">
-                      <Trash2 className="h-4 w-4" />
-                    </button>
-                  </div>
-                  <div className="space-y-3">
-                    <TextInput label="Label" value={item.label} onChange={(v) => updateArrayItem("storyBlocks", index, "label", v)} />
-                    <TextInput label="Text" value={item.text} onChange={(v) => updateArrayItem("storyBlocks", index, "text", v)} multiline />
-                  </div>
-                </div>
-              )}
-            />
-
-            <ArrayEditor
-              title="Writing notes"
-              items={data.writingNotes}
-              onAdd={() => addStringItem("writingNotes", "Add a new writing note.")}
-              onRemove={(index) => removeItem("writingNotes", index)}
-              renderItem={(item, index, onRemove) => (
-                <div key={index} className="rounded-xl border border-white/10 p-3">
-                  <div className="mb-3 flex justify-end">
-                    <button type="button" onClick={() => onRemove(index)} className="text-neutral-400 hover:text-white">
-                      <Trash2 className="h-4 w-4" />
-                    </button>
-                  </div>
-                  <TextInput label={`Note ${index + 1}`} value={item} onChange={(v) => updateStringArrayItem("writingNotes", index, v)} multiline />
-                </div>
-              )}
-            />
-
-            <ArrayEditor
-              title="Characters"
-              items={data.characterCards}
-              onAdd={() =>
-                addObjectItem("characterCards", {
-                  name: "New character",
-                  role: "Role",
-                  desc: "Describe this character.",
-                  image: "",
-                })
-              }
-              onRemove={(index) => removeItem("characterCards", index)}
-              renderItem={(item, index, onRemove) => (
-                <div key={index} className="rounded-xl border border-white/10 p-3">
-                  <div className="mb-3 flex justify-end">
-                    <button type="button" onClick={() => onRemove(index)} className="text-neutral-400 hover:text-white">
-                      <Trash2 className="h-4 w-4" />
-                    </button>
-                  </div>
-                  <div className="space-y-3">
-                    <TextInput label="Name" value={item.name} onChange={(v) => updateArrayItem("characterCards", index, "name", v)} />
-                    <TextInput label="Role" value={item.role} onChange={(v) => updateArrayItem("characterCards", index, "role", v)} />
-                    <TextInput label="Description" value={item.desc} onChange={(v) => updateArrayItem("characterCards", index, "desc", v)} multiline />
-                    <ImageField label="Character image" value={item.image} onChange={(v) => updateArrayItem("characterCards", index, "image", v)} />
-                  </div>
-                </div>
-              )}
-            />
-
-            <ArrayEditor
-              title="Mechanics"
-              items={data.mechanics}
-              onAdd={() => addStringItem("mechanics", "Describe another mechanic.")}
-              onRemove={(index) => removeItem("mechanics", index)}
-              renderItem={(item, index, onRemove) => (
-                <div key={index} className="rounded-xl border border-white/10 p-3">
-                  <div className="mb-3 flex justify-end">
-                    <button type="button" onClick={() => onRemove(index)} className="text-neutral-400 hover:text-white">
-                      <Trash2 className="h-4 w-4" />
-                    </button>
-                  </div>
-                  <TextInput label={`Mechanic ${index + 1}`} value={item} onChange={(v) => updateStringArrayItem("mechanics", index, v)} multiline />
-                </div>
-              )}
-            />
-
-            <ArrayEditor
-              title="Media gallery"
-              items={data.mediaItems}
-              onAdd={() => addObjectItem("mediaItems", { label: "New media slot", image: "" })}
-              onRemove={(index) => removeItem("mediaItems", index)}
-              renderItem={(item, index, onRemove) => (
-                <div key={index} className="rounded-xl border border-white/10 p-3">
-                  <div className="mb-3 flex justify-end">
-                    <button type="button" onClick={() => onRemove(index)} className="text-neutral-400 hover:text-white">
-                      <Trash2 className="h-4 w-4" />
-                    </button>
-                  </div>
-                  <div className="space-y-3">
-                    <TextInput label="Label" value={item.label} onChange={(v) => updateArrayItem("mediaItems", index, "label", v)} />
-                    <ImageField label="Gallery image" value={item.image} onChange={(v) => updateArrayItem("mediaItems", index, "image", v)} />
-                  </div>
-                </div>
-              )}
-            />
-
-            <ArrayEditor
-              title="Sound notes"
-              items={data.soundtrackNotes}
-              onAdd={() => addStringItem("soundtrackNotes", "New sound note")}
-              onRemove={(index) => removeItem("soundtrackNotes", index)}
-              renderItem={(item, index, onRemove) => (
-                <div key={index} className="rounded-xl border border-white/10 p-3">
-                  <div className="mb-3 flex justify-end">
-                    <button type="button" onClick={() => onRemove(index)} className="text-neutral-400 hover:text-white">
-                      <Trash2 className="h-4 w-4" />
-                    </button>
-                  </div>
-                  <TextInput label={`Sound note ${index + 1}`} value={item} onChange={(v) => updateStringArrayItem("soundtrackNotes", index, v)} />
-                </div>
-              )}
-            />
-
-            <div className="rounded-2xl border border-white/10 bg-neutral-950 p-4">
-              <h3 className="mb-4 text-sm font-semibold uppercase tracking-[0.2em] text-neutral-400">Trailer</h3>
-              <div className="space-y-3">
-                <TextInput
-                  label="Section title"
-                  value={data.trailer.title}
-                  onChange={(v) => setData((prev) => ({ ...prev, trailer: { ...prev.trailer, title: v } }))}
-                />
-                <TextInput
-                  label="Embed or YouTube URL"
-                  value={data.trailer.embedUrl}
-                  onChange={(v) => setData((prev) => ({ ...prev, trailer: { ...prev.trailer, embedUrl: v } }))}
-                />
-                <TextInput
-                  label="Placeholder text"
-                  value={data.trailer.placeholder}
-                  onChange={(v) => setData((prev) => ({ ...prev, trailer: { ...prev.trailer, placeholder: v } }))}
-                  multiline
-                />
-              </div>
-            </div>
-
-            <ArrayEditor
-              title="Devlog"
-              items={data.devlog}
-              onAdd={() => addObjectItem("devlog", { date: "New update", note: "Write update here." })}
-              onRemove={(index) => removeItem("devlog", index)}
-              renderItem={(item, index, onRemove) => (
-                <div key={index} className="rounded-xl border border-white/10 p-3">
-                  <div className="mb-3 flex justify-end">
-                    <button type="button" onClick={() => onRemove(index)} className="text-neutral-400 hover:text-white">
-                      <Trash2 className="h-4 w-4" />
-                    </button>
-                  </div>
-                  <div className="space-y-3">
-                    <TextInput label="Date / label" value={item.date} onChange={(v) => updateArrayItem("devlog", index, "date", v)} />
-                    <TextInput label="Note" value={item.note} onChange={(v) => updateArrayItem("devlog", index, "note", v)} multiline />
-                  </div>
-                </div>
-              )}
-            />
-
-            <div className="rounded-2xl border border-white/10 bg-neutral-950 p-4">
-              <h3 className="mb-4 text-sm font-semibold uppercase tracking-[0.2em] text-neutral-400">Call to action</h3>
-              <div className="space-y-3">
-                <TextInput label="Label" value={data.cta.label} onChange={(v) => setData((prev) => ({ ...prev, cta: { ...prev.cta, label: v } }))} />
-                <TextInput label="Headline" value={data.cta.headline} onChange={(v) => setData((prev) => ({ ...prev, cta: { ...prev.cta, headline: v } }))} multiline />
-                <TextInput label="Primary button label" value={data.cta.primaryLabel} onChange={(v) => setData((prev) => ({ ...prev, cta: { ...prev.cta, primaryLabel: v } }))} />
-                <TextInput label="Primary button link" value={data.cta.primaryHref} onChange={(v) => setData((prev) => ({ ...prev, cta: { ...prev.cta, primaryHref: v } }))} />
-                <TextInput label="Secondary button label" value={data.cta.secondaryLabel} onChange={(v) => setData((prev) => ({ ...prev, cta: { ...prev.cta, secondaryLabel: v } }))} />
-                <TextInput label="Secondary button link" value={data.cta.secondaryHref} onChange={(v) => setData((prev) => ({ ...prev, cta: { ...prev.cta, secondaryHref: v } }))} />
-              </div>
-            </div>
+          <input type="file" accept="image/*" hidden data-file="${escapeHtml(onUploadKey)}" />
+          <div class="upload-preview">
+            ${value ? `<img src="${escapeHtml(value)}" alt="${escapeHtml(label)}" />` : `<div>No image selected</div>`}
           </div>
         </div>
-      ) : null}
+      `;
+    }
 
-      <section className="relative overflow-hidden border-b border-white/10">
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_top,rgba(255,255,255,0.09),transparent_45%)]" />
-        <div className="mx-auto max-w-7xl px-6 py-20 md:px-10 md:py-28">
-          <div className="grid items-center gap-10 lg:grid-cols-2">
-            <div>
-              <p className="mb-4 inline-flex rounded-full border border-white/15 px-3 py-1 text-xs uppercase tracking-[0.25em] text-neutral-300">
-                {data.game.genre} • {data.game.status}
-              </p>
-              <h1 className="max-w-3xl text-5xl font-semibold tracking-tight md:text-7xl">{data.game.title}</h1>
-              <p className="mt-6 max-w-2xl text-lg leading-8 text-neutral-300 md:text-xl">{data.game.tagline}</p>
-              <p className="mt-6 max-w-2xl text-base leading-7 text-neutral-400">{data.game.description}</p>
-              <div className="mt-8 flex flex-wrap gap-4">
-                <a href={data.game.heroButtonPrimaryHref} className="rounded-2xl bg-white px-5 py-3 text-sm font-medium text-black transition hover:opacity-90">
-                  {data.game.heroButtonPrimaryLabel}
-                </a>
-                <a href={data.game.heroButtonSecondaryHref} className="rounded-2xl border border-white/15 px-5 py-3 text-sm font-medium text-white transition hover:bg-white/5">
-                  {data.game.heroButtonSecondaryLabel}
-                </a>
+    function sectionTitle(eyebrow, title) {
+      return `
+        <div class="section-title">
+          <p class="eyebrow">${escapeHtml(eyebrow)}</p>
+          <h2>${escapeHtml(title)}</h2>
+        </div>
+      `;
+    }
+
+    function renderPreview() {
+      const trailerUrl = normalizeYoutubeUrl(data.trailer.embedUrl);
+
+      siteRoot.innerHTML = `
+        <section class="hero">
+          <div class="container">
+            <div class="hero-grid">
+              <div class="hero-copy">
+                <p class="badge">${escapeHtml(data.game.genre)} • ${escapeHtml(data.game.status)}</p>
+                <h1>${escapeHtml(data.game.title)}</h1>
+                <p class="lead">${escapeHtml(data.game.tagline)}</p>
+                <p class="body">${escapeHtml(data.game.description)}</p>
+                <div class="hero-actions">
+                  <a href="${escapeHtml(data.game.heroButtonPrimaryHref)}" class="btn btn-primary btn-hero">${escapeHtml(data.game.heroButtonPrimaryLabel)}</a>
+                  <a href="${escapeHtml(data.game.heroButtonSecondaryHref)}" class="btn btn-hero">${escapeHtml(data.game.heroButtonSecondaryLabel)}</a>
+                </div>
+              </div>
+              <div class="hero-media">
+                <div class="hero-frame">
+                  <div class="hero-frame-inner">
+                    ${data.game.heroImage
+                      ? `<img src="${escapeHtml(data.game.heroImage)}" alt="Hero art" />`
+                      : `<div><p class="eyebrow">Replace Me</p><p>Hero Image / Poster Art / Animated Teaser Frame</p></div>`
+                    }
+                  </div>
+                </div>
+                <div class="hook-card">
+                  <p class="eyebrow">Core Hook</p>
+                  <p>${escapeHtml(data.game.hook)}</p>
+                </div>
               </div>
             </div>
+          </div>
+        </section>
 
-            <div className="relative">
-              <div className="aspect-[4/5] rounded-[2rem] border border-white/10 bg-neutral-900 p-5 shadow-2xl">
-                {data.game.heroImage ? (
-                  <img src={data.game.heroImage} alt="Hero art" className="h-full w-full rounded-[1.5rem] object-cover" />
-                ) : (
-                  <div className="flex h-full items-center justify-center rounded-[1.5rem] border border-dashed border-white/15 bg-neutral-950 text-center text-neutral-500">
-                    <div className="max-w-xs px-6">
-                      <p className="text-sm uppercase tracking-[0.3em] text-neutral-500">Replace Me</p>
-                      <p className="mt-3 text-lg text-neutral-400">Hero Image / Poster Art / Animated Teaser Frame</p>
+        <section class="section">
+          <div class="container">
+            ${sectionTitle("Game Feel", "What this experience is built to do")}
+            <div class="cards-3">
+              ${data.featureCards.map(item => `
+                <div class="panel-soft card">
+                  <h3>${escapeHtml(item.title)}</h3>
+                  <p>${escapeHtml(item.text)}</p>
+                </div>
+              `).join("")}
+            </div>
+          </div>
+        </section>
+
+        <section class="section border-top border-bottom" id="story" style="background:rgba(255,255,255,.03)">
+          <div class="container">
+            <div class="story-grid">
+              <div>
+                ${sectionTitle("Story Framework", "Build the unease before the reveal")}
+                <div class="story-stack">
+                  ${data.storyBlocks.map(block => `
+                    <div class="panel story-block">
+                      <p class="eyebrow">${escapeHtml(block.label)}</p>
+                      <p>${escapeHtml(block.text)}</p>
                     </div>
-                  </div>
-                )}
-              </div>
-              <div className="absolute -bottom-5 -left-5 w-40 rounded-2xl border border-white/10 bg-black/50 p-4 backdrop-blur">
-                <p className="text-xs uppercase tracking-[0.25em] text-neutral-500">Core Hook</p>
-                <p className="mt-2 text-sm text-neutral-300">{data.game.hook}</p>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <section className="mx-auto max-w-7xl px-6 py-16 md:px-10" id="features">
-        <SectionTitle eyebrow="Game Feel" title="What this experience is built to do" />
-        <div className="grid gap-6 md:grid-cols-3">
-          {data.featureCards.map((item, index) => (
-            <div key={`${item.title}-${index}`} className="rounded-[2rem] border border-white/10 bg-white/5 p-6">
-              <h3 className="text-xl font-medium">{item.title}</h3>
-              <p className="mt-3 leading-7 text-neutral-300">{item.text}</p>
-            </div>
-          ))}
-        </div>
-      </section>
-
-      <section className="border-y border-white/10 bg-white/[0.03]" id="story">
-        <div className="mx-auto max-w-7xl px-6 py-16 md:px-10">
-          <div className="grid gap-10 lg:grid-cols-[1.1fr_0.9fr]">
-            <div>
-              <SectionTitle eyebrow="Story Framework" title="Build the unease before the reveal" />
-              <div className="mt-8 space-y-5">
-                {data.storyBlocks.map((block, index) => (
-                  <div key={`${block.label}-${index}`} className="rounded-[1.75rem] border border-white/10 bg-neutral-950 p-6">
-                    <p className="text-sm uppercase tracking-[0.25em] text-neutral-500">{block.label}</p>
-                    <p className="mt-3 leading-7 text-neutral-300">{block.text}</p>
-                  </div>
-                ))}
-              </div>
-            </div>
-
-            <div className="rounded-[2rem] border border-white/10 bg-neutral-950 p-6">
-              <p className="text-sm uppercase tracking-[0.25em] text-neutral-500">Writing Notes</p>
-              <div className="mt-4 space-y-4 text-neutral-300">
-                {data.writingNotes.map((note, index) => (
-                  <p key={index}>{note}</p>
-                ))}
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <section className="mx-auto max-w-7xl px-6 py-16 md:px-10" id="characters">
-        <SectionTitle eyebrow="Characters" title="The people who make the room feel wrong" />
-        <div className="grid gap-6 md:grid-cols-3">
-          {data.characterCards.map((person, index) => (
-            <div key={`${person.name}-${index}`} className="rounded-[2rem] border border-white/10 bg-white/5 p-6">
-              <div className="mb-5 aspect-[4/3] overflow-hidden rounded-[1.25rem] border border-dashed border-white/15 bg-neutral-950">
-                {person.image ? (
-                  <img src={person.image} alt={person.name} className="h-full w-full object-cover" />
-                ) : (
-                  <div className="flex h-full items-center justify-center text-center text-neutral-500">Portrait / Sprite / Concept Art</div>
-                )}
-              </div>
-              <p className="text-sm uppercase tracking-[0.25em] text-neutral-500">{person.role}</p>
-              <h3 className="mt-2 text-xl font-medium">{person.name}</h3>
-              <p className="mt-3 leading-7 text-neutral-300">{person.desc}</p>
-            </div>
-          ))}
-        </div>
-      </section>
-
-      <section className="border-y border-white/10 bg-white/[0.03]" id="mechanics">
-        <div className="mx-auto max-w-7xl px-6 py-16 md:px-10">
-          <div className="grid gap-10 lg:grid-cols-2">
-            <div>
-              <SectionTitle eyebrow="Mechanics" title="Systems you can shape around your idea" />
-            </div>
-            <div className="grid gap-4 sm:grid-cols-2">
-              {data.mechanics.map((item, index) => (
-                <div key={`${item}-${index}`} className="rounded-[1.5rem] border border-white/10 bg-neutral-950 p-5 text-neutral-300">
-                  {item}
+                  `).join("")}
                 </div>
-              ))}
+              </div>
+              <div class="panel notes-card">
+                <p class="eyebrow">Writing Notes</p>
+                <div class="notes-list">
+                  ${data.writingNotes.map(note => `<p>${escapeHtml(note)}</p>`).join("")}
+                </div>
+              </div>
             </div>
           </div>
-        </div>
-      </section>
+        </section>
 
-      <section className="mx-auto max-w-7xl px-6 py-16 md:px-10" id="media">
-        <SectionTitle eyebrow="Creative Slots" title="Drop in your assets and the site starts breathing" />
-        <div className="grid gap-6 sm:grid-cols-2 xl:grid-cols-4">
-          {data.mediaItems.map((item, index) => (
-            <div key={`${item.label}-${index}`} className="rounded-[2rem] border border-white/10 bg-white/5 p-4">
-              <div className="aspect-[4/5] overflow-hidden rounded-[1.5rem] border border-dashed border-white/15 bg-neutral-950">
-                {item.image ? (
-                  <img src={item.image} alt={item.label} className="h-full w-full object-cover" />
-                ) : (
-                  <div className="flex h-full items-center justify-center px-4 text-center text-neutral-500">{item.label}</div>
-                )}
-              </div>
-            </div>
-          ))}
-        </div>
-      </section>
-
-      <section className="border-y border-white/10 bg-white/[0.03]">
-        <div className="mx-auto max-w-7xl px-6 py-16 md:px-10">
-          <div className="grid gap-10 lg:grid-cols-[1fr_1fr]">
-            <div className="rounded-[2rem] border border-white/10 bg-neutral-950 p-6">
-              <p className="text-sm uppercase tracking-[0.3em] text-neutral-500">Sound Direction</p>
-              <h2 className="mt-3 text-2xl font-semibold">Audio notes</h2>
-              <div className="mt-6 flex flex-wrap gap-3">
-                {data.soundtrackNotes.map((note, index) => (
-                  <span key={`${note}-${index}`} className="rounded-full border border-white/10 px-4 py-2 text-sm text-neutral-300">
-                    {note}
-                  </span>
-                ))}
-              </div>
-              <p className="mt-6 leading-7 text-neutral-300">
-                Use this area for composer notes, soundtrack themes, diegetic sound ideas, or links to teaser tracks.
-              </p>
-            </div>
-
-            <div className="rounded-[2rem] border border-white/10 bg-neutral-950 p-6">
-              <p className="text-sm uppercase tracking-[0.3em] text-neutral-500">Trailer / Demo</p>
-              <h2 className="mt-3 text-2xl font-semibold">{data.trailer.title}</h2>
-              <div className="mt-6 aspect-video overflow-hidden rounded-[1.5rem] border border-dashed border-white/15 bg-black">
-                {trailerEmbedUrl ? (
-                  <iframe
-                    title="Game trailer"
-                    src={trailerEmbedUrl}
-                    className="h-full w-full"
-                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                    allowFullScreen
-                  />
-                ) : (
-                  <div className="flex h-full items-center justify-center px-6 text-center text-neutral-500">
-                    {data.trailer.placeholder}
+        <section class="section" id="characters">
+          <div class="container">
+            ${sectionTitle("Characters", "The people who make the room feel wrong")}
+            <div class="cards-3">
+              ${data.characterCards.map(person => `
+                <div class="panel-soft card character-card">
+                  <div class="portrait">
+                    ${person.image
+                      ? `<img src="${escapeHtml(person.image)}" alt="${escapeHtml(person.name)}" />`
+                      : `Portrait / Sprite / Concept Art`
+                    }
                   </div>
-                )}
+                  <p class="role">${escapeHtml(person.role)}</p>
+                  <h3>${escapeHtml(person.name)}</h3>
+                  <p>${escapeHtml(person.desc)}</p>
+                </div>
+              `).join("")}
+            </div>
+          </div>
+        </section>
+
+        <section class="section border-top border-bottom" id="mechanics" style="background:rgba(255,255,255,.03)">
+          <div class="container">
+            <div class="mechanics-grid">
+              <div>${sectionTitle("Mechanics", "Systems you can shape around your idea")}</div>
+              <div class="mechanics-list">
+                ${data.mechanics.map(item => `<div class="panel mechanic">${escapeHtml(item)}</div>`).join("")}
               </div>
             </div>
           </div>
-        </div>
-      </section>
+        </section>
 
-      <section className="mx-auto max-w-7xl px-6 py-16 md:px-10" id="devlog">
-        <SectionTitle eyebrow="Development Log" title="Track progress in public" />
-        <div className="space-y-5">
-          {data.devlog.map((entry, index) => (
-            <div key={`${entry.date}-${index}`} className="rounded-[2rem] border border-white/10 bg-white/5 p-6">
-              <p className="text-sm uppercase tracking-[0.25em] text-neutral-500">{entry.date}</p>
-              <p className="mt-3 leading-7 text-neutral-300">{entry.note}</p>
-            </div>
-          ))}
-        </div>
-      </section>
-
-      <section className="border-t border-white/10">
-        <div className="mx-auto max-w-7xl px-6 py-16 md:px-10">
-          <div className="rounded-[2rem] border border-white/10 bg-white/[0.04] p-8 md:p-10">
-            <p className="text-sm uppercase tracking-[0.3em] text-neutral-500">{data.cta.label}</p>
-            <h2 className="mt-3 max-w-3xl text-3xl font-semibold md:text-4xl">{data.cta.headline}</h2>
-            <div className="mt-8 flex flex-wrap gap-4">
-              <a href={data.cta.primaryHref} className="rounded-2xl bg-white px-5 py-3 text-sm font-medium text-black">
-                {data.cta.primaryLabel}
-              </a>
-              <a href={data.cta.secondaryHref} className="rounded-2xl border border-white/15 px-5 py-3 text-sm font-medium text-white">
-                {data.cta.secondaryLabel}
-              </a>
+        <section class="section" id="media">
+          <div class="container">
+            ${sectionTitle("Creative Slots", "Drop in your assets and the site starts breathing")}
+            <div class="cards-4">
+              ${data.mediaItems.map(item => `
+                <div class="panel-soft media-card">
+                  <div class="media-box">
+                    ${item.image ? `<img src="${escapeHtml(item.image)}" alt="${escapeHtml(item.label)}" />` : escapeHtml(item.label)}
+                  </div>
+                </div>
+              `).join("")}
             </div>
           </div>
+        </section>
+
+        <section class="section border-top border-bottom" style="background:rgba(255,255,255,.03)">
+          <div class="container">
+            ${sectionTitle("Sound and Mood", "A short palette for the atmosphere")}
+            <div class="sound-grid">
+              ${data.soundtrackNotes.map(item => `<div class="sound-chip">${escapeHtml(item)}</div>`).join("")}
+            </div>
+          </div>
+        </section>
+
+        <section class="section" id="trailer">
+          <div class="container">
+            ${sectionTitle("Preview", data.trailer.title)}
+            <div class="trailer-wrap">
+              <div class="video-shell">
+                ${trailerUrl
+                  ? `<iframe src="${escapeHtml(trailerUrl)}" allowfullscreen title="${escapeHtml(data.trailer.title)}"></iframe>`
+                  : `<div>${escapeHtml(data.trailer.placeholder)}</div>`
+                }
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section class="section border-top border-bottom" style="background:rgba(255,255,255,.03)">
+          <div class="container">
+            ${sectionTitle("Devlog", "Keep the project alive while it is still growing")}
+            <div class="devlog-list">
+              ${data.devlog.map(item => `
+                <div class="panel devlog-item">
+                  <div class="date">${escapeHtml(item.date)}</div>
+                  <p>${escapeHtml(item.note)}</p>
+                </div>
+              `).join("")}
+            </div>
+          </div>
+        </section>
+
+        <section class="section">
+          <div class="container">
+            <div class="panel-soft cta-card">
+              <p class="eyebrow">${escapeHtml(data.cta.label)}</p>
+              <h2>${escapeHtml(data.cta.headline)}</h2>
+              <div class="hero-actions">
+                <a href="${escapeHtml(data.cta.primaryHref)}" class="btn btn-primary btn-hero">${escapeHtml(data.cta.primaryLabel)}</a>
+                <a href="${escapeHtml(data.cta.secondaryHref)}" class="btn btn-hero">${escapeHtml(data.cta.secondaryLabel)}</a>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <footer class="footer">
+          <div class="container">Standalone HTML staging build for your game site. No React. No bundler. Far fewer surprises.</div>
+        </footer>
+      `;
+    }
+
+    function bindBasicFields(scope) {
+      scope.querySelectorAll("[data-bind]").forEach(el => {
+        const path = el.getAttribute("data-bind");
+        const handler = e => updateField(path, e.target.value);
+        el.addEventListener("input", handler);
+      });
+      scope.querySelectorAll("[data-bind-array]").forEach(el => {
+        const [key, index, field] = el.getAttribute("data-bind-array").split("|");
+        el.addEventListener("input", e => updateArrayItem(key, Number(index), field, e.target.value));
+      });
+      scope.querySelectorAll("[data-bind-string-array]").forEach(el => {
+        const [key, index] = el.getAttribute("data-bind-string-array").split("|");
+        el.addEventListener("input", e => updateStringArrayItem(key, Number(index), e.target.value));
+      });
+      scope.querySelectorAll("[data-remove]").forEach(el => {
+        const [key, index] = el.getAttribute("data-remove").split("|");
+        el.addEventListener("click", () => removeArrayItem(key, Number(index)));
+      });
+      scope.querySelectorAll("[data-add]").forEach(el => {
+        el.addEventListener("click", () => {
+          const key = el.getAttribute("data-add");
+          const templates = {
+            featureCards: { title: "New feature", text: "Describe this feature." },
+            storyBlocks: { label: "New block", text: "Add story detail here." },
+            writingNotes: "Add a new writing note.",
+            characterCards: { name: "New character", role: "Role", desc: "Describe this character.", image: "" },
+            mechanics: "Describe another mechanic.",
+            mediaItems: { label: "New media slot", image: "" },
+            soundtrackNotes: "New sound note",
+            devlog: { date: "New update", note: "Write update here." }
+          };
+          addArrayItem(key, structuredClone ? structuredClone(templates[key]) : JSON.parse(JSON.stringify(templates[key])));
+        });
+      });
+      scope.querySelectorAll("[data-upload]").forEach(btn => {
+        const token = btn.getAttribute("data-upload");
+        btn.addEventListener("click", () => {
+          const input = scope.querySelector(`[data-file="${CSS.escape(token)}"]`);
+          if (input) input.click();
+        });
+      });
+      scope.querySelectorAll("[data-file]").forEach(input => {
+        const token = input.getAttribute("data-file");
+        input.addEventListener("change", e => {
+          const file = e.target.files && e.target.files[0];
+          if (!file) return;
+          readImage(file, value => {
+            const parts = token.split("|");
+            if (parts[0] === "game") data.game.heroImage = value;
+            else if (parts[0] === "array") data[parts[1]][Number(parts[2])][parts[3]] = value;
+            render();
+          });
+        });
+      });
+      scope.querySelectorAll("[data-clear]").forEach(btn => {
+        btn.addEventListener("click", () => {
+          const token = btn.getAttribute("data-clear");
+          const parts = token.split("|");
+          if (parts[0] === "game") data.game.heroImage = "";
+          else if (parts[0] === "array") data[parts[1]][Number(parts[2])][parts[3]] = "";
+          render();
+        });
+      });
+    }
+
+    function editorCard(title, inner) {
+      return `<div class="editor-card"><h4>${escapeHtml(title)}</h4>${inner}</div>`;
+    }
+
+    function makeBoundField(label, path, value, multiline = false) {
+      return `
+        <div class="field">
+          <label>${escapeHtml(label)}</label>
+          ${multiline
+            ? `<textarea data-bind="${escapeHtml(path)}">${escapeHtml(value)}</textarea>`
+            : `<input data-bind="${escapeHtml(path)}" value="${escapeHtml(value)}" />`
+          }
         </div>
-      </section>
-    </div>
-  );
-}
+      `;
+    }
+
+    function makeArrayBoundField(label, key, index, field, value, multiline = false) {
+      return `
+        <div class="field">
+          <label>${escapeHtml(label)}</label>
+          ${multiline
+            ? `<textarea data-bind-array="${escapeHtml(key)}|${index}|${escapeHtml(field)}">${escapeHtml(value)}</textarea>`
+            : `<input data-bind-array="${escapeHtml(key)}|${index}|${escapeHtml(field)}" value="${escapeHtml(value)}" />`
+          }
+        </div>
+      `;
+    }
+
+    function makeStringArrayField(label, key, index, value, multiline = false) {
+      return `
+        <div class="field">
+          <label>${escapeHtml(label)}</label>
+          ${multiline
+            ? `<textarea data-bind-string-array="${escapeHtml(key)}|${index}">${escapeHtml(value)}</textarea>`
+            : `<input data-bind-string-array="${escapeHtml(key)}|${index}" value="${escapeHtml(value)}" />`
+          }
+        </div>
+      `;
+    }
+
+    function renderEditor() {
+      editorGrid.innerHTML = [
+        editorCard("Hero", `
+          ${makeBoundField("Title", "game.title", data.game.title)}
+          ${makeBoundField("Tagline", "game.tagline", data.game.tagline, true)}
+          ${makeBoundField("Genre", "game.genre", data.game.genre)}
+          ${makeBoundField("Status", "game.status", data.game.status)}
+          ${makeBoundField("Description", "game.description", data.game.description, true)}
+          ${makeBoundField("Hook", "game.hook", data.game.hook, true)}
+          ${makeBoundField("Primary button label", "game.heroButtonPrimaryLabel", data.game.heroButtonPrimaryLabel)}
+          ${makeBoundField("Primary button link", "game.heroButtonPrimaryHref", data.game.heroButtonPrimaryHref)}
+          ${makeBoundField("Secondary button label", "game.heroButtonSecondaryLabel", data.game.heroButtonSecondaryLabel)}
+          ${makeBoundField("Secondary button link", "game.heroButtonSecondaryHref", data.game.heroButtonSecondaryHref)}
+          ${imageField("Hero image", data.game.heroImage, "game|heroImage", "game|heroImage")}
+        `),
+
+        editorCard("Feature cards", `
+          ${data.featureCards.map((item, index) => `
+            <div class="array-item">
+              <div class="array-head"><button class="icon-btn" data-remove="featureCards|${index}" title="Remove">🗑</button></div>
+              ${makeArrayBoundField("Title", "featureCards", index, "title", item.title)}
+              ${makeArrayBoundField("Text", "featureCards", index, "text", item.text, true)}
+            </div>
+          `).join("")}
+          <div class="sub-actions"><button class="small-btn" data-add="featureCards">Add</button></div>
+        `),
+
+        editorCard("Story blocks", `
+          ${data.storyBlocks.map((item, index) => `
+            <div class="array-item">
+              <div class="array-head"><button class="icon-btn" data-remove="storyBlocks|${index}" title="Remove">🗑</button></div>
+              ${makeArrayBoundField("Label", "storyBlocks", index, "label", item.label)}
+              ${makeArrayBoundField("Text", "storyBlocks", index, "text", item.text, true)}
+            </div>
+          `).join("")}
+          <div class="sub-actions"><button class="small-btn" data-add="storyBlocks">Add</button></div>
+        `),
+
+        editorCard("Writing notes", `
+          ${data.writingNotes.map((item, index) => `
+            <div class="array-item">
+              <div class="array-head"><button class="icon-btn" data-remove="writingNotes|${index}" title="Remove">🗑</button></div>
+              ${makeStringArrayField("Note " + (index + 1), "writingNotes", index, item, true)}
+            </div>
+          `).join("")}
+          <div class="sub-actions"><button class="small-btn" data-add="writingNotes">Add</button></div>
+        `),
+
+        editorCard("Characters", `
+          ${data.characterCards.map((item, index) => `
+            <div class="array-item">
+              <div class="array-head"><button class="icon-btn" data-remove="characterCards|${index}" title="Remove">🗑</button></div>
+              ${makeArrayBoundField("Name", "characterCards", index, "name", item.name)}
+              ${makeArrayBoundField("Role", "characterCards", index, "role", item.role)}
+              ${makeArrayBoundField("Description", "characterCards", index, "desc", item.desc, true)}
+              ${imageField("Character image", item.image, "array|characterCards|${index}|image", "array|characterCards|${index}|image")}
+            </div>
+          `).join("")}
+          <div class="sub-actions"><button class="small-btn" data-add="characterCards">Add</button></div>
+        `),
+
+        editorCard("Mechanics", `
+          ${data.mechanics.map((item, index) => `
+            <div class="array-item">
+              <div class="array-head"><button class="icon-btn" data-remove="mechanics|${index}" title="Remove">🗑</button></div>
+              ${makeStringArrayField("Mechanic " + (index + 1), "mechanics", index, item, true)}
+            </div>
+          `).join("")}
+          <div class="sub-actions"><button class="small-btn" data-add="mechanics">Add</button></div>
+        `),
+
+        editorCard("Media gallery", `
+          ${data.mediaItems.map((item, index) => `
+            <div class="array-item">
+              <div class="array-head"><button class="icon-btn" data-remove="mediaItems|${index}" title="Remove">🗑</button></div>
+              ${makeArrayBoundField("Label", "mediaItems", index, "label", item.label)}
+              ${imageField("Gallery image", item.image, "array|mediaItems|${index}|image", "array|mediaItems|${index}|image")}
+            </div>
+          `).join("")}
+          <div class="sub-actions"><button class="small-btn" data-add="mediaItems">Add</button></div>
+        `),
+
+        editorCard("Sound notes", `
+          ${data.soundtrackNotes.map((item, index) => `
+            <div class="array-item">
+              <div class="array-head"><button class="icon-btn" data-remove="soundtrackNotes|${index}" title="Remove">🗑</button></div>
+              ${makeStringArrayField("Sound note " + (index + 1), "soundtrackNotes", index, item)}
+            </div>
+          `).join("")}
+          <div class="sub-actions"><button class="small-btn" data-add="soundtrackNotes">Add</button></div>
+        `),
+
+        editorCard("Trailer", `
+          ${makeBoundField("Section title", "trailer.title", data.trailer.title)}
+          ${makeBoundField("Embed or YouTube URL", "trailer.embedUrl", data.trailer.embedUrl)}
+          ${makeBoundField("Placeholder text", "trailer.placeholder", data.trailer.placeholder, true)}
+        `),
+
+        editorCard("Devlog", `
+          ${data.devlog.map((item, index) => `
+            <div class="array-item">
+              <div class="array-head"><button class="icon-btn" data-remove="devlog|${index}" title="Remove">🗑</button></div>
+              ${makeArrayBoundField("Date / label", "devlog", index, "date", item.date)}
+              ${makeArrayBoundField("Note", "devlog", index, "note", item.note, true)}
+            </div>
+          `).join("")}
+          <div class="sub-actions"><button class="small-btn" data-add="devlog">Add</button></div>
+        `),
+
+        editorCard("Call to action", `
+          ${makeBoundField("Label", "cta.label", data.cta.label)}
+          ${makeBoundField("Headline", "cta.headline", data.cta.headline, true)}
+          ${makeBoundField("Primary button label", "cta.primaryLabel", data.cta.primaryLabel)}
+          ${makeBoundField("Primary button link", "cta.primaryHref", data.cta.primaryHref)}
+          ${makeBoundField("Secondary button label", "cta.secondaryLabel", data.cta.secondaryLabel)}
+          ${makeBoundField("Secondary button link", "cta.secondaryHref", data.cta.secondaryHref)}
+        `)
+      ].join("");
+
+      bindBasicFields(editorGrid);
+    }
+
+    function render() {
+      renderPreview();
+      renderEditor();
+      editorShell.classList.toggle("hidden", !editMode);
+      toggleModeBtn.textContent = editMode ? "Preview mode" : "Edit mode";
+    }
+
+    toggleModeBtn.addEventListener("click", () => {
+      editMode = !editMode;
+      render();
+    });
+
+    exportBtn.addEventListener("click", () => {
+      const blob = new Blob([JSON.stringify(data, null, 2)], { type: "application/json" });
+      const url = URL.createObjectURL(blob);
+      const link = document.createElement("a");
+      link.href = url;
+      link.download = "game-site-content.json";
+      link.click();
+      URL.revokeObjectURL(url);
+      showSavedMessage("Content JSON exported.");
+    });
+
+    render();
+  </script>
+</body>
+</html>

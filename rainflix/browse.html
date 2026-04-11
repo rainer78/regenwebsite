@@ -633,7 +633,7 @@
     function ensureSession() {
       const session = getSession();
       if (!session || !session.signedIn) {
-        window.location.href = '/signin.html';
+        window.location.href = '/rainflix/signin.html';
         return null;
       }
       return session;
@@ -754,7 +754,7 @@
       signoutBtn.addEventListener('click', () => {
         sessionStorage.removeItem('rainflix_session');
         localStorage.removeItem('rainflix_session');
-        window.location.href = '/signin.html';
+        window.location.href = '/rainflix/signin.html';
       });
     }
 

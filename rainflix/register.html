@@ -1,0 +1,380 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>RainFlix | Register</title>
+  <meta name="description" content="Create a RainFlix account." />
+  <style>
+    :root {
+      --bg: #141414;
+      --text: #ffffff;
+      --muted: #b3b3b3;
+      --accent: #e50914;
+      --accent-dark: #b20710;
+      --border: rgba(255,255,255,0.08);
+      --shadow: 0 18px 40px rgba(0,0,0,0.35);
+      --max: 1400px;
+    }
+
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: Arial, Helvetica, sans-serif;
+      background:
+        linear-gradient(to top, rgba(20,20,20,0.96), rgba(20,20,20,0.45)),
+        linear-gradient(to right, rgba(0,0,0,0.84), rgba(0,0,0,0.46)),
+        url('https://images.unsplash.com/photo-1517604931442-7e0c8ed2963c?auto=format&fit=crop&w=1600&q=80') center/cover no-repeat fixed;
+      color: var(--text);
+      min-height: 100vh;
+    }
+
+    a { color: inherit; text-decoration: none; }
+    .container { width: min(var(--max), calc(100% - 40px)); margin: 0 auto; }
+
+    .site-header {
+      position: sticky;
+      top: 0;
+      z-index: 20;
+      backdrop-filter: blur(12px);
+      background: linear-gradient(to bottom, rgba(0,0,0,0.86), rgba(0,0,0,0.42));
+      border-bottom: 1px solid rgba(255,255,255,0.05);
+    }
+
+    .header-inner {
+      min-height: 72px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 24px;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+    }
+
+    .brand-mark { color: var(--accent); font-size: 1.7rem; line-height: 1; }
+    .brand-name { font-size: 1.05rem; }
+
+    .nav {
+      display: flex;
+      align-items: center;
+      gap: 20px;
+      flex-wrap: wrap;
+      color: #e5e5e5;
+      font-size: 0.95rem;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      border: 0;
+      border-radius: 6px;
+      cursor: pointer;
+      font-weight: 700;
+      transition: transform 0.18s ease, background 0.18s ease;
+      padding: 12px 18px;
+      font-size: 0.98rem;
+    }
+
+    .btn:hover, .btn:focus-visible { transform: translateY(-1px); }
+    .btn-primary { background: var(--accent); color: #fff; }
+    .btn-primary:hover, .btn-primary:focus-visible { background: var(--accent-dark); }
+    .btn-secondary { background: rgba(109,109,110,0.7); color: #fff; }
+
+    .register-shell {
+      min-height: calc(100vh - 72px);
+      display: grid;
+      align-items: center;
+      padding: 40px 0 60px;
+    }
+
+    .register-grid {
+      display: grid;
+      grid-template-columns: minmax(280px, 1.05fr) minmax(320px, 500px);
+      gap: 48px;
+      align-items: center;
+    }
+
+    .register-copy h1 {
+      margin: 0 0 18px;
+      font-size: clamp(2.5rem, 5vw, 4.6rem);
+      line-height: 0.98;
+      max-width: 10ch;
+    }
+
+    .register-copy p {
+      margin: 0 0 24px;
+      max-width: 60ch;
+      color: #f0f0f0;
+      font-size: 1.06rem;
+    }
+
+    .register-meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px 14px;
+      color: #d4d4d4;
+      font-size: 0.92rem;
+    }
+
+    .register-meta span {
+      padding: 8px 12px;
+      border-radius: 999px;
+      background: rgba(255,255,255,0.08);
+      border: 1px solid rgba(255,255,255,0.08);
+    }
+
+    .card {
+      background: linear-gradient(180deg, rgba(15,15,15,0.9), rgba(0,0,0,0.86));
+      border: 1px solid rgba(255,255,255,0.1);
+      border-radius: 18px;
+      padding: 40px;
+      box-shadow: var(--shadow);
+      backdrop-filter: blur(10px);
+    }
+
+    .card h2 {
+      margin: 0 0 8px;
+      font-size: 2rem;
+      line-height: 1.1;
+    }
+
+    .subcopy {
+      margin: 0 0 26px;
+      color: var(--muted);
+      font-size: 0.96rem;
+    }
+
+    .form { display: grid; gap: 14px; }
+    .field-wrap { display: grid; gap: 8px; }
+    .field-wrap label { font-size: 0.93rem; color: #e7e7e7; }
+
+    .field {
+      width: 100%;
+      border-radius: 6px;
+      border: 1px solid rgba(255,255,255,0.08);
+      background: #333;
+      color: #fff;
+      padding: 16px;
+      font-size: 1rem;
+      outline: none;
+    }
+
+    .field:focus {
+      border-color: rgba(255,255,255,0.22);
+      background: #3a3a3a;
+    }
+
+    .inline-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 14px;
+    }
+
+    .checkbox-row {
+      display: inline-flex;
+      align-items: flex-start;
+      gap: 10px;
+      color: #d5d5d5;
+      font-size: 0.92rem;
+      margin-top: 2px;
+    }
+
+    .submit {
+      width: 100%;
+      margin-top: 10px;
+      padding: 14px 18px;
+      font-size: 1rem;
+    }
+
+    .status {
+      min-height: 22px;
+      color: #f5c2c7;
+      font-size: 0.92rem;
+      margin-top: 6px;
+    }
+
+    .helper {
+      margin-top: 22px;
+      color: var(--muted);
+      font-size: 0.95rem;
+    }
+
+    .helper a { color: #fff; font-weight: 700; }
+
+    @media (max-width: 900px) {
+      .register-grid { grid-template-columns: 1fr; gap: 28px; }
+      .card { max-width: 560px; }
+    }
+
+    @media (max-width: 760px) {
+      .header-inner {
+        min-height: auto;
+        padding: 16px 0;
+        align-items: flex-start;
+        flex-direction: column;
+      }
+      .inline-grid { grid-template-columns: 1fr; }
+      .card { padding: 28px 22px; }
+    }
+  </style>
+</head>
+<body>
+  <header class="site-header">
+    <div class="container header-inner">
+      <a href="/rainflix/media.html" class="brand" aria-label="RainFlix home">
+        <span class="brand-mark">RF</span>
+        <span class="brand-name">RAINFLIX</span>
+      </a>
+
+      <nav class="nav" aria-label="Primary navigation">
+        <a href="/rainflix/media.html">Home</a>
+        <a href="/rainflix/signin.html">Sign In</a>
+        <a href="/rainflix/forgot-password.html">Forgot Password</a>
+      </nav>
+
+      <a class="btn btn-secondary" href="/signin.html">Back to Sign In</a>
+    </div>
+  </header>
+
+  <main class="register-shell">
+    <div class="container register-grid">
+      <section class="register-copy" aria-label="Registration introduction">
+        <h1>Create your RainFlix account.</h1>
+        <p>
+          This registration page is built to function as a front-end prototype now and a proper sign-up screen later. It validates the form, stores the new user in browser storage, signs them in, and routes them into the browse page.
+        </p>
+        <div class="register-meta">
+          <span>Prototype ready</span>
+          <span>Back-end replaceable</span>
+          <span>Session-aware flow</span>
+        </div>
+      </section>
+
+      <section class="card" aria-label="Registration form">
+        <h2>Create Account</h2>
+        <p class="subcopy">Fill this out once and the prototype will store a local user record, then sign you in automatically.</p>
+
+        <form class="form" id="register-form" novalidate>
+          <div class="inline-grid">
+            <div class="field-wrap">
+              <label for="firstName">First name</label>
+              <input class="field" type="text" id="firstName" name="firstName" placeholder="First name" required />
+            </div>
+            <div class="field-wrap">
+              <label for="lastName">Last name</label>
+              <input class="field" type="text" id="lastName" name="lastName" placeholder="Last name" required />
+            </div>
+          </div>
+
+          <div class="field-wrap">
+            <label for="email">Email address</label>
+            <input class="field" type="email" id="email" name="email" placeholder="name@example.com" required />
+          </div>
+
+          <div class="field-wrap">
+            <label for="password">Password</label>
+            <input class="field" type="password" id="password" name="password" placeholder="At least 6 characters" required />
+          </div>
+
+          <div class="field-wrap">
+            <label for="confirmPassword">Confirm password</label>
+            <input class="field" type="password" id="confirmPassword" name="confirmPassword" placeholder="Re-enter password" required />
+          </div>
+
+          <label class="checkbox-row">
+            <input type="checkbox" id="terms" name="terms" />
+            <span>I agree to the placeholder terms. They are imaginary, but your checkbox is still required.</span>
+          </label>
+
+          <button class="btn btn-primary submit" type="submit">Create Account</button>
+          <div class="status" id="status" aria-live="polite"></div>
+        </form>
+
+        <div class="helper">
+          Already have an account? <a href="/rainflix/signin.html">Sign in here</a>
+        </div>
+      </section>
+    </div>
+  </main>
+
+  <script>
+    const form = document.getElementById('register-form');
+    const statusEl = document.getElementById('status');
+
+    function setStatus(message, isError = true) {
+      statusEl.textContent = message;
+      statusEl.style.color = isError ? '#f5c2c7' : '#b7f7c3';
+    }
+
+    form.addEventListener('submit', (event) => {
+      event.preventDefault();
+
+      const firstName = form.firstName.value.trim();
+      const lastName = form.lastName.value.trim();
+      const email = form.email.value.trim();
+      const password = form.password.value.trim();
+      const confirmPassword = form.confirmPassword.value.trim();
+      const terms = form.terms.checked;
+
+      if (!firstName || !lastName) {
+        setStatus('Enter your first and last name.');
+        return;
+      }
+
+      if (!/^\S+@\S+\.\S+$/.test(email)) {
+        setStatus('Enter a valid email address.');
+        return;
+      }
+
+      if (password.length < 6) {
+        setStatus('Use at least 6 characters for the password.');
+        return;
+      }
+
+      if (password !== confirmPassword) {
+        setStatus('Passwords do not match.');
+        return;
+      }
+
+      if (!terms) {
+        setStatus('You need to agree to the placeholder terms. Bureaucracy survives, even in prototypes.');
+        return;
+      }
+
+      const user = {
+        firstName,
+        lastName,
+        email,
+        createdAt: new Date().toISOString()
+      };
+
+      localStorage.setItem('rainflix_user', JSON.stringify(user));
+      localStorage.setItem('rainflix_session', JSON.stringify({
+        signedIn: true,
+        email,
+        remember: true,
+        signedInAt: new Date().toISOString()
+      }));
+
+      setStatus('Account created. Redirecting to the library...', false);
+
+      const button = form.querySelector('button[type="submit"]');
+      button.textContent = 'Account Created';
+      button.disabled = true;
+      button.style.opacity = '0.7';
+
+      setTimeout(() => {
+        window.location.href = '/rainflix/browse.html';
+      }, 700);
+    });
+  </script>
+</body>
+</html>

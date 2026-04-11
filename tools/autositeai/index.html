@@ -1532,7 +1532,10 @@
     });
   })();
 </script>
-<script>
+
+  
+<!--Fetch Live Autosite Updates -->
+  <script>
   const FEED_URL = "https://v0-next-js-api-route-nu.vercel.app/feed";
   const SITE_ORIGIN = "https://regencreatives.com";
 
@@ -1644,6 +1647,8 @@
       }
 
       const payload = await response.json();
+      console.log("Feed payload:", payload);
+
       const items = getItems(payload).slice(0, 3);
 
       if (!items.length) {
@@ -1668,6 +1673,7 @@
 
   document.addEventListener("DOMContentLoaded", loadLiveUpdates);
 </script>
+  
       
 </body>
 </html>

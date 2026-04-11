@@ -10,6 +10,7 @@
       --bg: #141414;
       --bg-soft: #1c1c1c;
       --panel: #181818;
+      --panel-2: #202020;
       --text: #ffffff;
       --muted: #b3b3b3;
       --accent: #e50914;
@@ -17,6 +18,7 @@
       --border: rgba(255,255,255,0.08);
       --shadow: 0 18px 40px rgba(0,0,0,0.35);
       --max: 1400px;
+      --blue-link: #54b9ff;
     }
 
     * {
@@ -30,7 +32,7 @@
     body {
       margin: 0;
       font-family: Arial, Helvetica, sans-serif;
-      background: var(--bg);
+      background: linear-gradient(180deg, #111 0%, #141414 25%, #141414 100%);
       color: var(--text);
       line-height: 1.5;
     }
@@ -55,8 +57,8 @@
       top: 0;
       z-index: 50;
       backdrop-filter: blur(12px);
-      background: linear-gradient(to bottom, rgba(0,0,0,0.82), rgba(0,0,0,0.42));
-      border-bottom: 1px solid rgba(255,255,255,0.04);
+      background: linear-gradient(to bottom, rgba(0,0,0,0.86), rgba(0,0,0,0.48));
+      border-bottom: 1px solid rgba(255,255,255,0.05);
     }
 
     .header-inner {
@@ -72,12 +74,13 @@
       align-items: center;
       gap: 14px;
       font-weight: 700;
-      letter-spacing: 0.06em;
+      letter-spacing: 0.08em;
     }
 
     .brand-mark {
       color: var(--accent);
       font-size: 1.7rem;
+      line-height: 1;
     }
 
     .brand-name {
@@ -95,6 +98,7 @@
 
     .nav a {
       opacity: 0.9;
+      transition: opacity 0.18s ease, color 0.18s ease;
     }
 
     .nav a:hover,
@@ -120,6 +124,7 @@
       font-weight: 700;
       transition: transform 0.18s ease, opacity 0.18s ease, background 0.18s ease;
       padding: 12px 18px;
+      font-size: 0.98rem;
     }
 
     .btn:hover,
@@ -138,35 +143,51 @@
     }
 
     .btn-secondary {
-      background: rgba(109, 109, 110, 0.7);
+      background: rgba(109,109,110,0.7);
       color: #fff;
     }
 
     .btn-secondary:hover,
     .btn-secondary:focus-visible {
-      background: rgba(109, 109, 110, 0.9);
+      background: rgba(109,109,110,0.9);
     }
 
     .btn-light {
-      background: rgba(255,255,255,0.92);
+      background: rgba(255,255,255,0.94);
       color: #111;
+    }
+
+    .btn-light:hover,
+    .btn-light:focus-visible {
+      background: #fff;
     }
 
     .hero {
       position: relative;
-      min-height: 78vh;
+      min-height: 80vh;
       display: grid;
       align-items: end;
       background:
-        linear-gradient(to top, rgba(20,20,20,1) 8%, rgba(20,20,20,0.25) 48%, rgba(20,20,20,0.8) 100%),
-        linear-gradient(to right, rgba(0,0,0,0.88) 0%, rgba(0,0,0,0.54) 38%, rgba(0,0,0,0.15) 62%, rgba(0,0,0,0.58) 100%),
+        linear-gradient(to top, rgba(20,20,20,1) 7%, rgba(20,20,20,0.18) 44%, rgba(20,20,20,0.85) 100%),
+        linear-gradient(to right, rgba(0,0,0,0.88) 0%, rgba(0,0,0,0.62) 36%, rgba(0,0,0,0.18) 64%, rgba(0,0,0,0.62) 100%),
         url('https://images.unsplash.com/photo-1489599849927-2ee91cede3ba?auto=format&fit=crop&w=1600&q=80') center/cover no-repeat;
     }
 
+    .hero::after {
+      content: "";
+      position: absolute;
+      inset: auto 0 0 0;
+      height: 120px;
+      background: linear-gradient(to bottom, transparent, #141414);
+      pointer-events: none;
+    }
+
     .hero-inner {
-      padding: 90px 0 70px;
+      position: relative;
+      z-index: 1;
+      padding: 94px 0 72px;
       display: grid;
-      grid-template-columns: minmax(280px, 620px);
+      grid-template-columns: minmax(280px, 640px);
     }
 
     .eyebrow {
@@ -178,10 +199,11 @@
     }
 
     .hero h1 {
-      font-size: clamp(2.5rem, 5vw, 4.8rem);
+      font-size: clamp(2.7rem, 5vw, 5rem);
       line-height: 0.98;
       margin: 0 0 18px;
       max-width: 10ch;
+      text-wrap: balance;
     }
 
     .hero p {
@@ -201,13 +223,24 @@
     .hero-meta {
       display: flex;
       flex-wrap: wrap;
-      gap: 14px;
+      gap: 10px 14px;
       color: #d4d4d4;
       font-size: 0.95rem;
     }
 
+    .hero-meta span {
+      padding: 8px 12px;
+      border-radius: 999px;
+      background: rgba(255,255,255,0.08);
+      border: 1px solid rgba(255,255,255,0.08);
+    }
+
     .section {
-      padding: 12px 0 10px;
+      padding: 14px 0 12px;
+    }
+
+    .section + .section {
+      margin-top: 4px;
     }
 
     .section-title-row {
@@ -225,8 +258,14 @@
     }
 
     .section-link {
-      color: #54b9ff;
+      color: var(--blue-link);
       font-size: 0.92rem;
+      white-space: nowrap;
+    }
+
+    .section-link:hover,
+    .section-link:focus-visible {
+      color: #8ed3ff;
     }
 
     .rail-wrap {
@@ -250,12 +289,12 @@
 
     .card {
       scroll-snap-align: start;
-      background: var(--panel);
+      background: linear-gradient(180deg, #1c1c1c, #171717);
       border-radius: 10px;
       overflow: hidden;
       border: 1px solid var(--border);
       box-shadow: var(--shadow);
-      transition: transform 0.25s ease, border-color 0.25s ease;
+      transition: transform 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease;
       min-height: 100%;
     }
 
@@ -263,6 +302,12 @@
     .card:focus-within {
       transform: scale(1.04);
       border-color: rgba(255,255,255,0.18);
+      box-shadow: 0 24px 54px rgba(0,0,0,0.42);
+    }
+
+    .card > a {
+      display: block;
+      height: 100%;
     }
 
     .card-poster {
@@ -272,16 +317,27 @@
       background: #0f0f0f;
     }
 
+    .card-poster::after {
+      content: "";
+      position: absolute;
+      inset: auto 0 0 0;
+      height: 50%;
+      background: linear-gradient(to top, rgba(0,0,0,0.38), transparent);
+      pointer-events: none;
+    }
+
     .card-poster img {
       width: 100%;
       height: 100%;
       object-fit: cover;
+      transform: scale(1.01);
     }
 
     .badge {
       position: absolute;
       top: 10px;
       left: 10px;
+      z-index: 1;
       background: rgba(229, 9, 20, 0.95);
       color: #fff;
       font-size: 0.72rem;
@@ -305,6 +361,7 @@
       margin: 0 0 12px;
       color: var(--muted);
       font-size: 0.92rem;
+      min-height: 4.2em;
     }
 
     .card-meta {
@@ -342,27 +399,21 @@
     }
 
     .signin-section {
-      padding: 54px 0 72px;
-    }
-
-    .signin-shell {
-      min-height: 100vh;
-      display: flex;
-      flex-direction: column;
+      padding: 60px 0 80px;
     }
 
     .signin-wrap {
-      width: min(100%, 450px);
+      width: min(100%, 460px);
       margin-left: auto;
-      padding: 60px 0;
     }
 
     .signin-card {
-      background: rgba(0,0,0,0.78);
+      background: linear-gradient(180deg, rgba(15,15,15,0.84), rgba(0,0,0,0.82));
       border: 1px solid rgba(255,255,255,0.1);
       border-radius: 18px;
       padding: 42px;
       box-shadow: var(--shadow);
+      backdrop-filter: blur(8px);
     }
 
     .signin-card h2 {
@@ -379,11 +430,17 @@
     .field {
       width: 100%;
       border-radius: 6px;
-      border: 0;
+      border: 1px solid rgba(255,255,255,0.08);
       background: #333;
       color: #fff;
       padding: 16px;
       font-size: 1rem;
+      outline: none;
+    }
+
+    .field:focus {
+      border-color: rgba(255,255,255,0.22);
+      background: #3a3a3a;
     }
 
     .field::placeholder {
@@ -403,7 +460,8 @@
       font-size: 0.95rem;
     }
 
-    .signin-help a {
+    .signin-help a,
+    .signin-meta a {
       color: #fff;
       font-weight: 700;
     }
@@ -437,15 +495,6 @@
       }
     }
 
-      .cta-box {
-        grid-template-columns: 1fr;
-      }
-
-      .signup {
-        justify-content: flex-start;
-      }
-    }
-
     @media (max-width: 760px) {
       .header-inner {
         min-height: auto;
@@ -459,7 +508,7 @@
       }
 
       .hero {
-        min-height: 70vh;
+        min-height: 72vh;
         background-position: center right;
       }
 
@@ -478,37 +527,15 @@
       .signin-wrap {
         width: 100%;
         margin-left: 0;
-        padding: 32px 0 48px;
       }
 
       .signin-card {
         padding: 28px 22px;
       }
-    }
 
-      .nav {
-        gap: 14px;
-      }
-
-      .hero {
-        min-height: 70vh;
-        background-position: center right;
-      }
-
-      .hero-inner {
-        padding: 72px 0 44px;
-      }
-
-      .feature-grid {
-        grid-template-columns: 1fr;
-      }
-
-      .rail {
-        grid-auto-columns: 78vw;
-      }
-
-      .cta-box {
-        padding: 24px;
+      .section-title-row {
+        align-items: flex-start;
+        flex-direction: column;
       }
     }
   </style>
@@ -567,51 +594,59 @@
         <div class="rail-wrap">
           <div class="rail" aria-label="Featured library carousel">
             <article class="card">
-              <div class="card-poster">
-                <img src="https://images.unsplash.com/photo-1489599849927-2ee91cede3ba?auto=format&fit=crop&w=900&q=80" alt="Cinema projector light beam" />
-                <span class="badge">FEATURED FILM</span>
-              </div>
-              <div class="card-body">
-                <h3 class="card-title">Movies That Feel Curated</h3>
-                <p class="card-copy">Use RainFlix as a polished front end for the films already living inside your Emby library.</p>
-                <div class="card-meta"><span>Video</span><span>Emby Powered</span><span>HD</span></div>
-              </div>
+              <a href="/browse.html?type=featured&category=movies">
+                <div class="card-poster">
+                  <img src="https://images.unsplash.com/photo-1489599849927-2ee91cede3ba?auto=format&fit=crop&w=900&q=80" alt="Cinema projector light beam" />
+                  <span class="badge">FEATURED FILM</span>
+                </div>
+                <div class="card-body">
+                  <h3 class="card-title">Movies That Feel Curated</h3>
+                  <p class="card-copy">Use RainFlix as a polished front end for the films already living inside your Emby library.</p>
+                  <div class="card-meta"><span>Video</span><span>Emby Powered</span><span>HD</span></div>
+                </div>
+              </a>
             </article>
 
             <article class="card">
-              <div class="card-poster">
-                <img src="https://images.unsplash.com/photo-1493225457124-a3eb161ffa5f?auto=format&fit=crop&w=900&q=80" alt="Microphone on stage with warm lighting" />
-                <span class="badge">CD AUDIO</span>
-              </div>
-              <div class="card-body">
-                <h3 class="card-title">Ripped CDs, Streamed Cleanly</h3>
-                <p class="card-copy">Albums, artists, and tracks can be surfaced as a music shelf while Emby handles playback in the background.</p>
-                <div class="card-meta"><span>Audio</span><span>Albums</span><span>Artists</span></div>
-              </div>
+              <a href="/browse.html?type=featured&category=music">
+                <div class="card-poster">
+                  <img src="https://images.unsplash.com/photo-1493225457124-a3eb161ffa5f?auto=format&fit=crop&w=900&q=80" alt="Microphone on stage with warm lighting" />
+                  <span class="badge">CD AUDIO</span>
+                </div>
+                <div class="card-body">
+                  <h3 class="card-title">Ripped CDs, Streamed Cleanly</h3>
+                  <p class="card-copy">Albums, artists, and tracks can be surfaced as a music shelf while Emby handles playback in the background.</p>
+                  <div class="card-meta"><span>Audio</span><span>Albums</span><span>Artists</span></div>
+                </div>
+              </a>
             </article>
 
             <article class="card">
-              <div class="card-poster">
-                <img src="https://images.unsplash.com/photo-1511512578047-dfb367046420?auto=format&fit=crop&w=900&q=80" alt="Gaming controller lit by screen glow" />
-                <span class="badge">PLAYABLE</span>
-              </div>
-              <div class="card-body">
-                <h3 class="card-title">Games You Actually Control</h3>
-                <p class="card-copy">Link your browser-based games directly from RainFlix without forcing Emby to pretend it is a game console.</p>
-                <div class="card-meta"><span>HTML Games</span><span>WebXR</span><span>Static Hosting</span></div>
-              </div>
+              <a href="/browse.html?type=featured&category=games">
+                <div class="card-poster">
+                  <img src="https://images.unsplash.com/photo-1511512578047-dfb367046420?auto=format&fit=crop&w=900&q=80" alt="Gaming controller lit by screen glow" />
+                  <span class="badge">PLAYABLE</span>
+                </div>
+                <div class="card-body">
+                  <h3 class="card-title">Games You Actually Control</h3>
+                  <p class="card-copy">Link your browser-based games directly from RainFlix without forcing Emby to pretend it is a game console.</p>
+                  <div class="card-meta"><span>HTML Games</span><span>WebXR</span><span>Static Hosting</span></div>
+                </div>
+              </a>
             </article>
 
             <article class="card">
-              <div class="card-poster">
-                <img src="https://images.unsplash.com/photo-1516321497487-e288fb19713f?auto=format&fit=crop&w=900&q=80" alt="Laptop with code on screen" />
-                <span class="badge">SYSTEM</span>
-              </div>
-              <div class="card-body">
-                <h3 class="card-title">One Interface, Multiple Feeds</h3>
-                <p class="card-copy">RainFlix can read media data from Emby and game data from a separate JSON feed, then render both in one clean interface.</p>
-                <div class="card-meta"><span>JSON Driven</span><span>Flexible</span><span>Scalable</span></div>
-              </div>
+              <a href="#library-system">
+                <div class="card-poster">
+                  <img src="https://images.unsplash.com/photo-1516321497487-e288fb19713f?auto=format&fit=crop&w=900&q=80" alt="Laptop with code on screen" />
+                  <span class="badge">SYSTEM</span>
+                </div>
+                <div class="card-body">
+                  <h3 class="card-title">One Interface, Multiple Feeds</h3>
+                  <p class="card-copy">RainFlix can read media data from Emby and game data from a separate JSON feed, then render both in one clean interface.</p>
+                  <div class="card-meta"><span>JSON Driven</span><span>Flexible</span><span>Scalable</span></div>
+                </div>
+              </a>
             </article>
           </div>
         </div>
@@ -622,64 +657,74 @@
       <div class="container">
         <div class="section-title-row">
           <h2>Trending Now</h2>
-          <a class="section-link" href="/browse.html">Open Row</a>
+          <a class="section-link" href="/browse.html?section=movies">Open Row</a>
         </div>
         <div class="rail-wrap">
           <div class="rail" aria-label="Trending carousel">
             <article class="card">
-              <div class="card-poster">
-                <img src="https://images.unsplash.com/photo-1497032205916-ac775f0649ae?auto=format&fit=crop&w=900&q=80" alt="Desk with scripts and headphones" />
-                <span class="badge">TRENDING</span>
-              </div>
-              <div class="card-body">
-                <h3 class="card-title">The Quiet Hour</h3>
-                <p class="card-copy">A talk show producer uncovers a political scandal through call screening logs.</p>
-                <div class="card-meta"><span>Drama</span><span>12 Episodes</span><span>HD</span></div>
-              </div>
+              <a href="/browse.html?type=movie&id=quiet-hour">
+                <div class="card-poster">
+                  <img src="https://images.unsplash.com/photo-1497032205916-ac775f0649ae?auto=format&fit=crop&w=900&q=80" alt="Desk with scripts and headphones" />
+                  <span class="badge">TRENDING</span>
+                </div>
+                <div class="card-body">
+                  <h3 class="card-title">The Quiet Hour</h3>
+                  <p class="card-copy">A talk show producer uncovers a political scandal through call screening logs.</p>
+                  <div class="card-meta"><span>Drama</span><span>12 Episodes</span><span>HD</span></div>
+                </div>
+              </a>
             </article>
 
             <article class="card">
-              <div class="card-poster">
-                <img src="https://images.unsplash.com/photo-1489599849927-2ee91cede3ba?auto=format&fit=crop&w=900&q=80" alt="Cinema projector light beam" />
-              </div>
-              <div class="card-body">
-                <h3 class="card-title">House Lights</h3>
-                <p class="card-copy">A theater reopens after decades, and so do all the old stories inside it.</p>
-                <div class="card-meta"><span>Suspense</span><span>1h 43m</span><span>4K</span></div>
-              </div>
+              <a href="/browse.html?type=movie&id=house-lights">
+                <div class="card-poster">
+                  <img src="https://images.unsplash.com/photo-1489599849927-2ee91cede3ba?auto=format&fit=crop&w=900&q=80" alt="Cinema projector light beam" />
+                </div>
+                <div class="card-body">
+                  <h3 class="card-title">House Lights</h3>
+                  <p class="card-copy">A theater reopens after decades, and so do all the old stories inside it.</p>
+                  <div class="card-meta"><span>Suspense</span><span>1h 43m</span><span>4K</span></div>
+                </div>
+              </a>
             </article>
 
             <article class="card">
-              <div class="card-poster">
-                <img src="https://images.unsplash.com/photo-1478720568477-152d9b164e26?auto=format&fit=crop&w=900&q=80" alt="Dark road with headlights" />
-              </div>
-              <div class="card-body">
-                <h3 class="card-title">Northbound</h3>
-                <p class="card-copy">A long-haul driver records one impossible thing at every stop.</p>
-                <div class="card-meta"><span>Supernatural</span><span>6 Episodes</span><span>HD</span></div>
-              </div>
+              <a href="/browse.html?type=movie&id=northbound">
+                <div class="card-poster">
+                  <img src="https://images.unsplash.com/photo-1478720568477-152d9b164e26?auto=format&fit=crop&w=900&q=80" alt="Dark road with headlights" />
+                </div>
+                <div class="card-body">
+                  <h3 class="card-title">Northbound</h3>
+                  <p class="card-copy">A long-haul driver records one impossible thing at every stop.</p>
+                  <div class="card-meta"><span>Supernatural</span><span>6 Episodes</span><span>HD</span></div>
+                </div>
+              </a>
             </article>
 
             <article class="card">
-              <div class="card-poster">
-                <img src="https://images.unsplash.com/photo-1513104890138-7c749659a591?auto=format&fit=crop&w=900&q=80" alt="Pizza on table during a watch party" />
-              </div>
-              <div class="card-body">
-                <h3 class="card-title">Friday Club</h3>
-                <p class="card-copy">A comedy about five strangers connected by a weekly film ritual.</p>
-                <div class="card-meta"><span>Comedy</span><span>3 Seasons</span><span>HD</span></div>
-              </div>
+              <a href="/browse.html?type=movie&id=friday-club">
+                <div class="card-poster">
+                  <img src="https://images.unsplash.com/photo-1513104890138-7c749659a591?auto=format&fit=crop&w=900&q=80" alt="Pizza on table during a watch party" />
+                </div>
+                <div class="card-body">
+                  <h3 class="card-title">Friday Club</h3>
+                  <p class="card-copy">A comedy about five strangers connected by a weekly film ritual.</p>
+                  <div class="card-meta"><span>Comedy</span><span>3 Seasons</span><span>HD</span></div>
+                </div>
+              </a>
             </article>
 
             <article class="card">
-              <div class="card-poster">
-                <img src="https://images.unsplash.com/photo-1516280440614-37939bbacd81?auto=format&fit=crop&w=900&q=80" alt="Band performing on stage" />
-              </div>
-              <div class="card-body">
-                <h3 class="card-title">Backstage Line</h3>
-                <p class="card-copy">A washed-up guitarist gets one final chance to fix his most famous mistake.</p>
-                <div class="card-meta"><span>Music Drama</span><span>2h 11m</span><span>4K</span></div>
-              </div>
+              <a href="/browse.html?type=movie&id=backstage-line">
+                <div class="card-poster">
+                  <img src="https://images.unsplash.com/photo-1516280440614-37939bbacd81?auto=format&fit=crop&w=900&q=80" alt="Band performing on stage" />
+                </div>
+                <div class="card-body">
+                  <h3 class="card-title">Backstage Line</h3>
+                  <p class="card-copy">A washed-up guitarist gets one final chance to fix his most famous mistake.</p>
+                  <div class="card-meta"><span>Music Drama</span><span>2h 11m</span><span>4K</span></div>
+                </div>
+              </a>
             </article>
           </div>
         </div>
@@ -690,56 +735,64 @@
       <div class="container">
         <div class="section-title-row">
           <h2>Music from Your CD Library</h2>
-          <a class="section-link" href="#library-system">How Audio Works</a>
+          <a class="section-link" href="/browse.html?section=music">Open Row</a>
         </div>
         <div class="rail-wrap">
           <div class="rail" aria-label="Music carousel">
             <article class="card">
-              <div class="card-poster">
-                <img src="https://images.unsplash.com/photo-1494232410401-ad00d5433cfa?auto=format&fit=crop&w=900&q=80" alt="Vinyl records stacked beside a player" />
-                <span class="badge">ALBUMS</span>
-              </div>
-              <div class="card-body">
-                <h3 class="card-title">Album Collection</h3>
-                <p class="card-copy">Present full albums with cover art, artist details, and direct playback links served by Emby.</p>
-                <div class="card-meta"><span>Music</span><span>Direct Stream</span><span>Metadata</span></div>
-              </div>
+              <a href="/browse.html?type=album&id=album-collection">
+                <div class="card-poster">
+                  <img src="https://images.unsplash.com/photo-1494232410401-ad00d5433cfa?auto=format&fit=crop&w=900&q=80" alt="Vinyl records stacked beside a player" />
+                  <span class="badge">ALBUMS</span>
+                </div>
+                <div class="card-body">
+                  <h3 class="card-title">Album Collection</h3>
+                  <p class="card-copy">Present full albums with cover art, artist details, and direct playback links served by Emby.</p>
+                  <div class="card-meta"><span>Music</span><span>Direct Stream</span><span>Metadata</span></div>
+                </div>
+              </a>
             </article>
 
             <article class="card">
-              <div class="card-poster">
-                <img src="https://images.unsplash.com/photo-1511379938547-c1f69419868d?auto=format&fit=crop&w=900&q=80" alt="Headphones on a mixing console" />
-                <span class="badge">TRACKS</span>
-              </div>
-              <div class="card-body">
-                <h3 class="card-title">Track-Level Streaming</h3>
-                <p class="card-copy">RainFlix can surface individual tracks while Emby handles the stream delivery and playback support.</p>
-                <div class="card-meta"><span>Artists</span><span>Songs</span><span>Playable</span></div>
-              </div>
+              <a href="/browse.html?type=track&id=track-streaming">
+                <div class="card-poster">
+                  <img src="https://images.unsplash.com/photo-1511379938547-c1f69419868d?auto=format&fit=crop&w=900&q=80" alt="Headphones on a mixing console" />
+                  <span class="badge">TRACKS</span>
+                </div>
+                <div class="card-body">
+                  <h3 class="card-title">Track-Level Streaming</h3>
+                  <p class="card-copy">RainFlix can surface individual tracks while Emby handles the stream delivery and playback support.</p>
+                  <div class="card-meta"><span>Artists</span><span>Songs</span><span>Playable</span></div>
+                </div>
+              </a>
             </article>
 
             <article class="card">
-              <div class="card-poster">
-                <img src="https://images.unsplash.com/photo-1507838153414-b4b713384a76?auto=format&fit=crop&w=900&q=80" alt="Person enjoying music with headphones" />
-                <span class="badge">LISTENING</span>
-              </div>
-              <div class="card-body">
-                <h3 class="card-title">Continue Listening</h3>
-                <p class="card-copy">Create a familiar streaming-style shelf for recently played albums and favorite artists.</p>
-                <div class="card-meta"><span>Favorites</span><span>Recent</span><span>Custom UI</span></div>
-              </div>
+              <a href="/browse.html?type=playlist&id=continue-listening">
+                <div class="card-poster">
+                  <img src="https://images.unsplash.com/photo-1507838153414-b4b713384a76?auto=format&fit=crop&w=900&q=80" alt="Person enjoying music with headphones" />
+                  <span class="badge">LISTENING</span>
+                </div>
+                <div class="card-body">
+                  <h3 class="card-title">Continue Listening</h3>
+                  <p class="card-copy">Create a familiar streaming-style shelf for recently played albums and favorite artists.</p>
+                  <div class="card-meta"><span>Favorites</span><span>Recent</span><span>Custom UI</span></div>
+                </div>
+              </a>
             </article>
 
             <article class="card">
-              <div class="card-poster">
-                <img src="https://images.unsplash.com/photo-1470229722913-7c0e2dbbafd3?auto=format&fit=crop&w=900&q=80" alt="Concert lights and crowd" />
-                <span class="badge">CURATED</span>
-              </div>
-              <div class="card-body">
-                <h3 class="card-title">Mood and Genre Rows</h3>
-                <p class="card-copy">Sort your library into shelves like Jazz Nights, Sunday Drive, or Deep Cuts without touching the core media server.</p>
-                <div class="card-meta"><span>Genres</span><span>Moods</span><span>Custom Rows</span></div>
-              </div>
+              <a href="/browse.html?type=playlist&id=mood-rows">
+                <div class="card-poster">
+                  <img src="https://images.unsplash.com/photo-1470229722913-7c0e2dbbafd3?auto=format&fit=crop&w=900&q=80" alt="Concert lights and crowd" />
+                  <span class="badge">CURATED</span>
+                </div>
+                <div class="card-body">
+                  <h3 class="card-title">Mood and Genre Rows</h3>
+                  <p class="card-copy">Sort your library into shelves like Jazz Nights, Sunday Drive, or Deep Cuts without touching the core media server.</p>
+                  <div class="card-meta"><span>Genres</span><span>Moods</span><span>Custom Rows</span></div>
+                </div>
+              </a>
             </article>
           </div>
         </div>
@@ -750,56 +803,64 @@
       <div class="container">
         <div class="section-title-row">
           <h2>Games You Build and Launch from RainFlix</h2>
-          <a class="section-link" href="#library-system">Why This Approach</a>
+          <a class="section-link" href="/browse.html?section=games">Open Row</a>
         </div>
         <div class="rail-wrap">
           <div class="rail" aria-label="Games carousel">
             <article class="card">
-              <div class="card-poster">
-                <img src="https://images.unsplash.com/photo-1511512578047-dfb367046420?auto=format&fit=crop&w=900&q=80" alt="Game controller in low light" />
-                <span class="badge">BROWSER GAME</span>
-              </div>
-              <div class="card-body">
-                <h3 class="card-title">HTML and JavaScript Games</h3>
-                <p class="card-copy">Launch lightweight browser games from GitHub Pages, Vercel, or any static host that serves plain web files.</p>
-                <div class="card-meta"><span>Simple</span><span>Fast</span><span>Portable</span></div>
-              </div>
+              <a href="/games/tic-tac-throw/index.html">
+                <div class="card-poster">
+                  <img src="https://images.unsplash.com/photo-1511512578047-dfb367046420?auto=format&fit=crop&w=900&q=80" alt="Game controller in low light" />
+                  <span class="badge">BROWSER GAME</span>
+                </div>
+                <div class="card-body">
+                  <h3 class="card-title">HTML and JavaScript Games</h3>
+                  <p class="card-copy">Launch lightweight browser games from GitHub Pages, Vercel, or any static host that serves plain web files.</p>
+                  <div class="card-meta"><span>Simple</span><span>Fast</span><span>Portable</span></div>
+                </div>
+              </a>
             </article>
 
             <article class="card">
-              <div class="card-poster">
-                <img src="https://images.unsplash.com/photo-1542751371-adc38448a05e?auto=format&fit=crop&w=900&q=80" alt="Gaming screen with vibrant lights" />
-                <span class="badge">WEBXR</span>
-              </div>
-              <div class="card-body">
-                <h3 class="card-title">Interactive Experiments</h3>
-                <p class="card-copy">Use RainFlix as a launcher for WebXR projects, game prototypes, and creative interactive pieces.</p>
-                <div class="card-meta"><span>Immersive</span><span>Experimental</span><span>Hosted Separately</span></div>
-              </div>
+              <a href="/games/interactive-experiments/index.html">
+                <div class="card-poster">
+                  <img src="https://images.unsplash.com/photo-1542751371-adc38448a05e?auto=format&fit=crop&w=900&q=80" alt="Gaming screen with vibrant lights" />
+                  <span class="badge">WEBXR</span>
+                </div>
+                <div class="card-body">
+                  <h3 class="card-title">Interactive Experiments</h3>
+                  <p class="card-copy">Use RainFlix as a launcher for WebXR projects, game prototypes, and creative interactive pieces.</p>
+                  <div class="card-meta"><span>Immersive</span><span>Experimental</span><span>Hosted Separately</span></div>
+                </div>
+              </a>
             </article>
 
             <article class="card">
-              <div class="card-poster">
-                <img src="https://images.unsplash.com/photo-1526374965328-7f61d4dc18c5?auto=format&fit=crop&w=900&q=80" alt="Abstract digital code pattern" />
-                <span class="badge">JSON FEED</span>
-              </div>
-              <div class="card-body">
-                <h3 class="card-title">Game Shelf from Data</h3>
-                <p class="card-copy">Maintain a separate games JSON feed with titles, thumbnails, descriptions, and launch URLs, then let RainFlix render the row.</p>
-                <div class="card-meta"><span>Structured</span><span>Flexible</span><span>Maintainable</span></div>
-              </div>
+              <a href="/games/index.html">
+                <div class="card-poster">
+                  <img src="https://images.unsplash.com/photo-1526374965328-7f61d4dc18c5?auto=format&fit=crop&w=900&q=80" alt="Abstract digital code pattern" />
+                  <span class="badge">JSON FEED</span>
+                </div>
+                <div class="card-body">
+                  <h3 class="card-title">Game Shelf from Data</h3>
+                  <p class="card-copy">Maintain a separate games JSON feed with titles, thumbnails, descriptions, and launch URLs, then let RainFlix render the row.</p>
+                  <div class="card-meta"><span>Structured</span><span>Flexible</span><span>Maintainable</span></div>
+                </div>
+              </a>
             </article>
 
             <article class="card">
-              <div class="card-poster">
-                <img src="https://images.unsplash.com/photo-1550745165-9bc0b252726f?auto=format&fit=crop&w=900&q=80" alt="Arcade controls and glowing buttons" />
-                <span class="badge">SMART LIMITS</span>
-              </div>
-              <div class="card-body">
-                <h3 class="card-title">No Emulator Circus</h3>
-                <p class="card-copy">Keep the game layer clean. RainFlix should launch games you host, not depend on fragile media-server plugins and mystery glue.</p>
-                <div class="card-meta"><span>Stable</span><span>Practical</span><span>No Drama</span></div>
-              </div>
+              <a href="/games/dev-lab/index.html">
+                <div class="card-poster">
+                  <img src="https://images.unsplash.com/photo-1550745165-9bc0b252726f?auto=format&fit=crop&w=900&q=80" alt="Arcade controls and glowing buttons" />
+                  <span class="badge">SMART LIMITS</span>
+                </div>
+                <div class="card-body">
+                  <h3 class="card-title">No Emulator Circus</h3>
+                  <p class="card-copy">Keep the game layer clean. RainFlix should launch games you host, not depend on fragile media-server plugins and mystery glue.</p>
+                  <div class="card-meta"><span>Stable</span><span>Practical</span><span>No Drama</span></div>
+                </div>
+              </a>
             </article>
           </div>
         </div>

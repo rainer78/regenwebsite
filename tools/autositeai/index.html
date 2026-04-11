@@ -67,6 +67,79 @@
   line-height: 1.5;
 }
 
+  <style>
+  .prose {
+    color: inherit;
+  }
+
+  .prose img {
+    max-width: 100%;
+    height: auto;
+    border-radius: 0.5rem;
+    margin: 1.5rem 0;
+  }
+
+  .prose h2 {
+    margin-top: 2rem;
+    margin-bottom: 1rem;
+    font-weight: 700;
+  }
+
+  .prose h3 {
+    margin-top: 1.5rem;
+    margin-bottom: 0.75rem;
+    font-weight: 600;
+  }
+
+  .prose p {
+    margin-bottom: 1rem;
+    line-height: 1.6;
+  }
+
+  .prose ul, .prose ol {
+    margin: 1rem 0;
+    padding-left: 1.5rem;
+  }
+
+  .prose li {
+    margin-bottom: 0.5rem;
+  }
+
+  .prose a {
+    color: #1085D2;
+    text-decoration: underline;
+  }
+
+  .prose a:hover {
+    color: #0B5BA3;
+  }
+
+  .prose code {
+    background: #f3f4f6;
+    padding: 0.25rem 0.5rem;
+    border-radius: 0.25rem;
+    font-family: monospace;
+    font-size: 0.875em;
+  }
+
+  .prose pre {
+    background: #1f2937;
+    color: #f3f4f6;
+    padding: 1rem;
+    border-radius: 0.5rem;
+    overflow-x: auto;
+    margin: 1rem 0;
+  }
+
+  .prose blockquote {
+    border-left: 4px solid #dbeafe;
+    padding-left: 1rem;
+    margin: 1rem 0;
+    color: #64748b;
+    font-style: italic;
+  }
+</style>
+
   </style>
 
     
@@ -1533,7 +1606,264 @@
   })();
 </script>
 
-  
+  <script>
+  const FEED_URL = "https://v0-next-js-api-route-nu.vercel.app/api/feed";
+  const SITE_ORIGIN = "https://regencreatives.com";
+
+  function formatDate(dateString) {
+    if (!dateString) return "Recent";
+    const date = new Date(dateString);
+    return date.toLocaleDateString("en-US", {
+      month: "long",
+      day: "2-digit",
+      year: "numeric"
+    });
+  }
+
+  function getItems(payload) {
+    if (Array.isArray(payload)) return payload;
+    if (Array.isArray(payload.data)) return payload.data;
+    if (Array.isArray(payload.items)) return payload.items;
+    return [];
+  }
+
+  function escapeHtml(str) {
+    if (!str) return "";
+    return String(str)
+      .replaceAll("&", "&amp;")
+      .replaceAll("<", "&lt;")
+      .replaceAll(">", "&gt;")
+      .replaceAll('"', "&quot;")
+      .replaceAll("'", "&#039;");
+  }
+
+  function toAbsoluteUrl(url) {
+    if (!url) return "#";
+    if (url.startsWith("http://") || url.startsWith("https://")) return url;
+    return `${SITE_ORIGIN}${url}`;
+  }
+
+  function renderLoadingCards() {
+    return [1, 2, 3].map(() => `
+      <article class="flex flex-col rounded-3xl border border-slate-200 bg-white p-8 shadow-sm">
+        <div class="mb-6 h-5 w-28 animate-pulse rounded bg-slate-200"></div>
+        <div class="h-7 w-3/4 animate-pulse rounded bg-slate-200"></div>
+        <div class="mt-4 h-20 animate-pulse rounded bg-slate-100"></div>
+        <div class="mt-6 h-4 w-40 animate-pulse rounded bg-slate-200"></div>
+      </article>
+    `).join("");
+  }
+
+  function renderCard(item) {
+    const title = escapeHtml(item.card_title || "Untitled update");
+    const excerpt = escapeHtml(item.card_excerpt || "No excerpt available.");
+    const tag = escapeHtml(item.card_tag || "Live Update");
+    const date = formatDate(item.card_date || item.article_published_at || item.created_at);
+    const url = toAbsoluteUrl(item.card_url);
+    const itemId = `article-${item.id}`;
+
+    return `
+      <article class="flex flex-col rounded-3xl border border-slate-200 bg-white p-8 shadow-sm hover:shadow-md transition cursor-pointer" data-modal-open="${itemId}">
+        <div class="flex justify-between items-start mb-6 gap-4">
+          <span class="rounded-full bg-slate-100 px-3 py-1 text-[10px] font-bold text-slate-500 uppercase">
+            ${tag}
+          </span>
+          <p class="text-xs font-semibold text-slate-400">
+            ${date}
+          </p>
+        </div>
+
+        <h3 class="text-xl font-bold text-[#0B1731] leading-snug">
+          ${title}
+        </h3>
+
+        <p class="mt-4 text-sm leading-relaxed text-slate-600 flex-grow">
+          ${excerpt}
+        </p>
+
+        <div class="mt-6 pt-6 border-t border-slate-100">
+          <div class="flex items-center gap-2">
+            <div class="w-2 h-2 rounded-full bg-green-500"></div>
+            <span class="text-[10px] font-bold text-slate-400 uppercase tracking-widest">
+              Verified Auto-Update
+            </span>
+          </div>
+
+          <a
+            href="${url}"
+            class="mt-4 inline-block text-sm font-semibold text-[#1085D2] hover:underline"
+          >
+            Read update
+          </a>
+        </div>
+      </article>
+    `;
+  }
+
+  function createArticleModal(item) {
+    const itemId = `article-${item.id}`;
+    const title = escapeHtml(item.card_title || item.article_title || "Untitled");
+    const tag = escapeHtml(item.card_tag || item.article_category || "Article");
+    const date = formatDate(item.card_date || item.article_published_at || item.created_at);
+    const url = toAbsoluteUrl(item.card_url);
+    const bodyHtml = item.article_body_html || "<p>No content available.</p>";
+    const image = item.article_image ? `<img src="${item.article_image}" alt="${title}" class="w-full h-80 object-cover rounded-lg mb-8" onerror="this.style.display='none'">` : "";
+
+    const modalHtml = `
+      <div id="${itemId}Modal" class="hidden fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50 p-4">
+        <div class="bg-white rounded-2xl max-w-2xl w-full max-h-[90vh] overflow-y-auto shadow-2xl">
+          <!-- Modal Header -->
+          <div class="sticky top-0 bg-white border-b border-slate-200 p-6 flex justify-between items-start gap-4">
+            <div class="flex-1">
+              <div class="flex items-center gap-3 mb-2">
+                <span class="rounded-full bg-slate-100 px-3 py-1 text-[10px] font-bold text-slate-500 uppercase">
+                  ${tag}
+                </span>
+                <span class="text-xs text-slate-400">${date}</span>
+              </div>
+              <h2 class="text-2xl font-bold text-[#0B1731]">${title}</h2>
+            </div>
+            <button data-modal-close="${itemId}" class="text-slate-400 hover:text-slate-600 text-2xl leading-none">
+              ×
+            </button>
+          </div>
+
+          <!-- Modal Body -->
+          <div class="p-8">
+            ${image}
+            <div class="prose prose-sm max-w-none prose-headings:font-bold prose-headings:text-[#0B1731] prose-h2:text-xl prose-h2:mt-8 prose-h2:mb-4 prose-p:text-slate-700 prose-p:leading-relaxed prose-p:mb-4 prose-ul:list-disc prose-ul:ml-6 prose-li:text-slate-700">
+              ${bodyHtml}
+            </div>
+          </div>
+
+          <!-- Modal Footer -->
+          <div class="sticky bottom-0 bg-slate-50 border-t border-slate-200 p-6 flex gap-4">
+            <a href="${url}" target="_blank" rel="noopener noreferrer" class="flex-1 text-center bg-[#1085D2] hover:bg-blue-700 text-white font-semibold py-3 px-6 rounded-lg transition">
+              View Original
+            </a>
+            <button data-modal-close="${itemId}" class="flex-1 bg-slate-200 hover:bg-slate-300 text-slate-700 font-semibold py-3 px-6 rounded-lg transition">
+              Close
+            </button>
+          </div>
+        </div>
+      </div>
+    `;
+
+    return modalHtml;
+  }
+
+  async function loadLiveUpdates() {
+    const grid = document.getElementById("live-updates-grid");
+    if (!grid) return;
+
+    grid.innerHTML = renderLoadingCards();
+
+    try {
+      const response = await fetch(FEED_URL, {
+        method: "GET",
+        headers: {
+          "Accept": "application/json"
+        }
+      });
+
+      if (!response.ok) {
+        throw new Error(`Feed request failed: ${response.status}`);
+      }
+
+      const payload = await response.json();
+      console.log("Feed payload:", payload);
+
+      const items = getItems(payload).slice(0, 3);
+
+      if (!items.length) {
+        grid.innerHTML = `
+          <div class="lg:col-span-3 rounded-3xl border border-slate-200 bg-white p-6 text-center text-sm text-slate-600">
+            No live updates yet.
+          </div>
+        `;
+        return;
+      }
+
+      grid.innerHTML = items.map(renderCard).join("");
+
+      // Create and append modals to body
+      const modalsContainer = document.getElementById("article-modals") || document.createElement("div");
+      if (!document.getElementById("article-modals")) {
+        modalsContainer.id = "article-modals";
+        document.body.appendChild(modalsContainer);
+      }
+
+      modalsContainer.innerHTML = items.map(createArticleModal).join("");
+
+      // Re-attach modal event listeners
+      attachModalListeners();
+    } catch (error) {
+      console.error("Unable to load live updates:", error);
+      grid.innerHTML = `
+        <div class="lg:col-span-3 rounded-3xl border border-red-200 bg-red-50 p-6 text-center text-sm text-red-700">
+          Unable to load live updates right now.
+        </div>
+      `;
+    }
+  }
+
+  function attachModalListeners() {
+    const openButtons = document.querySelectorAll("[data-modal-open]");
+    const closeButtons = document.querySelectorAll("[data-modal-close]");
+
+    function openModal(id) {
+      const modal = document.getElementById(id + "Modal");
+      if (!modal) return;
+      modal.classList.remove("hidden");
+      modal.classList.add("flex");
+      document.body.classList.add("overflow-hidden");
+    }
+
+    function closeModal(id) {
+      const modal = document.getElementById(id + "Modal");
+      if (!modal) return;
+      modal.classList.add("hidden");
+      modal.classList.remove("flex");
+      document.body.classList.remove("overflow-hidden");
+    }
+
+    openButtons.forEach((button) => {
+      button.addEventListener("click", () => {
+        openModal(button.getAttribute("data-modal-open"));
+      });
+    });
+
+    closeButtons.forEach((button) => {
+      button.addEventListener("click", () => {
+        closeModal(button.getAttribute("data-modal-close"));
+      });
+    });
+
+    document.querySelectorAll("[id$='Modal']").forEach((modal) => {
+      modal.addEventListener("click", (event) => {
+        if (event.target === modal) {
+          const id = modal.id.replace("Modal", "");
+          closeModal(id);
+        }
+      });
+    });
+
+    document.addEventListener("keydown", (event) => {
+      if (event.key === "Escape") {
+        document.querySelectorAll("[id$='Modal']").forEach((modal) => {
+          if (!modal.classList.contains("hidden")) {
+            const id = modal.id.replace("Modal", "");
+            closeModal(id);
+          }
+        });
+      }
+    });
+  }
+
+  document.addEventListener("DOMContentLoaded", loadLiveUpdates);
+</script>
+
+
 <!--Fetch Live Autosite Updates -->
   <script>
   const FEED_URL = "https://v0-next-js-api-route-nu.vercel.app/api/feed";

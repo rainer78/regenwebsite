@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>RainFlix</title>
-  <meta name="description" content="A streaming-style landing page that can be hosted on GitHub Pages." />
+  <title>RainFlix | Media + Interactive Library</title>
+  <meta name="description" content="RainFlix is a media and interactive library front end for movies, music, and browser-based games, designed for GitHub Pages." />
   <style>
     :root {
       --bg: #141414;
@@ -341,54 +341,79 @@
       font-size: 0.96rem;
     }
 
-    .cta {
+    .signin-section {
       padding: 54px 0 72px;
     }
 
-    .cta-box {
-      background: radial-gradient(circle at top, rgba(229,9,20,0.14), transparent 35%), linear-gradient(180deg, #1b1b1b, #111111);
-      border: 1px solid var(--border);
-      border-radius: 18px;
-      padding: 36px;
-      box-shadow: var(--shadow);
-      display: grid;
-      grid-template-columns: 1.4fr 1fr;
-      gap: 24px;
-      align-items: center;
+    .signin-shell {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
     }
 
-    .cta h2 {
-      margin: 0 0 10px;
-      font-size: clamp(1.9rem, 3vw, 2.8rem);
+    .signin-wrap {
+      width: min(100%, 450px);
+      margin-left: auto;
+      padding: 60px 0;
+    }
+
+    .signin-card {
+      background: rgba(0,0,0,0.78);
+      border: 1px solid rgba(255,255,255,0.1);
+      border-radius: 18px;
+      padding: 42px;
+      box-shadow: var(--shadow);
+    }
+
+    .signin-card h2 {
+      margin: 0 0 28px;
+      font-size: 2rem;
       line-height: 1.1;
     }
 
-    .cta p {
-      margin: 0;
-      color: var(--muted);
-      max-width: 58ch;
+    .signin-form {
+      display: grid;
+      gap: 14px;
     }
 
-    .signup {
-      display: flex;
-      gap: 10px;
-      flex-wrap: wrap;
-      justify-content: flex-end;
-    }
-
-    .signup input {
-      flex: 1 1 280px;
-      min-width: 0;
+    .field {
+      width: 100%;
       border-radius: 6px;
-      border: 1px solid rgba(255,255,255,0.16);
-      background: rgba(0,0,0,0.38);
+      border: 0;
+      background: #333;
       color: #fff;
-      padding: 14px 16px;
+      padding: 16px;
       font-size: 1rem;
     }
 
-    .signup input::placeholder {
-      color: #9d9d9d;
+    .field::placeholder {
+      color: #b9b9b9;
+    }
+
+    .signin-submit {
+      width: 100%;
+      margin-top: 8px;
+      padding: 14px 18px;
+      font-size: 1rem;
+    }
+
+    .signin-help {
+      margin-top: 18px;
+      color: var(--muted);
+      font-size: 0.95rem;
+    }
+
+    .signin-help a {
+      color: #fff;
+      font-weight: 700;
+    }
+
+    .signin-meta {
+      margin-top: 26px;
+      display: grid;
+      gap: 10px;
+      color: #bcbcbc;
+      font-size: 0.9rem;
     }
 
     .site-footer {
@@ -410,6 +435,7 @@
       .feature-grid {
         grid-template-columns: repeat(2, 1fr);
       }
+    }
 
       .cta-box {
         grid-template-columns: 1fr;
@@ -449,6 +475,38 @@
         grid-auto-columns: 78vw;
       }
 
+      .signin-wrap {
+        width: 100%;
+        margin-left: 0;
+        padding: 32px 0 48px;
+      }
+
+      .signin-card {
+        padding: 28px 22px;
+      }
+    }
+
+      .nav {
+        gap: 14px;
+      }
+
+      .hero {
+        min-height: 70vh;
+        background-position: center right;
+      }
+
+      .hero-inner {
+        padding: 72px 0 44px;
+      }
+
+      .feature-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .rail {
+        grid-auto-columns: 78vw;
+      }
+
       .cta-box {
         padding: 24px;
       }
@@ -465,13 +523,14 @@
 
       <nav class="nav" aria-label="Primary navigation">
         <a href="#top-picks">Home</a>
-        <a href="#trending">Trending</a>
-        <a href="#new-releases">New Releases</a>
-        <a href="#my-list">My List</a>
+        <a href="#movies">Movies</a>
+        <a href="#music">Music</a>
+        <a href="#games">Games</a>
+        <a href="#library-system">Library System</a>
       </nav>
 
       <div class="header-actions">
-        <a class="btn btn-secondary" href="#signup">Sign In</a>
+        <a class="btn btn-secondary" href="/signin.html">Sign In</a>
       </div>
     </div>
   </header>
@@ -480,20 +539,20 @@
     <section class="hero" id="top">
       <div class="container hero-inner">
         <div>
-          <div class="eyebrow">Featured Tonight</div>
-          <h1>The Last Broadcast</h1>
+          <div class="eyebrow">Featured in RainFlix</div>
+          <h1>Your media library, now with a front door.</h1>
           <p>
-            A late-night radio host uncovers a pattern hidden inside anonymous calls from across the country. By sunrise, the story is larger than the station, the city, or the man behind the microphone.
+            RainFlix brings movies, ripped CD audio, and browser-based games into one streaming-style interface. Emby handles the media delivery. RainFlix handles the experience layer.
           </p>
           <div class="hero-actions">
-            <a class="btn btn-light" href="#top-picks">▶ Play</a>
-            <a class="btn btn-secondary" href="#signup">More Info</a>
+            <a class="btn btn-light" href="/browse.html">Open Library</a>
+            <a class="btn btn-secondary" href="/signin.html">Sign In</a>
           </div>
           <div class="hero-meta">
-            <span>2026</span>
-            <span>16+</span>
-            <span>Thriller</span>
-            <span>4 Seasons</span>
+            <span>Movies</span>
+            <span>Music from CDs</span>
+            <span>Browser Games</span>
+            <span>GitHub Pages Ready</span>
           </div>
         </div>
       </div>
@@ -502,65 +561,56 @@
     <section class="section" id="top-picks">
       <div class="container">
         <div class="section-title-row">
-          <h2>Top Picks for You</h2>
-          <a class="section-link" href="#signup">See All</a>
+          <h2>Featured Across Your Library</h2>
+          <a class="section-link" href="#library-system">View Architecture</a>
         </div>
         <div class="rail-wrap">
-          <div class="rail" aria-label="Top picks carousel">
+          <div class="rail" aria-label="Featured library carousel">
             <article class="card">
               <div class="card-poster">
-                <img src="https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?auto=format&fit=crop&w=900&q=80" alt="Mountain landscape at dusk" />
-                <span class="badge">NEW</span>
+                <img src="https://images.unsplash.com/photo-1489599849927-2ee91cede3ba?auto=format&fit=crop&w=900&q=80" alt="Cinema projector light beam" />
+                <span class="badge">FEATURED FILM</span>
               </div>
               <div class="card-body">
-                <h3 class="card-title">Signal Ridge</h3>
-                <p class="card-copy">A small town, a missing team, and a frequency no one can explain.</p>
-                <div class="card-meta"><span>Drama</span><span>2h 04m</span><span>HD</span></div>
+                <h3 class="card-title">Movies That Feel Curated</h3>
+                <p class="card-copy">Use RainFlix as a polished front end for the films already living inside your Emby library.</p>
+                <div class="card-meta"><span>Video</span><span>Emby Powered</span><span>HD</span></div>
               </div>
             </article>
 
             <article class="card">
               <div class="card-poster">
-                <img src="https://images.unsplash.com/photo-1517604931442-7e0c8ed2963c?auto=format&fit=crop&w=900&q=80" alt="Movie theater seats and screen" />
+                <img src="https://images.unsplash.com/photo-1493225457124-a3eb161ffa5f?auto=format&fit=crop&w=900&q=80" alt="Microphone on stage with warm lighting" />
+                <span class="badge">CD AUDIO</span>
               </div>
               <div class="card-body">
-                <h3 class="card-title">Midnight Window</h3>
-                <p class="card-copy">One apartment. Eight witnesses. Nobody saw the same thing.</p>
-                <div class="card-meta"><span>Mystery</span><span>1h 51m</span><span>4K</span></div>
+                <h3 class="card-title">Ripped CDs, Streamed Cleanly</h3>
+                <p class="card-copy">Albums, artists, and tracks can be surfaced as a music shelf while Emby handles playback in the background.</p>
+                <div class="card-meta"><span>Audio</span><span>Albums</span><span>Artists</span></div>
               </div>
             </article>
 
             <article class="card">
               <div class="card-poster">
-                <img src="https://images.unsplash.com/photo-1492691527719-9d1e07e534b4?auto=format&fit=crop&w=900&q=80" alt="Neon city street at night" />
+                <img src="https://images.unsplash.com/photo-1511512578047-dfb367046420?auto=format&fit=crop&w=900&q=80" alt="Gaming controller lit by screen glow" />
+                <span class="badge">PLAYABLE</span>
               </div>
               <div class="card-body">
-                <h3 class="card-title">Neon District</h3>
-                <p class="card-copy">A courier gets one wrong package and the whole city starts moving.</p>
-                <div class="card-meta"><span>Action</span><span>10 Episodes</span><span>HD</span></div>
+                <h3 class="card-title">Games You Actually Control</h3>
+                <p class="card-copy">Link your browser-based games directly from RainFlix without forcing Emby to pretend it is a game console.</p>
+                <div class="card-meta"><span>HTML Games</span><span>WebXR</span><span>Static Hosting</span></div>
               </div>
             </article>
 
             <article class="card">
               <div class="card-poster">
-                <img src="https://images.unsplash.com/photo-1516035069371-29a1b244cc32?auto=format&fit=crop&w=900&q=80" alt="Film production lighting equipment" />
-                <span class="badge">TOP 10</span>
+                <img src="https://images.unsplash.com/photo-1516321497487-e288fb19713f?auto=format&fit=crop&w=900&q=80" alt="Laptop with code on screen" />
+                <span class="badge">SYSTEM</span>
               </div>
               <div class="card-body">
-                <h3 class="card-title">Cut to Black</h3>
-                <p class="card-copy">A famous editor disappears halfway through the biggest film of the year.</p>
-                <div class="card-meta"><span>Crime</span><span>Limited Series</span><span>4K</span></div>
-              </div>
-            </article>
-
-            <article class="card">
-              <div class="card-poster">
-                <img src="https://images.unsplash.com/photo-1518998053901-5348d3961a04?auto=format&fit=crop&w=900&q=80" alt="Woman walking in rain on city street" />
-              </div>
-              <div class="card-body">
-                <h3 class="card-title">After the Rain</h3>
-                <p class="card-copy">An investigative reporter returns to the case that broke her career.</p>
-                <div class="card-meta"><span>Thriller</span><span>8 Episodes</span><span>HD</span></div>
+                <h3 class="card-title">One Interface, Multiple Feeds</h3>
+                <p class="card-copy">RainFlix can read media data from Emby and game data from a separate JSON feed, then render both in one clean interface.</p>
+                <div class="card-meta"><span>JSON Driven</span><span>Flexible</span><span>Scalable</span></div>
               </div>
             </article>
           </div>
@@ -568,11 +618,11 @@
       </div>
     </section>
 
-    <section class="section" id="trending">
+    <section class="section" id="movies">
       <div class="container">
         <div class="section-title-row">
           <h2>Trending Now</h2>
-          <a class="section-link" href="#signup">See All</a>
+          <a class="section-link" href="/browse.html">Open Row</a>
         </div>
         <div class="rail-wrap">
           <div class="rail" aria-label="Trending carousel">
@@ -636,67 +686,59 @@
       </div>
     </section>
 
-    <section class="section" id="new-releases">
+    <section class="section" id="music">
       <div class="container">
         <div class="section-title-row">
-          <h2>New Releases</h2>
-          <a class="section-link" href="#signup">See All</a>
+          <h2>Music from Your CD Library</h2>
+          <a class="section-link" href="#library-system">How Audio Works</a>
         </div>
         <div class="rail-wrap">
-          <div class="rail" aria-label="New releases carousel">
+          <div class="rail" aria-label="Music carousel">
             <article class="card">
               <div class="card-poster">
-                <img src="https://images.unsplash.com/photo-1514894786521-9d1f0cfc3b4b?auto=format&fit=crop&w=900&q=80" alt="Ocean storm with dramatic clouds" />
-                <span class="badge">JUST ADDED</span>
+                <img src="https://images.unsplash.com/photo-1494232410401-ad00d5433cfa?auto=format&fit=crop&w=900&q=80" alt="Vinyl records stacked beside a player" />
+                <span class="badge">ALBUMS</span>
               </div>
               <div class="card-body">
-                <h3 class="card-title">Open Water Code</h3>
-                <p class="card-copy">An engineer stranded offshore finds signals in the weather reports.</p>
-                <div class="card-meta"><span>Adventure</span><span>1h 57m</span><span>HD</span></div>
+                <h3 class="card-title">Album Collection</h3>
+                <p class="card-copy">Present full albums with cover art, artist details, and direct playback links served by Emby.</p>
+                <div class="card-meta"><span>Music</span><span>Direct Stream</span><span>Metadata</span></div>
               </div>
             </article>
 
             <article class="card">
               <div class="card-poster">
-                <img src="https://images.unsplash.com/photo-1516321497487-e288fb19713f?auto=format&fit=crop&w=900&q=80" alt="Laptop and code on desk" />
+                <img src="https://images.unsplash.com/photo-1511379938547-c1f69419868d?auto=format&fit=crop&w=900&q=80" alt="Headphones on a mixing console" />
+                <span class="badge">TRACKS</span>
               </div>
               <div class="card-body">
-                <h3 class="card-title">Patch Notes</h3>
-                <p class="card-copy">A startup team learns that every software fix leaves a human cost.</p>
-                <div class="card-meta"><span>Tech Drama</span><span>8 Episodes</span><span>4K</span></div>
+                <h3 class="card-title">Track-Level Streaming</h3>
+                <p class="card-copy">RainFlix can surface individual tracks while Emby handles the stream delivery and playback support.</p>
+                <div class="card-meta"><span>Artists</span><span>Songs</span><span>Playable</span></div>
               </div>
             </article>
 
             <article class="card">
               <div class="card-poster">
-                <img src="https://images.unsplash.com/photo-1504384308090-c894fdcc538d?auto=format&fit=crop&w=900&q=80" alt="Team discussion in office" />
+                <img src="https://images.unsplash.com/photo-1507838153414-b4b713384a76?auto=format&fit=crop&w=900&q=80" alt="Person enjoying music with headphones" />
+                <span class="badge">LISTENING</span>
               </div>
               <div class="card-body">
-                <h3 class="card-title">Second Shift</h3>
-                <p class="card-copy">An office cleaning crew starts piecing together the secrets of the executives upstairs.</p>
-                <div class="card-meta"><span>Mystery</span><span>10 Episodes</span><span>HD</span></div>
+                <h3 class="card-title">Continue Listening</h3>
+                <p class="card-copy">Create a familiar streaming-style shelf for recently played albums and favorite artists.</p>
+                <div class="card-meta"><span>Favorites</span><span>Recent</span><span>Custom UI</span></div>
               </div>
             </article>
 
             <article class="card">
               <div class="card-poster">
-                <img src="https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&w=900&q=80" alt="Woman standing in spotlight" />
+                <img src="https://images.unsplash.com/photo-1470229722913-7c0e2dbbafd3?auto=format&fit=crop&w=900&q=80" alt="Concert lights and crowd" />
+                <span class="badge">CURATED</span>
               </div>
               <div class="card-body">
-                <h3 class="card-title">The Recall</h3>
-                <p class="card-copy">A witness with a perfect memory cannot remember the one face that matters.</p>
-                <div class="card-meta"><span>Thriller</span><span>1h 48m</span><span>HD</span></div>
-              </div>
-            </article>
-
-            <article class="card">
-              <div class="card-poster">
-                <img src="https://images.unsplash.com/photo-1493225457124-a3eb161ffa5f?auto=format&fit=crop&w=900&q=80" alt="Microphone on stage" />
-              </div>
-              <div class="card-body">
-                <h3 class="card-title">Encore City</h3>
-                <p class="card-copy">A singer tries to rebuild her career in the town that stopped listening.</p>
-                <div class="card-meta"><span>Drama</span><span>2 Seasons</span><span>4K</span></div>
+                <h3 class="card-title">Mood and Genre Rows</h3>
+                <p class="card-copy">Sort your library into shelves like Jazz Nights, Sunday Drive, or Deep Cuts without touching the core media server.</p>
+                <div class="card-meta"><span>Genres</span><span>Moods</span><span>Custom Rows</span></div>
               </div>
             </article>
           </div>
@@ -704,45 +746,110 @@
       </div>
     </section>
 
-    <section class="section" id="my-list">
+    <section class="section" id="games">
       <div class="container">
         <div class="section-title-row">
-          <h2>Why This Works on GitHub Pages</h2>
+          <h2>Games You Build and Launch from RainFlix</h2>
+          <a class="section-link" href="#library-system">Why This Approach</a>
+        </div>
+        <div class="rail-wrap">
+          <div class="rail" aria-label="Games carousel">
+            <article class="card">
+              <div class="card-poster">
+                <img src="https://images.unsplash.com/photo-1511512578047-dfb367046420?auto=format&fit=crop&w=900&q=80" alt="Game controller in low light" />
+                <span class="badge">BROWSER GAME</span>
+              </div>
+              <div class="card-body">
+                <h3 class="card-title">HTML and JavaScript Games</h3>
+                <p class="card-copy">Launch lightweight browser games from GitHub Pages, Vercel, or any static host that serves plain web files.</p>
+                <div class="card-meta"><span>Simple</span><span>Fast</span><span>Portable</span></div>
+              </div>
+            </article>
+
+            <article class="card">
+              <div class="card-poster">
+                <img src="https://images.unsplash.com/photo-1542751371-adc38448a05e?auto=format&fit=crop&w=900&q=80" alt="Gaming screen with vibrant lights" />
+                <span class="badge">WEBXR</span>
+              </div>
+              <div class="card-body">
+                <h3 class="card-title">Interactive Experiments</h3>
+                <p class="card-copy">Use RainFlix as a launcher for WebXR projects, game prototypes, and creative interactive pieces.</p>
+                <div class="card-meta"><span>Immersive</span><span>Experimental</span><span>Hosted Separately</span></div>
+              </div>
+            </article>
+
+            <article class="card">
+              <div class="card-poster">
+                <img src="https://images.unsplash.com/photo-1526374965328-7f61d4dc18c5?auto=format&fit=crop&w=900&q=80" alt="Abstract digital code pattern" />
+                <span class="badge">JSON FEED</span>
+              </div>
+              <div class="card-body">
+                <h3 class="card-title">Game Shelf from Data</h3>
+                <p class="card-copy">Maintain a separate games JSON feed with titles, thumbnails, descriptions, and launch URLs, then let RainFlix render the row.</p>
+                <div class="card-meta"><span>Structured</span><span>Flexible</span><span>Maintainable</span></div>
+              </div>
+            </article>
+
+            <article class="card">
+              <div class="card-poster">
+                <img src="https://images.unsplash.com/photo-1550745165-9bc0b252726f?auto=format&fit=crop&w=900&q=80" alt="Arcade controls and glowing buttons" />
+                <span class="badge">SMART LIMITS</span>
+              </div>
+              <div class="card-body">
+                <h3 class="card-title">No Emulator Circus</h3>
+                <p class="card-copy">Keep the game layer clean. RainFlix should launch games you host, not depend on fragile media-server plugins and mystery glue.</p>
+                <div class="card-meta"><span>Stable</span><span>Practical</span><span>No Drama</span></div>
+              </div>
+            </article>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="library-system">
+      <div class="container">
+        <div class="section-title-row">
+          <h2>How the RainFlix Library System Works</h2>
         </div>
         <div class="feature-grid">
           <article class="feature">
-            <h3>Single HTML file</h3>
-            <p>Drop this into an <strong>index.html</strong> file and GitHub Pages will serve it without drama. For once, the internet behaves.</p>
+            <h3>Emby handles media</h3>
+            <p>Movies, shows, and ripped CD audio stay in Emby, where the streaming and media management belong.</p>
           </article>
           <article class="feature">
-            <h3>No build step</h3>
-            <p>There is nothing to compile, bundle, or install. Static hosting is the whole point here.</p>
+            <h3>RainFlix handles experience</h3>
+            <p>RainFlix becomes the branded interface with shelves, featured rows, curated categories, and cleaner presentation.</p>
           </article>
           <article class="feature">
-            <h3>Easy to customize</h3>
-            <p>Swap the title, posters, descriptions, and brand colors directly in the markup. No framework ceremony required.</p>
+            <h3>Games stay separate</h3>
+            <p>Your games should live as browser-based projects with their own URLs. RainFlix simply catalogs and launches them.</p>
           </article>
           <article class="feature">
-            <h3>Responsive layout</h3>
-            <p>The page adapts for desktop, tablet, and mobile without needing extra libraries or a rescue mission.</p>
+            <h3>JSON ties it together</h3>
+            <p>One feed can represent Emby media data, and another can represent your games. RainFlix reads both and renders the front page.</p>
           </article>
         </div>
       </div>
     </section>
 
-    <section class="cta" id="signup">
+    <section class="signin-section" id="signin">
       <div class="container">
-        <div class="cta-box">
-          <div>
-            <h2>Ready to launch your streaming-style page?</h2>
-            <p>
-              Use this as a starter for a media server front end, a movie collection showcase, a creator portfolio, or a branded landing page. Replace the sample cards with your own content and publish.
-            </p>
+        <div class="signin-wrap">
+          <div class="signin-card">
+            <h2>Sign In</h2>
+            <form class="signin-form" method="post" action="/auth/login">
+              <input class="field" type="email" name="email" placeholder="Email address" aria-label="Email address" required />
+              <input class="field" type="password" name="password" placeholder="Password" aria-label="Password" required />
+              <button class="btn btn-primary signin-submit" type="submit">Sign In</button>
+            </form>
+            <div class="signin-help">
+              New here? <a href="/register.html">Create an account</a>
+            </div>
+            <div class="signin-meta">
+              <span><a href="/forgot-password.html">Forgot password?</a></span>
+              <span>This form is ready for your back-end authentication route.</span>
+            </div>
           </div>
-          <form class="signup" onsubmit="event.preventDefault(); alert('Replace this form action with your own signup flow.');">
-            <input type="email" placeholder="Email address" aria-label="Email address" />
-            <button class="btn btn-primary" type="submit">Get Started</button>
-          </form>
         </div>
       </div>
     </section>
@@ -750,8 +857,8 @@
 
   <footer class="site-footer">
     <div class="container footer-grid">
-      <div>© 2026 RainFlix. Built as a static page for GitHub Pages.</div>
-      <div>Customize the text, images, and links before publishing.</div>
+      <div>© 2026 RainFlix. Built as a static front end for media, music, and interactive content.</div>
+      <div>Connect the sign-in form to your authentication flow and replace the sample media with your own library data.</div>
     </div>
   </footer>
 </body>

@@ -1607,7 +1607,7 @@
 </script>
 
   <!--Fetch Live Autosite Updates -->
-  <script>
+ <script>
   const FEED_URL = "https://v0-next-js-api-route-nu.vercel.app/api/feed";
   const SITE_ORIGIN = "https://regencreatives.com";
 
@@ -1638,7 +1638,12 @@
       .replaceAll("'", "&#039;");
   }
 
- 
+  function toAbsoluteUrl(url) {
+    if (!url) return "#";
+    if (url.startsWith("http://") || url.startsWith("https://")) return url;
+    return `${SITE_ORIGIN}${url}`;
+  }
+
   function renderLoadingCards() {
     return [1, 2, 3].map(() => `
       <article class="flex flex-col rounded-3xl border border-slate-200 bg-white p-8 shadow-sm">
@@ -1858,6 +1863,7 @@
 
   document.addEventListener("DOMContentLoaded", loadLiveUpdates);
 </script>
+
 
 
 

@@ -67,7 +67,7 @@
   line-height: 1.5;
 }
 
-  <style>
+  
   .prose {
     color: inherit;
   }
@@ -138,7 +138,81 @@
     color: #64748b;
     font-style: italic;
   }
-</style>
+<style>
+  .article-content h2 {
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: #0B1731;
+    margin-top: 2rem;
+    margin-bottom: 1rem;
+  }
+
+  .article-content h3 {
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: #0B1731;
+    margin-top: 1.5rem;
+    margin-bottom: 0.75rem;
+  }
+
+  .article-content p {
+    color: #475569;
+    line-height: 1.7;
+    margin-bottom: 1rem;
+  }
+
+  .article-content ul, .article-content ol {
+    margin: 1rem 0;
+    padding-left: 1.5rem;
+    color: #475569;
+  }
+
+  .article-content li {
+    margin-bottom: 0.5rem;
+    line-height: 1.6;
+  }
+
+  .article-content a {
+    color: #1085D2;
+    text-decoration: underline;
+  }
+
+  .article-content a:hover {
+    color: #0B5BA3;
+  }
+
+  .article-content blockquote {
+    border-left: 4px solid #dbeafe;
+    padding-left: 1rem;
+    margin: 1.5rem 0;
+    color: #64748b;
+    font-style: italic;
+  }
+
+  .article-content code {
+    background: #f3f4f6;
+    padding: 0.2rem 0.4rem;
+    border-radius: 0.25rem;
+    font-family: monospace;
+    font-size: 0.875em;
+  }
+
+  .article-content pre {
+    background: #1f2937;
+    color: #f3f4f6;
+    padding: 1rem;
+    border-radius: 0.5rem;
+    overflow-x: auto;
+    margin: 1.5rem 0;
+  }
+
+  .article-content img {
+    max-width: 100%;
+    height: auto;
+    border-radius: 0.5rem;
+    margin: 1.5rem 0;
+  }
+
 
   </style>
 
@@ -1607,7 +1681,7 @@
 </script>
 
   <!--Fetch Live Autosite Updates -->
- <script>
+<script>
   const FEED_URL = "https://v0-next-js-api-route-nu.vercel.app/api/feed";
   const SITE_ORIGIN = "https://regencreatives.com";
 
@@ -1660,7 +1734,6 @@
     const excerpt = escapeHtml(item.card_excerpt || "No excerpt available.");
     const tag = escapeHtml(item.card_tag || "Live Update");
     const date = formatDate(item.card_date || item.article_published_at || item.created_at);
-    const url = toAbsoluteUrl(item.card_url);
     const itemId = `article-${item.id}`;
 
     return `
@@ -1690,12 +1763,9 @@
             </span>
           </div>
 
-          <a
-            href="${url}"
-            class="mt-4 inline-block text-sm font-semibold text-[#1085D2] hover:underline"
-          >
-            Read update
-          </a>
+          <span class="mt-4 inline-block text-sm font-semibold text-[#1085D2]">
+            Click to read full article
+          </span>
         </div>
       </article>
     `;
@@ -1710,11 +1780,16 @@
     const bodyHtml = item.article_body_html || "<p>No content available.</p>";
     const image = item.article_image ? `<img src="${item.article_image}" alt="${title}" class="w-full h-80 object-cover rounded-lg mb-8" onerror="this.style.display='none'">` : "";
 
-    const modalHtml = `
-      <div id="${itemId}Modal" class="hidden fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50 p-4">
+    // Only show "View Original" if the URL is a real page (not just "#")
+    const viewOriginalBtn = (url && url !== "#") 
+      ? `<a href="${url}" target="_blank" rel="noopener noreferrer" class="flex-1 text-center bg-[#1085D2] hover:bg-blue-700 text-white font-semibold py-3 px-6 rounded-lg transition">View Original</a>` 
+      : "";
+
+    return `
+      <div id="${itemId}Modal" class="hidden fixed inset-0 z-50 items-center justify-center bg-black bg-opacity-50 p-4">
         <div class="bg-white rounded-2xl max-w-2xl w-full max-h-[90vh] overflow-y-auto shadow-2xl">
           <!-- Modal Header -->
-          <div class="sticky top-0 bg-white border-b border-slate-200 p-6 flex justify-between items-start gap-4">
+          <div class="sticky top-0 bg-white border-b border-slate-200 p-6 flex justify-between items-start gap-4 z-10">
             <div class="flex-1">
               <div class="flex items-center gap-3 mb-2">
                 <span class="rounded-full bg-slate-100 px-3 py-1 text-[10px] font-bold text-slate-500 uppercase">
@@ -1724,33 +1799,29 @@
               </div>
               <h2 class="text-2xl font-bold text-[#0B1731]">${title}</h2>
             </div>
-            <button data-modal-close="${itemId}" class="text-slate-400 hover:text-slate-600 text-2xl leading-none">
-              ×
+            <button data-modal-close="${itemId}" class="text-slate-400 hover:text-slate-600 text-3xl leading-none p-2">
+              &times;
             </button>
           </div>
 
           <!-- Modal Body -->
           <div class="p-8">
             ${image}
-            <div class="prose prose-sm max-w-none prose-headings:font-bold prose-headings:text-[#0B1731] prose-h2:text-xl prose-h2:mt-8 prose-h2:mb-4 prose-p:text-slate-700 prose-p:leading-relaxed prose-p:mb-4 prose-ul:list-disc prose-ul:ml-6 prose-li:text-slate-700">
+            <div class="article-content">
               ${bodyHtml}
             </div>
           </div>
 
           <!-- Modal Footer -->
-          <div class="sticky bottom-0 bg-slate-50 border-t border-slate-200 p-6 flex gap-4">
-            <a href="${url}" target="_blank" rel="noopener noreferrer" class="flex-1 text-center bg-[#1085D2] hover:bg-blue-700 text-white font-semibold py-3 px-6 rounded-lg transition">
-              View Original
-            </a>
-            <button data-modal-close="${itemId}" class="flex-1 bg-slate-200 hover:bg-slate-300 text-slate-700 font-semibold py-3 px-6 rounded-lg transition">
+          <div class="sticky bottom-0 bg-slate-50 border-t border-slate-200 p-6 flex gap-4 z-10">
+            ${viewOriginalBtn}
+            <button data-modal-close="${itemId}" class="${viewOriginalBtn ? 'flex-1' : 'w-full'} bg-slate-200 hover:bg-slate-300 text-slate-700 font-semibold py-3 px-6 rounded-lg transition">
               Close
             </button>
           </div>
         </div>
       </div>
     `;
-
-    return modalHtml;
   }
 
   async function loadLiveUpdates() {
@@ -1762,9 +1833,7 @@
     try {
       const response = await fetch(FEED_URL, {
         method: "GET",
-        headers: {
-          "Accept": "application/json"
-        }
+        headers: { "Accept": "application/json" }
       });
 
       if (!response.ok) {
@@ -1772,8 +1841,6 @@
       }
 
       const payload = await response.json();
-      console.log("Feed payload:", payload);
-
       const items = getItems(payload).slice(0, 3);
 
       if (!items.length) {
@@ -1787,16 +1854,15 @@
 
       grid.innerHTML = items.map(renderCard).join("");
 
-      // Create and append modals to body
-      const modalsContainer = document.getElementById("article-modals") || document.createElement("div");
-      if (!document.getElementById("article-modals")) {
+      // Create modals container
+      let modalsContainer = document.getElementById("article-modals");
+      if (!modalsContainer) {
+        modalsContainer = document.createElement("div");
         modalsContainer.id = "article-modals";
         document.body.appendChild(modalsContainer);
       }
-
       modalsContainer.innerHTML = items.map(createArticleModal).join("");
 
-      // Re-attach modal event listeners
       attachModalListeners();
     } catch (error) {
       console.error("Unable to load live updates:", error);
@@ -1809,15 +1875,12 @@
   }
 
   function attachModalListeners() {
-    const openButtons = document.querySelectorAll("[data-modal-open]");
-    const closeButtons = document.querySelectorAll("[data-modal-close]");
-
     function openModal(id) {
       const modal = document.getElementById(id + "Modal");
       if (!modal) return;
       modal.classList.remove("hidden");
       modal.classList.add("flex");
-      document.body.classList.add("overflow-hidden");
+      document.body.style.overflow = "hidden";
     }
 
     function closeModal(id) {
@@ -1825,37 +1888,42 @@
       if (!modal) return;
       modal.classList.add("hidden");
       modal.classList.remove("flex");
-      document.body.classList.remove("overflow-hidden");
+      document.body.style.overflow = "";
     }
 
-    openButtons.forEach((button) => {
-      button.addEventListener("click", () => {
-        openModal(button.getAttribute("data-modal-open"));
+    // Open modal on card click
+    document.querySelectorAll("[data-modal-open]").forEach((el) => {
+      el.addEventListener("click", (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+        openModal(el.getAttribute("data-modal-open"));
       });
     });
 
-    closeButtons.forEach((button) => {
-      button.addEventListener("click", () => {
-        closeModal(button.getAttribute("data-modal-close"));
+    // Close modal on button click
+    document.querySelectorAll("[data-modal-close]").forEach((el) => {
+      el.addEventListener("click", (e) => {
+        e.preventDefault();
+        closeModal(el.getAttribute("data-modal-close"));
       });
     });
 
+    // Close modal on backdrop click
     document.querySelectorAll("[id$='Modal']").forEach((modal) => {
-      modal.addEventListener("click", (event) => {
-        if (event.target === modal) {
+      modal.addEventListener("click", (e) => {
+        if (e.target === modal) {
           const id = modal.id.replace("Modal", "");
           closeModal(id);
         }
       });
     });
 
-    document.addEventListener("keydown", (event) => {
-      if (event.key === "Escape") {
-        document.querySelectorAll("[id$='Modal']").forEach((modal) => {
-          if (!modal.classList.contains("hidden")) {
-            const id = modal.id.replace("Modal", "");
-            closeModal(id);
-          }
+    // Close modal on Escape key
+    document.addEventListener("keydown", (e) => {
+      if (e.key === "Escape") {
+        document.querySelectorAll("[id$='Modal']:not(.hidden)").forEach((modal) => {
+          const id = modal.id.replace("Modal", "");
+          closeModal(id);
         });
       }
     });
@@ -1863,6 +1931,7 @@
 
   document.addEventListener("DOMContentLoaded", loadLiveUpdates);
 </script>
+
 
 
 

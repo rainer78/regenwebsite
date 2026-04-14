@@ -1,0 +1,1006 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="icon" type="image/png" href="./img/olc_logo.png">
+  <link rel="apple-touch-icon" href="./img/olc_logo.png">
+  <title>Ole Lady Code Podcast</title>
+  <meta
+    name="description"
+    content="Old Lady Code is a podcast about tech, business, creativity, and building with experience, wit, and zero patience for nonsense."
+  />
+
+  <meta name="robots" content="index,follow" />
+  <link rel="canonical" href="https://oleladycode.com/" />
+
+  <meta property="og:title" content="Ole Lady Code | Practical AI, Automation, and Systems for Grown Builders" />
+  <meta property="og:description" content="Practical AI and automation for people who prefer thinking over posting. Notes-to-output systems, workflows, and real builds." />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://oleladycode.com/" />
+  <meta property="og:image" content="https://YOUR-DOMAIN.com/img/olc_logo.png" />
+
+  <meta name="twitter:card" content="summary_large_image" />
+
+  <!-- Google AdSense (replace ca-pub-XXXXXXXXXXXXXXXX) -->
+  <script async
+    src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-XXXXXXXXXXXXXXXX"
+    crossorigin="anonymous"></script>
+
+    
+  <style>
+    :root {
+      --bg: #f6f1e8;
+      --surface: #fffaf2;
+      --ink: #151515;
+      --muted: #5a5a5a;
+      --border: #151515;
+      --accent: #d9b65d;
+      --accent-2: #efe1bf;
+      --max-width: 1200px;
+      --radius: 22px;
+      --shadow: 0 12px 30px rgba(0, 0, 0, 0.12);
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      margin: 0;
+      font-family: Arial, Helvetica, sans-serif;
+      background: var(--bg);
+      color: var(--ink);
+      line-height: 1.5;
+    }
+
+    img {
+      max-width: 100%;
+      display: block;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    .container {
+      width: min(100% - 2rem, var(--max-width));
+      margin: 0 auto;
+    }
+
+    .site-header {
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      background: rgba(246, 241, 232, 0.94);
+      backdrop-filter: blur(10px);
+      border-bottom: 2px solid var(--border);
+    }
+
+    .nav-shell {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      min-height: 78px;
+      gap: 1rem;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 0.8rem;
+      min-width: 0;
+    }
+
+    .brand-logo {
+      width: 56px;
+      height: 56px;
+      border-radius: 50%;
+      overflow: hidden;
+      border: 2px solid var(--border);
+      background: #fff;
+      flex-shrink: 0;
+    }
+
+    .brand-copy {
+      display: flex;
+      flex-direction: column;
+      min-width: 0;
+    }
+
+    .brand-copy strong {
+      font-size: 1rem;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+    }
+
+    .brand-copy span {
+      font-size: 0.88rem;
+      color: var(--muted);
+    }
+
+    .nav-links {
+      display: none;
+      align-items: center;
+      gap: 1.2rem;
+      font-size: 0.96rem;
+      font-weight: 700;
+    }
+
+    .nav-links a {
+      padding: 0.3rem 0;
+      border-bottom: 2px solid transparent;
+    }
+
+    .nav-links a:hover,
+    .nav-links a:focus {
+      border-color: var(--ink);
+    }
+
+    .nav-actions {
+      display: none;
+      align-items: center;
+      gap: 0.75rem;
+    }
+
+    .menu-toggle {
+      width: 48px;
+      height: 48px;
+      border: 2px solid var(--border);
+      border-radius: 14px;
+      background: var(--surface);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+    }
+
+    .menu-toggle span,
+    .menu-toggle span::before,
+    .menu-toggle span::after {
+      content: "";
+      display: block;
+      width: 20px;
+      height: 2px;
+      background: var(--ink);
+      border-radius: 999px;
+      position: relative;
+      transition: 0.2s ease;
+    }
+
+    .menu-toggle span::before {
+      position: absolute;
+      top: -6px;
+      left: 0;
+    }
+
+    .menu-toggle span::after {
+      position: absolute;
+      top: 6px;
+      left: 0;
+    }
+
+    .mobile-menu {
+      display: none;
+      border-top: 2px solid var(--border);
+      background: var(--surface);
+    }
+
+    .mobile-menu.open {
+      display: block;
+    }
+
+    .mobile-menu-inner {
+      padding: 1rem 0 1.25rem;
+      display: grid;
+      gap: 0.75rem;
+    }
+
+    .mobile-menu a,
+    .mobile-menu button {
+      font: inherit;
+      text-align: left;
+      background: transparent;
+      border: 0;
+      padding: 0.9rem 0;
+      border-bottom: 1px solid rgba(21, 21, 21, 0.15);
+      font-weight: 700;
+      cursor: pointer;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
+      min-height: 48px;
+      padding: 0.85rem 1.2rem;
+      border: 2px solid var(--border);
+      border-radius: 999px;
+      font-weight: 700;
+      transition: 0.2s ease;
+    }
+
+    .btn-primary {
+      background: var(--ink);
+      color: #fff;
+    }
+
+    .btn-primary:hover,
+    .btn-primary:focus {
+      transform: translateY(-1px);
+      box-shadow: var(--shadow);
+    }
+
+    .btn-secondary {
+      background: var(--surface);
+      color: var(--ink);
+    }
+
+    .btn-secondary:hover,
+    .btn-secondary:focus {
+      transform: translateY(-1px);
+      box-shadow: var(--shadow);
+    }
+
+    .hero {
+      padding: 3rem 0 4rem;
+    }
+
+    .hero-grid {
+      display: grid;
+      gap: 2rem;
+      align-items: center;
+    }
+
+    .eyebrow {
+      display: inline-block;
+      margin-bottom: 1rem;
+      padding: 0.45rem 0.75rem;
+      border: 2px solid var(--border);
+      border-radius: 999px;
+      background: var(--accent-2);
+      font-size: 0.82rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+    }
+
+    .hero h1 {
+      margin: 0 0 1rem;
+      font-size: clamp(2.2rem, 6vw, 5rem);
+      line-height: 0.96;
+      letter-spacing: -0.03em;
+    }
+
+    .hero p {
+      margin: 0 0 1.4rem;
+      font-size: 1.05rem;
+      color: var(--muted);
+      max-width: 38rem;
+    }
+
+    .hero-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.9rem;
+      margin-bottom: 1.4rem;
+    }
+
+    .hero-notes {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.75rem;
+    }
+
+    .pill {
+      padding: 0.6rem 0.9rem;
+      border: 2px solid var(--border);
+      border-radius: 999px;
+      background: #fff;
+      font-size: 0.9rem;
+      font-weight: 700;
+    }
+
+    .hero-card {
+      background: var(--surface);
+      border: 2px solid var(--border);
+      border-radius: 28px;
+      padding: 1rem;
+      box-shadow: var(--shadow);
+    }
+
+    .logo-card {
+      display: grid;
+      gap: 1rem;
+      background:
+        radial-gradient(circle at top left, rgba(217, 182, 93, 0.35), transparent 35%),
+        #fff;
+    }
+
+    .patch-wrap {
+      border: 2px dashed rgba(21, 21, 21, 0.25);
+      border-radius: 22px;
+      padding: 1rem;
+      background: #fdfaf4;
+    }
+
+    .patch-wrap img {
+      width: 100%;
+      max-width: 420px;
+      margin: 0 auto;
+      object-fit: contain;
+    }
+
+    .card-meta {
+      display: grid;
+      gap: 0.75rem;
+    }
+
+    .card-meta strong {
+      font-size: 1.15rem;
+    }
+
+    .card-meta p {
+      margin: 0;
+      color: var(--muted);
+    }
+
+    .section {
+      padding: 1rem 0 4rem;
+    }
+
+    .section-head {
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .section-head h2 {
+      margin: 0;
+      font-size: clamp(1.8rem, 4vw, 3rem);
+      line-height: 1;
+    }
+
+    .section-head p {
+      margin: 0;
+      color: var(--muted);
+      max-width: 42rem;
+    }
+
+    .merch-grid {
+      display: grid;
+      gap: 1rem;
+    }
+
+    .merch-card {
+      background: var(--surface);
+      border: 2px solid var(--border);
+      border-radius: 24px;
+      padding: 1rem;
+      box-shadow: var(--shadow);
+    }
+
+    .merch-thumb {
+      aspect-ratio: 1 / 1;
+      border-radius: 18px;
+      background: linear-gradient(180deg, #fefcf7, #efe4ca);
+      border: 2px solid rgba(21, 21, 21, 0.15);
+      display: grid;
+      place-items: center;
+      overflow: hidden;
+      margin-bottom: 1rem;
+      padding: 1rem;
+    }
+
+    .merch-thumb img {
+      max-width: 78%;
+      max-height: 78%;
+      object-fit: contain;
+    }
+
+    .merch-card h3 {
+      margin: 0 0 0.35rem;
+      font-size: 1.1rem;
+    }
+
+    .merch-card p {
+      margin: 0 0 0.8rem;
+      color: var(--muted);
+    }
+
+    .site-footer {
+      border-top: 2px solid var(--border);
+      background: #111;
+      color: #fff;
+      padding: 3rem 0;
+      margin-top: 2rem;
+    }
+
+    .footer-grid {
+      display: grid;
+      gap: 2rem;
+    }
+
+    .footer-brand {
+      display: flex;
+      gap: 1rem;
+      align-items: flex-start;
+    }
+
+    .footer-brand-logo {
+      width: 68px;
+      height: 68px;
+      border-radius: 50%;
+      background: #fff;
+      border: 2px solid #fff;
+      overflow: hidden;
+      flex-shrink: 0;
+    }
+
+    .footer-brand-copy h3 {
+      margin: 0 0 0.45rem;
+      font-size: 1.1rem;
+      text-transform: uppercase;
+    }
+
+    .footer-brand-copy p {
+      margin: 0;
+      color: rgba(255, 255, 255, 0.78);
+      max-width: 28rem;
+    }
+
+    .footer-links {
+      display: grid;
+      gap: 0.7rem;
+    }
+
+    .footer-links strong {
+      font-size: 0.95rem;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    .footer-links a {
+      color: rgba(255, 255, 255, 0.82);
+    }
+
+    .footer-links a:hover,
+    .footer-links a:focus {
+      color: #fff;
+    }
+
+    .footer-bottom {
+      margin-top: 2rem;
+      padding-top: 1.2rem;
+      border-top: 1px solid rgba(255, 255, 255, 0.18);
+      color: rgba(255, 255, 255, 0.72);
+      font-size: 0.92rem;
+    }
+
+    @media (min-width: 768px) {
+      .nav-links,
+      .nav-actions {
+        display: flex;
+      }
+
+      .menu-toggle,
+      .mobile-menu {
+        display: none !important;
+      }
+
+      .hero {
+        padding: 4.5rem 0 5rem;
+      }
+
+      .hero-grid {
+        grid-template-columns: 1.1fr 0.9fr;
+        gap: 2.5rem;
+      }
+
+      .merch-grid {
+        grid-template-columns: repeat(3, 1fr);
+      }
+
+      .footer-grid {
+        grid-template-columns: 1.2fr 0.8fr 0.8fr;
+      }
+    }
+
+      .blueprint-grid {
+      display: grid;
+      gap: 1.5rem;
+      grid-template-columns: 1fr;
+    }
+
+    .blueprint-card {
+      background: var(--surface);
+      border: 2px solid var(--border);
+      border-radius: 24px;
+      padding: 2rem;
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+      position: relative;
+      overflow: hidden;
+      transition: 0.3s ease;
+    }
+
+    .blueprint-card:hover {
+      background: var(--accent-2);
+    }
+
+    .blueprint-tag {
+      position: absolute;
+      top: 1rem;
+      right: 1rem;
+      font-size: 0.7rem;
+      font-weight: 800;
+      text-transform: uppercase;
+      background: var(--ink);
+      color: #fff;
+      padding: 0.3rem 0.6rem;
+      border-radius: 4px;
+    }
+
+    .tool-icons {
+      display: flex;
+      gap: 0.5rem;
+      font-size: 0.8rem;
+      font-weight: 700;
+      color: var(--muted);
+      margin-top: auto;
+    }
+
+    @media (min-width: 768px) {
+      .blueprint-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+
+   /* Vertical Stack Refinements */
+  .about-stack {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 2rem;
+    max-width: 900px; /* Constraining width makes it look more premium/intentional */
+    margin: 0 auto;
+  }
+
+  .comic-top {
+    width: 100%;
+    background: var(--surface);
+    border: 2px solid var(--border);
+    border-radius: 42px;
+    padding: 1.5rem;
+    box-shadow: var(--shadow);
+  }
+
+  .comic-top img {
+    width: 100%;
+    border-radius: 26px;
+    border: 1px solid rgba(0,0,0,0.05);
+    display: block;
+  }
+
+  .manifesto-bottom {
+    width: 100%;
+    background: #151515;
+    color: #fff;
+    padding: 3.5rem;
+    border-radius: 42px;
+    border: 2px solid var(--border);
+    box-shadow: var(--shadow);
+  }
+
+  .manifesto-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 2rem;
+    margin-top: 2.5rem;
+    border-top: 1px solid #333;
+    padding-top: 2.5rem;
+  }
+
+  .manifesto-item {
+    border-left: 2px solid var(--accent);
+    padding-left: 1.5rem;
+  } 
+
+      /* Single Stack Container */
+  .olc-unified-stack {
+    max-width: 900px;
+    margin: 0 auto;
+    background: var(--surface); /* Cream background for the outer shell */
+    border: 2px solid var(--border);
+    border-radius: 42px; /* Matching your Hero "squircle" */
+    box-shadow: var(--shadow);
+    overflow: hidden; /* Keeps the dark box's corners tucked in at the bottom */
+  }
+
+  /* Upper Section: The Graphic */
+  .stack-top {
+    padding: 2rem;
+    background: #fff;
+    border-bottom: 2px solid var(--border);
+  }
+
+  .stack-top .inner-frame {
+    border: 2px dashed rgba(21, 21, 21, 0.1);
+    border-radius: 28px;
+    padding: 1rem;
+    background: #fff;
+  }
+
+  .stack-top img {
+    width: 100%;
+    border-radius: 18px;
+    display: block;
+  }
+
+  /* Lower Section: The Manifesto */
+  .stack-bottom {
+    background: #151515;
+    color: #fff;
+    padding: 3.5rem 2.5rem;
+  }
+
+  .stack-bottom h2 {
+    font-size: clamp(2.2rem, 5vw, 3.2rem);
+    line-height: 1;
+    margin: 1rem 0;
+  }
+
+  .logic-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 2rem;
+    margin-top: 3rem;
+    padding-top: 2rem;
+    border-top: 1px solid #333;
+  }
+
+  .logic-item {
+    border-left: 2px solid var(--accent);
+    padding-left: 1.25rem;
+  }
+
+  .logic-item strong {
+    display: block;
+    color: var(--accent);
+    text-transform: uppercase;
+    font-size: 0.75rem;
+    letter-spacing: 0.1em;
+    margin-bottom: 0.5rem;
+  }
+
+  .logic-item p {
+    color: #bbb;
+    font-size: 0.95rem;
+    line-height: 1.5;
+    margin: 0;
+  }
+  </style>
+</head>
+<body>
+  <header class="site-header">
+    <div class="container nav-shell">
+      <a href="#top" class="brand" aria-label="Old Lady Code home">
+        <div class="brand-logo">
+          <img src="./img/olc_logo.png" alt="Old Lady Code retro letter type logo" />
+        </div>
+        <div class="brand-copy">
+          <strong>Ole Lady Code</strong>
+          <span>Podcast</span>
+        </div>
+      </a>
+
+      <nav class="nav-links" aria-label="Primary navigation">
+        <a href="#about">About</a>
+        <a href="#episodes">Episodes</a>
+        <a href="#merch">Merch</a>
+        <a href="#contact">Contact</a>
+      </nav>
+
+      <div class="nav-actions">
+        <a class="btn btn-secondary" href="#merch">Shop Merch</a>
+        <a class="btn btn-primary" href="#episodes">Listen Now</a>
+      </div>
+
+      <button
+        class="menu-toggle"
+        id="menuToggle"
+        aria-expanded="false"
+        aria-controls="mobileMenu"
+        aria-label="Open menu"
+      >
+        <span></span>
+      </button>
+    </div>
+
+    <div class="mobile-menu" id="mobileMenu">
+      <div class="container mobile-menu-inner">
+        <a href="#about">About</a>
+        <a href="#episodes">Episodes</a>
+        <a href="#merch">Merch</a>
+        <a href="#contact">Contact</a>
+        <a href="#merch">Shop Merch</a>
+        <a href="#episodes">Listen Now</a>
+      </div>
+    </div>
+  </header>
+
+  <main id="top">
+   <!-- Hero Section -->
+      <section class="hero">
+  <div class="container hero-grid">
+    <div>
+      <span class="eyebrow">The Startup Operations Podcast (SOP)</span>
+      <h1>
+        Build systems, 
+        <br />
+        not just 
+        <br />
+        side hustles.
+      </h1>
+      <p>
+        Most "builders" are just busy. <strong>Ole Lady Code</strong> shows you how to 
+        unbundle business models, automate the messy parts with AI, and design operations 
+        that actually scale. Less hype, more Standard Operating Procedures.
+      </p>
+
+      <div class="hero-actions">
+        <a class="btn btn-primary" href="#episodes">Listen & Scale</a>
+        <a class="btn btn-secondary" href="#blueprints">View the SOPs</a>
+      </div>
+
+      <div class="hero-notes">
+        <span class="pill">AI Workflows</span>
+        <span class="pill">Business Unbundling</span>
+        <span class="pill">Visual Leverage</span>
+      </div>
+    </div>
+
+    <div class="hero-card logo-card">
+      <div class="patch-wrap">
+        <img src="./img/oleladycode_logo.png" alt="Old Lady Code patch logo" />
+      </div>
+      <div class="card-meta">
+        <strong>"Get Off My Grass"</strong>
+        <p>
+          The official uniform of the sensibly automated startup. One patch, several jobs. Efficient branding for people who value results over noise.
+        </p>
+        <div>
+          <a class="btn btn-secondary" href="#merch">Get the Patch</a>
+        </div>
+      </div>
+    </div>
+  </div> 
+      
+      </section>
+
+    <!-- Orgins of Ole Lady Code -->
+  <section class="section" id="about" style="padding: 6rem 0;">
+  <div class="container">
+    <div class="olc-unified-stack">
+      
+      <div class="stack-top">
+        <div class="inner-frame">
+          <img src="./img/olc-origin-comic.png" alt="Ole Lady Code Origin Comic">
+        </div>
+        <div style="margin-top: 1.5rem; padding: 0 0.5rem;">
+          <span class="eyebrow" style="font-size: 0.7rem; border-color: rgba(0,0,0,0.1);">Document 01 // The Conflict</span>
+          <p style="margin-top: 0.5rem; color: var(--muted); font-size: 0.9rem; font-style: italic;">
+            "Technical acumen isn't a department. It is the source code of every creative idea."
+          </p>
+        </div>
+      </div>
+
+      <div class="stack-bottom">
+        <span class="eyebrow" style="background: rgba(217, 182, 93, 0.15); color: var(--accent); border-color: var(--accent);">Operational Logic</span>
+        <h2>Seniority is <br>a Statement.</h2>
+        
+        <div class="logic-grid">
+          <div class="logic-item">
+            <strong>01 / Infrastructure</strong>
+            <p>Design is the architectural foundation of the code, not a decorative wrapper.</p>
+          </div>
+          
+          <div class="logic-item">
+            <strong>02 / Precision</strong>
+            <p>We close the gap between visionary aesthetics and automated, scalable systems.</p>
+          </div>
+
+          <div class="logic-item">
+            <strong>03 / Authority</strong>
+            <p>Experience is the only filter that separates high-signal leverage from the hype.</p>
+          </div>
+        </div>
+      </div>
+
+    </div> </div>
+</section>
+
+
+
+      
+      <section class="section" id="blueprints">
+      <div class="container">
+        <div class="section-head">
+          <span class="eyebrow">The SOP Library</span>
+          <h2>Download the Blueprints</h2>
+          <p>
+            We don't just talk about tools; we build the operations. Every episode comes with a 
+            <strong>Standard Operating Procedure</strong> you can copy and paste into your business.
+          </p>
+        </div>
+
+        <div class="blueprint-grid">
+          <div class="blueprint-card">
+            <span class="blueprint-tag">V1.0</span>
+            <div class="card-meta">
+              <strong>The "Ghost Ops" Intake System</strong>
+              <p>An automated workflow for onboarding high-ticket clients without lifting a finger.</p>
+            </div>
+            <div class="tool-icons">
+              <span>Stack:</span>
+              <span class="pill">OpenAI</span>
+              <span class="pill">Make.com</span>
+              <span class="pill">Airtable</span>
+            </div>
+            <a href="#" class="btn btn-primary" style="margin-top: 1rem;">Get the SOP File</a>
+          </div>
+
+          <div class="blueprint-card">
+            <span class="blueprint-tag">V2.1</span>
+            <div class="card-meta">
+              <strong>The Content Multiplier</strong>
+              <p>Turn one 20-minute voice memo into 10 high-signal social threads in your own voice.</p>
+            </div>
+            <div class="tool-icons">
+              <span>Stack:</span>
+              <span class="pill">Claude 3.5</span>
+              <span class="pill">Descript</span>
+              <span class="pill">Buffer</span>
+            </div>
+            <a href="#" class="btn btn-primary" style="margin-top: 1rem;">Download Template</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="episodes">
+      <div class="container">
+        <div class="section-head">
+          <h2>Featured episodes</h2>
+          <p>
+            Use this section for your latest episodes, trailers, or platform links.
+          </p>
+        </div>
+
+        <div class="merch-grid">
+          <article class="merch-card">
+            <h3>Episode 01: Build with Judgment</h3>
+            <p>Why experience still matters in a world obsessed with speed.</p>
+            <a class="btn btn-secondary" href="#">Play Episode</a>
+          </article>
+
+          <article class="merch-card">
+            <h3>Episode 02: AI Needs Supervision</h3>
+            <p>Tools are useful. Blind trust is not. That distinction matters.</p>
+            <a class="btn btn-secondary" href="#">Play Episode</a>
+          </article>
+
+          <article class="merch-card">
+            <h3>Episode 03: Business Systems Over Chaos</h3>
+            <p>How to stop running everything from memory and vibes.</p>
+            <a class="btn btn-secondary" href="#">Play Episode</a>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="merch">
+      <div class="container">
+        <div class="section-head">
+          <h2>Patch merch</h2>
+          <p>
+            The patch logo can anchor your merchandise line across apparel and accessories without
+            needing a second visual system. One logo, several jobs. Imagine that.
+          </p>
+        </div>
+
+        <div class="merch-grid">
+          <article class="merch-card">
+            <div class="merch-thumb">
+              <img src="patch-logo.png" alt="Ole Lady Code patch logo on merch mockup" />
+            </div>
+            <h3>Embroidered Patch</h3>
+            <p>The obvious first product. Simple, strong, and cheap to ship.</p>
+            <a class="btn btn-secondary" href="#">View Product</a>
+          </article>
+
+          <article class="merch-card">
+            <div class="merch-thumb">
+              <img src="patch-logo.png" alt="Ole Lady Code patch logo on hat mockup" />
+            </div>
+            <h3>Cap or Beanie</h3>
+            <p>The patch works well on headwear and still reads clearly at small sizes.</p>
+            <a class="btn btn-secondary" href="#">View Product</a>
+          </article>
+
+          <article class="merch-card">
+            <div class="merch-thumb">
+              <img src="patch-logo.png" alt="Ole Lady Code patch logo on tote mockup" />
+            </div>
+            <h3>Tote or Jacket</h3>
+            <p>Good for a more visible, street-ready version of the brand.</p>
+            <a class="btn btn-secondary" href="#">View Product</a>
+          </article>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer" id="contact">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <div class="footer-brand-logo">
+            <img src="./img/olc_logo.png" alt="Ole Lady Code patch logo" />
+          </div>
+          <div class="footer-brand-copy">
+            <h3>Ole Lady Code</h3>
+            <p>
+              Podcast and merch brand for sharp conversations about tech, business, creativity,
+              and seasoned perspective.
+            </p>
+          </div>
+        </div>
+
+        <div class="footer-links">
+          <strong>Explore</strong>
+          <a href="#about">About</a>
+          <a href="#episodes">Episodes</a>
+          <a href="#merch">Merch</a>
+        </div>
+
+        <div class="footer-links">
+          <strong>Connect</strong>
+          <a href="#">Instagram</a>
+          <a href="#">YouTube</a>
+          <a href="#">Email</a>
+        </div>
+      </div>
+
+      <div class="footer-bottom">
+        © 2026 Ole Lady Code. All rights reserved.
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    const menuToggle = document.getElementById("menuToggle");
+    const mobileMenu = document.getElementById("mobileMenu");
+
+    menuToggle.addEventListener("click", () => {
+      const isOpen = mobileMenu.classList.toggle("open");
+      menuToggle.setAttribute("aria-expanded", String(isOpen));
+    });
+
+    document.querySelectorAll(".mobile-menu a").forEach((link) => {
+      link.addEventListener("click", () => {
+        mobileMenu.classList.remove("open");
+        menuToggle.setAttribute("aria-expanded", "false");
+      });
+    });
+  </script>
+</body>
+</html>

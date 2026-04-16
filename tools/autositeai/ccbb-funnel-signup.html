@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>AutoSite AI Display</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            brandNavy: '#0B1731',
+            brandBlue: '#1085D2',
+            brandSoft: '#A7C4DA',
+            brandWhite: '#FEFFFF'
+          }
+        }
+      }
+    };
+  </script>
+  <style>
+    html, body {
+      height: 100%;
+      margin: 0;
+      background:
+        radial-gradient(circle at top, rgba(16, 133, 210, 0.2), transparent 40%),
+        linear-gradient(180deg, #09142B 0%, #0B1731 100%);
+    }
+  </style>
+</head>
+<body class="min-h-screen w-screen text-brandWhite">
+
+  <main class="min-h-screen px-6 py-6 sm:px-8 sm:py-8">
+    <section class="mx-auto h-full max-w-7xl grid gap-6 lg:grid-cols-2">
+
+      <!-- LEFT: MAIN STATUS -->
+      <div class="flex flex-col items-center justify-center text-center rounded-3xl border border-white/10 bg-white/5 p-6 sm:p-8">
+
+        <img
+          src="https://regencreatives.com/tools/autositeai/img/autosite_logo_2026_logo.png"
+          class="mb-2 w-20 rounded-[20px] sm:w-28 lg:w-36"
+        />
+
+        <p class="text-xs uppercase tracking-[0.35em] text-brandSoft sm:text-sm">
+          AutoSite AI™ by Regen Creatives
+        </p>
+
+        <div class="mt-4 flex flex-col items-center leading-none">
+          <span id="slotsLeft" class="text-[10rem] font-black sm:text-[14rem] lg:text-[18rem] xl:text-[22rem]">40</span>
+          <span class="mt-1 text-2xl uppercase tracking-[0.22em] sm:text-3xl lg:text-4xl">Spots Left</span>
+        </div>
+
+        <p class="mt-4 max-w-xl text-base text-brandSoft sm:text-lg lg:text-xl">
+          Pilot spots have already been secured. Applications are being reviewed throughout the event.
+        </p>
+
+      </div>
+
+      <!-- RIGHT: TIMER + QR -->
+      <div class="flex flex-col justify-between gap-6">
+
+        <!-- TIMER -->
+        <div class="rounded-3xl border border-white/10 bg-white/5 p-6 text-center">
+          <p class="text-xs uppercase tracking-[0.3em] text-brandSoft sm:text-sm">
+            Offer Closes In
+          </p>
+
+          <div class="mt-4 flex flex-wrap justify-center gap-6">
+            <div>
+              <div id="days" class="text-3xl font-bold sm:text-4xl lg:text-5xl">00</div>
+              <div class="text-[10px] uppercase text-brandSoft sm:text-xs">Days</div>
+            </div>
+            <div>
+              <div id="hours" class="text-3xl font-bold sm:text-4xl lg:text-5xl">00</div>
+              <div class="text-[10px] uppercase text-brandSoft sm:text-xs">Hours</div>
+            </div>
+            <div>
+              <div id="minutes" class="text-3xl font-bold sm:text-4xl lg:text-5xl">00</div>
+              <div class="text-[10px] uppercase text-brandSoft sm:text-xs">Minutes</div>
+            </div>
+            <div>
+              <div id="seconds" class="text-3xl font-bold sm:text-4xl lg:text-5xl">00</div>
+              <div class="text-[10px] uppercase text-brandSoft sm:text-xs">Seconds</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- QR -->
+        <div class="rounded-3xl border border-brandBlue/30 bg-gradient-to-br from-brandBlue/20 to-white/5 p-6 text-center">
+          <p class="text-xs uppercase tracking-[0.3em] text-brandSoft sm:text-sm">
+            Enter Now
+          </p>
+
+          <p class="mt-2 text-lg font-semibold sm:text-xl">
+            Scan the QR code
+          </p>
+
+          <div class="mt-4 flex justify-center">
+            <img
+              src="https://api.qrserver.com/v1/create-qr-code/?size=300x300&data=https://regencreatives.com/tools/business_process_intake_questionnaire/index.html"
+              class="h-56 w-56 rounded-2xl bg-white p-4 sm:h-72 sm:w-72 lg:h-96 lg:w-96"
+            />
+          </div>
+
+          <p class="mt-3 text-sm text-brandSoft sm:text-base">
+            Priority given to submissions during the event.
+          </p>
+        </div>
+
+      </div>
+
+    </section>
+  </main>
+
+  <script>
+    const totalSlots = 50;
+    const claimedSlots = 10;
+    document.getElementById('slotsLeft').textContent = totalSlots - claimedSlots;
+
+    const targetDate = new Date('2026-04-21T20:00:00');
+
+    function updateCountdown() {
+      const now = new Date();
+      const diff = targetDate - now;
+
+      if (diff <= 0) return;
+
+      const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+      const hours = Math.floor((diff / (1000 * 60 * 60)) % 24);
+      const minutes = Math.floor((diff / (1000 * 60)) % 60);
+      const seconds = Math.floor((diff / 1000) % 60);
+
+      document.getElementById('days').textContent = String(days).padStart(2, '0');
+      document.getElementById('hours').textContent = String(hours).padStart(2, '0');
+      document.getElementById('minutes').textContent = String(minutes).padStart(2, '0');
+      document.getElementById('seconds').textContent = String(seconds).padStart(2, '0');
+    }
+
+    updateCountdown();
+    setInterval(updateCountdown, 1000);
+  </script>
+
+</body>
+</html>

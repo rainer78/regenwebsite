@@ -1,10 +1,9 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Game Site Builder | Standalone HTML</title>
+  <title>Game Site Builder | Cryogenic Staging</title>
   <style>
     :root{
       --bg:#0a0a0a;
@@ -429,6 +428,7 @@
       <div class="topbar-actions">
         <button class="btn" id="toggleModeBtn">Preview mode</button>
         <button class="btn btn-primary" id="exportBtn">Export content</button>
+        <button class="btn" id="clearBtn" style="border-color: #ff4d4d; color: #ff4d4d;">Reset Defaults</button>
       </div>
     </div>
     <div class="save-msg" id="saveMsg">Content JSON exported.</div>
@@ -440,14 +440,16 @@
 
   <main id="siteRoot"></main>
 
- <script>
+  <script>
+    const STORAGE_KEY = "cryogenic_builder_save_v1";
+
     const initialData = {
       game: {
         title: "CRYOGENIC",
         tagline: "A quiet routine. A wrong feeling. A shift that should have ended hours ago.",
         genre: "Narrative Horror / Psychological Tension",
         status: "In Development",
-        description: "The cryo-chambers were supposed to be silent. But inside Unit 7, a pulse was detected.",
+        description: "The cryo-chambers were supposed to be silent. But inside Unit 7, a pulse was detected. Step into the investigation and decide who to trust.",
         hook: "A familiar job becomes increasingly unsettling as the player notices small details that do not belong.",
         heroImage: "",
         heroButtonPrimaryLabel: "Explore the World",
@@ -455,34 +457,58 @@
         heroButtonSecondaryLabel: "View Creative Slots",
         heroButtonSecondaryHref: "#media"
       },
-      featureCards: [],
-      storyBlocks: [],
-      writingNotes: [],
-      characterCards: [],
-      mechanics: [],
-      mediaItems: [],
-      soundtrackNotes: [],
-      trailer: { embedUrl: "", title: "Teaser", placeholder: "Paste URL" },
-      devlog: [],
-      cta: { label: "Wishlist", headline: "Stay Updated", primaryLabel: "Steam", primaryHref: "#", secondaryLabel: "Discord", secondaryHref: "#" }
+      featureCards: [
+        { title: "Atmospheric Tension", text: "Every sound in the station is designed to keep you on edge." }
+      ],
+      storyBlocks: [
+        { label: "Premise", text: "Write the setup here. Who is the player? What ordinary role are they performing?" }
+      ],
+      writingNotes: [
+        "Focus on the contrast between high-tech frost and human decay."
+      ],
+      characterCards: [
+        { name: "Ava Monroe", role: "Player Character", desc: "A sharp-witted investigator.", image: "" }
+      ],
+      mechanics: [
+        "Environmental observation and clue spotting",
+        "Trust/Suspicion Stat Tracking"
+      ],
+      mediaItems: [
+        { label: "Hero art", image: "" }
+      ],
+      soundtrackNotes: [
+        "Low Drone", "Metallic Clangs", "Static"
+      ],
+      trailer: {
+        embedUrl: "",
+        title: "Embed your preview",
+        placeholder: "Paste a YouTube embed URL or leave blank during staging."
+      },
+      devlog: [
+        { date: "Update 01", note: "Initial logic integrated." }
+      ],
+      cta: {
+        label: "Call to Action",
+        headline: "Join the community or wishlist on Steam.",
+        primaryLabel: "Primary Button",
+        primaryHref: "#",
+        secondaryLabel: "Secondary Button",
+        secondaryHref: "#"
+      }
     };
 
-    // --- FIX: LOCAL STORAGE PERSISTENCE ---
-    const STORAGE_KEY = "game_site_builder_data";
-    
-    function loadSavedData() {
-      const saved = localStorage.getItem(STORAGE_KEY);
-      return saved ? JSON.parse(saved) : JSON.parse(JSON.stringify(initialData));
+    // --- Persistence Logic ---
+    function loadData() {
+        const saved = localStorage.getItem(STORAGE_KEY);
+        return saved ? JSON.parse(saved) : JSON.parse(JSON.stringify(initialData));
     }
 
-    function persistData() {
-      localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
+    function saveData() {
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
     }
 
-    let data = loadSavedData();
+    let data = loadData();
     let editMode = true;
-
-    // --- END FIX ---
 
     const siteRoot = document.getElementById("siteRoot");
     const editorGrid = document.getElementById("editorGrid");
@@ -490,6 +516,7 @@
     const saveMsg = document.getElementById("saveMsg");
     const toggleModeBtn = document.getElementById("toggleModeBtn");
     const exportBtn = document.getElementById("exportBtn");
+    const clearBtn = document.getElementById("clearBtn");
 
     function escapeHtml(str) {
       return String(str ?? "").replace(/[&<>"']/g, s => ({
@@ -514,8 +541,174 @@
       }, 2500);
     }
 
+    function setByPath(obj, path, value) {
+      const parts = path.split(".");
+      let current = obj;
+      for (let i = 0; i < parts.length - 1; i++) current = current[parts[i]];
+      current[parts[parts.length - 1]] = value;
+    }
+
+    function updateField(path, value) {
+      setByPath(data, path, value);
+      render();
+    }
+
+    function removeArrayItem(key, index) {
+      data[key].splice(index, 1);
+      render();
+    }
+
+    function addArrayItem(key, item) {
+      data[key].push(item);
+      render();
+    }
+
+    function updateArrayItem(key, index, field, value) {
+      data[key][index][field] = value;
+      render();
+    }
+
+    function updateStringArrayItem(key, index, value) {
+      data[key][index] = value;
+      render();
+    }
+
+    function readImage(file, callback) {
+      if (!file) return;
+      const reader = new FileReader();
+      reader.onload = e => callback(String(e.target.result || ""));
+      reader.readAsDataURL(file);
+    }
+
+    function makeBoundField(label, path, value, multiline = false) {
+      return `
+        <div class="field">
+          <label>${escapeHtml(label)}</label>
+          ${multiline
+            ? `<textarea data-bind="${escapeHtml(path)}">${escapeHtml(value)}</textarea>`
+            : `<input data-bind="${escapeHtml(path)}" value="${escapeHtml(value)}" />`
+          }
+        </div>
+      `;
+    }
+
+    function imageField(label, value, onUploadKey, onClear) {
+      return `
+        <div class="field">
+          <label>${escapeHtml(label)}</label>
+          <div class="inline-actions">
+            <button class="small-btn" type="button" data-upload="${escapeHtml(onUploadKey)}">Upload</button>
+            ${value ? `<button class="small-btn" type="button" data-clear="${escapeHtml(onClear)}">Clear</button>` : ""}
+          </div>
+          <input type="file" accept="image/*" hidden data-file="${escapeHtml(onUploadKey)}" />
+          <div class="upload-preview">
+            ${value ? `<img src="${escapeHtml(value)}" alt="${escapeHtml(label)}" />` : `<div>No image</div>`}
+          </div>
+        </div>
+      `;
+    }
+
+    function renderEditor() {
+      editorGrid.innerHTML = "";
+      
+      const cards = [
+        {
+          title: "Core Identity",
+          content: 
+            makeBoundField("Title", "game.title", data.game.title) +
+            makeBoundField("Tagline", "game.tagline", data.game.tagline) +
+            makeBoundField("Genre", "game.genre", data.game.genre) +
+            makeBoundField("Status", "game.status", data.game.status) +
+            imageField("Hero Art", data.game.heroImage, "game|heroImage", "game|heroImage")
+        },
+        {
+          title: "Marketing Copy",
+          content:
+            makeBoundField("Description", "game.description", data.game.description, true) +
+            makeBoundField("Hook", "game.hook", data.game.hook, true)
+        },
+        {
+          title: "Trailer & Media",
+          content:
+            makeBoundField("YouTube Link", "trailer.embedUrl", data.trailer.embedUrl) +
+            makeBoundField("Trailer Title", "trailer.title", data.trailer.title)
+        }
+      ];
+
+      cards.forEach(c => {
+        const div = document.createElement("div");
+        div.className = "editor-card";
+        div.innerHTML = `<h4>${escapeHtml(c.title)}</h4>${c.content}`;
+        editorGrid.appendChild(div);
+      });
+
+      bindBasicFields(editorGrid);
+    }
+
+    function renderPreview() {
+      const trailerUrl = normalizeYoutubeUrl(data.trailer.embedUrl);
+      siteRoot.innerHTML = `
+        <section class="hero">
+          <div class="container">
+            <div class="hero-grid">
+              <div class="hero-copy">
+                <p class="badge">${escapeHtml(data.game.genre)} • ${escapeHtml(data.game.status)}</p>
+                <h1>${escapeHtml(data.game.title)}</h1>
+                <p class="lead">${escapeHtml(data.game.tagline)}</p>
+                <p class="body">${escapeHtml(data.game.description)}</p>
+                <div class="hero-actions">
+                  <a href="${escapeHtml(data.game.heroButtonPrimaryHref)}" class="btn btn-primary btn-hero">${escapeHtml(data.game.heroButtonPrimaryLabel)}</a>
+                  <a href="${escapeHtml(data.game.heroButtonSecondaryHref)}" class="btn btn-hero">${escapeHtml(data.game.heroButtonSecondaryLabel)}</a>
+                </div>
+              </div>
+              <div class="hero-media">
+                <div class="hero-frame">
+                  <div class="hero-frame-inner">
+                    ${data.game.heroImage 
+                      ? `<img src="${escapeHtml(data.game.heroImage)}" alt="Hero art" />` 
+                      : `<div><p class="eyebrow">Visual Placeholder</p></div>`}
+                  </div>
+                </div>
+                <div class="hook-card">
+                  <p class="eyebrow">Core Hook</p>
+                  <p>${escapeHtml(data.game.hook)}</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section class="section">
+          <div class="container">
+            <div class="cards-3">
+              ${data.featureCards.map(item => `
+                <div class="panel-soft card">
+                  <h3>${escapeHtml(item.title)}</h3>
+                  <p>${escapeHtml(item.text)}</p>
+                </div>
+              `).join("")}
+            </div>
+          </div>
+        </section>
+
+        <section class="section border-top" id="media">
+          <div class="container">
+             <div class="video-shell">
+                ${trailerUrl 
+                  ? `<iframe src="${escapeHtml(trailerUrl)}" allowfullscreen></iframe>` 
+                  : `<div>${escapeHtml(data.trailer.placeholder)}</div>`}
+             </div>
+          </div>
+        </section>
+
+        <footer class="footer">
+          <div class="container">Cryogenic Staging Build • 2026</div>
+        </footer>
+      `;
+    }
+
     function render() {
-      persistData(); // Auto-save on every render
+      saveData();
       if (editMode) {
         editorShell.classList.remove("hidden");
         renderEditor();
@@ -525,24 +718,32 @@
       renderPreview();
     }
 
-    function updateField(path, value) {
-      const parts = path.split(".");
-      let current = data;
-      for (let i = 0; i < parts.length - 1; i++) current = current[parts[i]];
-      current[parts[parts.length - 1]] = value;
-      render();
+    function bindBasicFields(scope) {
+      scope.querySelectorAll("[data-bind]").forEach(el => {
+        el.addEventListener("input", e => updateField(el.getAttribute("data-bind"), e.target.value));
+      });
+      scope.querySelectorAll("[data-upload]").forEach(btn => {
+        btn.addEventListener("click", () => {
+          scope.querySelector(`[data-file="${CSS.escape(btn.getAttribute("data-upload"))}"]`).click();
+        });
+      });
+      scope.querySelectorAll("[data-file]").forEach(input => {
+        input.addEventListener("change", e => {
+          readImage(e.target.files[0], value => {
+            const parts = input.getAttribute("data-file").split("|");
+            if (parts[0] === "game") data.game[parts[1]] = value;
+            render();
+          });
+        });
+      });
+      scope.querySelectorAll("[data-clear]").forEach(btn => {
+        btn.addEventListener("click", () => {
+          const parts = btn.getAttribute("data-clear").split("|");
+          if (parts[0] === "game") data.game[parts[1]] = "";
+          render();
+        });
+      });
     }
-
-    // Standard Export Function
-    exportBtn.addEventListener("click", () => {
-      const blob = new Blob([JSON.stringify(data, null, 2)], { type: "application/json" });
-      const url = URL.createObjectURL(blob);
-      const a = document.createElement("a");
-      a.href = url;
-      a.download = "game-site-content.json";
-      a.click();
-      showSavedMessage("Content exported to JSON file.");
-    });
 
     toggleModeBtn.addEventListener("click", () => {
       editMode = !editMode;
@@ -550,8 +751,24 @@
       render();
     });
 
-    // ... (Keep your existing renderEditor and renderPreview functions here) ...
-    // Note: ensure they call updateField or render() to trigger the persistData() logic.
+    exportBtn.addEventListener("click", () => {
+      const blob = new Blob([JSON.stringify(data, null, 2)], { type: "application/json" });
+      const a = document.createElement("a");
+      a.href = URL.createObjectURL(blob);
+      a.download = "cryogenic-content.json";
+      a.click();
+      showSavedMessage("Exported Successfully!");
+    });
+
+    clearBtn.addEventListener("click", () => {
+        if(confirm("This will erase your current session and reset to defaults. Continue?")) {
+            localStorage.removeItem(STORAGE_KEY);
+            data = JSON.parse(JSON.stringify(initialData));
+            render();
+        }
+    });
 
     render();
-</script>
+  </script>
+</body>
+</html>

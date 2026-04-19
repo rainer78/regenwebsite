@@ -659,7 +659,7 @@
           "
         >
           <div>About 10 minutes</div>
-          <div>6 structured sections</div>
+          <div><span id="section-count"></span> structured sections</div>
           <div>One question at a time</div>
         </div>
 
@@ -691,7 +691,7 @@
           </div>
         </div>
         <div class="flex items-center mb-1" id="progress-bar"></div>
-        <p class="text-xs font-medium" style="color: #8A857D;" id="progress-label">Question 1 of 22</p>
+        <p class="text-xs font-medium" style="color: #8A857D;" id="progress-label">Question 1 of 28</p>
       </div>
 
       <div style="background: var(--surface-color); border-radius: 16px; border: 1px solid #E8E4DD; padding: 28px; animation: slideIn 0.5s cubic-bezier(0.22, 1, 0.36, 1) forwards;">
@@ -1501,8 +1501,18 @@ function validateCurrentField() {
  function submitForm() {
   var nextBtn = document.getElementById('next-field-btn');
   var payload;
+  var errors;
 
   if (isSubmitting) return;
+
+  errors = validateEntireForm();
+  if (errors.length > 0) {
+    currentSectionIdx = errors[0].sectionIndex;
+    currentFieldIdx = errors[0].fieldIndex;
+    renderQuestion();
+    showToast('Please complete all required questions before submitting.', 'error');
+    return;
+  }
 
   if (!MAKE_WEBHOOK_URL || MAKE_WEBHOOK_URL.indexOf('REPLACE_WITH_YOUR_WEBHOOK_ID') !== -1) {
     showToast('Add your Make webhook URL before publishing.', 'error');
@@ -1752,6 +1762,81 @@ function resetForm() {
   if (window.lucide && lucide.createIcons) {
     lucide.createIcons();
   }
+
+  function validateEntireForm() {
+  var errors = [];
+  var i, j, section, field, val, emailPattern;
+
+  emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+  for (i = 0; i < SECTIONS.length; i++) {
+    section = SECTIONS[i];
+
+    for (j = 0; j < section.fields.length; j++) {
+      field = section.fields[j];
+      val = formData[field.name];
+
+      if (!field.required) continue;
+
+      if (field.type === 'checkbox') {
+        if (!isArray(val) || val.length === 0) {
+          errors.push({
+            sectionIndex: i,
+            fieldIndex: j,
+            fieldName: field.name,
+            message: field.label
+          });
+        }
+        continue;
+      }
+
+      if (typeof val === 'string') {
+        val = val.replace(/^\s+|\s+$/g, '');
+      }
+
+      if (!val) {
+        errors.push({
+          sectionIndex: i,
+          fieldIndex: j,
+          fieldName: field.name,
+          message: field.label
+        });
+        continue;
+      }
+
+      if (field.type === 'email' && !emailPattern.test(val)) {
+        errors.push({
+          sectionIndex: i,
+          fieldIndex: j,
+          fieldName: field.name,
+          message: field.label
+        });
+      }
+    }
+  }
+
+  return errors;
+}
+function updateStaticUiCounts() {
+  var sectionCountEl = document.getElementById('section-count');
+  var progressLabelEl = document.getElementById('progress-label');
+
+  if (sectionCountEl) {
+    sectionCountEl.textContent = TOTAL_SECTIONS;
+  }
+
+  if (progressLabelEl) {
+    progressLabelEl.textContent = 'Question 1 of ' + TOTAL_FIELDS;
+  }
+}
+applyConfig(getSdkConfig());
+updateStaticUiCounts();
+
+if (window.lucide && lucide.createIcons) {
+  lucide.createIcons();
+}
+  
+  
 </script>
   
 </body>

@@ -817,6 +817,7 @@
 
 <script>
   var MAKE_WEBHOOK_URL = 'https://hook.us2.make.com/95eb4haubwts1fad6rrvys7elhgfsrqe';
+  var currentVoiceField = null;
 
   var SECTIONS = [
     {
@@ -1381,103 +1382,142 @@ function validateCurrentField() {
     }
   }
 
-  function initVoiceRecognition() {
-    var SpeechRecognition;
+function initVoiceRecognition() {
+  var SpeechRecognition;
 
-    if (voiceRecognition) return true;
+  if (voiceRecognition) return true;
 
-    SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+  SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
 
-    if (!SpeechRecognition) {
-      showToast('Voice input is not supported in this browser.', 'error');
-      return false;
-    }
-
-    voiceRecognition = new SpeechRecognition();
-    voiceRecognition.continuous = false;
-    voiceRecognition.interimResults = true;
-    voiceRecognition.lang = 'en-US';
-
-    voiceRecognition.onstart = function() {
-      isRecording = true;
-      updateVoiceButton();
-    };
-
-    voiceRecognition.onend = function() {
-      isRecording = false;
-      updateVoiceButton();
-    };
-
-    voiceRecognition.onerror = function(e) {
-      isRecording = false;
-      updateVoiceButton();
-      if (e.error !== 'no-speech') {
-        showToast('Voice input error: ' + e.error, 'error');
-      }
-    };
-
-    voiceRecognition.onresult = function(e) {
-      var transcript = '';
-      var i;
-      var currentValue;
-
-      for (i = e.resultIndex; i < e.results.length; i++) {
-        transcript += e.results[i][0].transcript;
-        if (e.results[i].isFinal) {
-          transcript += ' ';
-        }
-      }
-
-      if (window.currentVoiceField && transcript.replace(/^\s+|\s+$/g, '')) {
-        currentValue = window.currentVoiceField.value || '';
-        window.currentVoiceField.value = (currentValue + ' ' + transcript).replace(/^\s+|\s+$/g, '');
-        formData[window.currentVoiceField.name] = window.currentVoiceField.value;
-      }
-    };
-
-    return true;
+  if (!SpeechRecognition) {
+    showToast('Voice input is not supported in this browser.', 'error');
+    return false;
   }
 
-  function handleVoiceInput(btn) {
-    var fieldName;
-    var input;
+  voiceRecognition = new SpeechRecognition();
+  voiceRecognition.continuous = false;
+  voiceRecognition.interimResults = false; // 🔥 key fix (no duplicate junk)
+  voiceRecognition.lang = 'en-US';
 
-    if (!initVoiceRecognition()) return;
-    if (!voiceRecognition) return;
+  voiceRecognition.onstart = function() {
+    isRecording = true;
+    updateVoiceButton();
+  };
 
-    fieldName = btn.getAttribute('data-field');
-    input = document.querySelector('[name="' + fieldName + '"]');
+  voiceRecognition.onend = function() {
+    isRecording = false;
+    updateVoiceButton();
+    currentVoiceField = null;
+  };
 
-    if (!input) return;
+  voiceRecognition.onerror = function(e) {
+    var message = 'Voice input is unavailable right now.';
 
-    if (isRecording) {
-      voiceRecognition.stop();
-    } else {
-      window.currentVoiceField = input;
-      input.focus();
+    isRecording = false;
+    updateVoiceButton();
+    currentVoiceField = null;
 
-      try {
-        voiceRecognition.start();
-      } catch (e) {
-        showToast('Could not start voice input.', 'error');
-      }
+    if (e.error === 'not-allowed') {
+      message = 'Microphone access was blocked. Please allow microphone access.';
+    } else if (e.error === 'audio-capture') {
+      message = 'No microphone detected on this device.';
+    } else if (e.error === 'network') {
+      message = 'Network issue interrupted voice input.';
+    } else if (e.error === 'no-speech') {
+      return;
     }
-  }
 
-  function updateVoiceButton() {
-    var btns = document.querySelectorAll('.voice-input-btn');
+    showToast(message, 'error');
+  };
+
+  voiceRecognition.onresult = function(e) {
+    var finalTranscript = '';
     var i;
-    var btn;
+    var currentValue;
 
-    for (i = 0; i < btns.length; i++) {
-      btn = btns[i];
-      if (isRecording && window.currentVoiceField && btn.getAttribute('data-field') === window.currentVoiceField.name) {
-        btn.classList.add('recording');
-      } else {
-        btn.classList.remove('recording');
+    for (i = e.resultIndex; i < e.results.length; i++) {
+      if (e.results[i].isFinal) {
+        finalTranscript += e.results[i][0].transcript + ' ';
       }
     }
+
+    finalTranscript = finalTranscript.replace(/^\s+|\s+$/g, '');
+
+    if (currentVoiceField && finalTranscript) {
+      currentValue = currentVoiceField.value || '';
+
+      currentVoiceField.value = (currentValue + ' ' + finalTranscript)
+        .replace(/\s+/g, ' ')
+        .replace(/^\s+|\s+$/g, '');
+
+      formData[currentVoiceField.name] = currentVoiceField.value;
+    }
+  };
+
+  return true;
+}
+
+function handleVoiceInput(btn) {
+  var fieldName;
+  var input;
+
+  if (!initVoiceRecognition()) return;
+  if (!voiceRecognition) return;
+
+  fieldName = btn.getAttribute('data-field');
+  input = document.querySelector('[name="' + fieldName + '"]');
+
+  if (!input) return;
+
+  if (isRecording) {
+    try {
+      voiceRecognition.stop();
+    } catch (e) {}
+    return;
   }
+
+  currentVoiceField = input;
+  input.focus();
+
+  try {
+    voiceRecognition.start();
+  } catch (e) {
+    showToast('Could not start voice input.', 'error');
+  }
+}
+
+function updateVoiceButton() {
+  var btns = document.querySelectorAll('.voice-input-btn');
+  var i;
+  var btn;
+
+  for (i = 0; i < btns.length; i++) {
+    btn = btns[i];
+
+    if (
+      isRecording &&
+      currentVoiceField &&
+      btn.getAttribute('data-field') === currentVoiceField.name
+    ) {
+      btn.classList.add('recording');
+    } else {
+      btn.classList.remove('recording');
+    }
+  }
+}
+
+// OPTIONAL BUT STRONGLY RECOMMENDED
+function stopVoiceRecognition() {
+  if (voiceRecognition && isRecording) {
+    try {
+      voiceRecognition.stop();
+    } catch (e) {}
+  }
+
+  isRecording = false;
+  currentVoiceField = null;
+  updateVoiceButton();
+}
 
   function buildPayload() {
     var payload = {};

@@ -819,106 +819,185 @@
   var MAKE_WEBHOOK_URL = 'https://hook.us2.make.com/95eb4haubwts1fad6rrvys7elhgfsrqe';
   
 
-  var SECTIONS = [
-    {
-      id: 'business_overview',
-      title: 'Business Overview',
-      description: 'Tell us about your business basics.',
-      icon: 'building-2',
-      fields: [
-        { name: 'business_name', label: 'What is your business name?', type: 'text', placeholder: 'e.g., Sunrise Bakery', required: true },
-        { name: 'industry', label: 'What industry are you in?', type: 'select', options: ['Select an industry','Retail','Food & Beverage','Professional Services','Health & Wellness','Construction & Trades','Education','Technology','Real Estate','Beauty & Personal Care','Other'], required: true },
-        { name: 'primary_product_service', label: 'What is your primary product or service?', type: 'text', placeholder: 'e.g., Custom wedding cakes', required: true },
-        { name: 'num_employees', label: 'How many employees do you have?', type: 'radio', options: ['Just me','2–5','6–15','16–50','50+'], required: true },
-        { name: 'customer_discovery', label: 'How do customers primarily discover your business?', type: 'radio', options: ['Word of mouth','Social media','Google / Search','Advertising','Referrals','Other'], required: true }
-      ]
-    },
-    {
-      id: 'customer_inquiries',
-      title: 'Customer Inquiries',
-      description: 'How do new customers reach you?',
-      icon: 'message-square',
-      fields: [
-        { name: 'contact_methods', label: 'How do customers contact your business?', type: 'checkbox', options: ['Website form','Email','Phone call','Social media DM','Walk-in','Other'], required: true },
-        { name: 'inquiry_tracking', label: 'Where are inquiries recorded?', type: 'radio', options: ['Email inbox','CRM software','Spreadsheet','Paper / Notebook','Not tracked'], required: true },
-        { name: 'after_contact', label: 'What happens after someone contacts your business?', type: 'textarea', placeholder: 'Describe your typical process...', required: false },
-        { name: 'who_responds', label: 'Who responds to inquiries?', type: 'radio', options: ['Me (the owner)','A specific team member','Whoever is available','No consistent person'], required: true }
-      ]
-    },
-    {
-      id: 'client_communication',
-      title: 'Client Communication',
-      description: 'How do you stay in touch with clients?',
-      icon: 'mail',
-      fields: [
-        { name: 'followup_method', label: 'How are follow-ups handled?', type: 'checkbox', options: ['Email','Phone call','Text message','Not currently done'], required: true },
-        { name: 'communication_tracked', label: 'Is client communication tracked?', type: 'radio', options: ['Yes, in a CRM','Yes, in a spreadsheet','Somewhat, in my email','No, not really'], required: true },
-        { name: 'followup_challenges', label: 'What challenges do you face with follow-up?', type: 'textarea', placeholder: 'e.g., I forget to follow up, it takes too long...', required: false }
-      ]
-    },
-    {
-      id: 'scheduling',
-      title: 'Scheduling',
-      description: 'How do you manage appointments?',
-      icon: 'calendar',
-      fields: [
-        { name: 'scheduling_method', label: 'How are appointments scheduled?', type: 'radio', options: ['Online booking tool','Phone / email back-and-forth','Walk-in only','Social media messages','No appointments needed'], required: true },
-        { name: 'confirmations_sent', label: 'Are appointment confirmations sent?', type: 'radio', options: ['Yes, automatically','Yes, manually','Sometimes','No'], required: true },
-        { name: 'reminders_sent', label: 'Are appointment reminders sent?', type: 'radio', options: ['Yes, automatically','Yes, manually','Sometimes','No'], required: true },
-        { name: 'scheduling_challenges', label: 'Any scheduling challenges?', type: 'textarea', placeholder: 'e.g., Double bookings, no-shows...', required: false }
-      ]
-    },
-    {
-      id: 'content_activity',
-      title: 'Content Activity',
-      description: 'Tell us about your content efforts.',
-      icon: 'pen-tool',
-      fields: [
-        { name: 'content_types', label: 'What types of content do you produce?', type: 'checkbox', options: ['Social media posts','Blog articles','Email newsletters','Videos','None currently'], required: true },
-        { name: 'publishing_frequency', label: 'How often do you publish content?', type: 'radio', options: ['Daily','A few times a week','Weekly','Monthly','Rarely / Never'], required: true },
-        { name: 'content_organization', label: 'How is content organized or planned?', type: 'radio', options: ['Content calendar','Notes app or document','I wing it','Not organized at all'], required: true }
-      ]
-    },
-    {
-      id: 'operational_challenges',
-      title: 'Operational Challenges',
-      description: 'Help us understand where you need the most support.',
-      icon: 'target',
-      fields: [
-        { name: 'time_consuming_task', label: 'What is your most time-consuming task?', type: 'textarea', placeholder: 'e.g., Responding to emails, creating invoices...', required: true },
-        { name: 'disorganized_process', label: 'What is your most disorganized process?', type: 'textarea', placeholder: 'e.g., Client onboarding, inventory tracking...', required: true },
-        { name: 'simplify_task', label: 'If you could simplify one task, what would it be?', type: 'textarea', placeholder: 'Describe the one thing you wish was easier...', required: true }
-      ]
-    },
-    {
-      id: 'current_workflow',
-      title: 'Current Workflow',
-      description: 'This helps us generate a simple workflow snapshot for your session.',
-      icon: 'git-branch',
-      fields: [
-        { name: 'primary_lead_source', label: 'Where do most new customer inquiries originate?', type: 'radio', options: ['Website form','Phone calls','Instagram / Social media','Email','Referral','Multiple sources'], required: true },
-        { name: 'initial_response_owner', label: 'Who typically responds to new inquiries?', type: 'radio', options: ['I respond personally','A staff member responds','CRM / automation responds','It varies'], required: true },
-        { name: 'response_timing', label: 'How quickly are inquiries usually answered?', type: 'radio', options: ['Within 1 hour','Same day','Within 24 hours','More than 24 hours','It varies'], required: true },
-        { name: 'post_scheduling_step', label: 'After scheduling, what normally happens next?', type: 'radio', options: ['Consultation call','In-person appointment','Quote or proposal','Immediate service','It varies'], required: true },
-        { name: 'post_interaction_followup', label: 'After a client interaction, what follow-up normally happens?', type: 'radio', options: ['Automated follow-up','Manual follow-up','Occasional follow-up','No formal follow-up'], required: true }
-      ]
-    },
-{
-  id: 'results_delivery',
-  title: 'Results Delivery',
-  description: 'Tell us where to send your results.',
-  icon: 'send',
-  fields: [
-    {
-      name: 'email',
-      label: 'Your intake submission has been received. Please enter the best email address for delivery of your results.',
-      type: 'email',
-      placeholder: 'you@example.com',
-      required: true
-    }
-  ]
-}
-  ];
+ var SECTIONS = [
+  {
+    id: 'business_overview',
+    title: 'Business Overview',
+    description: 'Tell us about your business basics.',
+    icon: 'building-2',
+    fields: [
+      { name: 'business_name', label: 'What is your business name?', type: 'text', placeholder: 'e.g., Sunrise Bakery', required: true },
+      { name: 'industry', label: 'What industry are you in?', type: 'select', options: ['Select an industry', 'Retail', 'Food & Beverage', 'Professional Services', 'Health & Wellness', 'Construction & Trades', 'Education', 'Technology', 'Real Estate', 'Beauty & Personal Care', 'Nonprofit', 'Other'], required: true },
+      { name: 'primary_product_service', label: 'What is your primary product or service?', type: 'text', placeholder: 'e.g., Custom wedding cakes', required: true },
+      { name: 'secondary_products_services', label: 'Do you offer any additional products or services?', type: 'textarea', placeholder: 'List any secondary services, packages, or offers...', required: false },
+      { name: 'num_employees', label: 'How many employees or team members do you have?', type: 'radio', options: ['Just me', '2–5', '6–15', '16–50', '50+'], required: true },
+      { name: 'business_stage', label: 'What stage is your business currently in?', type: 'radio', options: ['Just getting started', 'Operating but still building systems', 'Established and growing', 'Established and scaling'], required: true },
+      { name: 'customer_discovery', label: 'How do customers primarily discover your business today?', type: 'checkbox', options: ['Word of mouth', 'Google Search', 'Google Business Profile', 'Instagram', 'Facebook', 'LinkedIn', 'Yelp or directory sites', 'Advertising', 'Referrals', 'Repeat customers', 'Other'], required: true },
+      { name: 'service_area', label: 'What city, region, or service area do you serve?', type: 'text', placeholder: 'e.g., Atlanta Metro, Cobb County, nationwide', required: true }
+    ]
+  },
+  {
+    id: 'business_goals',
+    title: 'Business Goals',
+    description: 'Help us understand what outcome matters most right now.',
+    icon: 'flag',
+    fields: [
+      { name: 'primary_growth_goal', label: 'What is your top business goal right now?', type: 'radio', options: ['Get more leads', 'Respond faster to leads', 'Book more appointments', 'Improve follow-up', 'Improve website visibility', 'Save time on admin', 'Improve customer experience', 'Organize operations'], required: true },
+      { name: 'main_service_interest', label: 'Which type of support are you most interested in right now?', type: 'radio', options: ['Autonomous website updates through AutoSite', 'Lead capture and follow-up agent', 'Process mapping and operations support', 'A combination of these', 'Not sure yet'], required: true },
+      { name: 'urgency_level', label: 'How soon are you looking to improve this area?', type: 'radio', options: ['Immediately', 'Within 30 days', 'Within 90 days', 'Just exploring for now'], required: true },
+      { name: 'most_important_offer', label: 'Which service or offer do you most want to generate more leads for?', type: 'text', placeholder: 'e.g., Buyer consultations, hair appointments, bookkeeping packages', required: true },
+      { name: 'typical_customer_value', label: 'What is the typical value of a new customer, booking, or client engagement?', type: 'radio', options: ['Under $100', '$100–$500', '$500–$1,500', '$1,500–$5,000', '$5,000+', 'Not sure'], required: true }
+    ]
+  },
+  {
+    id: 'systems_tools',
+    title: 'Systems and Tools',
+    description: 'Tell us what software and systems you already use.',
+    icon: 'database',
+    fields: [
+      { name: 'current_website', label: 'Do you currently have a website?', type: 'radio', options: ['Yes, live website', 'Yes, but it is outdated', 'No website yet'], required: true },
+      { name: 'website_url', label: 'What is your current website URL, if you have one?', type: 'text', placeholder: 'e.g., https://yourbusiness.com', required: false },
+      { name: 'website_platform', label: 'What platform is your website built on?', type: 'radio', options: ['WordPress', 'Squarespace', 'Wix', 'Shopify', 'Custom-coded', 'GoDaddy Website Builder', 'Not sure', 'No website'], required: true },
+      { name: 'crm_tool', label: 'What CRM or lead tracking system do you currently use?', type: 'radio', options: ['HubSpot', 'GoHighLevel', 'Salesforce', 'Zoho', 'Spreadsheet', 'Email inbox only', 'Paper or notebook', 'None'], required: true },
+      { name: 'calendar_tool', label: 'What scheduling tool do you use, if any?', type: 'radio', options: ['Calendly', 'Acuity', 'Square Appointments', 'Google Calendar only', 'Phone or email only', 'None'], required: true },
+      { name: 'email_marketing_tool', label: 'What email marketing tool do you use, if any?', type: 'radio', options: ['Mailchimp', 'ConvertKit', 'Flodesk', 'MailerLite', 'Constant Contact', 'None'], required: true },
+      { name: 'primary_business_phone', label: 'Do you have a business phone number available for leads?', type: 'radio', options: ['Yes', 'No', 'Not sure'], required: true },
+      { name: 'primary_lead_destinations', label: 'Where do you want new leads sent or logged?', type: 'checkbox', options: ['Email inbox', 'Phone', 'Text message', 'CRM', 'Spreadsheet', 'Calendar booking', 'Multiple places'], required: true },
+      { name: 'google_business_profile', label: 'Do you have a Google Business Profile set up?', type: 'radio', options: ['Yes', 'No', 'Not sure'], required: true }
+    ]
+  },
+  {
+    id: 'access_readiness',
+    title: 'Access and Readiness',
+    description: 'This helps us understand whether your systems are ready for implementation.',
+    icon: 'key-round',
+    fields: [
+      { name: 'website_login_access', label: 'Do you have access to your website login?', type: 'radio', options: ['Yes', 'No', 'Not sure'], required: true },
+      { name: 'domain_access', label: 'Do you have access to your domain registrar or DNS settings?', type: 'radio', options: ['Yes', 'No', 'Not sure'], required: true },
+      { name: 'google_business_access', label: 'Do you have access to manage your Google Business Profile?', type: 'radio', options: ['Yes', 'No', 'Not sure', 'Not applicable'], required: true },
+      { name: 'approval_contact', label: 'Who would approve website or automation updates on your side?', type: 'radio', options: ['I would approve them', 'A team member would approve them', 'A business partner would approve them', 'No one currently assigned'], required: true },
+      { name: 'implementation_readiness_notes', label: 'Are there any technical, access, or approval issues we should know about before setup?', type: 'textarea', placeholder: 'Describe anything that could slow down setup or require coordination...', required: false }
+    ]
+  },
+  {
+    id: 'customer_inquiries',
+    title: 'Customer Inquiries',
+    description: 'How do new customers reach you?',
+    icon: 'message-square',
+    fields: [
+      { name: 'contact_methods', label: 'How do customers currently contact your business?', type: 'checkbox', options: ['Website form', 'Email', 'Phone call', 'Text message', 'Social media DM', 'Google Business Profile', 'Walk-in', 'Other'], required: true },
+      { name: 'inquiry_tracking', label: 'Where are new inquiries actually recorded or tracked?', type: 'radio', options: ['CRM software', 'Spreadsheet', 'Email inbox', 'Social inbox only', 'Paper or notebook', 'Not tracked consistently'], required: true },
+      { name: 'after_contact', label: 'What usually happens after someone contacts your business?', type: 'textarea', placeholder: 'Describe your typical process from inquiry to next step...', required: true },
+      { name: 'who_responds', label: 'Who usually responds to new inquiries?', type: 'radio', options: ['Me, the owner', 'A specific team member', 'Whoever is available', 'No consistent person'], required: true },
+      { name: 'response_timing_actual', label: 'How quickly are inquiries usually answered in real life?', type: 'radio', options: ['Within 1 hour', 'Same day', 'Within 24 hours', 'More than 24 hours', 'It varies'], required: true }
+    ]
+  },
+  {
+    id: 'lead_handling_rules',
+    title: 'Lead Handling Rules',
+    description: 'Tell us how new leads should ideally be handled.',
+    icon: 'phone-call',
+    fields: [
+      { name: 'lead_response_preference', label: 'How should a new lead ideally be handled first?', type: 'radio', options: ['Immediate text reply', 'Immediate email reply', 'Send booking link', 'Manual review first', 'Phone call first'], required: true },
+      { name: 'after_hours_handling', label: 'What should happen when a lead comes in after business hours?', type: 'radio', options: ['Auto-reply immediately', 'Hold until next business day', 'Send booking link only', 'No action needed', 'Not sure'], required: true },
+      { name: 'lead_qualification_needed', label: 'Do you want leads qualified before they reach you?', type: 'radio', options: ['Yes', 'No', 'Maybe'], required: true },
+      { name: 'lead_qualification_questions', label: 'What are the key questions a lead agent should ask before passing someone to you?', type: 'textarea', placeholder: 'e.g., budget, timeline, location, service type, readiness to buy...', required: false },
+      { name: 'disqualifying_factors', label: 'Are there any red flags or disqualifying factors a lead agent should watch for?', type: 'textarea', placeholder: 'e.g., outside service area, unrealistic budget, wrong type of customer...', required: false }
+    ]
+  },
+  {
+    id: 'client_communication',
+    title: 'Client Communication',
+    description: 'How do you stay in touch with clients?',
+    icon: 'mail',
+    fields: [
+      { name: 'followup_method', label: 'How are follow-ups currently handled?', type: 'checkbox', options: ['Email', 'Phone call', 'Text message', 'Social media message', 'Not currently done'], required: true },
+      { name: 'communication_tracked', label: 'Is client communication tracked anywhere?', type: 'radio', options: ['Yes, in a CRM', 'Yes, in a spreadsheet', 'Somewhat, in email or messages', 'No, not really'], required: true },
+      { name: 'followup_challenges', label: 'What challenges do you face with follow-up?', type: 'textarea', placeholder: 'e.g., I forget to follow up, it takes too long, messages are scattered...', required: true },
+      { name: 'client_response_goal', label: 'What should happen after a client or lead engages with your business?', type: 'radio', options: ['Book an appointment', 'Receive a quote', 'Get a callback', 'Receive more information', 'Be added to follow-up sequence', 'It depends'], required: true }
+    ]
+  },
+  {
+    id: 'scheduling',
+    title: 'Scheduling',
+    description: 'How do you manage appointments?',
+    icon: 'calendar',
+    fields: [
+      { name: 'scheduling_method', label: 'How are appointments currently scheduled?', type: 'radio', options: ['Online booking tool', 'Phone or email back-and-forth', 'Social media messages', 'Walk-in only', 'No appointments needed'], required: true },
+      { name: 'confirmations_sent', label: 'Are appointment confirmations sent?', type: 'radio', options: ['Yes, automatically', 'Yes, manually', 'Sometimes', 'No'], required: true },
+      { name: 'reminders_sent', label: 'Are appointment reminders sent?', type: 'radio', options: ['Yes, automatically', 'Yes, manually', 'Sometimes', 'No'], required: true },
+      { name: 'business_hours', label: 'What are your normal business hours?', type: 'textarea', placeholder: 'e.g., Monday–Friday 9 AM to 5 PM, Saturday by appointment only...', required: true },
+      { name: 'closed_days', label: 'Are there any days or times you are never available?', type: 'textarea', placeholder: 'List any closed days, blackout periods, or unavailable hours...', required: false },
+      { name: 'scheduling_challenges', label: 'What scheduling problems do you run into most often?', type: 'textarea', placeholder: 'e.g., Double bookings, no-shows, too much back-and-forth...', required: true }
+    ]
+  },
+  {
+    id: 'content_activity',
+    title: 'Content Activity',
+    description: 'Tell us about your content and website update efforts.',
+    icon: 'pen-tool',
+    fields: [
+      { name: 'content_types', label: 'What types of content do you currently produce?', type: 'checkbox', options: ['Social media posts', 'Blog articles', 'Email newsletters', 'Videos', 'Service pages', 'Promotions or offers', 'Testimonials', 'Project updates or case studies', 'None currently'], required: true },
+      { name: 'publishing_frequency', label: 'How often do you publish or update content?', type: 'radio', options: ['Daily', 'A few times a week', 'Weekly', 'Monthly', 'Rarely or never'], required: true },
+      { name: 'content_organization', label: 'How is content organized or planned?', type: 'radio', options: ['Content calendar', 'Notes app or document', 'Inside social platforms', 'I wing it', 'Not organized at all'], required: true },
+      { name: 'website_update_frequency', label: 'How often is your website currently updated?', type: 'radio', options: ['Weekly', 'Monthly', 'A few times a year', 'Rarely', 'Never'], required: true },
+      { name: 'website_update_owner', label: 'Who is responsible for updating your website right now?', type: 'radio', options: ['Me', 'A team member', 'A contractor or agency', 'No one consistently'], required: true },
+      { name: 'content_sources', label: 'What are the main sources of information that could be turned into website updates?', type: 'checkbox', options: ['Social media posts', 'New services or offers', 'Client testimonials', 'Events', 'Google Business Profile posts', 'Project completions', 'Promotions', 'Newsletter content', 'Other'], required: true }
+    ]
+  },
+  {
+    id: 'brand_messaging',
+    title: 'Brand and Messaging',
+    description: 'Tell us how your business should sound and what it should emphasize.',
+    icon: 'megaphone',
+    fields: [
+      { name: 'brand_voice', label: 'How should your business sound in writing?', type: 'checkbox', options: ['Professional', 'Friendly', 'Warm', 'Direct', 'Educational', 'Bold', 'Luxury', 'Playful'], required: true },
+      { name: 'brand_do_not_say', label: 'Are there any words, phrases, or tones your business should avoid?', type: 'textarea', placeholder: 'List anything that should never be used in messaging...', required: false },
+      { name: 'key_customer_action', label: 'What is the main action you want visitors to take on your website?', type: 'radio', options: ['Call', 'Book an appointment', 'Fill out a form', 'Send a message', 'Buy a product', 'Learn more'], required: true },
+      { name: 'top_services_to_highlight', label: 'What are the top services or offers you want highlighted most often?', type: 'textarea', placeholder: 'List your top services, offers, or priorities...', required: true },
+      { name: 'unique_value_proposition', label: 'What makes your business different from others offering something similar?', type: 'textarea', placeholder: 'Describe the key value or differentiator your messaging should emphasize...', required: true }
+    ]
+  },
+  {
+    id: 'operational_challenges',
+    title: 'Operational Challenges',
+    description: 'Help us understand where you need the most support.',
+    icon: 'target',
+    fields: [
+      { name: 'time_consuming_task', label: 'What is your most time-consuming task right now?', type: 'textarea', placeholder: 'e.g., Responding to emails, creating invoices, following up with leads...', required: true },
+      { name: 'disorganized_process', label: 'What is your most disorganized process right now?', type: 'textarea', placeholder: 'e.g., Client onboarding, lead tracking, appointment follow-up...', required: true },
+      { name: 'simplify_task', label: 'If you could simplify one task immediately, what would it be?', type: 'textarea', placeholder: 'Describe the one thing you wish was easier...', required: true },
+      { name: 'manual_workarounds', label: 'Are there any manual workarounds or repetitive tasks your business relies on right now?', type: 'textarea', placeholder: 'Describe any repeated steps, copy-paste tasks, reminders, or workarounds...', required: false }
+    ]
+  },
+  {
+    id: 'current_workflow',
+    title: 'Current Workflow',
+    description: 'This helps us generate a simple workflow snapshot for your business.',
+    icon: 'git-branch',
+    fields: [
+      { name: 'primary_lead_source', label: 'Where do most new customer inquiries originate?', type: 'radio', options: ['Website form', 'Phone calls', 'Instagram or social media', 'Google Business Profile', 'Email', 'Referral', 'Multiple sources'], required: true },
+      { name: 'initial_response_owner', label: 'Who typically responds to new inquiries first?', type: 'radio', options: ['I respond personally', 'A staff member responds', 'Automation responds', 'It varies'], required: true },
+      { name: 'response_timing', label: 'What is your intended response timing for new inquiries?', type: 'radio', options: ['Within 1 hour', 'Same day', 'Within 24 hours', 'More than 24 hours', 'It varies'], required: true },
+      { name: 'post_scheduling_step', label: 'After someone books or schedules, what normally happens next?', type: 'radio', options: ['Consultation call', 'In-person appointment', 'Quote or proposal', 'Immediate service', 'Automated follow-up', 'It varies'], required: true },
+      { name: 'post_interaction_followup', label: 'After a client interaction, what follow-up normally happens?', type: 'radio', options: ['Automated follow-up', 'Manual follow-up', 'Occasional follow-up', 'No formal follow-up'], required: true },
+      { name: 'workflow_notes', label: 'Is there anything else about your workflow we should know before recommending systems or automation?', type: 'textarea', placeholder: 'Add any notes that would help us understand your real-world process...', required: false }
+    ]
+  },
+  {
+    id: 'results_delivery',
+    title: 'Results Delivery',
+    description: 'Tell us where to send your results.',
+    icon: 'send',
+    fields: [
+      { name: 'contact_name', label: 'What is your full name?', type: 'text', placeholder: 'e.g., Jordan Smith', required: true },
+      { name: 'email', label: 'What is the best email address for delivery of your results and next steps?', type: 'email', placeholder: 'you@example.com', required: true },
+      { name: 'phone', label: 'What is the best phone number for follow-up, if applicable?', type: 'text', placeholder: 'e.g., (404) 555-1212', required: false },
+      { name: 'preferred_followup_method', label: 'How would you prefer we follow up with you?', type: 'radio', options: ['Email', 'Phone', 'Text message'], required: true },
+      { name: 'additional_notes', label: 'Anything else you want us to know before we review your intake?', type: 'textarea', placeholder: 'Add any final context, constraints, or questions...', required: false }
+    ]
+  }
+];
 
   var TOTAL_SECTIONS = SECTIONS.length;
   var currentSectionIdx = 0;

@@ -1682,6 +1682,36 @@
     });
 
     updateStepUI();
+
+// DEADLINE PROTOTYPE: Instant Mailto Logic
+    guideForm?.addEventListener("submit", function (event) {
+      event.preventDefault();
+
+      const userEmail = document.getElementById("guideEmail").value;
+      const subject = encodeURIComponent("Your AutoSite AI Readiness Roadmap");
+      
+      // Update the URL below to your actual guide link
+      const guideLink = "https://your-site.com/roadmap.pdf";
+      
+      const body = encodeURIComponent(
+        "Hi there,\n\n" +
+        "Great job completing the AI Readiness Assessment!\n\n" +
+        "To get your business ready for an autonomous website, download your roadmap here:\n" +
+        guideLink + "\n\n" +
+        "Best,\nThe AutoSite AI Team"
+      );
+
+      // This opens the user's native email app with the link ready to go
+      window.location.href = `mailto:${userEmail}?subject=${subject}&body=${body}`;
+
+      // Instant UI success feedback
+      guideForm.classList.add("hidden");
+      if (guideSuccess) {
+        guideSuccess.classList.remove("hidden");
+        guideSuccess.innerHTML = "<strong>Done!</strong> Your email client has been opened.";
+      }
+    });
+    
   })();
 </script>
 

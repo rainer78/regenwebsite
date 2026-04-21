@@ -1540,14 +1540,11 @@
 
 
 
-<!-- Assement Logic-->
-      
-   <script>
+<script>
   (function () {
-    const form = document.getElementById("request-demo");
+    const form = document.getElementById("autositeAssessmentForm"); // Updated ID to match your HTML
     const steps = Array.from(document.querySelectorAll(".assessment-step"));
     const stepLabel = document.getElementById("stepLabel");
-    const stepHint = document.getElementById("stepHint");
     const progressBar = document.getElementById("progressBar");
     const prevBtn = document.getElementById("prevBtn");
     const nextBtn = document.getElementById("nextBtn");
@@ -1556,39 +1553,17 @@
     const approvedResult = document.getElementById("approvedResult");
     const declinedResult = document.getElementById("declinedResult");
     const guideForm = document.getElementById("guideForm");
-    const guideSuccess = document.getElementById("guideSuccess");
-    const demoScheduleLink = document.getElementById("demoScheduleLink");
-    const automationApprovedNote = document.getElementById("automationApprovedNote");
-
-    const ASSESSMENT_WEBHOOK_URL = "YOUR_ASSESSMENT_WEBHOOK_URL";
-    const GUIDE_WEBHOOK_URL = "YOUR_GUIDE_WEBHOOK_URL";
-    const SCHEDULER_BASE_URL = "https://your-scheduler-link.com/";
 
     let currentStep = 0;
-    const totalSteps = steps.length;
+    const totalSteps = steps.length; // 16 total
 
-    const hints = [
-      "Quick business fit check",
-      "Understanding your posting rhythm",
-      "Checking website freshness",
-      "Finding the real mismatch",
-      "Seeing where leads come from",
-      "Spotting automation opportunities",
-      "Identifying your best automation use case",
-      "Final details"
-    ];
-
- function updateStepUI() {
+    function updateStepUI() {
       steps.forEach((step, index) => {
         step.classList.toggle("hidden", index !== currentStep);
       });
 
       if (stepLabel) {
         stepLabel.textContent = `Step ${currentStep + 1} of ${totalSteps}`;
-      }
-
-      if (stepHint) {
-        stepHint.textContent = hints[currentStep] || "";
       }
 
       if (progressBar) {
@@ -1608,167 +1583,39 @@
       }
     }
 
-    function validateStep(stepIndex) {
-      const step = steps[stepIndex];
-      if (!step) return false;
-
-      const requiredFields = Array.from(step.querySelectorAll("[required]"));
-
-      for (const field of requiredFields) {
-        const value = typeof field.value === "string" ? field.value.trim() : field.value;
-
-        if (!value) {
-          field.focus();
-          return false;
-        }
-      }
-
-      return true;
-    }
-
+    // Logic to calculate the 15-question score
     function scoreAssessment(formData) {
       let score = 0;
 
-      if (formData.activityChannels === "multi") score += 3;
-      if (formData.activityChannels === "single") score += 2;
-      if (formData.activityChannels === "rarely-post") score -= 3;
+      // 1. Data Presence (Weight: 45pts total)
+      if (formData.channels === "high") score += 15;
+      if (formData.backlog === "5") score += 15;
+      if (formData.googleVerified === "high") score += 15;
 
-      if (formData.postingFrequency === "several-week") score += 3;
-      if (formData.postingFrequency === "weekly") score += 3;
-      if (formData.postingFrequency === "monthly") score += 1;
-      if (formData.postingFrequency === "rarely") score -= 3;
+      // 2. Activity & Volume (Weight: 30pts total)
+      if (formData.frequency === "3") score += 10;
+      if (formData.volume === "high") score += 10;
+      if (formData.reviews === "high") score += 10;
 
-      if (formData.websiteUpdateTiming === "last-week") score -= 2;
-      if (formData.websiteUpdateTiming === "last-month") score += 0;
-      if (formData.websiteUpdateTiming === "last-six-months") score += 2;
-      if (formData.websiteUpdateTiming === "dont-remember") score += 3;
+      // 3. Content Quality (Weight: 25pts total)
+      if (formData.contentType === "high") score += 10;
+      if (formData.captions === "high") score += 10;
+      if (formData.video === "high") score += 5;
 
-      if (formData.fitStatement === "ideal") score += 4;
-      if (formData.fitStatement === "site-updated") score -= 1;
-      if (formData.fitStatement === "social-only") score -= 4;
+      // HARD FAIL: If they have no channels OR no frequency OR no backlog
+      const hardFail = 
+        formData.channels === "low" || 
+        formData.frequency === "0" || 
+        formData.backlog === "0";
 
-      if (formData.leadHandling === "website-form") score += 3;
-      if (formData.leadHandling === "email") score += 2;
-      if (formData.leadHandling === "phone") score += 1;
-      if (formData.leadHandling === "social-dm") score += 1;
-      if (formData.leadHandling === "google-messages") score += 1;
-
-      const hardFail =
-        formData.activityChannels === "rarely-post" ||
-        formData.postingFrequency === "rarely" ||
-        formData.fitStatement === "social-only";
-
-      const approved = !hardFail && score >= 8;
-
-      const automationInterested =
-        formData.automationNeedLevel === "many" ||
-        ["lead-capture", "ai-responses", "followups", "crm-tools"].includes(formData.automationPriority);
-
+      // Passing Threshold: 50 points
       return {
         score,
-        approved,
-        automationInterested
+        approved: !hardFail && score >= 50
       };
     }
 
-    function clearResultViews() {
-      approvedResult?.classList.add("hidden");
-      declinedResult?.classList.add("hidden");
-      automationApprovedNote?.classList.add("hidden");
-      guideSuccess?.classList.add("hidden");
-    }
-
-    function buildAssessmentPayload(formData, result) {
-      return {
-        event_type: "assessment_submission",
-        submitted_at: new Date().toISOString(),
-        source: "autosite_ai_readiness_check",
-        version: "v2",
-        contact: {
-          name: formData.name || "",
-          email: formData.email || "",
-          business_name: formData.businessName || "",
-          website_url: formData.websiteUrl || ""
-        },
-        assessment: {
-          activity_channels: formData.activityChannels || "",
-          posting_frequency: formData.postingFrequency || "",
-          website_update_timing: formData.websiteUpdateTiming || "",
-          fit_statement: formData.fitStatement || "",
-          lead_handling: formData.leadHandling || "",
-          automation_need_level: formData.automationNeedLevel || "",
-          automation_priority: formData.automationPriority || ""
-        },
-        result: {
-          score: result.score,
-          approved: result.approved,
-          status: result.approved ? "approved" : "not_ready",
-          automation_interested: result.automationInterested
-        },
-        segmentation: {
-          lead_type: result.approved ? "demo_candidate" : "nurture_candidate",
-          automation_segment: result.automationInterested ? "custom_automation_opportunity" : "standard_plan_only",
-          follow_up_path: result.approved
-            ? (result.automationInterested ? "demo_plus_automation_review" : "standard_demo")
-            : "readiness_nurture"
-        }
-      };
-    }
-
-    function buildGuidePayload(guideData) {
-      return {
-        event_type: "readiness_guide_request",
-        submitted_at: new Date().toISOString(),
-        source: "autosite_ai_readiness_guide",
-        version: "v2",
-        contact: {
-          email: guideData.guideEmail || ""
-        },
-        follow_up: {
-          follow_up_in_days: 90,
-          status: "guide_requested"
-        }
-      };
-    }
-
-    async function postToWebhook(url, payload) {
-      if (!url || url.includes("YOUR_")) {
-        console.warn("Webhook URL not set. Payload not sent.", payload);
-        return;
-      }
-
-      try {
-        const response = await fetch(url, {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json"
-          },
-          body: JSON.stringify(payload)
-        });
-
-        if (!response.ok) {
-          throw new Error(`Webhook failed with status ${response.status}`);
-        }
-      } catch (error) {
-        console.error("Webhook error:", error);
-      }
-    }
-
-    function buildSchedulerUrl(formData, result) {
-      const params = new URLSearchParams({
-        name: formData.name || "",
-        email: formData.email || "",
-        business: formData.businessName || "",
-        website: formData.websiteUrl || "",
-        assessment_status: result.approved ? "approved" : "not_ready",
-        automation_interest: result.automationInterested ? "yes" : "no",
-        automation_priority: formData.automationPriority || "",
-        automation_need_level: formData.automationNeedLevel || ""
-      });
-
-      return `${SCHEDULER_BASE_URL}?${params.toString()}`;
-    }
-
+    // Handle button clicks for the 15 questions
     document.querySelectorAll(".answer-card").forEach((card) => {
       card.addEventListener("click", function () {
         const name = this.dataset.name;
@@ -1778,394 +1625,65 @@
 
         if (!hiddenInput) return;
 
-        step.querySelectorAll(`.answer-card[data-name="${name}"]`).forEach((btn) => {
-          btn.classList.remove("is-selected");
+        // Visual selection
+        step.querySelectorAll(".answer-card").forEach((btn) => {
+          btn.classList.remove("border-[#1085D2]", "bg-blue-50");
+          btn.classList.add("border-slate-100");
         });
-
-        this.classList.add("is-selected");
+        this.classList.add("border-[#1085D2]", "bg-blue-50");
+        this.classList.remove("border-slate-100");
+        
         hiddenInput.value = value;
+
+        // Auto-advance logic for better UX (optional)
+        if (currentStep < totalSteps - 1) {
+            setTimeout(() => {
+                currentStep += 1;
+                updateStepUI();
+            }, 300);
+        }
       });
     });
 
-    prevBtn?.addEventListener("click", function () {
-      if (currentStep > 0) {
-        currentStep -= 1;
-        updateStepUI();
-      }
-    });
-
-    nextBtn?.addEventListener("click", function () {
-      if (!validateStep(currentStep)) return;
-
+    nextBtn?.addEventListener("click", () => {
       if (currentStep < totalSteps - 1) {
         currentStep += 1;
         updateStepUI();
       }
     });
 
-    form?.addEventListener("submit", async function (event) {
+    prevBtn?.addEventListener("click", () => {
+      if (currentStep > 0) {
+        currentStep -= 1;
+        updateStepUI();
+      }
+    });
+
+    form?.addEventListener("submit", function (event) {
       event.preventDefault();
-
-      if (!validateStep(currentStep)) return;
-
-      clearResultViews();
 
       const formData = Object.fromEntries(new FormData(form).entries());
       const result = scoreAssessment(formData);
-      const payload = buildAssessmentPayload(formData, result);
 
-      if (demoScheduleLink) {
-        demoScheduleLink.href = buildSchedulerUrl(formData, result);
-      }
-
+      // Hide Form UI
       form.classList.add("hidden");
-      document.getElementById("assessmentNav")?.classList.add("hidden");
-      steps.forEach((step) => step.classList.add("hidden"));
-
-      if (stepLabel) stepLabel.textContent = "Assessment Complete";
-      if (stepHint) stepHint.textContent = "Your result is ready";
-      if (progressBar) progressBar.style.width = "100%";
+      document.getElementById("progressArea")?.classList.add("hidden");
+      document.getElementById("assessmentHeader")?.classList.add("hidden");
 
       if (result.approved) {
         approvedResult?.classList.remove("hidden");
-
-        if (result.automationInterested) {
-          automationApprovedNote?.classList.remove("hidden");
-        }
+        const scoreTitle = approvedResult.querySelector('h3');
+        if (scoreTitle) scoreTitle.textContent = `Score: ${result.score}/100 — Excellent Fit!`;
       } else {
-        const guideEmailField = document.getElementById("guideEmail");
-        if (guideEmailField && formData.email) {
-          guideEmailField.value = formData.email;
-        }
-
         declinedResult?.classList.remove("hidden");
+        const scoreTitle = declinedResult.querySelector('h3');
+        if (scoreTitle) scoreTitle.textContent = `Score: ${result.score}/100 — Not Quite Ready`;
       }
-
-      await postToWebhook(ASSESSMENT_WEBHOOK_URL, payload);
-    });
-
-    guideForm?.addEventListener("submit", async function (event) {
-      event.preventDefault();
-
-      const guideData = Object.fromEntries(new FormData(guideForm).entries());
-      const payload = buildGuidePayload(guideData);
-
-      guideSuccess?.classList.remove("hidden");
-
-      await postToWebhook(GUIDE_WEBHOOK_URL, payload);
     });
 
     updateStepUI();
   })();
 </script>
-
-<script>
-  (function () {
-    const openButtons = document.querySelectorAll("[data-modal-open]");
-    const closeButtons = document.querySelectorAll("[data-modal-close]");
-
-    function openModal(id) {
-      const modal = document.getElementById(id);
-      if (!modal) return;
-
-      modal.classList.remove("hidden");
-      modal.classList.add("flex");
-      document.body.classList.add("overflow-hidden");
-    }
-
-    function closeModal(id) {
-      const modal = document.getElementById(id);
-      if (!modal) return;
-
-      modal.classList.add("hidden");
-      modal.classList.remove("flex");
-      document.body.classList.remove("overflow-hidden");
-    }
-
-    openButtons.forEach((button) => {
-      button.addEventListener("click", () => {
-        openModal(button.getAttribute("data-modal-open"));
-      });
-    });
-
-    closeButtons.forEach((button) => {
-      button.addEventListener("click", () => {
-        closeModal(button.getAttribute("data-modal-close"));
-      });
-    });
-
-    document.querySelectorAll("[id$='Modal']").forEach((modal) => {
-      modal.addEventListener("click", (event) => {
-        if (event.target === modal) {
-          closeModal(modal.id);
-        }
-      });
-    });
-
-    document.addEventListener("keydown", (event) => {
-      if (event.key === "Escape") {
-        document.querySelectorAll("[id$='Modal']").forEach((modal) => {
-          if (!modal.classList.contains("hidden")) {
-            closeModal(modal.id);
-          }
-        });
-      }
-    });
-  })();
-</script>
-
-  <!--Fetch Live Autosite Updates -->
-<script>
-  const FEED_URL = "https://v0-next-js-api-route-nu.vercel.app/api/feed";
-  const SITE_ORIGIN = "https://regencreatives.com";
-
-  function formatDate(dateString) {
-    if (!dateString) return "Recent";
-    const date = new Date(dateString);
-    return date.toLocaleDateString("en-US", {
-      month: "long",
-      day: "2-digit",
-      year: "numeric"
-    });
-  }
-
-  function getItems(payload) {
-    if (Array.isArray(payload)) return payload;
-    if (Array.isArray(payload.data)) return payload.data;
-    if (Array.isArray(payload.items)) return payload.items;
-    return [];
-  }
-
-  function escapeHtml(str) {
-    if (!str) return "";
-    return String(str)
-      .replaceAll("&", "&amp;")
-      .replaceAll("<", "&lt;")
-      .replaceAll(">", "&gt;")
-      .replaceAll('"', "&quot;")
-      .replaceAll("'", "&#039;");
-  }
-
-  function toAbsoluteUrl(url) {
-    if (!url) return "#";
-    if (url.startsWith("http://") || url.startsWith("https://")) return url;
-    return `${SITE_ORIGIN}${url}`;
-  }
-
-  function renderLoadingCards() {
-    return [1, 2, 3].map(() => `
-      <article class="flex flex-col rounded-3xl border border-slate-200 bg-white p-8 shadow-sm">
-        <div class="mb-6 h-5 w-28 animate-pulse rounded bg-slate-200"></div>
-        <div class="h-7 w-3/4 animate-pulse rounded bg-slate-200"></div>
-        <div class="mt-4 h-20 animate-pulse rounded bg-slate-100"></div>
-        <div class="mt-6 h-4 w-40 animate-pulse rounded bg-slate-200"></div>
-      </article>
-    `).join("");
-  }
-
-  function renderCard(item) {
-    const title = escapeHtml(item.card_title || "Untitled update");
-    const excerpt = escapeHtml(item.card_excerpt || "No excerpt available.");
-    const tag = escapeHtml(item.card_tag || "Live Update");
-    const date = formatDate(item.card_date || item.article_published_at || item.created_at);
-    const itemId = `article-${item.id}`;
-
-    return `
-      <article class="flex flex-col rounded-3xl border border-slate-200 bg-white p-8 shadow-sm hover:shadow-md transition cursor-pointer" data-modal-open="${itemId}">
-        <div class="flex justify-between items-start mb-6 gap-4">
-          <span class="rounded-full bg-slate-100 px-3 py-1 text-[10px] font-bold text-slate-500 uppercase">
-            ${tag}
-          </span>
-          <p class="text-xs font-semibold text-slate-400">
-            ${date}
-          </p>
-        </div>
-
-        <h3 class="text-xl font-bold text-[#0B1731] leading-snug">
-          ${title}
-        </h3>
-
-        <p class="mt-4 text-sm leading-relaxed text-slate-600 flex-grow">
-          ${excerpt}
-        </p>
-
-        <div class="mt-6 pt-6 border-t border-slate-100">
-          <div class="flex items-center gap-2">
-            <div class="w-2 h-2 rounded-full bg-green-500"></div>
-            <span class="text-[10px] font-bold text-slate-400 uppercase tracking-widest">
-              Verified Auto-Update
-            </span>
-          </div>
-
-          <span class="mt-4 inline-block text-sm font-semibold text-[#1085D2]">
-            Click to read full article
-          </span>
-        </div>
-      </article>
-    `;
-  }
-
-  function createArticleModal(item) {
-    const itemId = `article-${item.id}`;
-    const title = escapeHtml(item.card_title || item.article_title || "Untitled");
-    const tag = escapeHtml(item.card_tag || item.article_category || "Article");
-    const date = formatDate(item.card_date || item.article_published_at || item.created_at);
-    const url = toAbsoluteUrl(item.card_url);
-    const bodyHtml = item.article_body_html || "<p>No content available.</p>";
-    const image = item.article_image ? `<img src="${item.article_image}" alt="${title}" class="w-full h-80 object-cover rounded-lg mb-8" onerror="this.style.display='none'">` : "";
-
-    // Only show "View Original" if the URL is a real page (not just "#")
-    const viewOriginalBtn = (url && url !== "#") 
-      ? `<a href="${url}" target="_blank" rel="noopener noreferrer" class="flex-1 text-center bg-[#1085D2] hover:bg-blue-700 text-white font-semibold py-3 px-6 rounded-lg transition">View Original</a>` 
-      : "";
-
-    return `
-      <div id="${itemId}Modal" class="hidden fixed inset-0 z-50 items-center justify-center bg-black bg-opacity-50 p-4">
-        <div class="bg-white rounded-2xl max-w-2xl w-full max-h-[90vh] overflow-y-auto shadow-2xl">
-          <!-- Modal Header -->
-          <div class="sticky top-0 bg-white border-b border-slate-200 p-6 flex justify-between items-start gap-4 z-10">
-            <div class="flex-1">
-              <div class="flex items-center gap-3 mb-2">
-                <span class="rounded-full bg-slate-100 px-3 py-1 text-[10px] font-bold text-slate-500 uppercase">
-                  ${tag}
-                </span>
-                <span class="text-xs text-slate-400">${date}</span>
-              </div>
-              <h2 class="text-2xl font-bold text-[#0B1731]">${title}</h2>
-            </div>
-            <button data-modal-close="${itemId}" class="text-slate-400 hover:text-slate-600 text-3xl leading-none p-2">
-              &times;
-            </button>
-          </div>
-
-          <!-- Modal Body -->
-          <div class="p-8">
-            ${image}
-            <div class="article-content">
-              ${bodyHtml}
-            </div>
-          </div>
-
-          <!-- Modal Footer -->
-          <div class="sticky bottom-0 bg-slate-50 border-t border-slate-200 p-6 flex gap-4 z-10">
-            ${viewOriginalBtn}
-            <button data-modal-close="${itemId}" class="${viewOriginalBtn ? 'flex-1' : 'w-full'} bg-slate-200 hover:bg-slate-300 text-slate-700 font-semibold py-3 px-6 rounded-lg transition">
-              Close
-            </button>
-          </div>
-        </div>
-      </div>
-    `;
-  }
-
-  async function loadLiveUpdates() {
-    const grid = document.getElementById("live-updates-grid");
-    if (!grid) return;
-
-    grid.innerHTML = renderLoadingCards();
-
-    try {
-      const response = await fetch(FEED_URL, {
-        method: "GET",
-        headers: { "Accept": "application/json" }
-      });
-
-      if (!response.ok) {
-        throw new Error(`Feed request failed: ${response.status}`);
-      }
-
-      const payload = await response.json();
-      const items = getItems(payload).slice(0, 3);
-
-      if (!items.length) {
-        grid.innerHTML = `
-          <div class="lg:col-span-3 rounded-3xl border border-slate-200 bg-white p-6 text-center text-sm text-slate-600">
-            No live updates yet.
-          </div>
-        `;
-        return;
-      }
-
-      grid.innerHTML = items.map(renderCard).join("");
-
-      // Create modals container
-      let modalsContainer = document.getElementById("article-modals");
-      if (!modalsContainer) {
-        modalsContainer = document.createElement("div");
-        modalsContainer.id = "article-modals";
-        document.body.appendChild(modalsContainer);
-      }
-      modalsContainer.innerHTML = items.map(createArticleModal).join("");
-
-      attachModalListeners();
-    } catch (error) {
-      console.error("Unable to load live updates:", error);
-      grid.innerHTML = `
-        <div class="lg:col-span-3 rounded-3xl border border-red-200 bg-red-50 p-6 text-center text-sm text-red-700">
-          Unable to load live updates right now.
-        </div>
-      `;
-    }
-  }
-
-  function attachModalListeners() {
-    function openModal(id) {
-      const modal = document.getElementById(id + "Modal");
-      if (!modal) return;
-      modal.classList.remove("hidden");
-      modal.classList.add("flex");
-      document.body.style.overflow = "hidden";
-    }
-
-    function closeModal(id) {
-      const modal = document.getElementById(id + "Modal");
-      if (!modal) return;
-      modal.classList.add("hidden");
-      modal.classList.remove("flex");
-      document.body.style.overflow = "";
-    }
-
-    // Open modal on card click
-    document.querySelectorAll("[data-modal-open]").forEach((el) => {
-      el.addEventListener("click", (e) => {
-        e.preventDefault();
-        e.stopPropagation();
-        openModal(el.getAttribute("data-modal-open"));
-      });
-    });
-
-    // Close modal on button click
-    document.querySelectorAll("[data-modal-close]").forEach((el) => {
-      el.addEventListener("click", (e) => {
-        e.preventDefault();
-        closeModal(el.getAttribute("data-modal-close"));
-      });
-    });
-
-    // Close modal on backdrop click
-    document.querySelectorAll("[id$='Modal']").forEach((modal) => {
-      modal.addEventListener("click", (e) => {
-        if (e.target === modal) {
-          const id = modal.id.replace("Modal", "");
-          closeModal(id);
-        }
-      });
-    });
-
-    // Close modal on Escape key
-    document.addEventListener("keydown", (e) => {
-      if (e.key === "Escape") {
-        document.querySelectorAll("[id$='Modal']:not(.hidden)").forEach((modal) => {
-          const id = modal.id.replace("Modal", "");
-          closeModal(id);
-        });
-      }
-    });
-  }
-
-  document.addEventListener("DOMContentLoaded", loadLiveUpdates);
-</script>
-
 
 
 

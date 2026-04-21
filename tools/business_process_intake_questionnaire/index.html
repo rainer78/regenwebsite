@@ -1989,7 +1989,29 @@ updateStaticUiCounts();
 if (window.lucide && lucide.createIcons) {
   lucide.createIcons();
 }
+ // A simple function to transition from the form to the report
+function finalizeIntake() {
+  // 1. Hide the form and footer
+  document.getElementById('conversation-container').classList.add('hidden');
+  document.getElementById('nav-footer').classList.add('hidden');
   
+  // 2. Show the loading screen
+  const loading = document.getElementById('loading-screen');
+  loading.classList.remove('hidden');
+  
+  // 3. Simulate a "Processing" delay (3 seconds)
+  // In a real scenario, you'd trigger this after your fetch() to Make.com
+  setTimeout(() => {
+    loading.classList.add('hidden');
+    
+    // 4. Reveal the report screen!
+    const report = document.getElementById('report-screen');
+    report.classList.remove('hidden');
+    
+    // 5. Populate some dummy data so it's not empty
+    document.getElementById('report-summary').innerText = "We've analyzed your workflow. You have significant manual friction in your lead follow-up process.";
+  }, 3000);
+} 
   
 </script>
   

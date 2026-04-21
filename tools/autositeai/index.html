@@ -340,7 +340,7 @@
       </p>
 
       <div class="mt-12 flex flex-col sm:flex-row items-center justify-center gap-6">
-        <a href="#request-demo" class="w-full sm:w-auto rounded-2xl bg-[#1085D2] px-10 py-5 text-base font-bold text-white shadow-2xl shadow-[#1085D2]/40 transition hover:brightness-110 active:scale-95">
+        <a href="#" class="w-full sm:w-auto rounded-2xl bg-[#1085D2] px-10 py-5 text-base font-bold text-white shadow-2xl shadow-[#1085D2]/40 transition hover:brightness-110 active:scale-95">
           Put Your Site on Autopilot
         </a>
         <a href="#how-it-works" class="group flex items-center gap-2 text-base font-bold text-white">
@@ -481,7 +481,7 @@
     </div>
 
     <div class="mt-12 text-center">
-      <a href="#request-demo" class="inline-flex items-center rounded-2xl bg-[#1085D2] px-10 py-5 text-white font-bold shadow-xl hover:scale-105 transition duration-300">
+      <a href="#" class="inline-flex items-center rounded-2xl bg-[#1085D2] px-10 py-5 text-white font-bold shadow-xl hover:scale-105 transition duration-300">
         Launch Your Own Auto-Updating Site
       </a>
     </div>
@@ -806,113 +806,237 @@
   <div class="relative z-10 mx-auto max-w-3xl px-6 lg:px-8">
     <div class="overflow-hidden rounded-[2.5rem] border border-white/10 bg-white shadow-2xl">
       
-      <div class="bg-[#0B1731] px-8 py-10 sm:px-12">
+      <div id="assessmentHeader" class="bg-[#0B1731] px-8 py-10 sm:px-12">
         <span class="inline-flex items-center rounded-full bg-[#1085D2]/20 px-3 py-1 text-xs font-bold uppercase tracking-widest text-[#1085D2]">
-          Qualification
+          AI Readiness Assessment
         </span>
         <h2 class="mt-4 text-3xl font-bold text-white sm:text-4xl">
           Is your business ready for <span class="text-[#1085D2]">Autopilot</span>?
         </h2>
         <p class="mt-4 text-base leading-7 text-slate-300">
-          This 90-second check determines if AutoSite AI can successfully automate your presence today.
+          This 15-point diagnostic analyzes your digital "fuel" to see if our AI can automate your growth today.
         </p>
       </div>
 
       <div id="progressArea" class="px-8 pt-8 sm:px-12">
         <div class="flex items-center justify-between gap-4">
-          <p id="stepLabel" class="text-xs font-bold uppercase tracking-tighter text-[#1085D2]">Step 1 of 8</p>
+          <p id="stepLabel" class="text-xs font-bold uppercase tracking-tighter text-[#1085D2]">Step 1 of 16</p>
           <div class="ml-6 flex-1 max-w-xs">
             <div class="h-2 w-full rounded-full bg-slate-100 overflow-hidden">
-              <div id="progressBar" class="h-full rounded-full bg-[#1085D2]" style="width: 12.5%;"></div>
+              <div id="progressBar" class="h-full rounded-full bg-[#1085D2]" style="width: 6.25%;"></div>
             </div>
           </div>
         </div>
-        <p id="stepHint" class="mt-3 text-sm text-slate-500">Quick business fit check</p>
       </div>
 
       <div class="px-8 py-10 sm:px-12">
         <form id="autositeAssessmentForm" class="space-y-8">
 
           <div class="assessment-step transition-all duration-500" data-step="1">
-            <div class="mb-8">
-              <h3 class="text-2xl font-bold text-[#0B1731]">Where is your business most active?</h3>
-              <p class="mt-2 text-sm text-slate-500">Select the primary channel where you share work.</p>
-            </div>
-            <div class="grid gap-4">
-              <button type="button" class="answer-card group flex items-center justify-between w-full text-left p-5 rounded-2xl border-2 border-slate-100 hover:border-[#1085D2] transition-all" data-name="activityChannels" data-value="multi">
-                <div><span class="block font-bold text-[#0B1731]">Multi-Channel</span><span class="block text-xs text-slate-500">Instagram, LinkedIn, and Google</span></div>
-                <div class="h-6 w-6 rounded-full border-2 border-slate-200"></div>
+            <h3 class="text-2xl font-bold text-[#0B1731] mb-6">Where is your work currently documented?</h3>
+            <div class="grid gap-3">
+              <button type="button" class="answer-card group flex items-center justify-between w-full p-4 rounded-xl border-2 border-slate-100 hover:border-[#1085D2] transition-all" data-name="channels" data-value="high">
+                <span>Instagram, LinkedIn & Google Business</span>
+                <div class="h-5 w-5 rounded-full border-2 border-slate-200"></div>
               </button>
-              <button type="button" class="answer-card group flex items-center justify-between w-full text-left p-5 rounded-2xl border-2 border-slate-100 hover:border-[#1085D2] transition-all" data-name="activityChannels" data-value="rarely-post">
-                <div><span class="block font-bold text-[#0B1731]">Not Active</span><span class="block text-xs text-slate-500">We rarely post online</span></div>
-                <div class="h-6 w-6 rounded-full border-2 border-slate-200"></div>
+              <button type="button" class="answer-card group flex items-center justify-between w-full p-4 rounded-xl border-2 border-slate-100 hover:border-[#1085D2] transition-all" data-name="channels" data-value="mid">
+                <span>Just one platform (e.g. Facebook only)</span>
+                <div class="h-5 w-5 rounded-full border-2 border-slate-200"></div>
+              </button>
+              <button type="button" class="answer-card group flex items-center justify-between w-full p-4 rounded-xl border-2 border-slate-100 hover:border-[#1085D2] transition-all" data-name="channels" data-value="low">
+                <span>Nowhere / Word of mouth only</span>
+                <div class="h-5 w-5 rounded-full border-2 border-slate-200"></div>
               </button>
             </div>
-            <input type="hidden" name="activityChannels" required>
+            <input type="hidden" name="channels" required>
           </div>
 
-          <div class="assessment-step hidden transition-all duration-500" data-step="2">
-            <div class="mb-8">
-              <h3 class="text-2xl font-bold text-[#0B1731]">How often do you post?</h3>
+          <div class="assessment-step hidden" data-step="2">
+            <h3 class="text-2xl font-bold text-[#0B1731] mb-6">How often do you share updates or photos of your work?</h3>
+            <div class="grid gap-3">
+              <button type="button" class="answer-card p-4 rounded-xl border-2 border-slate-100" data-name="frequency" data-value="3">3+ times per week</button>
+              <button type="button" class="answer-card p-4 rounded-xl border-2 border-slate-100" data-name="frequency" data-value="1">Once a week</button>
+              <button type="button" class="answer-card p-4 rounded-xl border-2 border-slate-100" data-name="frequency" data-value="0">Rarely / Monthly</button>
             </div>
-            <div class="grid gap-4">
-              <button type="button" class="answer-card group flex items-center justify-between w-full text-left p-5 rounded-2xl border-2 border-slate-100 hover:border-[#1085D2]" data-name="postingFrequency" data-value="weekly">
-                <span class="font-bold">Weekly</span>
-                <div class="h-6 w-6 rounded-full border-2 border-slate-200"></div>
-              </button>
-              <button type="button" class="answer-card group flex items-center justify-between w-full text-left p-5 rounded-2xl border-2 border-slate-100 hover:border-[#1085D2]" data-name="postingFrequency" data-value="rarely">
-                <span class="font-bold">Rarely</span>
-                <div class="h-6 w-6 rounded-full border-2 border-slate-200"></div>
-              </button>
-            </div>
-            <input type="hidden" name="postingFrequency" required>
+            <input type="hidden" name="frequency" required>
           </div>
 
-          <div class="assessment-step hidden transition-all duration-500" data-step="8">
-            <div class="mb-8">
-              <h3 class="text-2xl font-bold text-[#0B1731]">Final Details</h3>
-              <p class="mt-2 text-sm text-slate-500">Where should we send your custom assessment?</p>
+          <div class="assessment-step hidden" data-step="3">
+            <h3 class="text-2xl font-bold text-[#0B1731] mb-6">What does your content mostly consist of?</h3>
+            <div class="grid gap-3">
+              <button type="button" class="answer-card p-4 rounded-xl border-2 border-slate-100" data-name="contentType" data-value="high">Photos/Videos of finished projects</button>
+              <button type="button" class="answer-card p-4 rounded-xl border-2 border-slate-100" data-name="contentType" data-value="mid">Text updates and industry news</button>
+              <button type="button" class="answer-card p-4 rounded-xl border-2 border-slate-100" data-name="contentType" data-value="low">Promotional graphics/Ads only</button>
             </div>
+            <input type="hidden" name="contentType" required>
+          </div>
+
+          <div class="assessment-step hidden" data-step="4">
+            <h3 class="text-2xl font-bold text-[#0B1731] mb-6">When was your website last updated?</h3>
+            <div class="grid gap-3">
+              <button type="button" class="answer-card p-4 rounded-xl border-2 border-slate-100" data-name="webState" data-value="high">Over 6 months ago</button>
+              <button type="button" class="answer-card p-4 rounded-xl border-2 border-slate-100" data-name="webState" data-value="low">I update it weekly myself</button>
+              <button type="button" class="answer-card p-4 rounded-xl border-2 border-slate-100" data-name="webState" data-value="mid">I don't have a website yet</button>
+            </div>
+            <input type="hidden" name="webState" required>
+          </div>
+
+          <div class="assessment-step hidden" data-step="5">
+            <h3 class="text-2xl font-bold text-[#0B1731] mb-6">Do you have a backlog of project photos?</h3>
+            <div class="grid gap-3">
+              <button type="button" class="answer-card p-4 rounded-xl border-2 border-slate-100" data-name="backlog" data-value="5">Yes, 20+ recent project photos</button>
+              <button type="button" class="answer-card p-4 rounded-xl border-2 border-slate-100" data-name="backlog" data-value="2">A few here and there</button>
+              <button type="button" class="answer-card p-4 rounded-xl border-2 border-slate-100" data-name="backlog" data-value="0">No, I need to start taking them</button>
+            </div>
+            <input type="hidden" name="backlog" required>
+          </div>
+
+          <div class="assessment-step hidden" data-step="6">
+            <h3 class="text-2xl font-bold text-[#0B1731] mb-6">Where do most of your leads come from?</h3>
+            <div class="grid gap-3">
+              <button type="button" class="answer-card p-4 rounded-xl border-2 border-slate-100" data-name="leads" data-value="high">Social Media / Search</button>
+              <button type="button" class="answer-card p-4 rounded-xl border-2 border-slate-100" data-name="leads" data-value="mid">Word of Mouth / Referral</button>
+            </div>
+            <input type="hidden" name="leads" required>
+          </div>
+
+          <div class="assessment-step hidden" data-step="7">
+            <h3 class="text-2xl font-bold text-[#0B1731] mb-6">What is your primary digital goal?</h3>
+            <div class="grid gap-3">
+              <button type="button" class="answer-card p-4 rounded-xl border-2 border-slate-100" data-name="goal" data-value="high">Save time on site updates</button>
+              <button type="button" class="answer-card p-4 rounded-xl border-2 border-slate-100" data-name="goal" data-value="high">Rank higher on Google</button>
+              <button type="button" class="answer-card p-4 rounded-xl border-2 border-slate-100" data-name="goal" data-value="mid">Just need a basic landing page</button>
+            </div>
+            <input type="hidden" name="goal" required>
+          </div>
+
+          <div class="assessment-step hidden" data-step="8">
+            <h3 class="text-2xl font-bold text-[#0B1731] mb-6">How often do you receive Google Reviews?</h3>
+            <div class="grid gap-3">
+              <button type="button" class="answer-card p-4 rounded-xl border-2 border-slate-100" data-name="reviews" data-value="high">Regularly (Monthly)</button>
+              <button type="button" class="answer-card p-4 rounded-xl border-2 border-slate-100" data-name="reviews" data-value="low">Rarely or Never</button>
+            </div>
+            <input type="hidden" name="reviews" required>
+          </div>
+
+          <div class="assessment-step hidden" data-step="9">
+            <h3 class="text-2xl font-bold text-[#0B1731] mb-6">Are you comfortable with AI writing your site drafts?</h3>
+            <div class="grid gap-3">
+              <button type="button" class="answer-card p-4 rounded-xl border-2 border-slate-100" data-name="aiComfort" data-value="high">Yes, I want full automation</button>
+              <button type="button" class="answer-card p-4 rounded-xl border-2 border-slate-100" data-name="aiComfort" data-value="mid">I want to approve everything first</button>
+            </div>
+            <input type="hidden" name="aiComfort" required>
+          </div>
+
+          <div class="assessment-step hidden" data-step="10">
+            <h3 class="text-2xl font-bold text-[#0B1731] mb-6">How many projects do you complete a month?</h3>
+            <div class="grid gap-3">
+              <button type="button" class="answer-card p-4 rounded-xl border-2 border-slate-100" data-name="volume" data-value="high">4 or more</button>
+              <button type="button" class="answer-card p-4 rounded-xl border-2 border-slate-100" data-name="volume" data-value="mid">1 to 3</button>
+              <button type="button" class="answer-card p-4 rounded-xl border-2 border-slate-100" data-name="volume" data-value="low">I work on long-term 6+ month projects</button>
+            </div>
+            <input type="hidden" name="volume" required>
+          </div>
+
+          <div class="assessment-step hidden" data-step="11">
+            <h3 class="text-2xl font-bold text-[#0B1731] mb-6">Do you write descriptions with your posts?</h3>
+            <div class="grid gap-3">
+              <button type="button" class="answer-card p-4 rounded-xl border-2 border-slate-100" data-name="captions" data-value="high">Detailed summaries of the work</button>
+              <button type="button" class="answer-card p-4 rounded-xl border-2 border-slate-100" data-name="captions" data-value="low">Just emojis or short phrases</button>
+              <button type="button" class="answer-card p-4 rounded-xl border-2 border-slate-100" data-name="captions" data-value="none">I only post images, no text</button>
+            </div>
+            <input type="hidden" name="captions" required>
+          </div>
+
+          <div class="assessment-step hidden" data-step="12">
+            <h3 class="text-2xl font-bold text-[#0B1731] mb-6">Is your Google Business Profile "Verified"?</h3>
+            <div class="grid gap-3">
+              <button type="button" class="answer-card p-4 rounded-xl border-2 border-slate-100" data-name="googleVerified" data-value="high">Yes, and it's fully optimized</button>
+              <button type="button" class="answer-card p-4 rounded-xl border-2 border-slate-100" data-name="googleVerified" data-value="mid">Yes, but I don't use it much</button>
+              <button type="button" class="answer-card p-4 rounded-xl border-2 border-slate-100" data-name="googleVerified" data-value="low">No / I'm not sure</button>
+            </div>
+            <input type="hidden" name="googleVerified" required>
+          </div>
+
+          <div class="assessment-step hidden" data-step="13">
+            <h3 class="text-2xl font-bold text-[#0B1731] mb-6">Do you record video "walkthroughs" of projects?</h3>
+            <div class="grid gap-3">
+              <button type="button" class="answer-card p-4 rounded-xl border-2 border-slate-100" data-name="video" data-value="high">Regularly (Great for AI blogs)</button>
+              <button type="button" class="answer-card p-4 rounded-xl border-2 border-slate-100" data-name="video" data-value="low">Occasionally / Never</button>
+            </div>
+            <input type="hidden" name="video" required>
+          </div>
+
+          <div class="assessment-step hidden" data-step="14">
+            <h3 class="text-2xl font-bold text-[#0B1731] mb-6">How active are your competitors online?</h3>
+            <div class="grid gap-3">
+              <button type="button" class="answer-card p-4 rounded-xl border-2 border-slate-100" data-name="competition" data-value="high">They post daily / Very active</button>
+              <button type="button" class="answer-card p-4 rounded-xl border-2 border-slate-100" data-name="competition" data-value="low">They have little to no presence</button>
+            </div>
+            <input type="hidden" name="competition" required>
+          </div>
+
+          <div class="assessment-step hidden" data-step="15">
+            <h3 class="text-2xl font-bold text-[#0B1731] mb-6">Do you serve specific local areas?</h3>
+            <div class="grid gap-3">
+              <button type="button" class="answer-card p-4 rounded-xl border-2 border-slate-100" data-name="location" data-value="high">Yes, multiple specific towns/cities</button>
+              <button type="button" class="answer-card p-4 rounded-xl border-2 border-slate-100" data-name="location" data-value="low">Nationwide / Digital only</button>
+            </div>
+            <input type="hidden" name="location" required>
+          </div>
+
+          <div class="assessment-step hidden" data-step="16">
+            <h3 class="text-2xl font-bold text-[#0B1731] mb-6">Analyze Your Results</h3>
             <div class="space-y-4">
-              <input type="text" name="name" placeholder="Full Name" required class="w-full p-4 rounded-xl border border-slate-200 focus:border-[#1085D2] outline-none">
-              <input type="email" name="email" placeholder="Work Email" required class="w-full p-4 rounded-xl border border-slate-200 focus:border-[#1085D2] outline-none">
-              <input type="text" name="businessName" placeholder="Business Name" required class="w-full p-4 rounded-xl border border-slate-200 focus:border-[#1085D2] outline-none">
+              <input type="text" name="name" placeholder="Full Name" required class="w-full p-4 border rounded-xl outline-none focus:border-[#1085D2]">
+              <input type="email" name="email" placeholder="Email Address" required class="w-full p-4 border rounded-xl outline-none focus:border-[#1085D2]">
+              <input type="text" name="websiteUrl" placeholder="Current Website (optional)" class="w-full p-4 border rounded-xl outline-none focus:border-[#1085D2]">
             </div>
           </div>
 
           <div id="assessmentNav" class="flex items-center justify-between border-t border-slate-100 pt-10">
             <button type="button" id="prevBtn" class="hidden text-sm font-bold text-slate-400 hover:text-[#0B1731]">← Back</button>
             <button type="button" id="nextBtn" class="rounded-xl bg-[#0B1731] px-8 py-4 text-sm font-bold text-white shadow-lg transition hover:scale-105">Continue</button>
-            <button type="submit" id="submitBtn" class="hidden rounded-xl bg-[#1085D2] px-8 py-4 text-sm font-bold text-white shadow-lg transition hover:scale-105">Analyze My Results</button>
+            <button type="submit" id="submitBtn" class="hidden rounded-xl bg-[#1085D2] px-8 py-4 text-sm font-bold text-white shadow-lg transition hover:scale-105">See My Readiness Score</button>
           </div>
         </form>
 
         <div id="approvedResult" class="hidden py-10 text-center">
-          <div class="mb-6 inline-flex h-16 w-16 items-center justify-center rounded-full bg-green-100 text-green-600">
-            <svg class="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7"/></svg>
+          <div class="mb-6 inline-flex h-20 w-20 items-center justify-center rounded-full bg-green-100 text-green-600">
+            <svg class="h-10 w-10" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="3"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>
           </div>
-          <h3 class="text-3xl font-bold text-[#0B1731]">You're Ready!</h3>
-          <p class="mt-4 text-slate-600">Your activity levels are perfect for AutoSite AI automation.</p>
-          <div id="automationApprovedNote" class="hidden mt-4 p-4 bg-blue-50 text-blue-700 rounded-lg text-sm">Custom automation opportunities detected!</div>
-          <a id="demoScheduleLink" href="#" class="mt-8 inline-block rounded-xl bg-[#1085D2] px-10 py-4 font-bold text-white shadow-xl">Schedule Your Demo</a>
+          <h3 class="text-3xl font-bold text-[#0B1731]">Excellent Fit!</h3>
+          <p class="mt-4 text-lg text-slate-600">You have the "Content Fuel" required to run an autonomous website. Our AI can begin syncing your work immediately.</p>
+          <a id="demoScheduleLink" href="#" class="mt-8 inline-block rounded-xl bg-[#1085D2] px-10 py-5 font-bold text-white shadow-xl hover:bg-blue-600 transition">Schedule My Auto-Sync Setup</a>
         </div>
 
         <div id="declinedResult" class="hidden py-10 text-center">
-          <h3 class="text-2xl font-bold text-[#0B1731]">Not Quite Ready</h3>
-          <p class="mt-4 text-slate-600">We recommend increasing your social frequency before using AutoSite.</p>
+          <div class="mb-6 inline-flex h-20 w-20 items-center justify-center rounded-full bg-amber-100 text-amber-600">
+            <svg class="h-10 w-10" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"/></svg>
+          </div>
+          <h3 class="text-3xl font-bold text-[#0B1731]">Not Ready for Autopilot... Yet.</h3>
+          <p class="mt-4 text-slate-600">To support an autonomous site, you need a slightly higher frequency of online documentation. We've generated a <b>30-Day Readiness Guide</b> to help you bridge the gap.</p>
+          
+          <div class="mt-8 p-6 bg-slate-50 rounded-2xl border border-slate-200 text-left">
+            <h4 class="font-bold text-[#0B1731] mb-2">How to qualify:</h4>
+            <ul class="text-sm text-slate-500 space-y-2">
+              <li>• Sync Google Business and post 2 photos weekly.</li>
+              <li>• Write 2-sentence captions describing your project.</li>
+              <li>• Collect 3 new reviews to trigger auto-testimonials.</li>
+            </ul>
+          </div>
+
           <form id="guideForm" class="mt-8 space-y-4">
-            <input type="email" id="guideEmail" name="guideEmail" placeholder="Enter email for our Readiness Guide" class="w-full p-4 border rounded-xl">
-            <button type="submit" class="w-full bg-[#0B1731] text-white py-4 rounded-xl font-bold">Send Me The Guide</button>
+            <input type="email" id="guideEmail" name="guideEmail" placeholder="Send my Roadmap to..." class="w-full p-4 border rounded-xl outline-none focus:border-[#1085D2]" required>
+            <button type="submit" class="w-full bg-[#0B1731] text-white py-4 rounded-xl font-bold hover:bg-black transition">Download My Roadmap</button>
           </form>
-          <div id="guideSuccess" class="hidden mt-4 text-green-600 font-bold">Guide sent! Check your inbox soon.</div>
+          <div id="guideSuccess" class="hidden mt-4 text-green-600 font-bold">Check your inbox! Your roadmap is on its way.</div>
         </div>
 
       </div>
     </div>
   </div>
 </section>
-
-
 
 
 

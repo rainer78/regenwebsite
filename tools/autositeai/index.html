@@ -1670,14 +1670,25 @@
       document.getElementById("progressArea")?.classList.add("hidden");
       document.getElementById("assessmentHeader")?.classList.add("hidden");
 
-      if (result.approved) {
+    if (result.approved) {
+        // 1. Show the success screen
         approvedResult?.classList.remove("hidden");
-        const scoreTitle = approvedResult.querySelector('h3');
-        if (scoreTitle) scoreTitle.textContent = `Score: ${result.score}/100 — Excellent Fit!`;
-      } else {
-        declinedResult?.classList.remove("hidden");
-        const scoreTitle = declinedResult.querySelector('h3');
-        if (scoreTitle) scoreTitle.textContent = `Score: ${result.score}/100 — Not Quite Ready`;
+
+        // 2. Deadline Logic: Create the "Request Time" Email
+        const myEmail = "autositeai@gmail.com"; // <-- PUT YOUR EMAIL HERE
+        const subject = encodeURIComponent("AutoSite AI: Setup Call Request");
+        const body = encodeURIComponent(
+          `Hi,\n\nI just finished the assessment and I am an Excellent Fit (Score: ${result.score}/100)!\n\nI would like to schedule my 15-minute setup call. What times do you have available this week?\n\nBest,`
+        );
+
+        const mailtoUrl = `mailto:${myEmail}?subject=${subject}&body=${body}`;
+
+        // 3. Attach the link to the button
+        const callBtn = document.getElementById("demoScheduleLink");
+        if (callBtn) {
+          callBtn.href = mailtoUrl;
+          callBtn.innerText = "Email to Book My Setup";
+        }
       }
     });
 

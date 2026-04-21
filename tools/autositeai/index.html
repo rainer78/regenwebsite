@@ -1671,55 +1671,87 @@
       document.getElementById("assessmentHeader")?.classList.add("hidden");
 
     if (result.approved) {
-        // 1. Show the success screen
         approvedResult?.classList.remove("hidden");
 
-        // 2. Deadline Logic: Create the "Request Time" Email
-        const myEmail = "autositeai@gmail.com"; // <-- PUT YOUR EMAIL HERE
-        const subject = encodeURIComponent("AutoSite AI: Setup Call Request");
+        // 1. Get the business details for the email
+        const bizName = formData.businessName || "My Business";
+        const bizUrl = formData.websiteUrl || "Not provided";
+
+        // 2. Build a robust "Application" style email
+        const myEmail = "autositeai@gmail.com"; 
+        const subject = encodeURIComponent(`Priority Setup Request: ${bizName}`);
+        
         const body = encodeURIComponent(
-          `Hi,\n\nI just finished the assessment and I am an Excellent Fit (Score: ${result.score}/100)!\n\nI would like to schedule my 15-minute setup call. What times do you have available this week?\n\nBest,`
+          `OFFICIAL AUTOSITE AI ASSESSMENT SUMMARY\n` +
+          `------------------------------------------\n` +
+          `Status: EXCELLENT FIT\n` +
+          `Score: ${result.score}/100\n` +
+          `Business: ${bizName}\n` +
+          `Website: ${bizUrl}\n` +
+          `------------------------------------------\n\n` +
+          `Hi Team,\n\n` +
+          `I just completed the AI Readiness Assessment and qualified for a Setup Call. I would like to schedule a 15-minute sync to:\n` +
+          `1. Connect my live data sources.\n` +
+          `2. Review my automated site structure.\n\n` +
+          `What is your availability for a brief onboarding session later this week?\n\n` +
+          `Best regards,\n` +
+          `${formData.name || 'Site Owner'}`
         );
 
         const mailtoUrl = `mailto:${myEmail}?subject=${subject}&body=${body}`;
 
-        // 3. Attach the link to the button
+        // 3. Apply to button
         const callBtn = document.getElementById("demoScheduleLink");
         if (callBtn) {
           callBtn.href = mailtoUrl;
-          callBtn.innerText = "Email to Book My Setup";
+          callBtn.innerText = "Send Setup Application";
         }
       }
+
+      
     });
 
     updateStepUI();
 
 // DEADLINE PROTOTYPE: Instant Mailto Logic
-    guideForm?.addEventListener("submit", function (event) {
+ guideForm?.addEventListener("submit", function (event) {
       event.preventDefault();
 
       const userEmail = document.getElementById("guideEmail").value;
-      const subject = encodeURIComponent("Your AutoSite AI Readiness Roadmap");
-      
-      // Update the URL below to your actual guide link
       const guideLink = "https://regencreatives.com/tools/autositeai/img/AutoSite_AI_Readiness_Roadmap.pdf";
       
+      // 1. Professional Subject Line
+      const subject = encodeURIComponent("Action Required: Your 30-Day AutoSite AI Roadmap");
+      
+      // 2. Robust Body with Report and Next Steps
       const body = encodeURIComponent(
-        "Hi there,\n\n" +
-        "Great job completing the AI Readiness Assessment!\n\n" +
-        "To get your business ready for an autonomous website, download your roadmap here:\n" +
-        guideLink + "\n\n" +
-        "Best,\nThe AutoSite AI Team"
+        `AUTOSITE AI READINESS REPORT\n` +
+        `------------------------------------------\n` +
+        `Target: Autonomous Website Deployment\n` +
+        `Status: IN-PROGRESS (Nurture Phase)\n` +
+        `Resource: 30-Day Readiness Roadmap\n` +
+        `------------------------------------------\n\n` +
+        `Hi there,\n\n` +
+        `Thank you for completing the AutoSite AI Assessment. While your business isn't quite ready for full automation today, you are closer than you think.\n\n` +
+        `I have prepared a custom 30-Day Roadmap to help you bridge the gap. You can access it here:\n` +
+        `${guideLink}\n\n` +
+        `YOUR NEXT 3 STEPS:\n` +
+        `1. Download the Roadmap PDF.\n` +
+        `2. Follow the 10-day content batching guide.\n` +
+        `3. Re-take this assessment in 30 days to unlock your demo.\n\n` +
+        `If you have questions about your specific score, just hit reply to this email.\n\n` +
+        `Best regards,\n` +
+        `The AutoSite AI Team`
       );
 
-      // This opens the user's native email app with the link ready to go
+      // 3. Trigger Email Client
       window.location.href = `mailto:${userEmail}?subject=${subject}&body=${body}`;
 
-      // Instant UI success feedback
+      // 4. UI Success Feedback
       guideForm.classList.add("hidden");
       if (guideSuccess) {
         guideSuccess.classList.remove("hidden");
-        guideSuccess.innerHTML = "<strong>Done!</strong> Your email client has been opened.";
+        guideSuccess.innerHTML = "<strong>Roadmap Sent!</strong> Check your email client to finish sending.";
       }
     });
     

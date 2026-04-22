@@ -1555,7 +1555,7 @@
     const approvedResult = document.getElementById("approvedResult");
     const declinedResult = document.getElementById("declinedResult");
     const guideForm = document.getElementById("guideForm");
-    const updates = Array.isArray(result?.data) ? result.data.slice(0, 6) : [];
+    
 
     let currentStep = 0;
     const totalSteps = steps.length; // 16 total
@@ -1776,6 +1776,7 @@ async function initLiveUpdates() {
         const response = await fetch(url, { cache: 'no-store' });
         const contentType = response.headers.get('content-type') || '';
         const rawText = await response.text();
+        const updates = Array.isArray(result?.data) ? result.data.slice(0, 6) : [];
 
         if (!response.ok) {
           console.warn(`Feed request failed for ${url}: ${response.status}`);

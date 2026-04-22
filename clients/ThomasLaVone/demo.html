@@ -1,0 +1,606 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Thomas LaVone | Celebrity Fashion Designer</title>
+    
+    <style>
+        body, html {
+            margin: 0;
+            padding: 0;
+            font-family: 'Helvetica Neue', Arial, sans-serif;
+            background-color: #f0f4f8;
+        }
+
+        /* Header Layout Fix */
+        header {
+            display: flex;
+            align-items: center;
+            padding: 25px 50px;
+            background-color: #f0f4f8;
+        }
+
+        .logo {
+            font-size: 20px;
+            font-weight: bold;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            flex: 1; /* Pushes everything else to the right */
+        }
+
+        nav {
+            display: flex;
+            gap: 30px;
+            margin-right: 40px; /* Space between links and search icon */
+        }
+
+        nav a {
+            text-decoration: none;
+            color: #333;
+            font-size: 11px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        .search-icon {
+            font-size: 16px;
+            cursor: pointer;
+            filter: grayscale(1);
+        }
+
+       /* 2. Full-Screen Image (COVER) */
+        .hero-container {
+            width: 100%;
+            height: 100vh; /* 100% of the viewport height */
+            overflow: hidden;
+            position: relative;
+        }
+
+        .hero-container img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover; /* Crucial for "covering" the space without stretching */
+            object-position: center top; /* Start crop from the top to prioritize the face/torso */
+            display: block;
+
+            /* 3. The "Black and White" Fix */
+            filter: grayscale(100%) contrast(120%); /* 100% grayscale with boosted contrast */
+        }
+
+        /* Subtle Vignette Overlay for Depth */
+        .hero-container::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle, rgba(0,0,0,0) 40%, rgba(0,0,0,0.6) 100%);
+            pointer-events: none;
+        }
+
+        /* Login & Dropdown Styling */
+        .login-container {
+            position: relative;
+            display: inline-block;
+        }
+
+        .login-btn {
+            background: none;
+            border: none;
+            color: rgba(255,255,255,0.8);
+            font-size: 11px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            cursor: pointer;
+            padding: 10px 0;
+        }
+
+        .login-btn:hover { color: #fff; }
+
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            right: 0;
+            top: 100%;
+            background-color: #fff;
+            min-width: 200px;
+            box-shadow: 0px 8px 16px rgba(0,0,0,0.2);
+            padding: 20px;
+            z-index: 1001;
+            text-align: left;
+        }
+
+        .login-container:hover .dropdown-content {
+            display: block;
+        }
+
+        .dropdown-content h4 {
+            color: #000;
+            margin: 0 0 10px 0;
+            font-size: 12px;
+            text-transform: uppercase;
+        }
+
+        .dropdown-content select {
+            width: 100%;
+            padding: 8px;
+            margin-bottom: 15px;
+            border: 1px solid #ccc;
+            font-size: 12px;
+            background: #fff;
+            color: #333;
+        }
+
+        .dropdown-content button {
+            width: 100%;
+            padding: 10px;
+            background-color: #000;
+            color: #fff;
+            border: none;
+            text-transform: uppercase;
+            font-size: 11px;
+            cursor: pointer;
+            letter-spacing: 1px;
+        }
+
+        .main-title {
+            font-size: clamp(40px, 10vw, 120px); /* Responsive sizing */
+            font-weight: 900; /* Extra bold */
+            text-transform: lowercase; /* Matching the screenshot style */
+            letter-spacing: -2px; /* Tight kerning for impact */
+            margin: 0;
+            line-height: 0.9;
+        }
+
+        /* 2. Bold Tagline (The "Own the Runway" Style) */
+        .tagline-group {
+            position: absolute;
+            z-index: 10;
+            text-align: center;
+            color: #fff;
+            width: 90%;
+        }
+        /* Subtle Glow/Shadow for readability */
+        .main-title {
+            text-shadow: 0px 4px 20px rgba(0,0,0,0.5);
+        }
+
+       /* 3. Bold Top-Aligned Tagline */
+        .tagline {
+            position: absolute;
+            bottom: 20px; /* Aligned to top of the image area per reference */
+            color: #fff;
+            font-size: clamp(4rem, 12vw, 9rem); /* Massive editorial scale */
+            font-weight: 800;
+            text-transform: lowercase;
+            letter-spacing: -4px; /* Tight, modern kerning */
+            margin: 0;
+            opacity: 0.5; /* Requested 50% opacity */
+            z-index: 10;
+            pointer-events: none;
+        }
+        /* New Sections Styling */
+        section.content-block {
+            padding: 100px 60px;
+            min-height: 60vh;
+            border-bottom: 1px solid #f0f0f0;
+        }
+
+        .section-title {
+            font-size: 12px;
+            text-transform: uppercase;
+            letter-spacing: 5px;
+            margin-bottom: 40px;
+            color: #888;
+            font-weight: 600;
+        }
+
+        .placeholder-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 40px;
+        }
+
+        .item {
+            background: #f9f9f9;
+            height: 400px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-transform: uppercase;
+            font-size: 11px;
+            letter-spacing: 2px;
+            color: #ccc;
+            transition: 0.4s;
+        }
+
+        .item:hover {
+            background: #eee;
+            color: #000;
+        }
+
+        /* --- NEW: Publication Ribbon --- */
+        .press-ribbon {
+            background-color: #f0f4f8;
+            padding: 40px 60px;
+            text-align: center;
+            border-bottom: 1px solid #eee;
+        }
+
+        .designer-title {
+            font-size: 13px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 4px;
+            margin-bottom: 15px;
+            display: block;
+        }
+
+        .publications {
+            font-size: 11px;
+            color: #666;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            line-height: 2;
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        /* --- FLOATING CONTACT CTA --- */
+        .contact-cta {
+            position: fixed;
+            bottom: 40px;
+            right: 40px;
+            z-index: 9999; /* Higher than everything else */
+            background-color: #000;
+            color: #fff;
+            padding: 18px 30px;
+            text-decoration: none;
+            text-transform: uppercase;
+            font-size: 11px;
+            font-weight: 600;
+            letter-spacing: 3px;
+            border-radius: 50px; /* Pill shape */
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+            transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .contact-cta:hover {
+            transform: translateY(-5px); /* Floating effect */
+            background-color: #222;
+            box-shadow: 0 15px 40px rgba(0,0,0,0.4);
+        }
+
+        .contact-cta::before {
+            content: '';
+            width: 8px;
+            height: 8px;
+            background-color: #fff;
+            border-radius: 50%;
+            display: inline-block;
+        }
+
+
+/* --- Press Section (Instagram Feed) --- */
+        #press {
+            padding: 100px 60px;
+            background-color: #fff;
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 60px;
+        }
+
+        .section-title {
+            font-size: 12px;
+            text-transform: uppercase;
+            letter-spacing: 5px;
+            display: block;
+            margin-bottom: 10px;
+        }
+
+        .insta-handle {
+            font-size: 18px;
+            font-weight: 300;
+            color: #666;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        .insta-handle:hover { color: #000; }
+
+        /* The Feed Grid */
+        .instagram-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 15px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .insta-post {
+            position: relative;
+            aspect-ratio: 1 / 1;
+            background-color: #f4f4f4;
+            overflow: hidden;
+            cursor: pointer;
+        }
+
+        .insta-post img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            filter: grayscale(100%);
+            transition: all 0.5s ease;
+        }
+
+        .insta-post:hover img {
+            filter: grayscale(0%);
+            transform: scale(1.05);
+        }
+
+        .insta-overlay {
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.3);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            transition: opacity 0.3s;
+            color: #fff;
+            font-size: 12px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .insta-post:hover .insta-overlay { opacity: 1; }
+
+        /* Mobile Adjustments */
+        @media (max-width: 768px) {
+            .instagram-grid { grid-template-columns: repeat(2, 1fr); }
+            header { padding: 20px; }
+        }
+
+        /* --- Luxury Modal Styles --- */
+        .modal-overlay {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(255, 255, 255, 0.95); /* Light luxury feel */
+            backdrop-filter: blur(10px);
+            display: none; /* Hidden by default */
+            justify-content: center;
+            align-items: center;
+            z-index: 10000;
+        }
+
+        .modal-content {
+            width: 90%;
+            max-width: 900px;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 60px;
+            padding: 40px;
+            animation: fadeIn 0.5s ease;
+        }
+
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+
+        .modal-close {
+            position: absolute; top: 40px; right: 40px;
+            font-size: 24px; cursor: pointer; font-weight: 200;
+        }
+
+        .modal-title { font-size: 14px; text-transform: uppercase; letter-spacing: 4px; margin-bottom: 30px; font-weight: 700; border-bottom: 1px solid #000; padding-bottom: 10px; }
+        
+        /* Form Styling */
+        .contact-form input, .contact-form textarea {
+            width: 100%; padding: 15px 0; margin-bottom: 20px;
+            border: none; border-bottom: 1px solid #ddd;
+            font-family: inherit; font-size: 13px; outline: none;
+            background: transparent;
+        }
+
+        .send-btn {
+            background: #000; color: #fff; border: none;
+            padding: 15px 40px; text-transform: uppercase;
+            letter-spacing: 2px; font-size: 11px; cursor: pointer;
+            margin-top: 20px;
+        }
+
+        /* Details Styling */
+        .contact-details p { font-size: 12px; text-transform: uppercase; letter-spacing: 1px; margin: 5px 0; }
+        .contact-details h3 { font-size: 11px; text-transform: uppercase; letter-spacing: 2px; margin-top: 30px; color: #888; }
+        .contact-details a { color: #000; text-decoration: none; border-bottom: 1px solid transparent; transition: 0.3s; }
+        .contact-details a:hover { border-bottom: 1px solid #000; }
+
+        @media (max-width: 768px) { .modal-content { grid-template-columns: 1fr; gap: 30px; } }
+
+        /* --- Footer Styling --- */
+        footer {
+            padding: 60px 20px;
+            background-color: #f0f4f8;
+            border-top: 1px solid #f0f0f0;
+            text-align: center;
+        }
+
+        .footer-credits {
+            font-size: 10px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            color: #888;
+            line-height: 2.4;
+        }
+
+        .footer-credits a {
+            color: #000;
+            text-decoration: none;
+            font-weight: 700;
+            border-bottom: 1px solid transparent;
+            transition: 0.3s;
+        }
+
+        .footer-credits a:hover {
+            border-bottom: 1px solid #000;
+        }
+
+        .footer-logo {
+            font-size: 14px;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 4px;
+            margin-bottom: 20px;
+            display: block;
+        }
+
+        .login-btn {
+    background:none;        /* Removes default button background */
+    border: none;            /* Removes default button borders */
+    color: #000; /* Semi-transparent white to match nav links */
+    font-size: 11px;         /* Small, elegant sizing */
+    text-transform: uppercase; /* All caps for that high-fashion look */
+    letter-spacing: 2px;     /* Wide spacing for better readability and style */
+    cursor: pointer;         /* Changes cursor to hand on hover */
+    padding: 10px 0;         /* Provides a larger hit-area for the user */
+    transition: color 0.3s;  /* Smooth color fade when hovering */
+}
+
+.login-btn:hover {
+    color: #ccc;             /* Becomes fully opaque white on hover */
+}
+        
+    </style>
+</head>
+<body>
+
+   <button class="contact-cta" onclick="toggleModal()">Contact Us</button>
+
+    <div class="modal-overlay" id="contactModal">
+        <span class="modal-close" onclick="toggleModal()">✕</span>
+        
+        <div class="modal-content">
+            <div class="contact-form">
+                <h2 class="modal-title">Contact Thomas LaVone</h2>
+                <p style="font-size: 12px; color: #666; margin-bottom: 20px;">Please feel free to ask any questions by leaving a message.</p>
+                <form action="#">
+                    <input type="text" placeholder="NAME *" required>
+                    <input type="email" placeholder="EMAIL *" required>
+                    <input type="text" placeholder="SUBJECT">
+                    <textarea placeholder="MESSAGE" rows="4"></textarea>
+                    <button type="submit" class="send-btn">Send</button>
+                </form>
+            </div>
+
+            <div class="contact-details">
+                <h2 class="modal-title">Contact Details</h2>
+                
+                <h3>Office</h3>
+                <p>646 492-1823</p>
+
+                <h3>Sales & Marketing</h3>
+                <p><a href="mailto:Sales@ThomasLaVone.com">Sales@ThomasLaVone.com</a></p>
+
+                <h3>Bookings / Appointments</h3>
+                <p><a href="mailto:Management@ThomasLaVone.com">Management@ThomasLaVone.com</a></p>
+
+                <h3>Business Inquiries</h3>
+                <p><a href="mailto:President@ThomasLaVone.com">President@ThomasLaVone.com</a></p>
+            </div>
+        </div>
+    </div>
+
+    <header>
+        <div class="logo">THOMAS LAVONE</div>
+        <nav>
+           <a href="#media">Media</a>
+            <a href="#collections">Collections</a>
+            
+        </nav>
+        <div class="login-container">
+            <button class="login-btn">Sign In / Region ▼</button>
+            <div class="dropdown-content">
+                <h4>Select Region</h4>
+                <select>
+                    <option>United States (USD)</option>
+                    <option>Europe (EUR)</option>
+                    <option>United Kingdom (GBP)</option>
+                    <option>Asia Pacific (HKD)</option>
+                </select>
+                <button>Login</button>
+            </div>
+        </div>
+    </header>
+
+    <section class="hero-container">
+        <div class="tagline">
+            <h1 class="main-title">reinvent yourself</h1>
+            
+        </div>
+        <img src="./img/ocean-shoot.png" alt="Thomas LaVone Runway">
+    </section>
+<div class="press-ribbon">
+        <span class="designer-title">Celebrity Fashion Designer</span>
+        <p class="publications">
+            As seen in UK editions of: <br>
+            Vogue, Elle, Tatler, Harper's Bazaar, Town&Country, GQ, Glamour, and Cosmopolitan
+        </p>
+   </div>
+
+    
+
+    <section id="media" class="content-block">
+        <h2 class="section-title">Media</h2>
+        <div class="placeholder-grid">
+            <div class="item">Film & Video</div>
+            <div class="item">Campaign Shoots</div>
+            <div class="item">Behind the Scenes</div>
+        </div>
+    </section>
+
+    <section id="collections" class="content-block">
+        <h2 class="section-title">Collections</h2>
+        <div class="placeholder-grid">
+            <div class="item">Spring / Summer 2026</div>
+            <div class="item">Autumn / Winter 2025</div>
+            <div class="item">Resort Wear</div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="footer-logo">Thomas LaVone</div>
+        <div class="footer-credits">
+            web design by **Regen Creatives** <br>
+            website updates by <a href="https://autositeai.com" target="_blank">AutoSite AI</a>
+        </div>
+    </footer>
+
+    <script>
+        function toggleModal() {
+            const modal = document.getElementById('contactModal');
+            if (modal.style.display === 'flex') {
+                modal.style.display = 'none';
+                document.body.style.overflow = 'auto'; // Re-enable scroll
+            } else {
+                modal.style.display = 'flex';
+                document.body.style.overflow = 'hidden'; // Disable scroll
+            }
+        }
+
+        // Close modal if user clicks outside of the content
+        window.onclick = function(event) {
+            const modal = document.getElementById('contactModal');
+            if (event.target == modal) {
+                toggleModal();
+            }
+        }
+    </script>
+
+    
+
+</body>
+</html>

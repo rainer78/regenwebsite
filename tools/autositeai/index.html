@@ -85,7 +85,9 @@
 .animate-autosite-marquee {
   animation: autosite-marquee 32s linear infinite;
 }
-
+#updateModal {
+  overscroll-behavior: contain;
+}
 .animate-autosite-marquee:hover {
   animation-play-state: paused;
 }
@@ -1933,9 +1935,9 @@ function escapeHtml(value) {
   })();
 </script>
 
-<div id="updateModal" class="fixed inset-0 z-[9999] hidden bg-[#0B1731]/80 backdrop-blur-sm">
-  <div class="flex min-h-screen items-start justify-center overflow-y-auto p-4 sm:p-8">
-    <div class="relative w-full max-w-5xl rounded-[2rem] bg-white shadow-2xl">
+<div id="updateModal" class="fixed inset-0 z-[9999] hidden bg-[#0B1731]/80 backdrop-blur-sm overflow-y-auto">
+  <div class="flex h-full w-full items-start justify-center overflow-y-auto p-4 sm:p-8">
+   <div class="relative w-full max-w-5xl rounded-[2rem] bg-white shadow-2xl max-h-[90vh] overflow-y-auto">
       
       <button
         id="closeUpdateModal"

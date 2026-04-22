@@ -1555,6 +1555,7 @@
     const approvedResult = document.getElementById("approvedResult");
     const declinedResult = document.getElementById("declinedResult");
     const guideForm = document.getElementById("guideForm");
+    const updates = Array.isArray(result?.data) ? result.data.slice(0, 6) : [];
 
     let currentStep = 0;
     const totalSteps = steps.length; // 16 total

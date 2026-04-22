@@ -1763,54 +1763,26 @@ async function initLiveUpdates() {
   const grid = document.getElementById('live-updates-grid');
   if (!grid) return;
 
-  const candidateUrls = [
-    'https://v0-next-js-api-route-nu.vercel.app/api/feed'
-  ];
+  const FEED_URL = 'PASTE_YOUR_WORKING_JSON_FEED_URL_HERE';
 
   try {
-    let updates = [];
-    let workingUrl = null;
+    const response = await fetch(FEED_URL, { cache: 'no-store' });
 
-    for (const url of candidateUrls) {
-      try {
-        const response = await fetch(url, { cache: 'no-store' });
-        const contentType = response.headers.get('content-type') || '';
-        const rawText = await response.text();
-        const updates = Array.isArray(result?.data) ? result.data.slice(0, 6) : [];
-
-        if (!response.ok) {
-          console.warn(`Feed request failed for ${url}: ${response.status}`);
-          continue;
-        }
-
-        if (!contentType.includes('application/json')) {
-          console.warn(`Feed request for ${url} returned non-JSON content: ${contentType}`);
-          console.warn(rawText.slice(0, 200));
-          continue;
-        }
-
-        const result = JSON.parse(rawText);
-        const possibleUpdates = Array.isArray(result?.data)
-          ? result.data
-          : Array.isArray(result)
-            ? result
-            : [];
-
-        if (possibleUpdates.length) {
-          updates = possibleUpdates;
-          workingUrl = url;
-          break;
-        }
-      } catch (innerErr) {
-        console.warn('Feed candidate failed:', url, innerErr);
-      }
+    if (!response.ok) {
+      throw new Error(`Feed request failed: ${response.status}`);
     }
 
-    if (!workingUrl) {
-      throw new Error('No working JSON feed endpoint found.');
-    }
+    const result = await response.json();
 
-    console.log('Live updates loaded from:', workingUrl);
+    const updates = Array.isArray(result?.data)
+      ? result.data
+          .sort((a, b) => new Date(b.article_published_at) - new Date(a.article_published_at))
+          .slice(0, 6)
+      : Array.isArray(result)
+        ? result
+            .sort((a, b) => new Date(b.article_published_at) - new Date(a.article_published_at))
+            .slice(0, 6)
+        : [];
 
     if (!updates.length) {
       grid.innerHTML = '<p class="text-slate-400">No updates available yet.</p>';

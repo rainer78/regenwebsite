@@ -1437,8 +1437,7 @@
 
 
    <!-- Footer -->
-
-      <footer class="bg-[#0B1731] text-[#A7C4DA] py-20">
+<footer class="bg-[#0B1731] text-[#A7C4DA] py-20">
   <div class="mx-auto max-w-7xl px-6 lg:px-8">
     <div class="grid grid-cols-1 gap-12 lg:grid-cols-4">
 
@@ -1473,16 +1472,32 @@
         <div>
           <h4 class="text-xs font-bold uppercase tracking-widest text-white">Legal</h4>
           <ul class="mt-6 space-y-4 text-sm font-medium">
+            
             <li>
               <button onclick="document.getElementById('privacyModal').classList.remove('hidden'); document.getElementById('privacyModal').classList.add('flex')" class="transition hover:text-[#1085D2]">
                 Privacy Policy
               </button>
             </li>
+
             <li>
               <button onclick="document.getElementById('termsModal').classList.remove('hidden'); document.getElementById('termsModal').classList.add('flex')" class="transition hover:text-[#1085D2]">
                 Terms of Service
               </button>
             </li>
+
+            <!-- NEW -->
+            <li>
+              <a href="/disclaimer" class="transition hover:text-[#1085D2]">
+                Disclaimer
+              </a>
+            </li>
+
+            <li>
+              <a href="/acceptable-use" class="transition hover:text-[#1085D2]">
+                Acceptable Use
+              </a>
+            </li>
+
           </ul>
         </div>
 
@@ -1507,11 +1522,20 @@
     <div class="mt-16 border-t border-white/10 pt-8 flex flex-col items-center justify-between gap-6 text-xs font-medium md:flex-row">
       
       <p class="text-slate-500 text-center md:text-left">
-        © 2026 <span class="text-white">AutoSite AI</span>. Built by <a href="https://regencreatives.com/" target="_blank" class="text-[#1085D2]">Regen Creatives RunWell LLC</a>.
+        © 2026 <span class="text-white">AutoSite AI</span>. All rights reserved. 
+        AutoSite AI is a product of 
+        <a href="https://regencreatives.com/" target="_blank" class="text-[#1085D2]">
+          Regen Creatives RunWell LLC
+        </a>.
       </p>
       
       <div class="flex items-center gap-6">
-        <a href="https://www.linkedin.com/company/autositeai/" target="_blank" class="text-slate-400 hover:text-white transition">Follow Us On LinkedIn</a>
+        <a href="/terms" class="text-slate-400 hover:text-white transition">Terms</a>
+        <a href="/privacy" class="text-slate-400 hover:text-white transition">Privacy</a>
+        <a href="/disclaimer" class="text-slate-400 hover:text-white transition">No Guarantees</a>
+        <a href="https://www.linkedin.com/company/autositeai/" target="_blank" class="text-slate-400 hover:text-white transition">
+          LinkedIn
+        </a>
       </div>
 
     </div>

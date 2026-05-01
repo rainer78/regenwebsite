@@ -343,6 +343,190 @@
         grid-template-columns: 1fr;
     }
 }
+        /* --- AUTOSITE UPDATES FEATURE LAYOUT --- */
+.updates-wrap {
+    padding: 70px 0;
+}
+
+.updates-eyebrow {
+    text-align: center;
+    color: var(--orange);
+    text-transform: uppercase;
+    letter-spacing: 4px;
+    font-size: 13px;
+    font-weight: 900;
+    margin-bottom: 12px;
+}
+
+.updates-title {
+    text-align: center;
+    font-size: clamp(32px, 5vw, 52px);
+    line-height: 1;
+    text-transform: uppercase;
+    margin-bottom: 18px;
+}
+
+.updates-title span {
+    color: var(--orange);
+}
+
+.updates-subtitle {
+    max-width: 720px;
+    margin: 0 auto 55px;
+    text-align: center;
+    font-family: Arial, sans-serif;
+    color: var(--text-gray);
+    font-size: 18px;
+    line-height: 1.6;
+}
+
+.updates-feature-layout {
+    display: grid;
+    grid-template-columns: 1.35fr 0.95fr;
+    gap: 28px;
+    align-items: stretch;
+}
+
+.feature-update-card,
+.side-update-card,
+.autosite-status-card {
+    background: #0b0b0b;
+    border: 1px solid #242424;
+    box-shadow: 0 0 25px rgba(242, 140, 0, 0.08);
+}
+
+.feature-update-card {
+    border-radius: 22px;
+    overflow: hidden;
+    border-bottom: 4px solid var(--orange);
+}
+
+.feature-image {
+    min-height: 310px;
+    background:
+        radial-gradient(circle at 20% 20%, rgba(242,140,0,0.32), transparent 28%),
+        linear-gradient(135deg, #1a1a1a 0%, #050505 70%);
+    border-bottom: 1px solid #242424;
+    display: flex;
+    align-items: flex-end;
+    padding: 26px;
+}
+
+.feature-image .material-symbols-rounded {
+    color: var(--orange);
+    font-size: 64px;
+}
+
+.feature-update-content {
+    padding: 30px;
+}
+
+.update-pill {
+    display: inline-block;
+    background: rgba(242, 140, 0, 0.14);
+    color: var(--orange);
+    padding: 7px 16px;
+    border-radius: 999px;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    font-family: Arial, sans-serif;
+    font-size: 11px;
+    font-weight: 900;
+    margin-bottom: 18px;
+}
+
+.feature-update-card h3,
+.side-update-card h3,
+.autosite-status-card h3 {
+    color: var(--white);
+    text-transform: uppercase;
+    line-height: 1.15;
+}
+
+.feature-update-card h3 {
+    font-size: clamp(26px, 4vw, 38px);
+    margin-bottom: 18px;
+}
+
+.side-update-card h3,
+.autosite-status-card h3 {
+    font-size: 20px;
+    margin-bottom: 14px;
+}
+
+.feature-update-card p,
+.side-update-card p,
+.autosite-status-card p {
+    font-family: Arial, sans-serif;
+    color: var(--text-gray);
+    line-height: 1.65;
+}
+
+.feature-update-footer {
+    display: flex;
+    justify-content: space-between;
+    gap: 18px;
+    align-items: center;
+    margin-top: 28px;
+    font-family: Arial, sans-serif;
+}
+
+.update-date {
+    color: var(--text-gray);
+    font-size: 14px;
+}
+
+.feed-link {
+    color: var(--orange);
+    text-decoration: none;
+    font-family: Arial, sans-serif;
+    font-weight: 900;
+}
+
+.side-updates {
+    display: grid;
+    gap: 24px;
+}
+
+.side-update-card {
+    border-radius: 22px;
+    padding: 28px;
+    border-left: 4px solid var(--orange);
+}
+
+.autosite-status-card {
+    border-radius: 22px;
+    padding: 28px;
+    background:
+        linear-gradient(135deg, rgba(242,140,0,0.20), transparent 45%),
+        #111;
+    border: 1px solid rgba(242,140,0,0.45);
+}
+
+.status-label {
+    color: var(--orange);
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    font-family: Arial, sans-serif;
+    font-size: 12px;
+    font-weight: 900;
+    margin-bottom: 14px;
+}
+
+@media (max-width: 900px) {
+    .updates-feature-layout {
+        grid-template-columns: 1fr;
+    }
+
+    .feature-image {
+        min-height: 220px;
+    }
+
+    .feature-update-footer {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+}
     </style>
     
 </head>

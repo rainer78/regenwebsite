@@ -162,7 +162,91 @@
         /* REVA STYLES (Existing) */
         .reva-trigger { position: fixed; bottom: 30px; right: 30px; background: var(--orange); color: var(--black); padding: 15px 25px; border-radius: 50px; font-weight: bold; cursor: pointer; z-index: 100; display: flex; align-items: center; gap: 8px; }
         .chat-modal { position: fixed; bottom: 100px; right: 30px; width: 350px; height: 450px; background: #111; border: 2px solid var(--orange); border-radius: 15px; display: none; flex-direction: column; z-index: 101; overflow: hidden; }
+   /* --- AUTOSITE AI + REVA SCHEDULING SECTION --- */
+.autosite-section {
+    padding: 60px 0;
+    border-top: 2px solid var(--orange);
+}
+
+.autosite-panel {
+    display: grid;
+    grid-template-columns: 1.1fr 0.9fr;
+    gap: 30px;
+    background: linear-gradient(180deg, #111 0%, #050505 100%);
+    border: 2px solid var(--orange);
+    padding: 40px;
+    align-items: center;
+}
+
+.autosite-kicker {
+    color: var(--orange);
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    font-size: 13px;
+    margin-bottom: 12px;
+}
+
+.autosite-panel h2 {
+    font-size: clamp(28px, 4vw, 42px);
+    line-height: 1;
+    text-transform: uppercase;
+    margin-bottom: 18px;
+}
+
+.autosite-panel h2 span {
+    color: var(--orange);
+}
+
+.autosite-panel p {
+    font-family: Arial, sans-serif;
+    color: var(--text-gray);
+    font-size: 16px;
+    line-height: 1.6;
+    margin-bottom: 20px;
+}
+
+.autosite-list {
+    display: grid;
+    gap: 14px;
+    margin-top: 20px;
+}
+
+.autosite-list-item {
+    display: flex;
+    gap: 12px;
+    align-items: flex-start;
+    font-family: Arial, sans-serif;
+    color: var(--white);
+}
+
+.autosite-list-item .material-symbols-rounded {
+    color: var(--orange);
+    font-size: 26px;
+}
+
+.autosite-card {
+    background: var(--black);
+    border-left: 5px solid var(--orange);
+    padding: 28px;
+}
+
+.autosite-card h3 {
+    text-transform: uppercase;
+    margin-bottom: 12px;
+}
+
+.autosite-card p {
+    font-size: 15px;
+}
+
+@media (max-width: 900px) {
+    .autosite-panel {
+        grid-template-columns: 1fr;
+        padding: 30px 22px;
+    }
+}
     </style>
+    
 </head>
 <body>
 
@@ -210,6 +294,61 @@
 
         <div class="orange-banner">The Right PEOPLE. The Right FIT. The Right TIME.</div>
     </div>
+
+    <section class="autosite-section" id="autosite">
+    <div class="autosite-panel">
+        <div>
+            <div class="autosite-kicker">Website Updates + Scheduling Support</div>
+
+            <h2>
+                Keep Your Website Current.<br>
+                <span>Let REVA Start the Conversation.</span>
+            </h2>
+
+            <p>
+                Your website should reflect the strength of your organization, not sit untouched while your business keeps moving.
+                With AutoSite AI, 10th Vision can keep important updates visible while REVA helps guide visitors toward the next step.
+            </p>
+
+            <div class="autosite-list">
+                <div class="autosite-list-item">
+                    <span class="material-symbols-rounded">update</span>
+                    <div>Show timely updates about services, announcements, hiring support, and workforce programs.</div>
+                </div>
+
+                <div class="autosite-list-item">
+                    <span class="material-symbols-rounded">campaign</span>
+                    <div>Turn business activity into fresh website content for better visibility and engagement.</div>
+                </div>
+
+                <div class="autosite-list-item">
+                    <span class="material-symbols-rounded">event_available</span>
+                    <div>Use REVA to invite qualified visitors to schedule a strategy call.</div>
+                </div>
+            </div>
+
+            <div class="hero-btns" style="margin-top:28px;">
+                <a href="#reva" class="btn btn-primary" id="autositeReva">
+                    <span class="material-symbols-rounded">chat</span>
+                    Ask REVA About Next Steps
+                </a>
+            </div>
+        </div>
+
+        <div class="autosite-card">
+            <h3>What AutoSite AI Supports</h3>
+            <p>
+                Service updates, hiring announcements, workforce development highlights, event reminders,
+                consulting offers, and timely calls to action.
+            </p>
+
+            <p>
+                Paired with REVA, the site becomes more than an online brochure. It becomes a guided entry point
+                for organizations that need HR, talent, staffing, or workforce development support.
+            </p>
+        </div>
+    </div>
+</section>
 
     <div class="contact-bar">
         <div class="contact-item"><span class="material-symbols-rounded">call</span> 470-818-6694</div>
@@ -266,6 +405,11 @@
             addMsg("user", v); chatInput.value = ""; step++;
             setTimeout(() => { if(step < questions.length) addMsg("reva", questions[step]); }, 600);
         };
+
+        document.getElementById('autositeReva').onclick = (e) => {
+    e.preventDefault();
+    document.getElementById('revaBtn').click();
+};
     </script>
 </body>
 </html>

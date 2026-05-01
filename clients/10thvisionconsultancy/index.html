@@ -163,58 +163,56 @@
         .reva-trigger { position: fixed; bottom: 30px; right: 30px; background: var(--orange); color: var(--black); padding: 15px 25px; border-radius: 50px; font-weight: bold; cursor: pointer; z-index: 100; display: flex; align-items: center; gap: 8px; }
         .chat-modal { position: fixed; bottom: 100px; right: 30px; width: 350px; height: 450px; background: #111; border: 2px solid var(--orange); border-radius: 15px; display: none; flex-direction: column; z-index: 101; overflow: hidden; }
 
-        /* --- WEBSITE UPDATES SECTION --- */
-.updates-section {
-    padding: 60px 0;
-    border-top: 2px solid var(--orange);
-}
-
-.updates-header {
-    text-align: center;
-    margin-bottom: 35px;
-}
-
-.updates-header p {
-    font-family: Arial, sans-serif;
-    color: var(--text-gray);
-    max-width: 720px;
-    margin: 10px auto 0;
-    font-size: 16px;
+      /* --- WEBSITE UPDATES SECTION --- */
+.updates-wrap {
+    padding: 10px 0 50px;
 }
 
 .updates-grid {
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 18px;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 1px;
+    background: #444;
+    border-top: 2px solid var(--orange);
+    border-bottom: 2px solid var(--orange);
 }
 
 .update-card {
-    background: var(--dark-gray);
-    border: 1px solid #333;
-    border-left: 5px solid var(--orange);
-    padding: 24px;
-    min-height: 220px;
+    background: var(--black);
+    padding: 30px 20px;
+    text-align: center;
+    min-height: 240px;
 }
 
-.update-card .update-tag {
+.update-card .material-symbols-rounded {
+    font-size: 42px;
     color: var(--orange);
-    text-transform: uppercase;
-    font-size: 12px;
-    letter-spacing: 1px;
     margin-bottom: 12px;
 }
 
 .update-card h3 {
     text-transform: uppercase;
-    font-size: 20px;
+    font-size: 18px;
     margin-bottom: 12px;
+    color: var(--white);
 }
 
 .update-card p {
     font-family: Arial, sans-serif;
     color: var(--text-gray);
-    font-size: 15px;
+    font-size: 14px;
     line-height: 1.55;
+    max-width: 280px;
+    margin: 0 auto;
+}
+
+.update-tag {
+    display: inline-block;
+    margin-bottom: 14px;
+    color: var(--orange);
+    font-size: 11px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
 }
 
 .update-date {
@@ -222,13 +220,8 @@
     margin-top: 18px;
     color: var(--orange);
     font-family: Arial, sans-serif;
-    font-size: 13px;
-}
-
-@media (max-width: 900px) {
-    .updates-grid {
-        grid-template-columns: 1fr;
-    }
+    font-size: 12px;
+    text-transform: uppercase;
 }
     </style>
     
@@ -280,49 +273,43 @@
         <div class="orange-banner">The Right PEOPLE. The Right FIT. The Right TIME.</div>
     </div>
 
-   <section class="updates-section" id="updates">
-    <div class="updates-header">
-        <div class="section-label">Latest Updates</div>
-        <p>
-            Stay connected with recent announcements, workforce insights, service updates,
-            and opportunities from 10th Vision Consultancy.
-        </p>
-    </div>
+   <div class="updates-wrap" id="updates">
+    <div class="section-label">Latest Updates</div>
 
     <div class="updates-grid" id="updatesGrid">
 
         <article class="update-card">
+            <span class="material-symbols-rounded">campaign</span>
             <div class="update-tag">Workforce Update</div>
             <h3>New Workforce Development Programs</h3>
             <p>
-                10th Vision Consultancy is preparing new training and coaching opportunities
-                designed to help organizations strengthen team performance.
+                Training and coaching opportunities designed to help organizations strengthen team performance.
             </p>
             <span class="update-date">Recently Added</span>
         </article>
 
         <article class="update-card">
+            <span class="material-symbols-rounded">psychology_alt</span>
             <div class="update-tag">HR Insight</div>
             <h3>People Systems That Support Growth</h3>
             <p>
-                Strong organizations need clear systems for hiring, retention, compliance,
-                leadership, and employee development.
+                Strong organizations need clear systems for hiring, retention, compliance, leadership, and development.
             </p>
             <span class="update-date">Recently Added</span>
         </article>
 
         <article class="update-card">
+            <span class="material-symbols-rounded">event_available</span>
             <div class="update-tag">Now Scheduling</div>
             <h3>Strategy Calls Available</h3>
             <p>
-                Organizations seeking support with HR, staffing, workforce development,
-                or organizational growth can schedule a focused strategy conversation.
+                Organizations seeking support with HR, staffing, or workforce growth can schedule a focused conversation.
             </p>
             <span class="update-date">Recently Added</span>
         </article>
 
     </div>
-</section>
+</div>
 
     <div class="contact-bar">
         <div class="contact-item"><span class="material-symbols-rounded">call</span> 470-818-6694</div>

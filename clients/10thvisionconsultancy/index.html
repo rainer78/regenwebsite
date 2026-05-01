@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>10th Vision Consultancy | Strategic People Solutions</title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
+    
+    <style>
+        :root {
+            --orange: #f28c00;
+            --black: #050505;
+            --dark-gray: #111111;
+            --white: #ffffff;
+            --text-gray: #cfcfcf;
+        }
+
+        .material-symbols-rounded {
+          font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+          vertical-align: middle;
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body { 
+            font-family: 'Arial Black', 'Arial Bold', sans-serif; 
+            background-color: var(--black); 
+            color: var(--white);
+            line-height: 1.4;
+        }
+
+        /* --- HERO SECTION --- */
+        .hero {
+            position: relative;
+            background: linear-gradient(180deg, #111 0%, #000 100%);
+            min-height: 80vh;
+            display: flex;
+            align-items: center;
+            border-bottom: 4px solid var(--orange);
+            padding: 60px 0;
+        }
+
+        /* Desktop Side-by-Side Layout */
+        .hero-container {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 40px;
+            width: 100%;
+        }
+
+        .hero-text { 
+            flex: 1;
+            max-width: 600px; 
+        }
+
+        .hero-image-wrap {
+            flex: 1;
+            display: flex;
+            justify-content: flex-end;
+            position: relative;
+        }
+
+        .hero-image-wrap img {
+            width: 100%;
+            max-width: 500px;
+            height: auto;
+            border-radius: 20px;
+            /* Curved aesthetic from flyer */
+            clip-path: ellipse(100% 100% at 100% 50%);
+            background: #222;
+        }
+
+        .logo-main { width: 280px; margin-bottom: 30px; }
+        h1 { font-size: clamp(32px, 5vw, 48px); text-transform: uppercase; line-height: 1; margin-bottom: 20px; }
+        h1 span { color: var(--orange); }
+        .hero p { font-family: 'Arial', sans-serif; font-size: 18px; color: var(--text-gray); margin-bottom: 30px; }
+
+        /* --- HERO CTA BUTTONS --- */
+        .hero-btns {
+            display: flex;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            padding: 16px 28px;
+            text-transform: uppercase;
+            font-weight: 900;
+            text-decoration: none;
+            font-size: 14px;
+            letter-spacing: 1px;
+            transition: 0.3s;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            border-radius: 4px;
+        }
+
+        .btn-primary { background: var(--orange); color: var(--black); }
+        .btn-primary:hover { background: var(--white); }
+
+        .btn-secondary { border: 2px solid var(--orange); color: var(--orange); }
+        .btn-secondary:hover { background: var(--orange); color: var(--black); }
+
+        /* --- PILLARS --- */
+        .container { max-width: 1200px; margin: 0 auto; padding: 0 40px; }
+        .pillars { 
+            display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; 
+            padding: 40px 0; text-align: center; border-bottom: 2px solid #333;
+        }
+        .pillar-item { text-transform: uppercase; font-size: 14px; font-weight: bold; }
+        .pillar-icon { color: var(--orange); font-size: 36px; margin-bottom: 10px; display: block; }
+
+        /* --- RESPONSIVE LOGIC --- */
+        
+        /* iPad (Tablet) and iPhone (Mobile) Stacking */
+        @media (max-width: 1024px) {
+            .hero-container {
+                flex-direction: column;
+                text-align: center;
+            }
+
+            .hero-text {
+                order: 2;
+                max-width: 100%;
+            }
+
+            .hero-image-wrap {
+                order: 1;
+                justify-content: center;
+                width: 100%;
+            }
+
+            .hero-image-wrap img {
+                max-width: 400px;
+                clip-path: none; /* Remove clip path on mobile for better visibility */
+                border: 3px solid var(--orange);
+            }
+
+            .hero-btns {
+                justify-content: center;
+            }
+
+            .pillars { grid-template-columns: 1fr 1fr; }
+        }
+
+        @media (max-width: 480px) {
+            .hero-btns .btn { width: 100%; justify-content: center; }
+            .pillars { grid-template-columns: 1fr; }
+            h1 { font-size: 32px; }
+        }
+
+        /* Keep existing Services/Banner/Contact styles */
+        .section-label { text-align: center; margin: 40px 0; display: flex; align-items: center; justify-content: center; gap: 15px; color: var(--orange); text-transform: uppercase; }
+        .section-label::before, .section-label::after { content: ""; height: 2px; width: 60px; background: var(--orange); }
+        .services-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1px; background: #444; }
+        .service-card { background: var(--black); padding: 30px 15px; text-align: center; }
+        .service-card .material-symbols-rounded { font-size: 42px; color: var(--orange); margin-bottom: 10px; }
+        .orange-banner { background: var(--orange); color: var(--black); text-align: center; padding: 15px; font-weight: 900; text-transform: uppercase; margin: 40px 0; }
+        .contact-bar { background: var(--black); border-top: 2px solid var(--orange); border-bottom: 2px solid var(--orange); display: flex; justify-content: space-around; padding: 20px; flex-wrap: wrap; }
+        
+        /* REVA STYLES (Existing) */
+        .reva-trigger { position: fixed; bottom: 30px; right: 30px; background: var(--orange); color: var(--black); padding: 15px 25px; border-radius: 50px; font-weight: bold; cursor: pointer; z-index: 100; display: flex; align-items: center; gap: 8px; }
+        .chat-modal { position: fixed; bottom: 100px; right: 30px; width: 350px; height: 450px; background: #111; border: 2px solid var(--orange); border-radius: 15px; display: none; flex-direction: column; z-index: 101; overflow: hidden; }
+    </style>
+</head>
+<body>
+
+    <section class="hero">
+        <div class="container hero-container">
+            <div class="hero-text">
+                <img src="YOUR_LOGO_URL" alt="10th Vision Logo" class="logo-main">
+                <h1>SEE BEYOND.<br>BUILD STRONGER.<br><span>IMPACT TOMORROW.</span></h1>
+                <p>10th Vision Consultancy helps organizations build strong people systems, attract top talent, and develop workforces that drive growth.</p>
+                
+                <div class="hero-btns">
+                    <a href="YOUR_BOOKING_LINK" class="btn btn-primary">
+                        <span class="material-symbols-rounded">calendar_month</span>
+                        Book Strategy Call
+                    </a>
+                    <a href="#reva" class="btn btn-secondary" id="heroReva">
+                        <span class="material-symbols-rounded">psychology</span>
+                        Start with REVA
+                    </a>
+                </div>
+            </div>
+
+            <div class="hero-image-wrap">
+                <img src="YOUR_HEADSHOT_URL" alt="10th Vision Founder">
+            </div>
+        </div>
+    </section>
+
+    <div class="container">
+        <div class="pillars">
+            <div class="pillar-item"><span class="material-symbols-rounded pillar-icon">groups</span> Strategic Focus</div>
+            <div class="pillar-item"><span class="material-symbols-rounded pillar-icon">verified_user</span> People Centered</div>
+            <div class="pillar-item"><span class="material-symbols-rounded pillar-icon">trending_up</span> Measurable Results</div>
+            <div class="pillar-item"><span class="material-symbols-rounded pillar-icon">star</span> Lasting Impact</div>
+        </div>
+
+        <div class="section-label">Our Core Services</div>
+        <div class="services-grid">
+            <div class="service-card"><span class="material-symbols-rounded">support_agent</span><h3>HR Consulting</h3></div>
+            <div class="service-card"><span class="material-symbols-rounded">person_search</span><h3>Talent Acquisition</h3></div>
+            <div class="service-card"><span class="material-symbols-rounded">school</span><h3>Workforce Dev</h3></div>
+            <div class="service-card"><span class="material-symbols-rounded">corporate_fare</span><h3>Org Development</h3></div>
+            <div class="service-card"><span class="material-symbols-rounded">assignment</span><h3>Staffing Solutions</h3></div>
+        </div>
+
+        <div class="orange-banner">The Right PEOPLE. The Right FIT. The Right TIME.</div>
+    </div>
+
+    <div class="contact-bar">
+        <div class="contact-item"><span class="material-symbols-rounded">call</span> 470-818-6694</div>
+        <div class="contact-item"><span class="material-symbols-rounded">mail</span> info@10thvision.com</div>
+    </div>
+
+    <div class="reva-trigger" id="revaBtn">
+        <span class="material-symbols-rounded">chat</span> Chat with REVA
+    </div>
+
+    <div class="chat-modal" id="revaModal">
+        <div style="background:var(--orange); padding:15px; color:black; font-weight:bold; display:flex; justify-content:space-between;">
+            <span>REVA Diagnostic</span>
+            <span style="cursor:pointer;" id="closeChat">✕</span>
+        </div>
+        <div id="chatContent" style="flex:1; padding:15px; overflow-y:auto; font-family:Arial; font-size:14px;"></div>
+        <div style="padding:10px; background:#000; display:flex; gap:5px;">
+            <input type="text" id="chatInput" style="flex:1; padding:10px; background:#222; border:1px solid #444; color:white;" placeholder="Type here...">
+            <button id="sendBtn" style="background:var(--orange); border:none; padding:10px;">➤</button>
+        </div>
+    </div>
+
+    <script>
+        // Hero REVA Button functionality
+        document.getElementById('heroReva').onclick = (e) => {
+            e.preventDefault();
+            document.getElementById('revaBtn').click();
+        };
+
+        // Existing REVA logic
+        const revaBtn = document.getElementById('revaBtn');
+        const revaModal = document.getElementById('revaModal');
+        const closeChat = document.getElementById('closeChat');
+        const chatContent = document.getElementById('chatContent');
+        const chatInput = document.getElementById('chatInput');
+        const sendBtn = document.getElementById('sendBtn');
+
+        let step = 0;
+        const questions = ["Hi, I'm REVA. What is your name?", "What organization do you represent?", "HR, Talent, or Workforce Dev?", "Ready for a call?"];
+
+        revaBtn.onclick = () => { revaModal.style.display = 'flex'; if(step===0) addMsg("reva", questions[0]); };
+        closeChat.onclick = () => revaModal.style.display = 'none';
+
+        function addMsg(s, t) {
+            const d = document.createElement('div');
+            d.style.cssText = s === "reva" ? "background:#222; margin-bottom:10px; padding:10px; border-left:3px solid var(--orange);" : "background:var(--orange); color:black; margin-bottom:10px; padding:10px; align-self:flex-end;";
+            d.innerText = t;
+            chatContent.appendChild(d);
+            chatContent.scrollTop = chatContent.scrollHeight;
+        }
+
+        sendBtn.onclick = () => {
+            const v = chatInput.value.trim(); if(!v) return;
+            addMsg("user", v); chatInput.value = ""; step++;
+            setTimeout(() => { if(step < questions.length) addMsg("reva", questions[step]); }, 600);
+        };
+    </script>
+</body>
+</html>

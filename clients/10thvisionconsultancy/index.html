@@ -292,10 +292,10 @@
                 <p>10th Vision Consultancy helps organizations build strong people systems, attract top talent, and develop workforces that drive growth.</p>
                 
                 <div class="hero-btns">
-                    <a href="#reva" class="btn btn-primary">
-                        <span class="material-symbols-rounded">calendar_month</span>
-                        Book Strategy Call with REVA
-                    </a>
+                    <a href="#" class="btn btn-primary" id="heroScheduleBtn">
+    <span class="material-symbols-rounded">calendar_month</span>
+    Book Strategy Call with REVA
+</a>
                 
                 </div>
             </div>
@@ -422,45 +422,84 @@
         </div>
     </div>
 
-    <script>
-        // Hero REVA Button functionality
-        document.getElementById('heroReva').onclick = (e) => {
-            e.preventDefault();
-            document.getElementById('revaBtn').click();
-        };
+  <script>
+    const revaBtn = document.getElementById('revaBtn');
+    const revaModal = document.getElementById('revaModal');
+    const closeChat = document.getElementById('closeChat');
+    const chatContent = document.getElementById('chatContent');
+    const chatInput = document.getElementById('chatInput');
+    const sendBtn = document.getElementById('sendBtn');
+    const heroScheduleBtn = document.getElementById('heroScheduleBtn');
 
-        // Existing REVA logic
-        const revaBtn = document.getElementById('revaBtn');
-        const revaModal = document.getElementById('revaModal');
-        const closeChat = document.getElementById('closeChat');
-        const chatContent = document.getElementById('chatContent');
-        const chatInput = document.getElementById('chatInput');
-        const sendBtn = document.getElementById('sendBtn');
+    let step = 0;
 
-        let step = 0;
-        const questions = ["Hi, I'm REVA. What is your name?", "What organization do you represent?", "HR, Talent, or Workforce Dev?", "Ready for a call?"];
+    const questions = [
+        "What organization do you represent?",
+        "Which area do you need support with: HR, Talent, Workforce Development, Organizational Development, or Staffing?",
+        "Briefly describe your current challenge.",
+        "What is the best email or phone number to follow up with?",
+        "Thank you. 10th Vision Consultancy will follow up to confirm your next step."
+    ];
 
-        revaBtn.onclick = () => { revaModal.style.display = 'flex'; if(step===0) addMsg("reva", questions[0]); };
-        closeChat.onclick = () => revaModal.style.display = 'none';
+    function addMsg(s, t) {
+        const d = document.createElement('div');
+        d.style.cssText = s === "reva"
+            ? "background:#222; margin-bottom:10px; padding:10px; border-left:3px solid var(--orange);"
+            : "background:var(--orange); color:black; margin-bottom:10px; padding:10px; align-self:flex-end;";
 
-        function addMsg(s, t) {
-            const d = document.createElement('div');
-            d.style.cssText = s === "reva" ? "background:#222; margin-bottom:10px; padding:10px; border-left:3px solid var(--orange);" : "background:var(--orange); color:black; margin-bottom:10px; padding:10px; align-self:flex-end;";
-            d.innerText = t;
-            chatContent.appendChild(d);
-            chatContent.scrollTop = chatContent.scrollHeight;
+        d.innerText = t;
+        chatContent.appendChild(d);
+        chatContent.scrollTop = chatContent.scrollHeight;
+    }
+
+    function openReva(mode = "default") {
+        revaModal.style.display = 'flex';
+        chatContent.innerHTML = "";
+        step = 0;
+
+        if (mode === "schedule") {
+            addMsg("reva", "Great. I can help you schedule the right strategy conversation.");
+            setTimeout(() => {
+                addMsg("reva", "What is your name?");
+            }, 500);
+        } else {
+            addMsg("reva", "Hi, I'm REVA. What is your name?");
         }
+    }
 
-        sendBtn.onclick = () => {
-            const v = chatInput.value.trim(); if(!v) return;
-            addMsg("user", v); chatInput.value = ""; step++;
-            setTimeout(() => { if(step < questions.length) addMsg("reva", questions[step]); }, 600);
-        };
+    revaBtn.onclick = () => {
+        openReva("default");
+    };
 
-        document.getElementById('autositeReva').onclick = (e) => {
-    e.preventDefault();
-    document.getElementById('revaBtn').click();
-};
-    </script>
+    heroScheduleBtn.onclick = (e) => {
+        e.preventDefault();
+        openReva("schedule");
+    };
+
+    closeChat.onclick = () => {
+        revaModal.style.display = 'none';
+    };
+
+    sendBtn.onclick = () => {
+        const v = chatInput.value.trim();
+        if (!v) return;
+
+        addMsg("user", v);
+        chatInput.value = "";
+
+        setTimeout(() => {
+            if (step < questions.length) {
+                addMsg("reva", questions[step]);
+                step++;
+            }
+        }, 600);
+    };
+
+    chatInput.addEventListener("keydown", function(e) {
+        if (e.key === "Enter") {
+            sendBtn.click();
+        }
+    });
+</script>
 </body>
 </html>

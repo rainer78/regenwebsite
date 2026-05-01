@@ -162,87 +162,72 @@
         /* REVA STYLES (Existing) */
         .reva-trigger { position: fixed; bottom: 30px; right: 30px; background: var(--orange); color: var(--black); padding: 15px 25px; border-radius: 50px; font-weight: bold; cursor: pointer; z-index: 100; display: flex; align-items: center; gap: 8px; }
         .chat-modal { position: fixed; bottom: 100px; right: 30px; width: 350px; height: 450px; background: #111; border: 2px solid var(--orange); border-radius: 15px; display: none; flex-direction: column; z-index: 101; overflow: hidden; }
-   /* --- AUTOSITE AI + REVA SCHEDULING SECTION --- */
-.autosite-section {
+
+        /* --- WEBSITE UPDATES SECTION --- */
+.updates-section {
     padding: 60px 0;
     border-top: 2px solid var(--orange);
 }
 
-.autosite-panel {
-    display: grid;
-    grid-template-columns: 1.1fr 0.9fr;
-    gap: 30px;
-    background: linear-gradient(180deg, #111 0%, #050505 100%);
-    border: 2px solid var(--orange);
-    padding: 40px;
-    align-items: center;
+.updates-header {
+    text-align: center;
+    margin-bottom: 35px;
 }
 
-.autosite-kicker {
-    color: var(--orange);
-    text-transform: uppercase;
-    letter-spacing: 2px;
-    font-size: 13px;
-    margin-bottom: 12px;
-}
-
-.autosite-panel h2 {
-    font-size: clamp(28px, 4vw, 42px);
-    line-height: 1;
-    text-transform: uppercase;
-    margin-bottom: 18px;
-}
-
-.autosite-panel h2 span {
-    color: var(--orange);
-}
-
-.autosite-panel p {
+.updates-header p {
     font-family: Arial, sans-serif;
     color: var(--text-gray);
+    max-width: 720px;
+    margin: 10px auto 0;
     font-size: 16px;
-    line-height: 1.6;
-    margin-bottom: 20px;
 }
 
-.autosite-list {
+.updates-grid {
     display: grid;
-    gap: 14px;
-    margin-top: 20px;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 18px;
 }
 
-.autosite-list-item {
-    display: flex;
-    gap: 12px;
-    align-items: flex-start;
-    font-family: Arial, sans-serif;
-    color: var(--white);
-}
-
-.autosite-list-item .material-symbols-rounded {
-    color: var(--orange);
-    font-size: 26px;
-}
-
-.autosite-card {
-    background: var(--black);
+.update-card {
+    background: var(--dark-gray);
+    border: 1px solid #333;
     border-left: 5px solid var(--orange);
-    padding: 28px;
+    padding: 24px;
+    min-height: 220px;
 }
 
-.autosite-card h3 {
+.update-card .update-tag {
+    color: var(--orange);
     text-transform: uppercase;
+    font-size: 12px;
+    letter-spacing: 1px;
     margin-bottom: 12px;
 }
 
-.autosite-card p {
+.update-card h3 {
+    text-transform: uppercase;
+    font-size: 20px;
+    margin-bottom: 12px;
+}
+
+.update-card p {
+    font-family: Arial, sans-serif;
+    color: var(--text-gray);
     font-size: 15px;
+    line-height: 1.55;
+}
+
+.update-date {
+    display: block;
+    margin-top: 18px;
+    color: var(--orange);
+    font-family: Arial, sans-serif;
+    font-size: 13px;
 }
 
 @media (max-width: 900px) {
-    .autosite-panel {
+    .updates-grid {
         grid-template-columns: 1fr;
-        padding: 30px 22px;
     }
 }
     </style>
@@ -295,58 +280,47 @@
         <div class="orange-banner">The Right PEOPLE. The Right FIT. The Right TIME.</div>
     </div>
 
-    <section class="autosite-section" id="autosite">
-    <div class="autosite-panel">
-        <div>
-            <div class="autosite-kicker">Website Updates + Scheduling Support</div>
+   <section class="updates-section" id="updates">
+    <div class="updates-header">
+        <div class="section-label">Latest Updates</div>
+        <p>
+            Stay connected with recent announcements, workforce insights, service updates,
+            and opportunities from 10th Vision Consultancy.
+        </p>
+    </div>
 
-            <h2>
-                Keep Your Website Current.<br>
-                <span>Let REVA Start the Conversation.</span>
-            </h2>
+    <div class="updates-grid" id="updatesGrid">
 
+        <article class="update-card">
+            <div class="update-tag">Workforce Update</div>
+            <h3>New Workforce Development Programs</h3>
             <p>
-                Your website should reflect the strength of your organization, not sit untouched while your business keeps moving.
-                With AutoSite AI, 10th Vision can keep important updates visible while REVA helps guide visitors toward the next step.
+                10th Vision Consultancy is preparing new training and coaching opportunities
+                designed to help organizations strengthen team performance.
             </p>
+            <span class="update-date">Recently Added</span>
+        </article>
 
-            <div class="autosite-list">
-                <div class="autosite-list-item">
-                    <span class="material-symbols-rounded">update</span>
-                    <div>Show timely updates about services, announcements, hiring support, and workforce programs.</div>
-                </div>
-
-                <div class="autosite-list-item">
-                    <span class="material-symbols-rounded">campaign</span>
-                    <div>Turn business activity into fresh website content for better visibility and engagement.</div>
-                </div>
-
-                <div class="autosite-list-item">
-                    <span class="material-symbols-rounded">event_available</span>
-                    <div>Use REVA to invite qualified visitors to schedule a strategy call.</div>
-                </div>
-            </div>
-
-            <div class="hero-btns" style="margin-top:28px;">
-                <a href="#reva" class="btn btn-primary" id="autositeReva">
-                    <span class="material-symbols-rounded">chat</span>
-                    Ask REVA About Next Steps
-                </a>
-            </div>
-        </div>
-
-        <div class="autosite-card">
-            <h3>What AutoSite AI Supports</h3>
+        <article class="update-card">
+            <div class="update-tag">HR Insight</div>
+            <h3>People Systems That Support Growth</h3>
             <p>
-                Service updates, hiring announcements, workforce development highlights, event reminders,
-                consulting offers, and timely calls to action.
+                Strong organizations need clear systems for hiring, retention, compliance,
+                leadership, and employee development.
             </p>
+            <span class="update-date">Recently Added</span>
+        </article>
 
+        <article class="update-card">
+            <div class="update-tag">Now Scheduling</div>
+            <h3>Strategy Calls Available</h3>
             <p>
-                Paired with REVA, the site becomes more than an online brochure. It becomes a guided entry point
-                for organizations that need HR, talent, staffing, or workforce development support.
+                Organizations seeking support with HR, staffing, workforce development,
+                or organizational growth can schedule a focused strategy conversation.
             </p>
-        </div>
+            <span class="update-date">Recently Added</span>
+        </article>
+
     </div>
 </section>
 

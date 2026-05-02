@@ -2064,34 +2064,52 @@ async function initLiveUpdates() {
       });
     }
 
-    function openUpdateModal(item) {
-      modalCategory.textContent = item.article_category || item.card_tag || 'Update';
-      modalTitle.textContent = item.article_title || item.card_title || 'Untitled Update';
-      modalDate.textContent = formatDisplayDate(item.article_published_at || item.card_date || item.created_at);
-      modalExcerpt.textContent = item.article_excerpt || item.card_excerpt || '';
+   function openUpdateModal(item) {
+  if (!modal) return;
 
-      if (item.article_image && item.article_image !== 'empty') {
-        modalImage.src = item.article_image;
-        modalImage.alt = item.article_title || item.card_title || 'Update image';
-        modalImage.classList.remove('hidden');
-      } else {
-        modalImage.src = '';
-        modalImage.alt = '';
-        modalImage.classList.add('hidden');
-      }
+  if (modalCategory) {
+    modalCategory.textContent = item.article_category || item.card_tag || 'Update';
+  }
 
-      modalBody.innerHTML = item.article_body_html || '<p>No detailed content available.</p>';
+  if (modalTitle) {
+    modalTitle.textContent = item.article_title || item.card_title || 'Untitled Update';
+  }
 
-      modal.classList.remove('hidden');
-      document.body.classList.add('overflow-hidden');
+  if (modalDate) {
+    modalDate.textContent = formatDisplayDate(
+      item.article_published_at || item.card_date || item.created_at
+    );
+  }
+
+  if (modalExcerpt) {
+    modalExcerpt.textContent = item.article_excerpt || item.card_excerpt || '';
+  }
+
+  if (modalImage) {
+    if (item.article_image && item.article_image !== 'empty') {
+      modalImage.src = item.article_image;
+      modalImage.alt = item.article_title || item.card_title || 'Update image';
+      modalImage.classList.remove('hidden');
+    } else {
+      modalImage.src = '';
+      modalImage.alt = '';
+      modalImage.classList.add('hidden');
     }
+  }
 
+  if (modalBody) {
+    modalBody.innerHTML = item.article_body_html || '<p>No detailed content available.</p>';
+  }
+
+  modal.classList.remove('hidden');
+  document.body.classList.add('overflow-hidden');
+}
     function closeUpdateModal() {
       modal.classList.add('hidden');
       document.body.classList.remove('overflow-hidden');
     }
 
-    grid.addEventListener('click', function (event) {
+    if (!grid.dataset.listenerAttached) {   grid.addEventListener('click', function (event) {     const button = event.target.closest('.open-update-modal');     if (!button) return;      const index = Number(button.dataset.index);     const item = updates[index];      if (item) openUpdateModal(item);   });    grid.dataset.listenerAttached = "true"; }
       const button = event.target.closest('.open-update-modal');
       if (!button) return;
 

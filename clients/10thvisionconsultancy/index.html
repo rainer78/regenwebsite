@@ -9,8 +9,8 @@
     <style>
         :root {
             --orange: #f28c00;
-            --black: #000;
-            --dark-gray: #111111;
+            --black: #0B1F4B;       /* Royal Blue */
+            --dark-gray: #102A66;   /* Slightly lighter blue for cards */
             --white: #ffffff;
             --text-gray: #cfcfcf;
         }
@@ -161,7 +161,7 @@
         
         /* REVA STYLES (Existing) */
         .reva-trigger { position: fixed; bottom: 30px; right: 30px; background: var(--orange); color: var(--black); padding: 15px 25px; border-radius: 50px; font-weight: bold; cursor: pointer; z-index: 100; display: flex; align-items: center; gap: 8px; }
-        .chat-modal { position: fixed; bottom: 100px; right: 30px; width: 350px; height: 450px; background: #111; border: 2px solid var(--orange); border-radius: 15px; display: none; flex-direction: column; z-index: 101; overflow: hidden; }
+        .chat-modal { position: fixed; bottom: 100px; right: 30px; width: 350px; height: 450px; background: var(--black); border: 2px solid var(--orange); border-radius: 15px; display: none; flex-direction: column; z-index: 101; overflow: hidden; }
 
      /* --- LIVE UPDATES / ACTIVITY FEED SECTION --- */
 .updates-wrap {
@@ -207,7 +207,7 @@
 }
 
 .feed-card {
-    background: #0b0b0b;
+    background: var(--black);
     border: 1px solid #242424;
     border-radius: 18px;
     padding: 28px;
@@ -282,7 +282,7 @@
 
         /* --- FOOTER --- */
 .footer {
-    background: #0b0b0b;
+    background: var(--black);
     border-top: 2px solid var(--orange);
     padding: 50px 0 20px;
     margin-top: 60px;
@@ -320,7 +320,7 @@
 }
 
 .footer-cta {
-    background: #111;
+    background: var(--black);
     border: 1px solid #333;
     padding: 24px;
     border-radius: 12px;
@@ -390,7 +390,7 @@
 .feature-update-card,
 .side-update-card,
 .autosite-status-card {
-    background: #0b0b0b;
+    background: var(--black);
     border: 1px solid #242424;
     box-shadow: 0 0 25px rgba(242, 140, 0, 0.08);
 }
@@ -533,6 +533,52 @@
         align-items: flex-start;
     }
 }
+
+        .faq-section {
+    padding: 70px 0;
+    border-top: 2px solid var(--orange);
+}
+
+.section-subtitle {
+    text-align: center;
+    max-width: 700px;
+    margin: 0 auto 50px;
+    font-family: Arial, sans-serif;
+    color: var(--text-gray);
+    font-size: 16px;
+}
+
+.faq-grid {
+    display: grid;
+    gap: 14px;
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.faq-item {
+    border: 1px solid #2a2a2a;
+    background: var(--dark-gray);
+}
+
+.faq-question {
+    width: 100%;
+    text-align: left;
+    padding: 18px;
+    font-weight: bold;
+    text-transform: uppercase;
+    color: var(--white);
+    background: none;
+    border: none;
+    cursor: pointer;
+}
+
+.faq-answer {
+    display: none;
+    padding: 0 18px 18px;
+    font-family: Arial, sans-serif;
+    color: var(--text-gray);
+    line-height: 1.6;
+}
     </style>
     
 </head>
@@ -650,6 +696,75 @@
         </div>
     </div>
 </div>
+
+    <section class="faq-section" id="faq">
+    <div class="container">
+
+        <div class="section-label">Frequently Asked Questions</div>
+
+        <h2 class="section-title">
+            Answers to <span>Common Questions</span>
+        </h2>
+
+        <p class="section-subtitle">
+            Learn more about how 10th Vision Consultancy supports organizations
+            through strategic people solutions.
+        </p>
+
+        <div class="faq-grid">
+
+            <div class="faq-item">
+                <button class="faq-question">What services does 10th Vision Consultancy provide?</button>
+                <div class="faq-answer">
+                    We provide HR consulting, talent acquisition, workforce development,
+                    organizational development, and staffing solutions tailored to your organization.
+                </div>
+            </div>
+
+            <div class="faq-item">
+                <button class="faq-question">Who do you typically work with?</button>
+                <div class="faq-answer">
+                    We work with small to mid-sized organizations and growing teams that need
+                    structure, strategy, and support across their people systems.
+                </div>
+            </div>
+
+            <div class="faq-item">
+                <button class="faq-question">How do I know which service I need?</button>
+                <div class="faq-answer">
+                    Start a conversation with REVA. Based on your responses, we help identify
+                    the right service and next step for your organization.
+                </div>
+            </div>
+
+            <div class="faq-item">
+                <button class="faq-question">Do you offer ongoing support or one-time consultations?</button>
+                <div class="faq-answer">
+                    Both. We offer one-time strategic sessions as well as ongoing support
+                    depending on your organization’s needs and goals.
+                </div>
+            </div>
+
+            <div class="faq-item">
+                <button class="faq-question">How long does it take to see results?</button>
+                <div class="faq-answer">
+                    Some improvements can be immediate, especially in process clarity.
+                    Larger organizational changes typically show measurable results over time.
+                </div>
+            </div>
+
+            <div class="faq-item">
+                <button class="faq-question">How do we get started?</button>
+                <div class="faq-answer">
+                    Start with REVA or schedule a strategy call. We’ll assess your needs
+                    and guide you toward the best next step.
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+</section>
 
     <!-- Footer -->
     <footer class="footer">

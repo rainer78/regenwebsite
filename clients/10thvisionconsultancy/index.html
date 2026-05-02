@@ -895,6 +895,20 @@
             sendBtn.click();
         }
     });
+
+      document.querySelectorAll('.faq-question').forEach((btn) => {
+    btn.addEventListener('click', () => {
+        const answer = btn.nextElementSibling;
+
+        const isOpen = answer.style.display === 'block';
+
+        document.querySelectorAll('.faq-answer').forEach(a => a.style.display = 'none');
+
+        if (!isOpen) {
+            answer.style.display = 'block';
+        }
+    });
+});
 </script>
 </body>
 </html>

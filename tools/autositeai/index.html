@@ -1722,288 +1722,294 @@
 
 
 <script>
-  (function () {
-    const form = document.getElementById("autositeAssessmentForm"); // Updated ID to match your HTML
-    const steps = Array.from(document.querySelectorAll(".assessment-step"));
-    const stepLabel = document.getElementById("stepLabel");
-    const progressBar = document.getElementById("progressBar");
-    const prevBtn = document.getElementById("prevBtn");
-    const nextBtn = document.getElementById("nextBtn");
-    const submitBtn = document.getElementById("submitBtn");
-    
-    const approvedResult = document.getElementById("approvedResult");
-    const declinedResult = document.getElementById("declinedResult");
-    const guideForm = document.getElementById("guideForm");
-    const guideSuccess = document.getElementById("guideSuccess");
-    
+(function () {
+  const form = document.getElementById("autositeAssessmentForm");
+  const steps = Array.from(document.querySelectorAll(".assessment-step"));
+  const stepLabel = document.getElementById("stepLabel");
+  const progressBar = document.getElementById("progressBar");
+  const prevBtn = document.getElementById("prevBtn");
+  const nextBtn = document.getElementById("nextBtn");
+  const submitBtn = document.getElementById("submitBtn");
 
-    let currentStep = 0;
-    const totalSteps = steps.length; // 16 total
+  const approvedResult = document.getElementById("approvedResult");
+  const declinedResult = document.getElementById("declinedResult");
+  const guideForm = document.getElementById("guideForm");
+  const guideSuccess = document.getElementById("guideSuccess");
 
-    function updateStepUI() {
-      steps.forEach((step, index) => {
-        step.classList.toggle("hidden", index !== currentStep);
-      });
+  let currentStep = 0;
+  const totalSteps = steps.length;
 
-      if (stepLabel) {
-        stepLabel.textContent = `Step ${currentStep + 1} of ${totalSteps}`;
-      }
+  function escapeHtml(value) {
+    return String(value ?? "")
+      .replace(/&/g, "&amp;")
+      .replace(/</g, "&lt;")
+      .replace(/>/g, "&gt;")
+      .replace(/"/g, "&quot;")
+      .replace(/'/g, "&#39;");
+  }
 
-      if (progressBar) {
-        progressBar.style.width = `${((currentStep + 1) / totalSteps) * 100}%`;
-      }
-
-      if (prevBtn) {
-        prevBtn.classList.toggle("hidden", currentStep === 0);
-      }
-
-      if (nextBtn) {
-        nextBtn.classList.toggle("hidden", currentStep === totalSteps - 1);
-      }
-
-      if (submitBtn) {
-        submitBtn.classList.toggle("hidden", currentStep !== totalSteps - 1);
-      }
-    }
-
-    // Logic to calculate the 15-question score
-    function scoreAssessment(formData) {
-      let score = 0;
-
-      // 1. Data Presence (Weight: 45pts total)
-      if (formData.channels === "high") score += 15;
-      if (formData.backlog === "5") score += 15;
-      if (formData.googleVerified === "high") score += 15;
-
-      // 2. Activity & Volume (Weight: 30pts total)
-      if (formData.frequency === "3") score += 10;
-      if (formData.volume === "high") score += 10;
-      if (formData.reviews === "high") score += 10;
-
-      // 3. Content Quality (Weight: 25pts total)
-      if (formData.contentType === "high") score += 10;
-      if (formData.captions === "high") score += 10;
-      if (formData.video === "high") score += 5;
-
-      // HARD FAIL: If they have no channels OR no frequency OR no backlog
-      const hardFail = 
-        formData.channels === "low" || 
-        formData.frequency === "0" || 
-        formData.backlog === "0";
-
-      // Passing Threshold: 50 points
-      return {
-        score,
-        approved: !hardFail && score >= 50
-      };
-    }
-
-    // Handle button clicks for the 15 questions
-    document.querySelectorAll(".answer-card").forEach((card) => {
-      card.addEventListener("click", function () {
-        const name = this.dataset.name;
-        const value = this.dataset.value;
-        const step = this.closest(".assessment-step");
-        const hiddenInput = step?.querySelector(`input[name="${name}"]`);
-
-        if (!hiddenInput) return;
-
-        // Visual selection
-        step.querySelectorAll(".answer-card").forEach((btn) => {
-          btn.classList.remove("border-[#1085D2]", "bg-blue-50");
-          btn.classList.add("border-slate-100");
-        });
-        this.classList.add("border-[#1085D2]", "bg-blue-50");
-        this.classList.remove("border-slate-100");
-        
-        hiddenInput.value = value;
-
-        // Auto-advance logic for better UX (optional)
-        if (currentStep < totalSteps - 1) {
-            setTimeout(() => {
-                currentStep += 1;
-                updateStepUI();
-            }, 300);
-        }
-      });
+  function updateStepUI() {
+    steps.forEach((step, index) => {
+      step.classList.toggle("hidden", index !== currentStep);
     });
 
-    nextBtn?.addEventListener("click", () => {
+    if (stepLabel) {
+      stepLabel.textContent = `Step ${currentStep + 1} of ${totalSteps}`;
+    }
+
+    if (progressBar) {
+      progressBar.style.width = `${((currentStep + 1) / totalSteps) * 100}%`;
+    }
+
+    prevBtn?.classList.toggle("hidden", currentStep === 0);
+    nextBtn?.classList.toggle("hidden", currentStep === totalSteps - 1);
+    submitBtn?.classList.toggle("hidden", currentStep !== totalSteps - 1);
+  }
+
+  function scoreAssessment(formData) {
+    let score = 0;
+
+    if (formData.channels === "high") score += 15;
+    if (formData.backlog === "5") score += 15;
+    if (formData.googleVerified === "high") score += 15;
+
+    if (formData.frequency === "3") score += 10;
+    if (formData.volume === "high") score += 10;
+    if (formData.reviews === "high") score += 10;
+
+    if (formData.contentType === "high") score += 10;
+    if (formData.captions === "high") score += 10;
+    if (formData.video === "high") score += 5;
+
+    const hardFail =
+      formData.channels === "low" ||
+      formData.frequency === "0" ||
+      formData.backlog === "0";
+
+    return {
+      score,
+      approved: !hardFail && score >= 50
+    };
+  }
+
+  document.querySelectorAll(".answer-card").forEach((card) => {
+    card.addEventListener("click", function () {
+      const name = this.dataset.name;
+      const value = this.dataset.value;
+      const step = this.closest(".assessment-step");
+      const hiddenInput = step?.querySelector(`input[name="${name}"]`);
+
+      if (!hiddenInput) return;
+
+      step.querySelectorAll(".answer-card").forEach((btn) => {
+        btn.classList.remove("border-[#1085D2]", "bg-blue-50");
+        btn.classList.add("border-slate-100");
+      });
+
+      this.classList.add("border-[#1085D2]", "bg-blue-50");
+      this.classList.remove("border-slate-100");
+
+      hiddenInput.value = value;
+
       if (currentStep < totalSteps - 1) {
-        currentStep += 1;
-        updateStepUI();
+        setTimeout(() => {
+          currentStep += 1;
+          updateStepUI();
+        }, 300);
       }
     });
+  });
 
-    prevBtn?.addEventListener("click", () => {
-      if (currentStep > 0) {
-        currentStep -= 1;
-        updateStepUI();
-      }
-    });
+  nextBtn?.addEventListener("click", () => {
+    if (currentStep < totalSteps - 1) {
+      currentStep += 1;
+      updateStepUI();
+    }
+  });
 
-    form?.addEventListener("submit", function (event) {
-      event.preventDefault();
+  prevBtn?.addEventListener("click", () => {
+    if (currentStep > 0) {
+      currentStep -= 1;
+      updateStepUI();
+    }
+  });
 
-      const formData = Object.fromEntries(new FormData(form).entries());
-      const result = scoreAssessment(formData);
+  form?.addEventListener("submit", function (event) {
+    event.preventDefault();
 
-      // Hide Form UI
-      form.classList.add("hidden");
-      document.getElementById("progressArea")?.classList.add("hidden");
-      document.getElementById("assessmentHeader")?.classList.add("hidden");
+    const formData = Object.fromEntries(new FormData(form).entries());
+    const result = scoreAssessment(formData);
+
+    form.classList.add("hidden");
+    document.getElementById("progressArea")?.classList.add("hidden");
+    document.getElementById("assessmentHeader")?.classList.add("hidden");
 
     if (result.approved) {
-        approvedResult?.classList.remove("hidden");
+      approvedResult?.classList.remove("hidden");
 
-        // 1. Get the business details for the email
-        const bizName = formData.businessName || "My Business";
-        const bizUrl = formData.websiteUrl || "Not provided";
+      const bizName = formData.businessName || formData.name || "My Business";
+      const bizUrl = formData.websiteUrl || "Not provided";
+      const myEmail = "autositeai@gmail.com";
 
-        // 2. Build a robust "Application" style email
-        const myEmail = "autositeai@gmail.com"; 
-        const subject = encodeURIComponent(`Priority Setup Request: ${bizName}`);
-        
-        const body = encodeURIComponent(
-          `OFFICIAL AUTOSITE AI ASSESSMENT SUMMARY\n` +
-          `------------------------------------------\n` +
-          `Status: EXCELLENT FIT\n` +
-          `Score: ${result.score}/100\n` +
-          `Business: ${bizName}\n` +
-          `Website: ${bizUrl}\n` +
-          `------------------------------------------\n\n` +
-          `Hi Team,\n\n` +
-          `I just completed the AI Readiness Assessment and qualified for a Setup Call. I would like to schedule a 15-minute sync to:\n` +
-          `1. Connect my live data sources.\n` +
-          `2. Review my automated site structure.\n\n` +
-          `What is your availability for a brief onboarding session later this week?\n\n` +
-          `Best regards,\n` +
-          `${formData.name || 'Site Owner'}`
-        );
+      const subject = encodeURIComponent(`Priority Setup Request: ${bizName}`);
 
-        const mailtoUrl = `mailto:${myEmail}?subject=${subject}&body=${body}`;
-
-        // 3. Apply to button
-        const callBtn = document.getElementById("demoScheduleLink");
-        if (callBtn) {
-          callBtn.href = mailtoUrl;
-          callBtn.innerText = "Send Setup Application";
-        }
-      }
-
-      
-    });
-
-    updateStepUI();
-
-// DEADLINE PROTOTYPE: Instant Mailto Logic
- guideForm?.addEventListener("submit", function (event) {
-      event.preventDefault();
-
-      const userEmail = document.getElementById("guideEmail").value;
-      const guideLink = "https://regencreatives.com/tools/autositeai/img/AutoSite_AI_Readiness_Roadmap.pdf";
-      
-      // 1. Professional Subject Line
-      const subject = encodeURIComponent("Action Required: Your 30-Day AutoSite AI Roadmap");
-      
-      // 2. Robust Body with Report and Next Steps
       const body = encodeURIComponent(
-        `AUTOSITE AI READINESS REPORT\n` +
+        `OFFICIAL AUTOSITE AI ASSESSMENT SUMMARY\n` +
         `------------------------------------------\n` +
-        `Target: Autonomous Website Deployment\n` +
-        `Status: IN-PROGRESS (Nurture Phase)\n` +
-        `Resource: 30-Day Readiness Roadmap\n` +
+        `Status: EXCELLENT FIT\n` +
+        `Score: ${result.score}/100\n` +
+        `Business: ${bizName}\n` +
+        `Website: ${bizUrl}\n` +
         `------------------------------------------\n\n` +
-        `Hi there,\n\n` +
-        `Thank you for completing the AutoSite AI Assessment. While your business isn't quite ready for full automation today, you are closer than you think.\n\n` +
-        `I have prepared a custom 30-Day Roadmap to help you bridge the gap. You can access it here:\n` +
-        `${guideLink}\n\n` +
-        `YOUR NEXT 3 STEPS:\n` +
-        `1. Download the Roadmap PDF.\n` +
-        `2. Follow the 10-day content batching guide.\n` +
-        `3. Re-take this assessment in 30 days to unlock your demo.\n\n` +
-        `If you have questions about your specific score, just hit reply to this email.\n\n` +
+        `Hi Team,\n\n` +
+        `I just completed the AI Readiness Assessment and qualified for a Setup Call. I would like to schedule a 15-minute sync to:\n` +
+        `1. Connect my live data sources.\n` +
+        `2. Review my automated site structure.\n\n` +
+        `What is your availability for a brief onboarding session later this week?\n\n` +
         `Best regards,\n` +
-        `The AutoSite AI Team`
+        `${formData.name || "Site Owner"}`
       );
 
-      // 3. Trigger Email Client
-      window.location.href = `mailto:${userEmail}?subject=${subject}&body=${body}`;
+      const callBtn = document.getElementById("demoScheduleLink");
 
-      // 4. UI Success Feedback
-      guideForm.classList.add("hidden");
-      if (guideSuccess) {
-        guideSuccess.classList.remove("hidden");
-        guideSuccess.innerHTML = "<strong>Roadmap Sent!</strong> Check your email client to finish sending.";
+      if (callBtn) {
+        callBtn.href = `mailto:${myEmail}?subject=${subject}&body=${body}`;
+        callBtn.innerText = "Send Setup Application";
       }
-    });
-
-    // --- ADD THE LIVE UPDATES LOGIC HERE ---
-async function initLiveUpdates() {
-  const grid = document.getElementById('live-updates-grid');
-  if (!grid) return;
-
-  const FEED_URL = 'https://regencreatives.com/tools/autositeai/feed.json';
-
-  try {
-    const response = await fetch(FEED_URL, { cache: 'no-store' });
-
-    if (!response.ok) {
-      throw new Error(`Feed request failed: ${response.status}`);
+    } else {
+      declinedResult?.classList.remove("hidden");
     }
+  });
 
-    const result = await response.json();
+  guideForm?.addEventListener("submit", function (event) {
+    event.preventDefault();
 
-    const updates = Array.isArray(result?.data)
-      ? result.data
-          .sort((a, b) => new Date(b.article_published_at) - new Date(a.article_published_at))
-          .slice(0, 6)
-      : Array.isArray(result)
-        ? result
-            .sort((a, b) => new Date(b.article_published_at) - new Date(a.article_published_at))
-            .slice(0, 6)
-        : [];
+    const userEmail = document.getElementById("guideEmail")?.value;
+    const guideLink = "https://regencreatives.com/tools/autositeai/img/AutoSite_AI_Readiness_Roadmap.pdf";
 
-    if (!updates.length) {
-      grid.innerHTML = '<p class="text-slate-400">No updates available yet.</p>';
-      return;
+    if (!userEmail) return;
+
+    const subject = encodeURIComponent("Action Required: Your 30-Day AutoSite AI Roadmap");
+
+    const body = encodeURIComponent(
+      `AUTOSITE AI READINESS REPORT\n` +
+      `------------------------------------------\n` +
+      `Target: Autonomous Website Deployment\n` +
+      `Status: IN-PROGRESS (Nurture Phase)\n` +
+      `Resource: 30-Day Readiness Roadmap\n` +
+      `------------------------------------------\n\n` +
+      `Hi there,\n\n` +
+      `Thank you for completing the AutoSite AI Assessment. While your business is not quite ready for full automation today, you are closer than you think.\n\n` +
+      `You can access your 30-Day Roadmap here:\n` +
+      `${guideLink}\n\n` +
+      `YOUR NEXT 3 STEPS:\n` +
+      `1. Download the Roadmap PDF.\n` +
+      `2. Follow the 10-day content batching guide.\n` +
+      `3. Re-take this assessment in 30 days to unlock your demo.\n\n` +
+      `Best regards,\n` +
+      `The AutoSite AI Team`
+    );
+
+    window.location.href = `mailto:${userEmail}?subject=${subject}&body=${body}`;
+
+    guideForm.classList.add("hidden");
+
+    if (guideSuccess) {
+      guideSuccess.classList.remove("hidden");
+      guideSuccess.innerHTML = "<strong>Roadmap Sent!</strong> Check your email client to finish sending.";
     }
+  });
 
-    grid.innerHTML = updates.map((item, index) => `
-      <div class="group relative rounded-3xl bg-[#0B1731] p-8 transition-all hover:-translate-y-2 hover:shadow-2xl border border-white/5">
-        <div class="mb-4 flex items-center justify-between">
-          <span class="rounded-full bg-blue-500/10 px-3 py-1 text-xs font-medium text-blue-400 uppercase tracking-widest">
-            ${escapeHtml(item.card_tag || item.article_category || 'Update')}
-          </span>
-          <div class="h-2 w-2 animate-pulse rounded-full bg-green-400"></div>
-        </div>
+  async function initLiveUpdates() {
+    const grid = document.getElementById("liveUpdatesGrid");
+    if (!grid) return;
 
-        <h4 class="text-xl font-bold text-white mb-3 leading-tight">
-          ${escapeHtml(item.card_title || item.article_title || 'Untitled Update')}
-        </h4>
+    const FEED_URL = "/tools/autositeai/feed.json";
 
-        <p class="text-slate-400 text-sm leading-relaxed mb-6">
-          ${escapeHtml(item.card_excerpt || item.article_excerpt || '')}
-        </p>
+    try {
+      const response = await fetch(FEED_URL, { cache: "no-store" });
 
-        <button
-          type="button"
-          class="open-update-modal text-sm font-bold text-blue-400 hover:text-blue-300 flex items-center gap-2"
-          data-index="${index}"
-        >
-          ${escapeHtml(item.social_cta || 'Read Update')} <span>→</span>
-        </button>
-      </div>
-    `).join('');
+      if (!response.ok) {
+        throw new Error(`Feed request failed: ${response.status}`);
+      }
 
-    let modal = document.getElementById('updateModal');
+      const result = await response.json();
 
-    // Build the modal if it is missing from the page.
-    // This keeps the feed cards from breaking when the modal HTML is accidentally removed or renamed.
+      const updates = Array.isArray(result?.data)
+        ? result.data
+        : Array.isArray(result)
+          ? result
+          : [];
+
+      const latestUpdates = updates
+        .filter(Boolean)
+        .sort((a, b) => {
+          const dateA = new Date(a.article_published_at || a.created_at || 0);
+          const dateB = new Date(b.article_published_at || b.created_at || 0);
+          return dateB - dateA;
+        })
+        .slice(0, 6);
+
+      if (!latestUpdates.length) {
+        grid.innerHTML = `
+          <article class="rounded-3xl border border-white/10 bg-[#0B1731] p-8 shadow-xl">
+            <p class="text-xs font-bold uppercase tracking-widest text-[#1085D2]">Visibility Update</p>
+            <h3 class="mt-4 text-xl font-bold text-white">Fresh website updates are being prepared.</h3>
+            <p class="mt-4 text-sm leading-7 text-slate-400">New updates will appear here as they are published.</p>
+          </article>
+        `;
+        return;
+      }
+
+      grid.innerHTML = latestUpdates.map((item, index) => `
+        <article class="group relative rounded-3xl bg-[#0B1731] p-8 transition-all hover:-translate-y-2 hover:shadow-2xl border border-white/5">
+          <div class="mb-4 flex items-center justify-between">
+            <span class="rounded-full bg-blue-500/10 px-3 py-1 text-xs font-medium text-blue-400 uppercase tracking-widest">
+              ${escapeHtml(item.card_tag || item.article_category || "Update")}
+            </span>
+            <div class="h-2 w-2 animate-pulse rounded-full bg-green-400"></div>
+          </div>
+
+          <h4 class="text-xl font-bold text-white mb-3 leading-tight">
+            ${escapeHtml(item.card_title || item.article_title || "Untitled Update")}
+          </h4>
+
+          <p class="text-slate-400 text-sm leading-relaxed mb-6">
+            ${escapeHtml(item.card_excerpt || item.article_excerpt || "")}
+          </p>
+
+          <button
+            type="button"
+            class="open-update-modal text-sm font-bold text-blue-400 hover:text-blue-300 flex items-center gap-2"
+            data-index="${index}"
+          >
+            ${escapeHtml(item.social_cta || "Read Update")} <span>→</span>
+          </button>
+        </article>
+      `).join("");
+
+      setupUpdateModal(latestUpdates, grid);
+
+    } catch (error) {
+      console.error("Live Updates Error:", error);
+
+      grid.innerHTML = `
+        <article class="rounded-3xl border border-white/10 bg-[#0B1731] p-8 shadow-xl">
+          <p class="text-xs font-bold uppercase tracking-widest text-[#1085D2]">Visibility Update</p>
+          <h3 class="mt-4 text-xl font-bold text-white">Updates are temporarily unavailable.</h3>
+          <p class="mt-4 text-sm leading-7 text-slate-400">Please check back soon for the latest AutoSite AI updates.</p>
+        </article>
+      `;
+    }
+  }
+
+  function setupUpdateModal(updates, grid) {
+    let modal = document.getElementById("updateModal");
+
     if (!modal) {
-      modal = document.createElement('div');
-      modal.id = 'updateModal';
-      modal.className = 'hidden fixed inset-0 z-[9999] bg-black/70 p-4 overflow-y-auto';
+      modal = document.createElement("div");
+      modal.id = "updateModal";
+      modal.className = "hidden fixed inset-0 z-[9999] bg-black/70 p-4 overflow-y-auto";
 
       modal.innerHTML = `
         <div class="mx-auto my-10 max-w-3xl rounded-3xl bg-[#0B1731] border border-white/10 shadow-2xl">
@@ -2025,112 +2031,92 @@ async function initLiveUpdates() {
       document.body.appendChild(modal);
     }
 
-    const closeModalBtn = modal.querySelector('#closeUpdateModal');
-    const modalCategory = modal.querySelector('#modalCategory');
-    const modalTitle = modal.querySelector('#modalTitle');
-    const modalDate = modal.querySelector('#modalDate');
-    const modalExcerpt = modal.querySelector('#modalExcerpt');
-    const modalImage = modal.querySelector('#modalImage');
-    const modalBody = modal.querySelector('#modalBody');
+    const closeModalBtn = modal.querySelector("#closeUpdateModal");
 
-    function formatDisplayDate(dateString) {
-      if (!dateString) return '';
-      const date = new Date(dateString);
-      if (Number.isNaN(date.getTime())) return '';
-      return date.toLocaleDateString('en-US', {
-        year: 'numeric',
-        month: 'long',
-        day: 'numeric'
+    function formatDisplayDate(value) {
+      if (!value) return "";
+      const date = new Date(value);
+      if (Number.isNaN(date.getTime())) return "";
+
+      return date.toLocaleDateString("en-US", {
+        year: "numeric",
+        month: "long",
+        day: "numeric"
       });
     }
 
-   function openUpdateModal(item) {
-  if (!modal) return;
+    function openUpdateModal(item) {
+      modal.querySelector("#modalCategory").textContent =
+        item.article_category || item.card_tag || "Update";
 
-  if (modalCategory) {
-    modalCategory.textContent = item.article_category || item.card_tag || 'Update';
-  }
+      modal.querySelector("#modalTitle").textContent =
+        item.article_title || item.card_title || "Untitled Update";
 
-  if (modalTitle) {
-    modalTitle.textContent = item.article_title || item.card_title || 'Untitled Update';
-  }
+      modal.querySelector("#modalDate").textContent =
+        formatDisplayDate(item.article_published_at || item.card_date || item.created_at);
 
-  if (modalDate) {
-    modalDate.textContent = formatDisplayDate(
-      item.article_published_at || item.card_date || item.created_at
-    );
-  }
+      modal.querySelector("#modalExcerpt").textContent =
+        item.article_excerpt || item.card_excerpt || "";
 
-  if (modalExcerpt) {
-    modalExcerpt.textContent = item.article_excerpt || item.card_excerpt || '';
-  }
+      const modalImage = modal.querySelector("#modalImage");
 
-  if (modalImage) {
-    if (item.article_image && item.article_image !== 'empty') {
-      modalImage.src = item.article_image;
-      modalImage.alt = item.article_title || item.card_title || 'Update image';
-      modalImage.classList.remove('hidden');
-    } else {
-      modalImage.src = '';
-      modalImage.alt = '';
-      modalImage.classList.add('hidden');
+      if (item.article_image && item.article_image !== "empty") {
+        modalImage.src = item.article_image;
+        modalImage.alt = item.article_title || item.card_title || "Update image";
+        modalImage.classList.remove("hidden");
+      } else {
+        modalImage.src = "";
+        modalImage.alt = "";
+        modalImage.classList.add("hidden");
+      }
+
+      const modalBody = modal.querySelector("#modalBody");
+
+      modalBody.innerHTML = item.article_body_html
+        ? item.article_body_html
+        : "<p>No detailed content available.</p>";
+
+      modal.classList.remove("hidden");
+      document.body.classList.add("overflow-hidden");
     }
-  }
 
-  if (modalBody) {
-    modalBody.innerHTML = item.article_body_html || '<p>No detailed content available.</p>';
-  }
-
-  modal.classList.remove('hidden');
-  document.body.classList.add('overflow-hidden');
-}
     function closeUpdateModal() {
-      modal.classList.add('hidden');
-      document.body.classList.remove('overflow-hidden');
+      modal.classList.add("hidden");
+      document.body.classList.remove("overflow-hidden");
     }
 
-    if (!grid.dataset.listenerAttached) {   grid.addEventListener('click', function (event) {     const button = event.target.closest('.open-update-modal');     if (!button) return;      const index = Number(button.dataset.index);     const item = updates[index];      if (item) openUpdateModal(item);   });    grid.dataset.listenerAttached = "true"; }
-      const button = event.target.closest('.open-update-modal');
-      if (!button) return;
+    if (!grid.dataset.listenerAttached) {
+      grid.addEventListener("click", function (event) {
+        const button = event.target.closest(".open-update-modal");
+        if (!button) return;
 
-      const index = Number(button.dataset.index);
-      const item = updates[index];
+        const index = Number(button.dataset.index);
+        const item = updates[index];
 
-      if (item) openUpdateModal(item);
-    });
+        if (item) openUpdateModal(item);
+      });
 
-    closeModalBtn?.addEventListener('click', closeUpdateModal);
+      grid.dataset.listenerAttached = "true";
+    }
 
-    modal.addEventListener('click', function (event) {
+    closeModalBtn?.addEventListener("click", closeUpdateModal);
+
+    modal.addEventListener("click", function (event) {
       if (event.target === modal) {
         closeUpdateModal();
       }
     });
 
-    document.addEventListener('keydown', function (event) {
-      if (event.key === 'Escape' && !modal.classList.contains('hidden')) {
+    document.addEventListener("keydown", function (event) {
+      if (event.key === "Escape" && !modal.classList.contains("hidden")) {
         closeUpdateModal();
       }
     });
-
-  } catch (err) {
-    console.error('Live Updates Error:', err);
-    grid.innerHTML = '<p class="text-slate-400">Unable to load updates.</p>';
   }
-}
 
-function escapeHtml(value) {
-  return String(value ?? '')
-    .replace(/&/g, '&amp;')
-    .replace(/</g, '&lt;')
-    .replace(/>/g, '&gt;')
-    .replace(/"/g, '&quot;')
-    .replace(/'/g, '&#39;');
-}
-
-    initLiveUpdates();
-    
-  })();
+  updateStepUI();
+  initLiveUpdates();
+})();
 </script>
 
 

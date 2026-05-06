@@ -1,0 +1,1523 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>AutoSite AI Builder</title>
+  <meta name="description" content="AutoSite AI website builder flow." />
+
+
+    <style>
+    :root{
+      --bg:#f3efff;
+      --panel:#ffffff;
+      --ink:#10172a;
+      --muted:#667085;
+      --line:#e7e5f2;
+      --soft:#f5f2ff;
+      --purple:#6c4de6;
+      --purple-2:#8d4fe8;
+      --blue:#2f80ed;
+      --success:#45a66c;
+      --shadow:0 18px 45px rgba(32,24,77,.08);
+      --shadow-sm:0 10px 24px rgba(32,24,77,.08);
+      --radius:26px;
+      --radius-sm:14px;
+      --font: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    }
+
+    *{box-sizing:border-box}
+    html{
+      scroll-behavior:smooth;
+      overflow-x:hidden;
+    }
+    body{
+      margin:0;
+      min-height:100vh;
+      font-family:var(--font);
+      color:var(--ink);
+      background:var(--bg);
+      overflow-x:hidden;
+    }
+
+    button,input,textarea,select{font:inherit}
+    button{cursor:pointer}
+    a{color:inherit;text-decoration:none}
+
+    .app-shell{
+      width:min(1680px, calc(100% - 72px));
+      max-width:1680px;
+      min-height:calc(100vh - 72px);
+      margin:36px auto;
+      background:rgba(255,255,255,.94);
+      border:1px solid rgba(255,255,255,.7);
+      border-radius:var(--radius);
+      box-shadow:var(--shadow);
+      overflow:hidden;
+    }
+
+    .container{
+      width:min(1450px, calc(100% - 64px));
+      margin:0 auto;
+    }
+
+    header{
+      height:112px;
+      border-bottom:1px solid var(--line);
+      display:flex;
+      align-items:center;
+    }
+
+    .nav{
+      width:100%;
+      display:grid;
+      grid-template-columns:1fr auto 1fr;
+      align-items:center;
+      gap:32px;
+    }
+
+    .brand{
+      display:flex;
+      align-items:center;
+      gap:16px;
+      font-weight:800;
+      font-size:26px;
+      letter-spacing:-.03em;
+      white-space:nowrap;
+    }
+
+    .logo{
+      width:62px;
+      height:48px;
+      display:grid;
+      place-items:center;
+    }
+
+    .logo svg{width:62px;height:48px;display:block}
+
+    .nav-links{
+      display:flex;
+      gap:58px;
+      align-items:center;
+      color:#1f2937;
+      font-weight:700;
+      font-size:16px;
+    }
+
+    .nav-cta{
+      justify-self:end;
+    }
+
+    .btn{
+      border:none;
+      border-radius:10px;
+      padding:14px 30px;
+      font-weight:800;
+      font-size:16px;
+      transition:transform .16s ease, box-shadow .16s ease, opacity .16s ease;
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      gap:10px;
+    }
+
+    .btn:hover{transform:translateY(-1px)}
+    .btn-primary{
+      color:#fff;
+      background:linear-gradient(135deg,var(--purple-2),var(--blue));
+      box-shadow:0 12px 22px rgba(78,74,220,.27);
+    }
+    .btn-secondary{
+      background:#fff;
+      color:#182033;
+      border:1px solid var(--line);
+      box-shadow:var(--shadow-sm);
+    }
+    .btn-ghost{
+      background:#fff;
+      color:#5d49d9;
+      border:1px solid #cfc6ff;
+    }
+    .btn-small{padding:10px 18px;font-size:14px;border-radius:9px}
+
+    main{min-height:calc(100vh - 184px)}
+
+    .screen{display:none;animation:fade .22s ease both}
+    .screen.active{display:block}
+    @keyframes fade{from{opacity:.35;transform:translateY(4px)}to{opacity:1;transform:none}}
+
+    .hero{
+      padding:clamp(72px, 11vw, 150px) 0 clamp(72px, 8vw, 112px);
+      min-height:640px;
+      display:flex;
+      align-items:center;
+    }
+
+    .hero-copy{
+      width:min(720px,100%);
+      padding-left:clamp(0px, 4vw, 70px);
+    }
+
+    .hero h1{
+      font-size:clamp(34px, 3.1vw, 42px);
+      line-height:1.75;
+      letter-spacing:-.035em;
+      margin:0 0 clamp(52px, 5vw, 72px);
+      font-weight:800;
+      max-width:680px;
+    }
+
+    .hero .btn{
+      font-size:clamp(20px, 2vw, 26px);
+      padding:22px 44px;
+      border-radius:14px;
+    }
+
+    .wizard{
+      padding:58px 0 46px;
+    }
+
+    .wizard-grid{
+      display:grid;
+      grid-template-columns:minmax(0, 1fr) 430px;
+      gap:72px;
+      align-items:start;
+      width:min(1180px, calc(100% - 80px));
+      margin:0 auto;
+    }
+
+    .wizard-main{padding-top:14px}
+    .back-link{
+      display:inline-flex;
+      align-items:center;
+      gap:9px;
+      color:#7861e8;
+      font-weight:800;
+      margin-bottom:16px;
+      background:none;
+      border:none;
+      padding:0;
+      font-size:15px;
+    }
+
+    .wizard h2{
+      font-size:38px;
+      line-height:1.32;
+      letter-spacing:-.035em;
+      margin:0 0 14px;
+      font-weight:850;
+      max-width:760px;
+    }
+
+    .wizard p.lead{
+      color:#697386;
+      font-size:18px;
+      line-height:1.65;
+      margin:0 0 46px;
+      max-width:680px;
+      font-weight:600;
+    }
+
+    .steps{
+      display:flex;
+      align-items:center;
+      gap:14px;
+      margin-bottom:42px;
+      min-width:0;
+    }
+    .step{
+      display:flex;
+      align-items:center;
+      gap:10px;
+      color:#667085;
+      font-size:14px;
+      font-weight:800;
+      white-space:nowrap;
+    }
+    .dot{
+      width:31px;
+      height:31px;
+      border-radius:999px;
+      display:grid;
+      place-items:center;
+      background:#fff;
+      color:#96a0b5;
+      border:1px solid #dfe3eb;
+      font-size:13px;
+      font-weight:850;
+    }
+    .step.done .dot{background:#5594ec;color:#fff;border-color:#5594ec}
+    .step.active .dot{background:var(--purple);color:#fff;border-color:var(--purple)}
+    .connector{
+      height:1px;
+      width:54px;
+      background:var(--line);
+      flex:0 0 auto;
+    }
+
+    label{
+      display:block;
+      margin:0 0 12px;
+      font-weight:850;
+      color:#1c2435;
+      font-size:16px;
+    }
+
+    input,textarea,select{
+      width:100%;
+      border:1px solid #dfe3eb;
+      border-radius:9px;
+      background:#fff;
+      color:#1f2937;
+      padding:15px 18px;
+      outline:none;
+      font-size:16px;
+      box-shadow:0 1px 0 rgba(16,24,40,.02);
+    }
+    textarea{height:130px;resize:none;line-height:1.55}
+    input:focus,textarea:focus,select:focus{border-color:#8e79ff;box-shadow:0 0 0 4px rgba(108,77,230,.1)}
+    .field{margin-bottom:30px}
+    .char-count{text-align:right;color:#7c8497;font-size:13px;margin-top:-28px;padding-right:14px}
+
+    .actions{
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      gap:20px;
+      margin-top:44px;
+    }
+
+    .summary-card,.side-card,.info-card{
+      background:rgba(255,255,255,.86);
+      border:1px solid var(--line);
+      border-radius:16px;
+      box-shadow:0 10px 30px rgba(42,31,102,.04);
+    }
+    .summary-card{padding:32px}
+    .summary-card h3,.side-card h3{
+      margin:0 0 28px;
+      font-size:20px;
+      letter-spacing:-.02em;
+    }
+    .summary-row{
+      display:grid;
+      grid-template-columns:24px 1fr;
+      gap:14px;
+      margin:0 0 25px;
+    }
+    .summary-row svg{color:#6b53e8;margin-top:2px}
+    .summary-row strong{display:block;font-size:14px;margin-bottom:7px}
+    .summary-row p{margin:0;color:#566174;line-height:1.55;font-weight:600}
+    .pills{display:flex;gap:9px;flex-wrap:wrap}
+    .pill{
+      background:#f0edff;
+      color:#6c4de6;
+      border-radius:999px;
+      padding:7px 13px;
+      font-size:13px;
+      font-weight:750;
+    }
+
+    .note-box{
+      margin-top:28px;
+      background:#f3f0ff;
+      border-radius:13px;
+      padding:24px;
+      display:grid;
+      grid-template-columns:26px 1fr;
+      gap:14px;
+    }
+    .note-box strong{display:block;margin-bottom:9px}
+    .note-box p{margin:0;color:#596278;line-height:1.55;font-weight:600}
+
+    .choice-grid{
+      display:grid;
+      grid-template-columns:repeat(3, minmax(0,1fr));
+      gap:18px;
+      margin-top:18px;
+    }
+    .choice-card{
+      position:relative;
+      min-height:136px;
+      border:1px solid var(--line);
+      border-radius:10px;
+      padding:28px 22px 20px;
+      background:#fff;
+      transition:border .16s ease, box-shadow .16s ease, transform .16s ease;
+    }
+    .choice-card:hover{transform:translateY(-1px);box-shadow:0 10px 20px rgba(32,24,77,.06)}
+    .choice-card.selected{border-color:#927cff;box-shadow:0 0 0 1px rgba(146,124,255,.25)}
+    .choice-card .check{
+      position:absolute;right:18px;top:18px;width:22px;height:22px;border-radius:5px;border:2px solid #dfe3eb;
+      display:grid;place-items:center;color:#fff;font-size:13px;font-weight:900;
+    }
+    .choice-card.selected .check{background:#6c4de6;border-color:#6c4de6}
+    .choice-icon{
+      width:37px;height:37px;border-radius:8px;background:#f2eeff;color:#6c4de6;display:grid;place-items:center;margin-bottom:18px;
+    }
+    .choice-card h4{margin:0 0 8px;font-size:16px}
+    .choice-card p{margin:0;color:#697386;line-height:1.45;font-weight:650}
+
+    .style-grid{
+      display:grid;
+      grid-template-columns:repeat(5,minmax(0,1fr));
+      gap:18px;
+      margin:18px 0 32px;
+    }
+    .style-card{
+      border:1px solid var(--line);
+      background:#fff;
+      border-radius:10px;
+      padding:14px;
+      min-height:172px;
+    }
+    .style-card.selected{border-color:#927cff;box-shadow:0 0 0 1px rgba(146,124,255,.25)}
+    .style-thumb{
+      height:54px;
+      border-radius:7px;
+      background:#f6f3ff;
+      margin-bottom:14px;
+      padding:14px;
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      color:#111827;
+      font-weight:800;
+    }
+    .image-dot{width:35px;height:23px;border-radius:3px;background:linear-gradient(135deg,#c3b5ff,#8257e8)}
+    .style-card h4{margin:0 0 7px;font-size:15px}
+    .style-card p{margin:0;color:#697386;line-height:1.45;font-weight:650;font-size:14px}
+
+    .palette-grid{
+      display:grid;
+      grid-template-columns:repeat(6,minmax(0,1fr));
+      gap:18px;
+      margin-top:14px;
+      padding-bottom:26px;
+      border-bottom:1px solid var(--line);
+    }
+    .palette{
+      border:1px solid var(--line);
+      border-radius:9px;
+      background:#fff;
+      padding:18px 16px;
+      display:flex;
+      gap:9px;
+      align-items:center;
+      justify-content:center;
+    }
+    .palette.selected{border-color:#927cff;box-shadow:0 0 0 1px rgba(146,124,255,.25)}
+    .swatch{width:18px;height:18px;border-radius:999px;background:#ddd}
+
+    .content-options{
+      display:grid;
+      grid-template-columns:repeat(2,minmax(0,1fr));
+      gap:18px;
+    }
+
+    .review-card{
+      border:1px solid var(--line);
+      border-radius:14px;
+      background:#fff;
+      padding:22px;
+      margin-bottom:18px;
+    }
+    .review-head{
+      display:flex;justify-content:space-between;align-items:center;gap:16px;margin-bottom:24px;
+    }
+    .review-head h3{margin:0;font-size:20px}
+    .review-grid{
+      display:grid;
+      grid-template-columns:1fr 1fr;
+      gap:28px;
+    }
+    .review-col + .review-col{border-left:1px solid var(--line);padding-left:28px}
+    .review-item{margin-bottom:22px}
+    .review-item strong{display:block;margin-bottom:7px;font-size:14px}
+    .review-item p{margin:0;color:#586276;line-height:1.5;font-weight:650}
+    .extra-card{
+      border:1px solid var(--line);
+      border-radius:12px;
+      background:#fff;
+      padding:18px;
+    }
+
+    .build-screen{
+      padding:46px 0 30px;
+    }
+    .build-grid{
+      display:grid;
+      grid-template-columns:520px minmax(0,1fr);
+      gap:70px;
+      width:min(1370px, calc(100% - 80px));
+      margin:0 auto;
+      align-items:start;
+    }
+    .build-title{
+      display:grid;
+      grid-template-columns:44px 1fr;
+      gap:18px;
+      align-items:start;
+      margin:36px 0 38px;
+    }
+    .build-title h2{font-size:30px;line-height:1.25;margin:0 0 14px}
+    .build-title p{margin:0;color:#566174;line-height:1.5;font-weight:650;font-size:16px}
+
+    .task-list{
+      border:1px solid var(--line);
+      border-radius:12px;
+      background:#fff;
+      overflow:hidden;
+    }
+    .task{
+      min-height:78px;
+      display:grid;
+      grid-template-columns:46px 1fr 28px;
+      gap:18px;
+      align-items:center;
+      padding:16px 20px;
+      border-bottom:1px solid var(--line);
+    }
+    .task:last-child{border-bottom:none}
+    .task.active{border:2px solid #a48dff;margin:-1px;border-radius:12px}
+    .task-icon{width:38px;height:38px;border-radius:8px;background:#f2eeff;color:#6c4de6;display:grid;place-items:center}
+    .task strong{display:block;font-size:15px;margin-bottom:5px}
+    .task span{color:#566174;font-size:14px;font-weight:650}
+    .status-check{width:20px;height:20px;border-radius:999px;background:#45a66c;color:#fff;display:grid;place-items:center;font-size:12px}
+    .spinner{width:22px;height:22px;border-radius:999px;border:3px solid #ded8ff;border-top-color:#6c4de6;animation:spin 1s linear infinite}
+    @keyframes spin{to{transform:rotate(360deg)}}
+
+    .preview-browser{
+      background:#fff;
+      border:1px solid var(--line);
+      border-radius:12px;
+      overflow:hidden;
+      box-shadow:0 12px 26px rgba(32,24,77,.06);
+    }
+    .browser-bar{
+      height:52px;
+      background:#f5f6fb;
+      border-bottom:1px solid var(--line);
+      display:flex;align-items:center;padding:0 22px;gap:9px;
+    }
+    .browser-dot{width:11px;height:11px;border-radius:999px;background:#c8ccd8}
+    .site-preview{min-height:610px;background:#fff}
+    .preview-nav{
+      height:80px;display:flex;justify-content:space-between;align-items:center;padding:0 44px;border-bottom:1px solid #edf0f6;font-size:12px;font-weight:800;color:#232b3b;
+    }
+    .preview-nav-links{display:flex;gap:38px;align-items:center}
+    .preview-nav .button{background:#111827;color:#fff;padding:10px 20px;border-radius:4px}
+    .preview-hero{
+      padding:74px 44px 78px;
+      display:grid;grid-template-columns:1fr 1fr;gap:38px;align-items:center;
+    }
+    .preview-hero h3{font-size:40px;line-height:1.18;letter-spacing:-.035em;margin:0 0 24px}
+    .preview-hero .accent{color:#6c4de6}
+    .preview-hero p{color:#596278;line-height:1.5;font-weight:650;margin:0 0 28px}
+    .preview-buttons{display:flex;gap:16px}
+    .mini-primary{background:#6c4de6;color:#fff;border-radius:4px;padding:13px 22px;font-size:13px;font-weight:800}
+    .mini-outline{border:1px solid #cbd1df;border-radius:4px;padding:13px 22px;font-size:13px;font-weight:800}
+    .preview-visual{
+      min-height:230px;border-radius:20px;background:#f2efff;position:relative;overflow:hidden;
+    }
+    .metric{
+      position:absolute;background:#fff;border-radius:8px;box-shadow:0 10px 20px rgba(32,24,77,.08);padding:16px 20px;font-weight:800;
+      color:#1f2937;
+    }
+    .metric small{display:block;color:#7d8797;font-size:10px;margin-bottom:6px}
+    .metric.one{left:-8px;top:92px}
+    .metric.two{right:76px;top:44px;width:205px;height:88px}
+    .metric.three{left:122px;bottom:34px}
+    .donut{position:absolute;right:22px;bottom:30px;width:86px;height:86px;border-radius:999px;border:16px solid #8169df;border-left-color:#e6e1ff}
+    .logos{
+      padding:26px 44px 34px;text-align:center;border-top:1px solid #f0f2f7;color:#818898;font-weight:850;font-size:12px;letter-spacing:.08em;
+    }
+    .logo-row{display:flex;justify-content:center;gap:68px;margin-top:20px;color:#767d8d;letter-spacing:0;font-size:15px}
+    .preview-section{background:#f7f5ff;text-align:center;padding:34px}
+    .preview-section h4{margin:0 0 6px;font-size:24px}
+    .progress-wrap{padding:34px 24px 0}
+    .bar{height:10px;background:#eeeeF7;border-radius:99px;overflow:hidden}
+    .bar span{display:block;height:100%;width:75%;background:#7453e8;border-radius:99px}
+    .progress-meta{display:flex;justify-content:space-between;color:#566174;font-weight:700;margin-top:14px}
+
+    .ready-screen{
+      min-height:calc(100vh - 112px);
+      display:grid;
+      grid-template-columns:570px 1px minmax(0,1fr);
+      gap:32px;
+      padding:36px 36px 18px;
+    }
+    .divider{background:#ece9f7}
+    .ready-left{padding:48px 0 0 18px}
+    .ready-left h2{
+      text-align:center;
+      font-size:32px;
+      line-height:1.25;
+      margin:20px 0 18px;
+      letter-spacing:-.03em;
+    }
+    .ready-left .ready-sub{
+      text-align:center;
+      color:#637086;
+      line-height:1.55;
+      font-weight:650;
+      margin:0 auto 28px;
+      max-width:390px;
+    }
+    .mail-icon{
+      width:54px;height:54px;border-radius:999px;background:#6c4de6;color:#fff;display:grid;place-items:center;margin:0 auto;position:relative;
+    }
+    .mail-icon:before,.mail-icon:after{
+      content:"";position:absolute;width:7px;height:7px;background:#ffd166;transform:rotate(45deg);left:-22px;top:10px;box-shadow:52px -4px #68d391,36px 34px #f87171,-5px 38px #93c5fd;
+    }
+
+    .email-card,.recommend-card,.control-card{
+      border:1px solid var(--line);border-radius:12px;background:#fff;padding:28px;margin-bottom:24px;
+    }
+    .email-card h3,.recommend-card h3{margin:0 0 10px;font-size:19px}
+    .email-card p,.recommend-card p,.control-card p{color:#586276;line-height:1.5;font-weight:650;margin:0 0 22px}
+    .email-card .btn{width:100%;margin-top:14px}
+    .safe-line{text-align:center;color:#70798c;font-size:13px;font-weight:700;margin-top:15px}
+    .check-list{list-style:none;margin:18px 0 24px;padding:0;color:#4f5b70;font-weight:650}
+    .check-list li{margin:10px 0}
+    .check-list li:before{content:"✓";color:#50b978;margin-right:9px;font-weight:900}
+    .badge{background:#61c582;color:#fff;border-radius:999px;font-size:12px;padding:4px 9px;margin-left:8px}
+    .control-card{display:grid;grid-template-columns:34px 1fr;gap:16px;margin-bottom:0}
+    .ready-main{padding:22px 12px 0}
+    .next-steps{
+      display:grid;
+      grid-template-columns:repeat(4, minmax(0,1fr));
+      gap:24px;
+      margin:22px 0 38px;
+    }
+    .next-step{
+      display:grid;grid-template-columns:38px 1fr;gap:14px;align-items:start;
+    }
+    .next-step .num{
+      width:35px;height:35px;border-radius:999px;background:#6c4de6;color:#fff;display:grid;place-items:center;font-weight:850;
+    }
+    .next-step:nth-child(n+2) .num{background:#e4e8f0;color:#576174}
+    .next-step strong{display:block;margin-bottom:7px}
+    .next-step p{margin:0;color:#596278;font-weight:650;line-height:1.5}
+
+    .package-card{
+      border:1px solid var(--line);border-radius:12px;background:#fff;padding:34px 36px;margin-bottom:34px;
+      display:grid;grid-template-columns:72px 1fr auto;gap:24px;align-items:center;
+    }
+    .zip-icon{width:56px;height:72px;color:#6c4de6}
+    .package-card h3{margin:0 0 9px;font-size:20px}
+    .package-card p{margin:0;color:#5f687a;font-weight:650}
+    .file-illustration{width:210px;height:78px;border-radius:12px;background:#f5f2ff;opacity:.7}
+
+    .package-grid{
+      display:grid;
+      grid-template-columns:1fr 1fr;
+      gap:64px;
+    }
+    .file-list{
+      border:1px solid var(--line);border-radius:10px;background:#fff;overflow:hidden;
+    }
+    .file-row{
+      display:grid;grid-template-columns:34px 1fr;gap:14px;align-items:center;padding:14px 18px;border-bottom:1px solid var(--line);
+    }
+    .file-row:last-child{border-bottom:none}
+    .file-row strong{display:block;margin-bottom:4px}
+    .file-row span{color:#626c7e;font-weight:650;font-size:14px}
+    .publish-card{
+      background:#f5f2ff;border-radius:13px;padding:30px;
+    }
+    .publish-card h3{margin:0 0 26px;font-size:18px}
+    .publish-step{
+      display:grid;grid-template-columns:32px 1fr;gap:14px;margin-bottom:23px;
+    }
+    .publish-step .num{width:26px;height:26px;border-radius:999px;background:#6c4de6;color:#fff;display:grid;place-items:center;font-weight:850;font-size:13px}
+    .publish-step strong{display:block;margin-bottom:5px}
+    .publish-step p{margin:0;color:#596278;line-height:1.55;font-weight:650}
+    .bottom-actions{
+      margin-top:38px;padding:20px 24px;background:#f7f5ff;border-radius:10px;display:flex;justify-content:center;gap:28px;
+    }
+
+    .chat{
+      position:fixed;
+      right:calc((100vw - min(1680px, calc(100% - 72px)))/2 + 38px);
+      bottom:54px;
+      width:58px;height:58px;border-radius:999px;background:#6c4de6;color:#fff;display:grid;place-items:center;
+      box-shadow:0 14px 24px rgba(108,77,230,.28);
+      border:none;
+      z-index:10;
+    }
+
+    .toast{
+      position:fixed;
+      left:50%;
+      bottom:36px;
+      transform:translateX(-50%) translateY(20px);
+      opacity:0;
+      pointer-events:none;
+      background:#111827;
+      color:#fff;
+      border-radius:999px;
+      padding:13px 20px;
+      font-weight:750;
+      transition:.2s ease;
+      z-index:30;
+    }
+    .toast.show{opacity:1;transform:translateX(-50%)}
+
+    @media (max-width:1150px){
+      .app-shell{
+        width:calc(100% - 24px);
+        min-height:calc(100vh - 24px);
+        margin:12px auto;
+      }
+      .container{width:calc(100% - 36px)}
+      .nav{grid-template-columns:1fr auto}
+      .nav-links{display:none}
+      .wizard-grid,
+      .build-grid{
+        grid-template-columns:minmax(0,1fr);
+        width:calc(100% - 36px);
+        max-width:760px;
+        gap:36px;
+      }
+      .summary-card{
+        order:-1;
+        width:100%;
+        min-width:0;
+      }
+      .choice-grid{grid-template-columns:1fr 1fr}
+      .style-grid,.palette-grid{grid-template-columns:1fr 1fr}
+      .ready-screen{grid-template-columns:1fr;padding:24px}
+      .divider{display:none}
+      .package-grid,.next-steps{grid-template-columns:1fr}
+      .hero-copy{padding-left:0}
+      .hero{
+        padding:80px 0;
+        min-height:620px;
+      }
+      .hero h1{
+        font-size:34px;
+        line-height:1.45;
+      }
+      .preview-nav,
+      .preview-hero,
+      .logos{
+        padding-left:24px;
+        padding-right:24px;
+      }
+      .preview-nav-links{
+        display:none;
+      }
+    }
+
+    @media (max-width:700px){
+      .app-shell{
+        width:calc(100% - 16px);
+        margin:8px auto;
+        border-radius:22px;
+      }
+      header{
+        height:92px;
+      }
+      .container{width:calc(100% - 32px)}
+      .brand{
+        font-size:20px;
+        gap:12px;
+      }
+      .logo,.logo svg{
+        width:46px;
+        height:38px;
+      }
+      .nav-cta .btn{
+        padding:11px 16px;
+        font-size:14px;
+      }
+      .hero{
+        min-height:640px;
+        align-items:flex-start;
+        padding:122px 0 56px;
+      }
+      .hero h1{
+        font-size:37px;
+        line-height:1.47;
+        margin-bottom:86px;
+        max-width:360px;
+      }
+      .hero .btn{
+        width:min(268px, 100%);
+        font-size:20px;
+        padding:22px 26px;
+        white-space:nowrap;
+      }
+      .wizard{
+        padding:42px 0 34px;
+      }
+      .wizard-grid,
+      .build-grid{
+        width:calc(100% - 32px);
+        max-width:100%;
+        gap:28px;
+      }
+      .wizard h2{
+        font-size:30px;
+      }
+      .wizard p.lead{
+        font-size:16px;
+        margin-bottom:32px;
+      }
+      .choice-grid,
+      .content-options,
+      .review-grid{
+        grid-template-columns:1fr;
+      }
+      .style-grid,
+      .palette-grid{
+        grid-template-columns:1fr;
+      }
+      .review-col + .review-col{
+        border-left:none;
+        padding-left:0;
+        border-top:1px solid var(--line);
+        padding-top:24px;
+      }
+      .steps{
+        overflow-x:auto;
+        padding-bottom:8px;
+        -webkit-overflow-scrolling:touch;
+      }
+      .step{
+        font-size:13px;
+      }
+      .connector{
+        width:32px;
+      }
+      .build-title{
+        grid-template-columns:1fr;
+      }
+      .preview-hero{
+        grid-template-columns:1fr;
+      }
+      .logo-row{
+        flex-wrap:wrap;
+        gap:20px;
+      }
+      .ready-left{
+        padding-left:0;
+      }
+      .package-card{
+        grid-template-columns:56px 1fr;
+      }
+      .file-illustration{
+        display:none;
+      }
+      .bottom-actions{
+        flex-direction:column;
+      }
+      .chat{
+        right:22px;
+        bottom:30px;
+        width:54px;
+        height:54px;
+      }
+    }
+
+    @media (max-width:480px){
+      .app-shell{
+        width:calc(100% - 12px);
+        margin:6px auto;
+      }
+      .container{
+        width:calc(100% - 28px);
+      }
+      .brand span:last-child{
+        font-size:20px;
+      }
+      .nav-cta .btn{
+        padding:12px 15px;
+      }
+      .hero{
+        min-height:642px;
+        padding-top:118px;
+      }
+      .hero h1{
+        font-size:38px;
+        line-height:1.47;
+        max-width:350px;
+        margin-bottom:86px;
+      }
+      .wizard-grid,
+      .build-grid{
+        width:calc(100% - 28px);
+      }
+      .summary-card{
+        padding:28px;
+      }
+      .summary-row{
+        grid-template-columns:22px minmax(0,1fr);
+      }
+      input, textarea, select{
+        font-size:16px;
+      }
+      .chat{
+        right:28px;
+        bottom:56px;
+      }
+    }
+  </style>
+    
+
+</head>
+<body>
+  <div class="app-shell">
+    <header>
+      <div class="container nav">
+        <a href="#" class="brand" data-go="home" aria-label="AutoSite AI home">
+          <img src="https://regencreatives.com/tools/autositeai/img/autosite_logo_2026_logo.png"/>
+        </a>
+        <nav class="nav-links" aria-label="Primary">
+          <a href="#features">Features</a>
+          <a href="#solutions">Solutions</a>
+          <a href="#pricing">Pricing</a>
+          <a href="#resources">Resources</a>
+        </nav>
+        <div class="nav-cta">
+          <button class="btn btn-primary btn-small" data-go="builder">Get Started</button>
+        </div>
+      </div>
+    </header>
+
+    <main>
+      <section class="screen active" id="home">
+        <div class="container hero">
+          <div class="hero-copy">
+            <h1>An AI-powered platform for<br>website creation, SEO &amp; digital<br>growth</h1>
+            <button class="btn btn-primary" data-go="builder">
+              <span>✦</span> Build with AI
+            </button>
+          </div>
+        </div>
+      </section>
+
+      <section class="screen wizard" id="builder">
+        <div class="wizard-grid">
+          <div class="wizard-main">
+            <h2>Let's build your website with AI</h2>
+            <p class="lead">Answer a few questions and our AI will create a custom website tailored to your business.</p>
+            <div class="steps" data-steps></div>
+
+            <div class="field">
+              <label for="businessName">What's your business or project name?</label>
+              <input id="businessName" value="" placeholder="e.g. Acme Marketing Agency" />
+            </div>
+            <div class="field">
+              <label for="businessDescription">What does your business do?</label>
+              <textarea id="businessDescription" maxlength="500" placeholder="Describe your business, services, and what makes you unique..."></textarea>
+              <div class="char-count"><span id="descCount">0</span>/500</div>
+            </div>
+            <div class="field">
+              <label for="industry">Industry</label>
+              <select id="industry">
+                <option value="">Select your industry</option>
+                <option>Marketing & Advertising</option>
+                <option>Real Estate</option>
+                <option>Coaching & Consulting</option>
+                <option>Beauty & Wellness</option>
+                <option>Home Services</option>
+                <option>Retail</option>
+                <option>Education</option>
+                <option>Nonprofit</option>
+              </select>
+            </div>
+            <div class="actions">
+              <button class="btn btn-secondary" data-go="home">Back</button>
+              <button class="btn btn-primary" data-next>Next →</button>
+            </div>
+          </div>
+
+          <aside class="side-card summary-card">
+            <h3>What happens next?</h3>
+            <div class="summary-row">
+              <span class="choice-icon">✦</span>
+              <div><strong>AI-Powered Generation</strong><p>Our AI will analyze your input and generate a custom website.</p></div>
+            </div>
+            <div class="summary-row">
+              <span class="choice-icon">●</span>
+              <div><strong>Customize &amp; Refine</strong><p>Review your site and make any changes you want.</p></div>
+            </div>
+            <div class="summary-row">
+              <span class="choice-icon">➤</span>
+              <div><strong>Launch Fast</strong><p>Publish your site and start growing your business online.</p></div>
+            </div>
+            <div class="note-box">
+              <span>♢</span>
+              <div><strong>Your data is safe</strong><p>We use your information only to build your website and never share it with third parties.</p></div>
+            </div>
+          </aside>
+        </div>
+      </section>
+
+      <section class="screen wizard" id="goals">
+        <div class="wizard-grid">
+          <div class="wizard-main">
+            <button class="back-link" data-prev>← Back</button>
+            <h2>Great! Let's set your goals</h2>
+            <p class="lead">What would you like your website to achieve? You can select multiple goals.</p>
+            <div class="steps" data-steps></div>
+
+            <label>Select your primary goals (choose up to 3)</label>
+            <div class="choice-grid" id="goalChoices"></div>
+
+            <div class="actions">
+              <button class="btn btn-secondary" data-prev>Back</button>
+              <button class="btn btn-primary" data-next>Next →</button>
+            </div>
+          </div>
+          <aside class="summary-card" data-summary></aside>
+        </div>
+      </section>
+
+      <section class="screen wizard" id="design">
+        <div class="wizard-grid">
+          <div class="wizard-main">
+            <button class="back-link" data-prev>← Back</button>
+            <h2>Perfect! Now, tell us about your design preferences</h2>
+            <p class="lead">Help our AI understand your style so we can create a website you'll love.</p>
+            <div class="steps" data-steps></div>
+
+            <label>What style do you prefer?</label>
+            <div class="style-grid" id="styleChoices"></div>
+
+            <label>Preferred color palette</label>
+            <div class="palette-grid" id="paletteChoices"></div>
+
+            <div class="actions">
+              <button class="btn btn-secondary" data-prev>Back</button>
+              <button class="btn btn-primary" data-next>Next →</button>
+            </div>
+          </div>
+          <aside class="summary-card" data-summary></aside>
+        </div>
+      </section>
+
+      <section class="screen wizard" id="content">
+        <div class="wizard-grid">
+          <div class="wizard-main">
+            <button class="back-link" data-prev>← Back</button>
+            <h2>Choose the pages for your website</h2>
+            <p class="lead">Select the pages your website should include. We added the essentials for you.</p>
+            <div class="steps" data-steps></div>
+
+            <label>Selected pages</label>
+            <div class="choice-grid content-options" id="pageChoices"></div>
+
+            <div class="actions">
+              <button class="btn btn-secondary" data-prev>Back</button>
+              <button class="btn btn-primary" data-next>Next →</button>
+            </div>
+          </div>
+          <aside class="summary-card" data-summary></aside>
+        </div>
+      </section>
+
+      <section class="screen wizard" id="review">
+        <div class="wizard-grid">
+          <div class="wizard-main">
+            <button class="back-link" data-prev>← Back</button>
+            <h2>Almost there! Review and refine</h2>
+            <p class="lead">Review your website plan and provide any extra details before we generate your site.</p>
+            <div class="steps" data-steps></div>
+
+            <div class="review-card">
+              <div class="review-head">
+                <h3>✦ Your Website Plan</h3>
+                <button class="btn btn-ghost btn-small" data-go="builder">✎ Edit</button>
+              </div>
+              <div class="review-grid" id="reviewPlan"></div>
+            </div>
+
+            <div class="extra-card">
+              <label for="extraNotes">Anything else we should know?</label>
+              <textarea id="extraNotes" maxlength="500" placeholder="e.g. I prefer a bold headline style, include a contact form on the contact page..."></textarea>
+              <div class="char-count"><span id="notesCount">0</span>/500</div>
+            </div>
+
+            <div class="actions">
+              <button class="btn btn-secondary" data-prev>Back</button>
+              <button class="btn btn-primary" data-go="building">Generate My Website ✦</button>
+            </div>
+          </div>
+          <aside class="summary-card" data-summary></aside>
+        </div>
+      </section>
+
+      <section class="screen build-screen" id="building">
+        <div class="build-grid">
+          <div>
+            <div class="build-title">
+              <span>✦</span>
+              <div>
+                <h2>Great choice! We're building your website</h2>
+                <p>Our AI is designing and building your website. This usually takes 1–2 minutes.</p>
+              </div>
+            </div>
+            <div class="task-list" id="taskList"></div>
+            <div class="note-box">
+              <span>✦</span>
+              <div><strong>Almost there!</strong><p>Your website is being built and will be ready in a moment.</p></div>
+            </div>
+          </div>
+
+          <div>
+            <div class="preview-browser">
+              <div class="browser-bar"><span class="browser-dot"></span><span class="browser-dot"></span><span class="browser-dot"></span></div>
+              <div class="site-preview">
+                <div class="preview-nav">
+                  <strong><span style="font-size:20px;">A</span> <span id="previewNameNav">Acme Marketing Agency</span></strong>
+                  <div class="preview-nav-links">
+                    <span>Home</span><span>About Us</span><span>Services</span><span>Portfolio</span><span>Testimonials</span><span class="button">Contact Us</span>
+                  </div>
+                </div>
+                <div class="preview-hero">
+                  <div>
+                    <div class="pill">DIGITAL MARKETING AGENCY</div>
+                    <h3>Growing Brands.<br><span class="accent">Building Futures.</span></h3>
+                    <p id="previewDescription">We help businesses grow online with data-driven strategies that deliver real results.</p>
+                    <div class="preview-buttons"><span class="mini-primary">Our Services</span><span class="mini-outline">Get in Touch</span></div>
+                  </div>
+                  <div class="preview-visual">
+                    <div class="metric one"><small>Total Leads</small>1,250</div>
+                    <div class="metric two"><small>Performance Overview</small>+48%</div>
+                    <div class="metric three"><small>Website Traffic</small>23.5K</div>
+                    <div class="donut"></div>
+                  </div>
+                </div>
+                <div class="logos">
+                  TRUSTED BY BUSINESSES LIKE YOURS
+                  <div class="logo-row"><span>LOGOIPSUM</span><span>logipsum</span><span>LOGOIPSUM</span><span>logipsum</span></div>
+                </div>
+                <div class="preview-section"><h4>Our Services</h4><p>Solutions designed to help your business grow</p></div>
+              </div>
+            </div>
+            <div class="progress-wrap">
+              <div class="bar"><span id="progressBar"></span></div>
+              <div class="progress-meta"><span id="progressText">Building your website...</span><span id="progressPct">75%</span></div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="screen" id="ready">
+        <div class="ready-screen">
+          <aside class="ready-left">
+            <div class="mail-icon">✉</div>
+            <h2>Your website is ready<br>and the code is all yours!</h2>
+            <p class="ready-sub">Enter your email address and we'll send you a download link for your website code.</p>
+
+            <div class="email-card">
+              <h3>✉ Send my code to email</h3>
+              <p>We'll email you a secure download link for the complete website code and assets.</p>
+              <label for="emailAddress">Email address</label>
+              <input id="emailAddress" type="email" placeholder="Enter your email address" />
+              <button class="btn btn-primary" id="sendCode">Send My Code</button>
+              <div class="safe-line">♙ Your email is safe with us. We never share it.</div>
+            </div>
+
+            <div class="recommend-card">
+              <h3>▣ Recommended: Google Sites <span class="badge">FREE</span></h3>
+              <p>We recommend Google Sites for free and easy hosting.</p>
+              <ul class="check-list">
+                <li>100% free hosting by Google</li>
+                <li>Custom domain support</li>
+                <li>Easy to publish and manage</li>
+                <li>Secure and reliable</li>
+              </ul>
+              <a class="btn btn-ghost" href="https://sites.google.com" target="_blank" rel="noreferrer">View Guide: Publish on Google Sites ↗</a>
+            </div>
+
+            <div class="control-card">
+              <span>🛡</span>
+              <div><strong>You're in control</strong><p>Host anywhere you want. The code is yours to keep and customize.</p></div>
+            </div>
+          </aside>
+
+          <div class="divider"></div>
+
+          <section class="ready-main">
+            <h3>What happens next?</h3>
+            <div class="next-steps">
+              <div class="next-step"><span class="num">1</span><div><strong>Enter your email</strong><p>We'll send your code and download link</p></div></div>
+              <div class="next-step"><span class="num">2</span><div><strong>Receive your code</strong><p>Check your email for the download link</p></div></div>
+              <div class="next-step"><span class="num">3</span><div><strong>Upload to Google Sites</strong><p>Follow our guide to upload and publish your site</p></div></div>
+              <div class="next-step"><span class="num">4</span><div><strong>Your site is live!</strong><p>Share your website with the world</p></div></div>
+            </div>
+
+            <div class="package-card">
+              <svg class="zip-icon" viewBox="0 0 70 90" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M10 5h32l18 18v62H10V5Z" stroke="#6C4DE6" stroke-width="4" fill="#F4F0FF"/>
+                <path d="M42 5v20h18" stroke="#6C4DE6" stroke-width="4"/>
+                <path d="M23 52h24v18H23V52Z" fill="#6C4DE6"/>
+                <text x="28" y="65" font-size="10" font-weight="800" fill="#fff">ZIP</text>
+              </svg>
+              <div>
+                <h3 id="zipName">acme-marketing-agency.zip</h3>
+                <p>24.6 MB</p>
+                <p>Includes all HTML, CSS, JS &amp; assets</p>
+              </div>
+              <div class="file-illustration"></div>
+            </div>
+
+            <div class="package-grid">
+              <div>
+                <h3>What's inside your code package</h3>
+                <div class="file-list" id="fileList"></div>
+              </div>
+              <div class="publish-card">
+                <h3>How to publish (Recommended: Google Sites)</h3>
+                <div class="publish-step"><span class="num">1</span><div><strong>Go to Google Sites</strong><p>sites.google.com ↗</p></div></div>
+                <div class="publish-step"><span class="num">2</span><div><strong>Create a new site</strong><p>Click the + button to start a new site.</p></div></div>
+                <div class="publish-step"><span class="num">3</span><div><strong>Upload your files</strong><p>Go to ⚙ → Manage site → Upload. Upload the contents of the downloaded ZIP file.</p></div></div>
+                <div class="publish-step"><span class="num">4</span><div><strong>Publish</strong><p>Click Publish and your website is live!</p></div></div>
+                <a class="btn btn-ghost" href="https://sites.google.com" target="_blank" rel="noreferrer">View Step-by-Step Guide ↗</a>
+              </div>
+            </div>
+
+            <div class="bottom-actions">
+              <button class="btn btn-secondary" data-go="home">▦ Go to Dashboard</button>
+              <button class="btn btn-secondary" data-go="builder">＋ Build Another Website</button>
+            </div>
+          </section>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  
+  <div class="toast" id="toast"></div>
+
+  <script>
+    const screens = ["home","builder","goals","design","content","review","building","ready"];
+    const wizardScreens = ["builder","goals","design","content","review"];
+    const state = {
+      businessName:"",
+      businessDescription:"",
+      industry:"",
+      goals:["Generate Leads","Build Brand Awareness"],
+      style:"Modern",
+      palette:0,
+      pages:["Home","About Us","Services","Portfolio","Testimonials","Contact","Pricing"],
+      notes:""
+    };
+
+    const icons = {
+      leads:"<svg width='22' height='22' viewBox='0 0 24 24' fill='none'><path d='M16 11a4 4 0 1 0-8 0' stroke='currentColor' stroke-width='2'/><path d='M4 20a8 8 0 0 1 16 0' stroke='currentColor' stroke-width='2'/></svg>",
+      cart:"<svg width='22' height='22' viewBox='0 0 24 24' fill='none'><path d='M5 5h2l2 10h9l2-7H8' stroke='currentColor' stroke-width='2'/><circle cx='10' cy='20' r='1.5' fill='currentColor'/><circle cx='18' cy='20' r='1.5' fill='currentColor'/></svg>",
+      case:"<svg width='22' height='22' viewBox='0 0 24 24' fill='none'><path d='M8 7V5h8v2' stroke='currentColor' stroke-width='2'/><path d='M4 8h16v11H4V8Z' stroke='currentColor' stroke-width='2'/></svg>",
+      megaphone:"<svg width='22' height='22' viewBox='0 0 24 24' fill='none'><path d='M4 13h4l9 4V7l-9 4H4v2Z' stroke='currentColor' stroke-width='2'/><path d='M8 14l1 5' stroke='currentColor' stroke-width='2'/></svg>",
+      info:"<svg width='22' height='22' viewBox='0 0 24 24' fill='none'><circle cx='12' cy='12' r='8' stroke='currentColor' stroke-width='2'/><path d='M12 11v6M12 8h.01' stroke='currentColor' stroke-width='2'/></svg>",
+      dots:"<svg width='22' height='22' viewBox='0 0 24 24' fill='none'><circle cx='6' cy='12' r='2' fill='currentColor'/><circle cx='12' cy='12' r='2' fill='currentColor'/><circle cx='18' cy='12' r='2' fill='currentColor'/></svg>",
+      page:"<svg width='22' height='22' viewBox='0 0 24 24' fill='none'><path d='M6 3h9l3 3v15H6V3Z' stroke='currentColor' stroke-width='2'/><path d='M15 3v4h4' stroke='currentColor' stroke-width='2'/></svg>"
+    };
+
+    const goalData = [
+      ["Generate Leads","Collect leads and inquiries from potential customers",icons.leads],
+      ["Sell Products","Sell products or services online",icons.cart],
+      ["Showcase Portfolio","Display work, projects, or case studies",icons.case],
+      ["Build Brand Awareness","Increase visibility and reach for your brand",icons.megaphone],
+      ["Provide Information","Educate visitors and provide useful information",icons.info],
+      ["Other","Other specific goals",icons.dots]
+    ];
+
+    const styleData = [
+      ["Modern","Clean, minimal, and contemporary","#c3b5ff,#8257e8"],
+      ["Professional","Corporate, trusted, and polished","#dfe7f5,#3b82f6"],
+      ["Creative","Bold, artistic, and unique","#ffd7bd,#fb923c"],
+      ["Friendly","Warm, approachable, and inviting","#d9f5dd,#68c26f"],
+      ["Luxurious","Elegant, premium, and sophisticated","#dfd8e8,#3a2d4d"]
+    ];
+
+    const palettes = [
+      ["#6c4de6","#7453e8","#5a62de","#4c7fea"],
+      ["#008ed0","#178dd0","#8aa8bd","#d7dee8"],
+      ["#67bf4b","#43a747","#1f7a31","#0b4e21"],
+      ["#fb8500","#ffb070","#f34c42","#d62828"],
+      ["#858585","#c7c7c7","#273142","#06101f"],
+      ["#6c4de6","#48a868","#ef7399","#ff8a4a"]
+    ];
+
+    const pageData = ["Home","About Us","Services","Portfolio","Testimonials","Contact","Pricing"];
+
+    function $(sel,root=document){ return root.querySelector(sel); }
+    function $all(sel,root=document){ return Array.from(root.querySelectorAll(sel)); }
+
+    function go(id){
+      $all(".screen").forEach(s=>s.classList.remove("active"));
+      $("#" + id).classList.add("active");
+      window.scrollTo({top:0,behavior:"smooth"});
+      sync();
+      if(id === "building") startBuild();
+    }
+
+    function currentWizardIndex(){
+      const active = $(".screen.active").id;
+      return wizardScreens.indexOf(active);
+    }
+
+    function next(){
+      const i = currentWizardIndex();
+      if(i > -1 && i < wizardScreens.length - 1) go(wizardScreens[i+1]);
+    }
+
+    function prev(){
+      const i = currentWizardIndex();
+      if(i > 0) go(wizardScreens[i-1]);
+      else go("home");
+    }
+
+    function renderSteps(){
+      $all("[data-steps]").forEach(el=>{
+        const activeIndex = Math.max(0,currentWizardIndex());
+        const labels = ["Business Info","Site Goals","Design Preferences","Content","Review"];
+        el.innerHTML = labels.map((label,i)=>`
+          <div class="step ${i<activeIndex?'done':''} ${i===activeIndex?'active':''}">
+            <span class="dot">${i<activeIndex?'✓':i+1}</span><span>${label}</span>
+          </div>${i<labels.length-1?'<span class="connector"></span>':''}
+        `).join("");
+      });
+    }
+
+    function summaryHTML(){
+      const name = state.businessName || "Acme Marketing Agency";
+      const desc = state.businessDescription || "We provide digital marketing services including SEO, social media marketing, content creation, and paid advertising to help businesses grow online.";
+      const industry = state.industry || "Marketing & Advertising";
+      return `
+        <h3>Your Project Summary <button class="btn btn-ghost btn-small" style="float:right;padding:8px 10px;" data-go="builder">✎</button></h3>
+        <div class="summary-row"><span>✣</span><div><strong>Business / Project Name</strong><p>${escapeHTML(name)}</p></div></div>
+        <div class="summary-row"><span>▣</span><div><strong>What your business does</strong><p>${escapeHTML(desc)}</p></div></div>
+        <div class="summary-row"><span>◀</span><div><strong>Industry</strong><p>${escapeHTML(industry)}</p></div></div>
+        <div class="summary-row"><span>♥</span><div><strong>Goals</strong><div class="pills">${state.goals.map(g=>`<span class="pill">${escapeHTML(g)}</span>`).join("")}</div></div></div>
+        ${state.style?`<div class="summary-row"><span>✦</span><div><strong>Design Style</strong><p>${escapeHTML(state.style)}</p><div class="pills">${palettes[state.palette].map(c=>`<span class="swatch" style="background:${c}"></span>`).join("")}</div></div></div>`:""}
+        ${state.pages.length?`<div class="summary-row"><span>▣</span><div><strong>Selected Pages (${state.pages.length})</strong><div class="pills">${state.pages.map(p=>`<span class="pill">${escapeHTML(p)}</span>`).join("")}</div></div></div>`:""}
+        <div class="note-box"><span>✦</span><div><strong>${currentWizardIndex() >= 2 ? "AI is crafting your perfect site" : "AI is ready to craft your site"}</strong><p>Based on your inputs, our AI will generate a custom website design tailored to your brand and goals.</p></div></div>
+      `;
+    }
+
+    function renderSummaries(){
+      $all("[data-summary]").forEach(el=>{
+        el.innerHTML = summaryHTML();
+      });
+      bindGo();
+    }
+
+    function renderGoals(){
+      $("#goalChoices").innerHTML = goalData.map(([name,desc,icon])=>`
+        <button type="button" class="choice-card ${state.goals.includes(name)?"selected":""}" data-goal="${name}">
+          <span class="check">${state.goals.includes(name)?"✓":""}</span>
+          <span class="choice-icon">${icon}</span>
+          <h4>${name}</h4>
+          <p>${desc}</p>
+        </button>
+      `).join("");
+      $all("[data-goal]").forEach(btn=>btn.addEventListener("click",()=>{
+        const val = btn.dataset.goal;
+        if(state.goals.includes(val)){
+          state.goals = state.goals.filter(g=>g!==val);
+        } else if(state.goals.length < 3){
+          state.goals.push(val);
+        } else {
+          toast("Choose up to 3 goals.");
+        }
+        sync();
+      }));
+    }
+
+    function renderStyles(){
+      $("#styleChoices").innerHTML = styleData.map(([name,desc,grad])=>`
+        <button type="button" class="style-card ${state.style===name?"selected":""}" data-style="${name}">
+          <div class="style-thumb"><span>Aa</span><span class="image-dot" style="background:linear-gradient(135deg,${grad})"></span></div>
+          <h4>${name}</h4><p>${desc}</p>
+        </button>
+      `).join("");
+      $all("[data-style]").forEach(btn=>btn.addEventListener("click",()=>{state.style=btn.dataset.style;sync();}));
+
+      $("#paletteChoices").innerHTML = palettes.map((colors,i)=>`
+        <button type="button" class="palette ${state.palette===i?"selected":""}" data-palette="${i}">
+          ${colors.map(c=>`<span class="swatch" style="background:${c}"></span>`).join("")}
+        </button>
+      `).join("");
+      $all("[data-palette]").forEach(btn=>btn.addEventListener("click",()=>{state.palette=Number(btn.dataset.palette);sync();}));
+    }
+
+    function renderPages(){
+      $("#pageChoices").innerHTML = pageData.map(p=>`
+        <button type="button" class="choice-card ${state.pages.includes(p)?"selected":""}" data-page="${p}">
+          <span class="check">${state.pages.includes(p)?"✓":""}</span>
+          <span class="choice-icon">${icons.page}</span>
+          <h4>${p}</h4>
+          <p>${pageDescription(p)}</p>
+        </button>
+      `).join("");
+      $all("[data-page]").forEach(btn=>btn.addEventListener("click",()=>{
+        const p = btn.dataset.page;
+        if(state.pages.includes(p)) state.pages = state.pages.filter(x=>x!==p);
+        else state.pages.push(p);
+        sync();
+      }));
+    }
+
+    function pageDescription(p){
+      const map = {
+        "Home":"Main landing page",
+        "About Us":"Company story and credibility",
+        "Services":"Offerings and service details",
+        "Portfolio":"Work, projects, or case studies",
+        "Testimonials":"Customer proof and reviews",
+        "Contact":"Inquiry form and contact details",
+        "Pricing":"Packages, rates, or starting prices"
+      };
+      return map[p] || "Website page";
+    }
+
+    function renderReview(){
+      const colors = palettes[state.palette].map(c=>`<span class="swatch" style="background:${c}"></span>`).join("");
+      $("#reviewPlan").innerHTML = `
+        <div class="review-col">
+          <div class="review-item"><strong>Business / Project Name</strong><p>${escapeHTML(state.businessName || "Acme Marketing Agency")}</p></div>
+          <div class="review-item"><strong>Business Description</strong><p>${escapeHTML(state.businessDescription || "We provide digital marketing services including SEO, social media marketing, content creation, and paid advertising to help businesses grow online.")}</p></div>
+          <div class="review-item"><strong>Industry</strong><p>${escapeHTML(state.industry || "Marketing & Advertising")}</p></div>
+          <div class="review-item"><strong>Goals</strong><div class="pills">${state.goals.map(g=>`<span class="pill">${escapeHTML(g)}</span>`).join("")}</div></div>
+        </div>
+        <div class="review-col">
+          <div class="review-item"><strong>Design Style</strong><p>${escapeHTML(state.style)}</p></div>
+          <div class="review-item"><strong>Selected Pages (${state.pages.length})</strong><div class="pills">${state.pages.map(p=>`<span class="pill">${escapeHTML(p)}</span>`).join("")}</div></div>
+          <div class="review-item"><strong>Color Palette</strong><div class="pills">${colors}</div></div>
+        </div>
+      `;
+    }
+
+    function renderTasks(active=4){
+      const tasks = [
+        ["Planning your site","Analyzing your business and goals","▧"],
+        ["Designing pages","Creating layout and visual design","▦"],
+        ["Writing content","Generating copy for your pages","✎"],
+        ["Adding images","Selecting relevant images and graphics","▣"],
+        ["Building your website","Putting everything together","&lt;/&gt;"]
+      ];
+      $("#taskList").innerHTML = tasks.map((t,i)=>`
+        <div class="task ${i===active?"active":""}">
+          <span class="task-icon">${t[2]}</span>
+          <div><strong>${t[0]}</strong><span>${t[1]}</span></div>
+          ${i<active?'<span class="status-check">✓</span>':'<span class="spinner"></span>'}
+        </div>
+      `).join("");
+    }
+
+    function renderFiles(){
+      const files = [
+        ["assets/","Images, icons and other assets","📁"],
+        ["index.html","Main homepage","▣"],
+        ["about.html","About Us page","▣"],
+        ["services.html","Services page","▣"],
+        ["contact.html","Contact page","▣"],
+        ["styles.css","Website styles","▣"],
+        ["script.js","Interactive functionality","▣"]
+      ];
+      $("#fileList").innerHTML = files.map(([name,desc,icon])=>`
+        <div class="file-row"><span>${icon}</span><div><strong>${name}</strong><span>${desc}</span></div></div>
+      `).join("");
+    }
+
+    let buildTimer = null;
+    function startBuild(){
+      clearInterval(buildTimer);
+      let progress = 75;
+      let active = 4;
+      renderTasks(active);
+      $("#progressBar").style.width = progress + "%";
+      $("#progressPct").textContent = progress + "%";
+      $("#progressText").textContent = "Building your website...";
+      $("#previewNameNav").textContent = state.businessName || "Acme Marketing Agency";
+      $("#previewDescription").textContent = state.businessDescription || "We help businesses grow online with data-driven strategies that deliver real results.";
+      buildTimer = setInterval(()=>{
+        progress += 5;
+        if(progress > 100) progress = 100;
+        $("#progressBar").style.width = progress + "%";
+        $("#progressPct").textContent = progress + "%";
+        if(progress >= 100){
+          clearInterval(buildTimer);
+          $("#progressText").textContent = "Website complete.";
+          setTimeout(()=>go("ready"),650);
+        }
+      },450);
+    }
+
+    function sync(){
+      state.businessName = $("#businessName")?.value || state.businessName;
+      state.businessDescription = $("#businessDescription")?.value || state.businessDescription;
+      state.industry = $("#industry")?.value || state.industry;
+      state.notes = $("#extraNotes")?.value || state.notes;
+
+      renderSteps();
+      renderGoals();
+      renderStyles();
+      renderPages();
+      renderReview();
+      renderSummaries();
+      renderTasks();
+      renderFiles();
+
+      $("#descCount").textContent = ($("#businessDescription")?.value || "").length;
+      $("#notesCount").textContent = ($("#extraNotes")?.value || "").length;
+
+      const slug = slugify(state.businessName || "Acme Marketing Agency");
+      $("#zipName").textContent = slug + ".zip";
+    }
+
+    function bindGo(){
+      $all("[data-go]").forEach(btn=>{
+        if(btn.dataset.bound) return;
+        btn.dataset.bound = "true";
+        btn.addEventListener("click",e=>{
+          e.preventDefault();
+          go(btn.dataset.go);
+        });
+      });
+    }
+
+    function bind(){
+      bindGo();
+      $all("[data-next]").forEach(b=>b.addEventListener("click",next));
+      $all("[data-prev]").forEach(b=>b.addEventListener("click",prev));
+      ["businessName","businessDescription","industry","extraNotes"].forEach(id=>{
+        const el = $("#" + id);
+        if(el) el.addEventListener("input",sync);
+      });
+      $("#sendCode").addEventListener("click",()=>{
+        const email = $("#emailAddress").value.trim();
+        if(!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)){
+          toast("Enter a valid email address.");
+          return;
+        }
+        toast("Your website code link is ready. Connect this button to your email service when you publish.");
+      });
+    }
+
+    function toast(msg){
+      const el = $("#toast");
+      el.textContent = msg;
+      el.classList.add("show");
+      setTimeout(()=>el.classList.remove("show"),2400);
+    }
+
+    function escapeHTML(str){
+      return String(str).replace(/[&<>"']/g, m => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]));
+    }
+
+    function slugify(str){
+      return String(str).toLowerCase().trim().replace(/[^a-z0-9]+/g,"-").replace(/^-+|-+$/g,"") || "website-code";
+    }
+
+    bind();
+    sync();
+  </script>
+</body>
+</html>

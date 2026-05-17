@@ -1,0 +1,769 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <title>AI Operational Readiness Program for Small Businesses | Regen Creatives</title>
+
+  <meta name="description" content="Regen Creatives helps small businesses adopt practical AI systems for daily operations, lead follow-up, scheduling, communication, workflow organization, and administrative time recovery." />
+
+  <meta name="keywords" content="AI literacy for small businesses, AI readiness program, AI operational readiness, small business AI training, AI workflow automation, business operations AI, workforce AI readiness, AI implementation for entrepreneurs, Regen Creatives, Lorraine Dukes" />
+
+  <link rel="canonical" href="https://regencreatives.com/ai-operational-readiness-program/" />
+
+  <meta property="og:title" content="AI Operational Readiness Program for Small Businesses" />
+  <meta property="og:description" content="Practical AI systems for everyday business operations, administrative time recovery, lead follow-up, and workflow organization." />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://regencreatives.com/ai-operational-readiness-program/" />
+  <meta property="og:image" content="https://regencreatives.com/img/regenlogo3d.png" />
+
+  <style>
+    :root {
+      --navy: #111827;
+      --dark: #0b1731;
+      --blue: #1085d2;
+      --soft-blue: #a7c4da;
+      --light: #f8fafc;
+      --white: #ffffff;
+      --gray: #4b5563;
+      --border: #e5e7eb;
+      --coral: #ff6f61;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: Arial, Helvetica, sans-serif;
+      color: var(--navy);
+      background: var(--white);
+      line-height: 1.6;
+    }
+
+    a {
+      color: inherit;
+    }
+
+    .container {
+      width: min(1120px, 92%);
+      margin: 0 auto;
+    }
+
+    header {
+      background: var(--white);
+      border-bottom: 1px solid var(--border);
+      position: sticky;
+      top: 0;
+      z-index: 50;
+    }
+
+    .nav {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 18px 0;
+    }
+
+    .brand {
+      font-weight: 800;
+      letter-spacing: -0.03em;
+      font-size: 1.1rem;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 24px;
+      font-size: 0.95rem;
+    }
+
+    .nav-links a {
+      text-decoration: none;
+      color: var(--gray);
+    }
+
+    .nav-links a:hover {
+      color: var(--blue);
+    }
+
+    .hero {
+      background:
+        radial-gradient(circle at top right, rgba(16, 133, 210, 0.16), transparent 32%),
+        linear-gradient(135deg, #0b1731 0%, #111827 100%);
+      color: var(--white);
+      padding: 92px 0;
+    }
+
+    .hero-grid {
+      display: grid;
+      grid-template-columns: 1.2fr 0.8fr;
+      gap: 48px;
+      align-items: center;
+    }
+
+    .eyebrow {
+      display: inline-block;
+      font-size: 0.85rem;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      color: var(--soft-blue);
+      margin-bottom: 16px;
+      font-weight: 700;
+    }
+
+    h1 {
+      font-size: clamp(2.4rem, 6vw, 4.8rem);
+      line-height: 1.02;
+      letter-spacing: -0.06em;
+      margin: 0 0 24px;
+    }
+
+    .hero p {
+      font-size: 1.18rem;
+      color: #e5e7eb;
+      max-width: 720px;
+      margin-bottom: 32px;
+    }
+
+    .button-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 14px;
+    }
+
+    .button {
+      display: inline-block;
+      padding: 14px 22px;
+      border-radius: 999px;
+      text-decoration: none;
+      font-weight: 700;
+      transition: 0.2s ease;
+    }
+
+    .button-primary {
+      background: var(--coral);
+      color: var(--white);
+    }
+
+    .button-primary:hover {
+      transform: translateY(-2px);
+      opacity: 0.94;
+    }
+
+    .button-secondary {
+      border: 1px solid rgba(255,255,255,0.35);
+      color: var(--white);
+    }
+
+    .button-secondary:hover {
+      background: rgba(255,255,255,0.08);
+    }
+
+    .hero-card {
+      background: rgba(255,255,255,0.08);
+      border: 1px solid rgba(255,255,255,0.18);
+      border-radius: 24px;
+      padding: 28px;
+      backdrop-filter: blur(10px);
+    }
+
+    .hero-card h2 {
+      margin-top: 0;
+      color: var(--white);
+      font-size: 1.4rem;
+    }
+
+    .hero-card ul {
+      padding-left: 20px;
+      color: #e5e7eb;
+    }
+
+    section {
+      padding: 78px 0;
+    }
+
+    .section-light {
+      background: var(--light);
+    }
+
+    .section-title {
+      max-width: 820px;
+      margin-bottom: 36px;
+    }
+
+    .section-title h2 {
+      font-size: clamp(2rem, 4vw, 3rem);
+      line-height: 1.1;
+      letter-spacing: -0.045em;
+      margin: 0 0 16px;
+    }
+
+    .section-title p {
+      color: var(--gray);
+      font-size: 1.05rem;
+    }
+
+    .answer-box {
+      background: #eef6fc;
+      border-left: 5px solid var(--blue);
+      padding: 24px;
+      border-radius: 16px;
+      margin-top: 28px;
+    }
+
+    .answer-box strong {
+      display: block;
+      margin-bottom: 8px;
+    }
+
+    .grid-3 {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 22px;
+    }
+
+    .grid-2 {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 24px;
+    }
+
+    .card {
+      background: var(--white);
+      border: 1px solid var(--border);
+      border-radius: 22px;
+      padding: 28px;
+      box-shadow: 0 12px 30px rgba(17, 24, 39, 0.05);
+    }
+
+    .card h3 {
+      margin-top: 0;
+      font-size: 1.25rem;
+      letter-spacing: -0.02em;
+    }
+
+    .card p,
+    .card li {
+      color: var(--gray);
+    }
+
+    .card ul {
+      padding-left: 20px;
+      margin-bottom: 0;
+    }
+
+    .pill-list {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      padding: 0;
+      list-style: none;
+      margin-top: 24px;
+    }
+
+    .pill-list li {
+      background: var(--white);
+      border: 1px solid var(--border);
+      padding: 10px 14px;
+      border-radius: 999px;
+      color: var(--gray);
+      font-size: 0.95rem;
+    }
+
+    .dark-section {
+      background: var(--navy);
+      color: var(--white);
+    }
+
+    .dark-section p,
+    .dark-section li {
+      color: #d1d5db;
+    }
+
+    .dark-section .card {
+      background: #172033;
+      border-color: rgba(255,255,255,0.1);
+    }
+
+    .dark-section .card h3 {
+      color: var(--white);
+    }
+
+    .steps {
+      counter-reset: step;
+    }
+
+    .step {
+      position: relative;
+      padding-left: 58px;
+    }
+
+    .step::before {
+      counter-increment: step;
+      content: counter(step);
+      position: absolute;
+      left: 0;
+      top: 24px;
+      width: 36px;
+      height: 36px;
+      border-radius: 999px;
+      background: var(--blue);
+      color: var(--white);
+      display: grid;
+      place-items: center;
+      font-weight: 800;
+    }
+
+    .cta {
+      background:
+        radial-gradient(circle at top left, rgba(255, 111, 97, 0.18), transparent 30%),
+        var(--dark);
+      color: var(--white);
+      text-align: center;
+      padding: 86px 0;
+    }
+
+    .cta h2 {
+      font-size: clamp(2rem, 4vw, 3.4rem);
+      line-height: 1.1;
+      letter-spacing: -0.045em;
+      margin: 0 0 18px;
+    }
+
+    .cta p {
+      color: #e5e7eb;
+      max-width: 720px;
+      margin: 0 auto 30px;
+      font-size: 1.08rem;
+    }
+
+    footer {
+      background: #050a16;
+      color: #cbd5e1;
+      padding: 36px 0;
+      font-size: 0.9rem;
+    }
+
+    footer a {
+      color: #ffffff;
+      text-decoration: none;
+    }
+
+    .footer-grid {
+      display: flex;
+      justify-content: space-between;
+      gap: 24px;
+      flex-wrap: wrap;
+    }
+
+    @media (max-width: 860px) {
+      .hero-grid,
+      .grid-2,
+      .grid-3 {
+        grid-template-columns: 1fr;
+      }
+
+      .nav {
+        align-items: flex-start;
+        gap: 14px;
+      }
+
+      .nav-links {
+        display: none;
+      }
+
+      .hero {
+        padding: 72px 0;
+      }
+
+      section {
+        padding: 58px 0;
+      }
+    }
+  </style>
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Service",
+    "name": "AI Operational Readiness Program for Small Businesses",
+    "provider": {
+      "@type": "Organization",
+      "name": "Regen Creatives",
+      "url": "https://regencreatives.com"
+    },
+    "areaServed": "United States",
+    "serviceType": "AI literacy, business operations strategy, workflow modernization, AI readiness training",
+    "description": "A practical AI readiness program that helps small businesses adopt AI-supported systems for daily operations, communication, scheduling, lead follow-up, website operations, and administrative time recovery.",
+    "audience": {
+      "@type": "Audience",
+      "audienceType": "Small business owners, solo entrepreneurs, workforce development organizations, entrepreneurship programs, non-technical founders"
+    }
+  }
+  </script>
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "What is the AI Operational Readiness Program?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "The AI Operational Readiness Program is a practical business operations program that helps small businesses use AI-supported systems to improve daily workflows, reduce administrative work, organize communication, and improve lead follow-up."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Who is the program for?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "The program is designed for small business owners, solo entrepreneurs, service-based businesses, community business programs, workforce development organizations, non-technical founders, and underserved business communities."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Does the program require coding or advanced technical knowledge?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "No. The program focuses on practical AI adoption using familiar business tools such as Google Workspace, AI assistants, workflow templates, forms, calendars, and lightweight operational systems."
+        }
+      }
+    ]
+  }
+  </script>
+</head>
+
+<body>
+
+  <header>
+    <div class="container nav">
+      <div class="brand">Regen Creatives</div>
+      <nav class="nav-links" aria-label="Primary navigation">
+        <a href="#program">Program</a>
+        <a href="#outcomes">Outcomes</a>
+        <a href="#delivery">Delivery</a>
+        <a href="#partnership">Partnership</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+
+    <section class="hero">
+      <div class="container hero-grid">
+        <div>
+          <span class="eyebrow">AI Literacy · Workflow Modernization · Small Business Readiness</span>
+          <h1>AI Operational Readiness Program for Small Businesses</h1>
+          <p>
+            Practical AI systems for everyday business operations, helping small businesses reduce administrative work,
+            improve lead follow-up, organize communication, and build workflows they can actually maintain.
+          </p>
+
+          <div class="button-row">
+            <a class="button button-primary" href="mailto:hello@regencreatives.com?subject=AI Operational Readiness Program">Discuss Partnership</a>
+            <a class="button button-secondary" href="#program">View Program Details</a>
+          </div>
+        </div>
+
+        <aside class="hero-card" aria-label="Program summary">
+          <h2>Built for Real Operations</h2>
+          <ul>
+            <li>Lead follow-up systems</li>
+            <li>Administrative time recovery</li>
+            <li>AI-assisted communication templates</li>
+            <li>Google Workspace workflows</li>
+            <li>Small business AI readiness planning</li>
+          </ul>
+        </aside>
+      </div>
+    </section>
+
+    <section id="program">
+      <div class="container">
+        <div class="section-title">
+          <h2>What Is the AI Operational Readiness Program?</h2>
+          <p>
+            The AI Operational Readiness Program is a business operations and workforce readiness initiative designed to help organizations adopt practical artificial intelligence systems without requiring advanced technical expertise.
+          </p>
+
+          <div class="answer-box">
+            <strong>Direct Answer:</strong>
+            The program helps small businesses use AI to improve daily operations, including scheduling, communication, lead follow-up, customer intake, workflow organization, website updates, and administrative task reduction.
+          </div>
+        </div>
+
+        <div class="grid-3">
+          <div class="card">
+            <h3>Operational Assessment</h3>
+            <p>
+              Participants complete a structured intake process to identify bottlenecks, repetitive tasks, communication breakdowns, and workflow inefficiencies.
+            </p>
+          </div>
+
+          <div class="card">
+            <h3>AI Readiness Planning</h3>
+            <p>
+              Businesses receive guidance on where AI can realistically improve operations without disrupting existing workflows or requiring complex software builds.
+            </p>
+          </div>
+
+          <div class="card">
+            <h3>Workflow Modernization</h3>
+            <p>
+              Participants build simple systems for communication, intake, scheduling, lead tracking, website operations, and administrative organization.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section-light">
+      <div class="container">
+        <div class="section-title">
+          <h2>Common Problems This Program Addresses</h2>
+          <p>
+            Many small businesses do not need more software. They need clearer systems, better follow-up, and practical AI support built around how they already work.
+          </p>
+        </div>
+
+        <ul class="pill-list">
+          <li>Inconsistent lead follow-up</li>
+          <li>Missed customer inquiries</li>
+          <li>Disorganized communication</li>
+          <li>Repetitive administrative work</li>
+          <li>Fragmented scheduling</li>
+          <li>Unclear workflow ownership</li>
+          <li>Manual website updates</li>
+          <li>Uncertainty around AI adoption</li>
+          <li>Lack of operational documentation</li>
+          <li>Low confidence using AI tools</li>
+        </ul>
+      </div>
+    </section>
+
+    <section>
+      <div class="container">
+        <div class="section-title">
+          <h2>Who This Program Serves</h2>
+          <p>
+            The program is designed for business owners and organizations that need practical, non-technical AI adoption support.
+          </p>
+        </div>
+
+        <div class="grid-2">
+          <div class="card">
+            <h3>Business Participants</h3>
+            <ul>
+              <li>Small business owners</li>
+              <li>Solo entrepreneurs</li>
+              <li>Service-based businesses</li>
+              <li>Non-technical founders</li>
+              <li>Independent contractors</li>
+              <li>Career-transitioning professionals</li>
+            </ul>
+          </div>
+
+          <div class="card">
+            <h3>Program Partners</h3>
+            <ul>
+              <li>Workforce development organizations</li>
+              <li>Community entrepreneurship programs</li>
+              <li>Small business incubators</li>
+              <li>Economic development offices</li>
+              <li>Digital literacy initiatives</li>
+              <li>Libraries and community education programs</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="outcomes" class="dark-section">
+      <div class="container">
+        <div class="section-title">
+          <h2>Program Outcomes</h2>
+          <p>
+            Participants leave with practical assets, not vague AI advice.
+          </p>
+        </div>
+
+        <div class="grid-3">
+          <div class="card">
+            <h3>AI Operational Readiness Roadmap</h3>
+            <p>
+              A practical plan that identifies where AI can support the business, which workflows should be improved first, and how to maintain progress.
+            </p>
+          </div>
+
+          <div class="card">
+            <h3>Communication Systems</h3>
+            <p>
+              Reusable AI-assisted templates for customer inquiries, appointment reminders, lead nurturing, intake processing, and follow-up.
+            </p>
+          </div>
+
+          <div class="card">
+            <h3>Workflow Templates</h3>
+            <p>
+              Simple structures for lead tracking, administrative organization, scheduling, intake, and internal process documentation.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="delivery">
+      <div class="container">
+        <div class="section-title">
+          <h2>Sample 6-Week Pilot Structure</h2>
+          <p>
+            The program can be delivered as a cohort, workshop series, workforce readiness pilot, or implementation partnership.
+          </p>
+        </div>
+
+        <div class="grid-2 steps">
+          <div class="card step">
+            <h3>Business Operations Intake</h3>
+            <p>Participants document current workflows, administrative pain points, communication systems, and lead handling processes.</p>
+          </div>
+
+          <div class="card step">
+            <h3>AI Readiness Assessment</h3>
+            <p>Each business identifies realistic AI opportunities based on operational need, not trends or tool hype.</p>
+          </div>
+
+          <div class="card step">
+            <h3>Administrative Time Recovery</h3>
+            <p>Participants create simple systems to reduce repetitive work using templates, checklists, and AI-assisted workflows.</p>
+          </div>
+
+          <div class="card step">
+            <h3>Lead Follow-Up System</h3>
+            <p>Businesses build a basic follow-up structure using tools such as Google Sheets, Forms, Calendar, and Gmail Templates.</p>
+          </div>
+
+          <div class="card step">
+            <h3>AI-Assisted Communication</h3>
+            <p>Participants create reusable communication prompts and templates for common customer and administrative scenarios.</p>
+          </div>
+
+          <div class="card step">
+            <h3>Roadmap and Sustainability Plan</h3>
+            <p>Each participant leaves with a practical implementation roadmap and next-step priorities for maintaining the system.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section-light">
+      <div class="container">
+        <div class="section-title">
+          <h2>Measurable Business Outcomes</h2>
+          <p>
+            The program is designed to support practical, measurable improvement in how small businesses organize and execute daily operations.
+          </p>
+        </div>
+
+        <div class="grid-3">
+          <div class="card">
+            <h3>Reduced Admin Workload</h3>
+            <p>Participants identify repetitive administrative tasks and create systems to reduce manual effort.</p>
+          </div>
+
+          <div class="card">
+            <h3>Improved Lead Response</h3>
+            <p>Businesses improve consistency in customer intake, follow-up, and inquiry handling.</p>
+          </div>
+
+          <div class="card">
+            <h3>Increased AI Confidence</h3>
+            <p>Participants gain practical experience applying AI to everyday business activities.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="partnership">
+      <div class="container">
+        <div class="section-title">
+          <h2>Partnership Opportunities</h2>
+          <p>
+            Regen Creatives partners with organizations seeking practical AI literacy, business operations training, small business modernization, and workforce readiness programming.
+          </p>
+        </div>
+
+        <div class="grid-2">
+          <div class="card">
+            <h3>Program Formats</h3>
+            <ul>
+              <li>Small business workshops</li>
+              <li>Founder cohorts</li>
+              <li>AI literacy pilots</li>
+              <li>Workforce readiness programs</li>
+              <li>Community education initiatives</li>
+              <li>Implementation support sessions</li>
+            </ul>
+          </div>
+
+          <div class="card">
+            <h3>Best-Fit Partners</h3>
+            <ul>
+              <li>Incubators and accelerators</li>
+              <li>Workforce boards</li>
+              <li>Community colleges</li>
+              <li>Economic development organizations</li>
+              <li>Chambers of commerce</li>
+              <li>Digital equity programs</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section-light">
+      <div class="container">
+        <div class="section-title">
+          <h2>About Regen Creatives</h2>
+          <p>
+            Regen Creatives is an operations strategy and AI implementation studio focused on helping businesses modernize workflows through practical systems, operational organization, and AI-supported business processes.
+          </p>
+          <p>
+            Founded by Lorraine Dukes, Regen Creatives combines expertise in customer experience design, workflow strategy, operational systems thinking, and AI implementation to help businesses create sustainable improvements without unnecessary technical complexity.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <section class="cta">
+      <div class="container">
+        <h2>Bring Practical AI Readiness to Your Small Business Community</h2>
+        <p>
+          Regen Creatives is available for AI literacy partnerships, workforce readiness pilots, entrepreneurship programs, small business workshops, and operational implementation support.
+        </p>
+        <a class="button button-primary" href="mailto:hello@regencreatives.com?subject=AI Operational Readiness Program Partnership">Start a Partnership Conversation</a>
+      </div>
+    </section>
+
+  </main>
+
+  <footer>
+    <div class="container footer-grid">
+      <div>
+        <strong>Regen Creatives</strong><br />
+        Operations Strategy & AI Implementation
+      </div>
+
+      <div>
+        <a href="https://regencreatives.com">regencreatives.com</a><br />
+        <a href="mailto:hello@regencreatives.com">hello@regencreatives.com</a>
+      </div>
+    </div>
+  </footer>
+
+</body>
+</html>

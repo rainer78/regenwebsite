@@ -928,6 +928,117 @@
     grid-template-columns: 1fr;
   }
 }
+    .market-mini-widget {
+  background: linear-gradient(
+    145deg,
+    rgba(11, 23, 49, 0.96),
+    rgba(17, 24, 39, 0.98)
+  );
+  border-radius: 24px;
+  padding: 1.25rem;
+  color: #ffffff;
+  overflow: hidden;
+  position: relative;
+  isolation: isolate;
+}
+
+/* soft ambient glow */
+.market-mini-widget::before {
+  content: "";
+  position: absolute;
+  width: 220px;
+  height: 220px;
+  top: -120px;
+  right: -100px;
+  background: radial-gradient(
+    circle,
+    rgba(103,180,255,0.22),
+    transparent 70%
+  );
+  z-index: 0;
+}
+
+.market-mini-header,
+.market-mini-stats,
+.market-mini-tabs {
+  position: relative;
+  z-index: 2;
+}
+
+.market-mini-eyebrow {
+  font-size: .72rem;
+  text-transform: uppercase;
+  letter-spacing: .08em;
+  color: rgba(255,255,255,0.62);
+  margin-bottom: .45rem;
+}
+
+.market-mini-header h4 {
+  margin: 0;
+  font-size: 1rem;
+  font-weight: 600;
+  line-height: 1.4;
+}
+
+.market-mini-value {
+  font-size: 1.8rem;
+  font-weight: 700;
+  margin: .5rem 0 0;
+}
+
+.market-mini-stats {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: .75rem;
+  margin-top: 1rem;
+}
+
+.market-mini-stats div {
+  background: rgba(255,255,255,0.06);
+  border-radius: 16px;
+  padding: .75rem;
+  backdrop-filter: blur(10px);
+}
+
+.market-mini-stats span {
+  display: block;
+  font-size: .72rem;
+  color: rgba(255,255,255,0.58);
+  margin-bottom: .2rem;
+}
+
+.market-mini-stats strong {
+  font-size: 1rem;
+  font-weight: 600;
+}
+
+.market-mini-tabs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: .5rem;
+  margin-top: 1rem;
+}
+
+.market-tab {
+  border: none;
+  background: rgba(255,255,255,0.08);
+  color: rgba(255,255,255,0.88);
+  padding: .55rem .85rem;
+  border-radius: 999px;
+  cursor: pointer;
+  font-size: .78rem;
+  transition:
+    background .25s ease,
+    transform .25s ease,
+    color .25s ease;
+}
+
+.market-tab:hover,
+.market-tab.active {
+  background: #ffffff;
+  color: #0b1731;
+  transform: translateY(-1px);
+}
   </style>
 </head>
 <body>
@@ -1070,23 +1181,61 @@
           </a>
         </article>
 
-        <article class="live-side-card live-status-card">
-          <p class="live-status-label">AutoSite AI Status</p>
-          <p class="live-status-value">Placeholder Content Active</p>
-          <p class="live-status-time">
-            Feed connection pending:
-            <span id="autosite-last-synced">AutoSite AI Feed coming soon</span>
-          </p>
+       <article class="live-side-card live-status-card market-mini-widget">
 
-          <a
-            href="https://www.redfin.com/county/536/GA/Cobb-County/housing-market"
-            class="live-link"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Compare Local Trends
-          </a>
-        </article>
+  <div class="market-mini-header">
+    <p class="market-mini-eyebrow">Cobb County Snapshot</p>
+    <h4 id="miniMetricTitle">Median Listing Price</h4>
+    <p id="miniMetricValue" class="market-mini-value">$449,900</p>
+  </div>
+
+  <div class="market-mini-stats">
+    <div>
+      <span>1Y</span>
+      <strong id="miniOneYear">-0.01%</strong>
+    </div>
+
+    <div>
+      <span>3Y</span>
+      <strong id="miniThreeYear">0.45%</strong>
+    </div>
+  </div>
+
+  <div class="market-mini-tabs">
+    <button class="market-tab active"
+      data-title="Median Listing Price"
+      data-value="$449,900"
+      data-one="-0.01%"
+      data-three="0.45%">
+      Listings
+    </button>
+
+    <button class="market-tab"
+      data-title="Median Sold Price"
+      data-value="$435,000"
+      data-one="-0.16%"
+      data-three="5.52%">
+      Sold
+    </button>
+
+    <button class="market-tab"
+      data-title="Active Listings"
+      data-value="4,070"
+      data-one="8.97%"
+      data-three="57.40%">
+      Inventory
+    </button>
+
+    <button class="market-tab"
+      data-title="Median Rent"
+      data-value="$1,785/mo"
+      data-one="-0.56%"
+      data-three="-15%">
+      Rent
+    </button>
+  </div>
+
+</article>
       </div>
     </div>
   </div>
@@ -1246,5 +1395,30 @@
       toggle.setAttribute("aria-expanded", isOpen ? "true" : "false");
     });
   </script>
+
+  <script>
+const miniTabs = document.querySelectorAll(".market-tab");
+
+const miniMetricTitle = document.getElementById("miniMetricTitle");
+const miniMetricValue = document.getElementById("miniMetricValue");
+const miniOneYear = document.getElementById("miniOneYear");
+const miniThreeYear = document.getElementById("miniThreeYear");
+
+miniTabs.forEach(tab => {
+  tab.addEventListener("click", () => {
+
+    miniTabs.forEach(item => item.classList.remove("active"));
+    tab.classList.add("active");
+
+    miniMetricTitle.textContent = tab.dataset.title;
+    miniMetricValue.textContent = tab.dataset.value;
+    miniOneYear.textContent = tab.dataset.one;
+    miniThreeYear.textContent = tab.dataset.three;
+  });
+});
+</script>
+
+
+</html>
 </body>
 </html>

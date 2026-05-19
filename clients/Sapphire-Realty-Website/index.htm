@@ -1039,6 +1039,107 @@
   color: #0b1731;
   transform: translateY(-1px);
 }
+
+.market-widget {
+  max-width: 760px;
+  margin: 2rem auto;
+  padding: 1.25rem;
+  border-radius: 24px;
+  background: #ffffff;
+  box-shadow: 0 18px 45px rgba(15, 23, 42, 0.10);
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+.market-widget-header {
+  padding: 1rem;
+  border-radius: 18px;
+  background: #f7f7f5;
+  text-align: center;
+}
+
+.market-widget-header .eyebrow {
+  margin: 0 0 .35rem;
+  font-size: .8rem;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+  color: #6b7280;
+}
+
+.market-widget-header h3 {
+  margin: 0;
+  font-size: 1.35rem;
+  color: #111827;
+}
+
+.market-widget-header p {
+  margin: .5rem 0 0;
+  font-size: 2rem;
+  font-weight: 700;
+  color: #0b1731;
+}
+
+.metric-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+  gap: .75rem;
+  margin-top: 1rem;
+}
+
+.metric-card {
+  text-align: left;
+  border: 1px solid #e5e7eb;
+  background: #ffffff;
+  border-radius: 16px;
+  padding: 1rem;
+  cursor: pointer;
+  transition: transform .2s ease, box-shadow .2s ease, border-color .2s ease;
+}
+
+.metric-card:hover,
+.metric-card.active {
+  transform: translateY(-3px);
+  border-color: #0b1731;
+  box-shadow: 0 10px 24px rgba(15, 23, 42, 0.10);
+}
+
+.metric-card span {
+  display: block;
+  font-size: .85rem;
+  color: #6b7280;
+  margin-bottom: .35rem;
+}
+
+.metric-card strong {
+  color: #111827;
+  font-size: 1.05rem;
+}
+
+.trend-panel {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: .75rem;
+  margin-top: 1rem;
+}
+
+.trend-panel div {
+  padding: 1rem;
+  border-radius: 16px;
+  background: #0b1731;
+  color: #ffffff;
+}
+
+.trend-panel span {
+  display: block;
+  font-size: .8rem;
+  color: #cbd5e1;
+}
+
+.trend-panel strong {
+  display: block;
+  margin-top: .25rem;
+  font-size: 1.4rem;
+}
+
   </style>
 </head>
 <body>
@@ -1236,6 +1337,64 @@
   </div>
 
 </article>
+
+        <div class="market-widget">
+  <div class="market-widget-header">
+    <p class="eyebrow">Key Cobb County market data</p>
+    <h3 id="metric-title">Median Listing Price</h3>
+    <p id="metric-value">$449,900</p>
+  </div>
+
+  <div class="metric-grid">
+    <button class="metric-card active" data-title="Median Listing Price" data-value="$449,900" data-one="-0.01%" data-three="0.45%">
+      <span>Median listing $</span>
+      <strong>$449,900</strong>
+    </button>
+
+    <button class="metric-card" data-title="Median Sold Price" data-value="$435,000" data-one="-0.16%" data-three="5.52%">
+      <span>Median sold $</span>
+      <strong>$435,000</strong>
+    </button>
+
+    <button class="metric-card" data-title="Price Per Square Foot" data-value="$203/sq ft" data-one="-2.40%" data-three="0%">
+      <span>$ per sq ft</span>
+      <strong>$203/sq ft</strong>
+    </button>
+
+    <button class="metric-card" data-title="Active Listings" data-value="4,070" data-one="8.97%" data-three="57.40%">
+      <span>Active listings</span>
+      <strong>4,070</strong>
+    </button>
+
+    <button class="metric-card" data-title="Median Days on Market" data-value="42 days" data-one="10.53%" data-three="31.25%">
+      <span>Median days on market</span>
+      <strong>42 days</strong>
+    </button>
+
+    <button class="metric-card" data-title="Rental Properties" data-value="3,512" data-one="15.81%" data-three="196.88%">
+      <span>Rental properties</span>
+      <strong>3,512</strong>
+    </button>
+
+    <button class="metric-card" data-title="Median Rent" data-value="$1,785/mo" data-one="-0.56%" data-three="-15%">
+      <span>Median rent</span>
+      <strong>$1,785/mo</strong>
+    </button>
+  </div>
+
+  <div class="trend-panel">
+    <div>
+      <span>1Y Change</span>
+      <strong id="one-year-change">-0.01%</strong>
+    </div>
+    <div>
+      <span>3Y Change</span>
+      <strong id="three-year-change">0.45%</strong>
+    </div>
+  </div>
+</div>
+
+
       </div>
     </div>
   </div>
@@ -1322,7 +1481,7 @@
           </p>
 
           <div class="footer-socials">
-           <!-- <a href="#" class="social-link" aria-label="Facebook" target="_blank" rel="noopener noreferrer">
+           <a href="#" class="social-link" aria-label="Facebook" target="_blank" rel="noopener noreferrer">
               <svg viewBox="0 0 24 24">
                 <path d="M24 12.073c0-6.627-5.373-12-12-12S0 5.446 0 12.073c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/>
               </svg>
@@ -1337,7 +1496,7 @@
             <a href="#" class="social-link" aria-label="LinkedIn" target="_blank" rel="noopener noreferrer">
               <svg viewBox="0 0 24 24">
                 <path d="M19 0H5C2.239 0 0 2.239 0 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5V5c0-2.761-2.238-5-5-5zM8 19H5V8h3v11zM6.5 6.732c-.966 0-1.75-.79-1.75-1.764S5.534 3.204 6.5 3.204s1.75.79 1.75 1.764-.783 1.764-1.75 1.764zM20 19h-3v-5.604c0-3.368-4-3.113-4 0V19h-3V8h3v1.765c1.396-2.586 7-2.777 7 2.476V19z"/>
-              </svg>-->
+              </svg>
             
             </a>
           </div>
@@ -1414,6 +1573,26 @@ miniTabs.forEach(tab => {
     miniMetricValue.textContent = tab.dataset.value;
     miniOneYear.textContent = tab.dataset.one;
     miniThreeYear.textContent = tab.dataset.three;
+  });
+});
+</script>
+
+  <script>
+const cards = document.querySelectorAll(".metric-card");
+const title = document.getElementById("metric-title");
+const value = document.getElementById("metric-value");
+const oneYear = document.getElementById("one-year-change");
+const threeYear = document.getElementById("three-year-change");
+
+cards.forEach(card => {
+  card.addEventListener("click", () => {
+    cards.forEach(item => item.classList.remove("active"));
+    card.classList.add("active");
+
+    title.textContent = card.dataset.title;
+    value.textContent = card.dataset.value;
+    oneYear.textContent = card.dataset.one;
+    threeYear.textContent = card.dataset.three;
   });
 });
 </script>

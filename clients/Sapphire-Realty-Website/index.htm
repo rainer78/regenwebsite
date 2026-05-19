@@ -928,216 +928,207 @@
     grid-template-columns: 1fr;
   }
 }
-    .market-mini-widget {
-  background: linear-gradient(
-    145deg,
-    rgba(11, 23, 49, 0.96),
-    rgba(17, 24, 39, 0.98)
-  );
-  border-radius: 24px;
-  padding: 1.25rem;
-  color: #ffffff;
-  overflow: hidden;
-  position: relative;
-  isolation: isolate;
+.live-updates-layout {
+  display: grid;
+  gap: 1.75rem;
 }
 
-/* soft ambient glow */
-.market-mini-widget::before {
+.live-updates-secondary {
+  display: grid;
+  grid-template-columns: minmax(0, 1.35fr) minmax(280px, .75fr);
+  gap: 1.5rem;
+  align-items: stretch;
+}
+
+.redesigned-side-cards {
+  display: grid;
+  grid-template-rows: 1fr 1fr;
+  gap: 1.5rem;
+}
+
+.market-dashboard-widget {
+  position: relative;
+  overflow: hidden;
+  min-height: 520px;
+  padding: 2rem;
+  border-radius: 32px;
+  color: #ffffff;
+  background:
+    linear-gradient(145deg, rgba(5, 15, 35, .96), rgba(12, 30, 62, .98)),
+    radial-gradient(circle at top right, rgba(96, 165, 250, .32), transparent 36%);
+  box-shadow: 0 28px 60px rgba(15, 23, 42, .20);
+  border: 1px solid rgba(255,255,255,.10);
+}
+
+.market-dashboard-widget::before {
   content: "";
   position: absolute;
-  width: 220px;
-  height: 220px;
-  top: -120px;
-  right: -100px;
-  background: radial-gradient(
-    circle,
-    rgba(103,180,255,0.22),
-    transparent 70%
-  );
+  inset: 0;
+  background:
+    linear-gradient(to right, rgba(5,15,35,.88), rgba(5,15,35,.48)),
+    url("https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=1200&q=80")
+    center right / cover no-repeat;
+  opacity: .38;
   z-index: 0;
 }
 
-.market-mini-header,
-.market-mini-stats,
-.market-mini-tabs {
+.market-dashboard-widget > * {
   position: relative;
-  z-index: 2;
+  z-index: 1;
 }
 
-.market-mini-eyebrow {
-  font-size: .72rem;
-  text-transform: uppercase;
-  letter-spacing: .08em;
-  color: #fff;
-  margin-bottom: .45rem;
-}
-
-.market-mini-header h4 {
-  margin: 0;
-  font-size: 1rem;
-  font-weight: 600;
-  line-height: 1.4;
-}
-
-.market-mini-value {
-  font-size: 1.8rem;
-  font-weight: 700;
-  margin: .5rem 0 0;
-}
-
-.market-mini-stats {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: .75rem;
-  margin-top: 1rem;
-}
-
-.market-mini-stats div {
-  background: rgba(255,255,255,0.06);
-  border-radius: 16px;
-  padding: .75rem;
-  backdrop-filter: blur(10px);
-}
-
-.market-mini-stats span {
-  display: block;
-  font-size: .72rem;
-  color: #fff;
-  margin-bottom: .2rem;
-}
-
-.market-mini-stats strong {
-  font-size: 1rem;
-  font-weight: 600;
-}
-
-.market-mini-tabs {
+.market-dashboard-top,
+.market-dashboard-footer {
   display: flex;
-  flex-wrap: wrap;
-  gap: .5rem;
-  margin-top: 1rem;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
 }
 
-.market-tab {
-  border: none;
-  background: rgba(255,255,255,0.08);
-  color: rgba(255,255,255,0.88);
-  padding: .55rem .85rem;
-  border-radius: 999px;
-  cursor: pointer;
+.market-dashboard-eyebrow {
+  margin: 0 0 .45rem;
   font-size: .78rem;
-  transition:
-    background .25s ease,
-    transform .25s ease,
-    color .25s ease;
-}
-
-.market-tab:hover,
-.market-tab.active {
-  background: #ffffff;
-  color: #0b1731;
-  transform: translateY(-1px);
-}
-
-.market-widget {
-  max-width: 760px;
-  margin: 2rem auto;
-  padding: 1.25rem;
-  border-radius: 24px;
-  background: #ffffff;
-  box-shadow: 0 18px 45px rgba(15, 23, 42, 0.10);
-  font-family: Arial, Helvetica, sans-serif;
-}
-
-.market-widget-header {
-  padding: 1rem;
-  border-radius: 18px;
-  background: #f7f7f5;
-  text-align: center;
-}
-
-.market-widget-header .eyebrow {
-  margin: 0 0 .35rem;
-  font-size: .8rem;
-  letter-spacing: .08em;
   text-transform: uppercase;
-  color: #6b7280;
+  letter-spacing: .13em;
+  color: rgba(255,255,255,.64);
 }
 
-.market-widget-header h3 {
+.market-dashboard-widget h3 {
   margin: 0;
-  font-size: 1.35rem;
-  color: #111827;
+  font-size: clamp(1.4rem, 3vw, 2rem);
 }
 
-.market-widget-header p {
-  margin: .5rem 0 0;
-  font-size: 2rem;
-  font-weight: 700;
-  color: #0b1731;
+.market-live-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: .5rem;
+  padding: .55rem .9rem;
+  border-radius: 999px;
+  background: rgba(255,255,255,.12);
+  color: rgba(255,255,255,.9);
+  font-size: .85rem;
 }
 
-.metric-grid {
+.market-live-pill span {
+  width: .58rem;
+  height: .58rem;
+  border-radius: 999px;
+  background: #67e8a5;
+  box-shadow: 0 0 0 6px rgba(103,232,165,.14);
+}
+
+.market-dashboard-value {
+  margin: 1.6rem 0 .5rem;
+  font-size: clamp(3.1rem, 7vw, 5.5rem);
+  line-height: .95;
+  font-weight: 800;
+  letter-spacing: -.06em;
+  color: #bfdbfe;
+}
+
+.market-dashboard-note {
+  max-width: 34rem;
+  margin: 0;
+  font-size: 1rem;
+  line-height: 1.6;
+  color: rgba(255,255,255,.72);
+}
+
+.market-dashboard-trends {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1rem;
+  margin: 2rem 0 1.4rem;
+}
+
+.market-dashboard-trends div {
+  padding: 1.1rem;
+  border-radius: 22px;
+  background: rgba(255,255,255,.10);
+  border: 1px solid rgba(255,255,255,.10);
+  backdrop-filter: blur(12px);
+}
+
+.market-dashboard-trends span {
+  display: block;
+  margin-bottom: .35rem;
+  font-size: .78rem;
+  text-transform: uppercase;
+  letter-spacing: .08em;
+  color: rgba(255,255,255,.58);
+}
+
+.market-dashboard-trends strong {
+  font-size: 1.6rem;
+}
+
+.market-dashboard-tabs {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
   gap: .75rem;
-  margin-top: 1rem;
 }
 
 .metric-card {
-  text-align: left;
-  border: 1px solid #e5e7eb;
-  background: #ffffff;
-  border-radius: 16px;
-  padding: 1rem;
+  border: 1px solid rgba(255,255,255,.12);
+  background: rgba(255,255,255,.10);
+  color: rgba(255,255,255,.9);
+  padding: .9rem;
+  border-radius: 18px;
   cursor: pointer;
-  transition: transform .2s ease, box-shadow .2s ease, border-color .2s ease;
+  transition: all .22s ease;
 }
 
 .metric-card:hover,
 .metric-card.active {
-  transform: translateY(-3px);
-  border-color: #0b1731;
-  box-shadow: 0 10px 24px rgba(15, 23, 42, 0.10);
+  background: #ffffff;
+  color: #0b1731;
+  transform: translateY(-2px);
 }
 
-.metric-card span {
-  display: block;
-  font-size: .85rem;
-  color: #6b7280;
-  margin-bottom: .35rem;
+.market-dashboard-footer {
+  margin-top: 1.4rem;
+  padding-top: 1rem;
+  border-top: 1px solid rgba(255,255,255,.12);
 }
 
-.metric-card strong {
-  color: #111827;
-  font-size: 1.05rem;
+.market-dashboard-footer p {
+  margin: 0;
+  font-size: .86rem;
+  color: rgba(255,255,255,.62);
 }
 
-.trend-panel {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: .75rem;
-  margin-top: 1rem;
+.market-dashboard-footer a {
+  color: #bfdbfe;
+  text-decoration: none;
+  font-weight: 700;
 }
 
-.trend-panel div {
-  padding: 1rem;
-  border-radius: 16px;
-  background: #0b1731;
-  color: #ffffff;
+@media (max-width: 980px) {
+  .live-updates-secondary {
+    grid-template-columns: 1fr;
+  }
+
+  .market-dashboard-widget {
+    min-height: auto;
+  }
 }
 
-.trend-panel span {
-  display: block;
-  font-size: .8rem;
-  color: #cbd5e1;
-}
+@media (max-width: 640px) {
+  .market-dashboard-widget {
+    padding: 1.35rem;
+    border-radius: 24px;
+  }
 
-.trend-panel strong {
-  display: block;
-  margin-top: .25rem;
-  font-size: 1.4rem;
+  .market-dashboard-top,
+  .market-dashboard-footer {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .market-dashboard-trends,
+  .market-dashboard-tabs {
+    grid-template-columns: 1fr 1fr;
+  }
 }
 
   </style>
@@ -1207,17 +1198,19 @@
       <span class="live-updates-eyebrow">Fresh Updates From Sapphire Realty</span>
       <h2>Real Estate Market Updates</h2>
       <p>
-        Local real estate insights, community highlights, and practical buyer and seller guidance.
+        Local real estate insights, community highlights, and practical buyer or seller guidance.
         This section will later connect to the AutoSite AI Feed for automatic updates.
       </p>
     </div>
 
-    <div class="live-updates-grid">
+    <div class="live-updates-layout">
+
+      <!-- Featured Update -->
       <article class="live-feature-card" id="autosite-featured-card">
         <div class="live-feature-media">
           <img
             id="autosite-featured-image"
-            src="https://images.unsplash.com/photo-1560518883-ce09059eeffa?auto=format&fit=crop&w=1200&q=80"
+            src="https://images.unsplash.com/photo-1560518883-ce09059eeffa?auto=format&fit=crop&w=1400&q=80"
             alt="Residential homes in a real estate market update"
           />
         </div>
@@ -1247,153 +1240,145 @@
         </div>
       </article>
 
-      <div class="live-side-cards">
-        <article class="live-side-card">
-          <span class="live-badge" id="autosite-side1-tag">Community Spotlight</span>
-          <h4 id="autosite-side1-title">Browse Current Cobb County Homes for Sale</h4>
-          <p id="autosite-side1-excerpt">
-            Explore active listings, current pricing, and homes available across Cobb County neighborhoods.
+      <!-- Lower Content Row -->
+      <div class="live-updates-secondary">
+
+        <!-- Full Market Widget -->
+        <article class="market-dashboard-widget">
+          <div class="market-dashboard-top">
+            <div>
+              <p class="market-dashboard-eyebrow">Cobb County Snapshot</p>
+              <h3 id="metric-title">Median Listing Price</h3>
+            </div>
+
+            <span class="market-live-pill">
+              <span></span>
+              Live Data
+            </span>
+          </div>
+
+          <p id="metric-value" class="market-dashboard-value">$449,900</p>
+
+          <p id="metric-note" class="market-dashboard-note">
+            Key market indicator for buyers and sellers watching the local market.
           </p>
-          <a
-            id="autosite-side1-link"
-            href="https://www.realtor.com/realestateandhomes-search/Cobb-County_GA"
-            class="live-link"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Browse Listings
-          </a>
+
+          <div class="market-dashboard-trends">
+            <div>
+              <span>1 Year Change</span>
+              <strong id="one-year-change">-0.01%</strong>
+            </div>
+
+            <div>
+              <span>3 Year Change</span>
+              <strong id="three-year-change">0.45%</strong>
+            </div>
+          </div>
+
+          <div class="market-dashboard-tabs">
+            <button class="metric-card active"
+              data-title="Median Listing Price"
+              data-value="$449,900"
+              data-one="-0.01%"
+              data-three="0.45%"
+              data-note="Key market indicator for buyers and sellers watching the local market.">
+              Listings
+            </button>
+
+            <button class="metric-card"
+              data-title="Median Sold Price"
+              data-value="$435,000"
+              data-one="-0.16%"
+              data-three="5.52%"
+              data-note="A practical signal for understanding what homes are actually closing for.">
+              Sold
+            </button>
+
+            <button class="metric-card"
+              data-title="Price Per Square Foot"
+              data-value="$203/sq ft"
+              data-one="-2.40%"
+              data-three="0%"
+              data-note="Useful for comparing home value across neighborhoods and property types.">
+              Price/Sq Ft
+            </button>
+
+            <button class="metric-card"
+              data-title="Active Listings"
+              data-value="4,070"
+              data-one="8.97%"
+              data-three="57.40%"
+              data-note="Inventory helps explain buyer options and seller competition.">
+              Inventory
+            </button>
+
+            <button class="metric-card"
+              data-title="Median Days on Market"
+              data-value="42 days"
+              data-one="10.53%"
+              data-three="31.25%"
+              data-note="Days on market can show whether buyers are moving quickly or negotiating more carefully.">
+              Days
+            </button>
+
+            <button class="metric-card"
+              data-title="Median Rent"
+              data-value="$1,785/mo"
+              data-one="-0.56%"
+              data-three="-15%"
+              data-note="Rental trends can help investors and relocating households compare options.">
+              Rent
+            </button>
+          </div>
+
+          <div class="market-dashboard-footer">
+            <p>Market data updated April 2026</p>
+            <a
+              href="https://www.realtor.com/local/market/georgia/cobb-county"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              View Full Market Report →
+            </a>
+          </div>
         </article>
 
-        <article class="live-side-card">
-          <span class="live-badge" id="autosite-side2-tag">Homeowner Tip</span>
-          <h4 id="autosite-side2-title">Check Cobb County Homestead Exemption Information</h4>
-          <p id="autosite-side2-excerpt">
-            Homeowners may be able to reduce their property tax burden by applying for applicable exemptions.
-          </p>
-          <a
-            id="autosite-side2-link"
-            href="https://www.cobbtax.gov/property/exemptions.php"
-            class="live-link"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            View Exemption Info
-          </a>
-        </article>
+        <!-- Supporting Updates -->
+        <div class="live-side-cards redesigned-side-cards">
+          <article class="live-side-card">
+            <span class="live-badge" id="autosite-side1-tag">Community Spotlight</span>
+            <h4 id="autosite-side1-title">Browse Current Cobb County Homes for Sale</h4>
+            <p id="autosite-side1-excerpt">
+              Explore active listings, current pricing, and homes available across Cobb County neighborhoods.
+            </p>
+            <a
+              id="autosite-side1-link"
+              href="https://www.realtor.com/realestateandhomes-search/Cobb-County_GA"
+              class="live-link"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              Browse Listings
+            </a>
+          </article>
 
-       <article class="live-side-card live-status-card market-mini-widget">
-
-  <div class="market-mini-header">
-    <p class="market-mini-eyebrow">Cobb County Snapshot</p>
-    <h4 id="miniMetricTitle">Median Listing Price</h4>
-    <p id="miniMetricValue" class="market-mini-value">$449,900</p>
-  </div>
-
-  <div class="market-mini-stats">
-    <div>
-      <span>1Y</span>
-      <strong id="miniOneYear">-0.01%</strong>
-    </div>
-
-    <div>
-      <span>3Y</span>
-      <strong id="miniThreeYear">0.45%</strong>
-    </div>
-  </div>
-
-  <div class="market-mini-tabs">
-    <button class="market-tab active"
-      data-title="Median Listing Price"
-      data-value="$449,900"
-      data-one="-0.01%"
-      data-three="0.45%">
-      Listings
-    </button>
-
-    <button class="market-tab"
-      data-title="Median Sold Price"
-      data-value="$435,000"
-      data-one="-0.16%"
-      data-three="5.52%">
-      Sold
-    </button>
-
-    <button class="market-tab"
-      data-title="Active Listings"
-      data-value="4,070"
-      data-one="8.97%"
-      data-three="57.40%">
-      Inventory
-    </button>
-
-    <button class="market-tab"
-      data-title="Median Rent"
-      data-value="$1,785/mo"
-      data-one="-0.56%"
-      data-three="-15%">
-      Rent
-    </button>
-  </div>
-
-</article>
-
-        <div class="market-widget">
-  <div class="market-widget-header">
-    <p class="eyebrow">Key Cobb County market data</p>
-    <h3 id="metric-title">Median Listing Price</h3>
-    <p id="metric-value">$449,900</p>
-  </div>
-
-  <div class="metric-grid">
-    <button class="metric-card active" data-title="Median Listing Price" data-value="$449,900" data-one="-0.01%" data-three="0.45%">
-      <span>Median listing $</span>
-      <strong>$449,900</strong>
-    </button>
-
-    <button class="metric-card" data-title="Median Sold Price" data-value="$435,000" data-one="-0.16%" data-three="5.52%">
-      <span>Median sold $</span>
-      <strong>$435,000</strong>
-    </button>
-
-    <button class="metric-card" data-title="Price Per Square Foot" data-value="$203/sq ft" data-one="-2.40%" data-three="0%">
-      <span>$ per sq ft</span>
-      <strong>$203/sq ft</strong>
-    </button>
-
-    <button class="metric-card" data-title="Active Listings" data-value="4,070" data-one="8.97%" data-three="57.40%">
-      <span>Active listings</span>
-      <strong>4,070</strong>
-    </button>
-
-    <button class="metric-card" data-title="Median Days on Market" data-value="42 days" data-one="10.53%" data-three="31.25%">
-      <span>Median days on market</span>
-      <strong>42 days</strong>
-    </button>
-
-    <button class="metric-card" data-title="Rental Properties" data-value="3,512" data-one="15.81%" data-three="196.88%">
-      <span>Rental properties</span>
-      <strong>3,512</strong>
-    </button>
-
-    <button class="metric-card" data-title="Median Rent" data-value="$1,785/mo" data-one="-0.56%" data-three="-15%">
-      <span>Median rent</span>
-      <strong>$1,785/mo</strong>
-    </button>
-  </div>
-
-  <div class="trend-panel">
-    <div>
-      <span>1Y Change</span>
-      <strong id="one-year-change">-0.01%</strong>
-    </div>
-    <div>
-      <span>3Y Change</span>
-      <strong id="three-year-change">0.45%</strong>
-    </div>
-  </div>
-</div>
-
+          <article class="live-side-card">
+            <span class="live-badge" id="autosite-side2-tag">Homeowner Tip</span>
+            <h4 id="autosite-side2-title">Check Cobb County Homestead Exemption Information</h4>
+            <p id="autosite-side2-excerpt">
+              Homeowners may be able to reduce their property tax burden by applying for applicable exemptions.
+            </p>
+            <a
+              id="autosite-side2-link"
+              href="https://www.cobbtax.gov/property/exemptions.php"
+              class="live-link"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              View Exemption Info
+            </a>
+          </article>
+        </div>
 
       </div>
     </div>
@@ -1555,49 +1540,24 @@
     });
   </script>
 
-  <script>
-const miniTabs = document.querySelectorAll(".market-tab");
-
-const miniMetricTitle = document.getElementById("miniMetricTitle");
-const miniMetricValue = document.getElementById("miniMetricValue");
-const miniOneYear = document.getElementById("miniOneYear");
-const miniThreeYear = document.getElementById("miniThreeYear");
-
-miniTabs.forEach(tab => {
-  tab.addEventListener("click", () => {
-
-    miniTabs.forEach(item => item.classList.remove("active"));
-    tab.classList.add("active");
-
-    miniMetricTitle.textContent = tab.dataset.title;
-    miniMetricValue.textContent = tab.dataset.value;
-    miniOneYear.textContent = tab.dataset.one;
-    miniThreeYear.textContent = tab.dataset.three;
-  });
-});
-</script>
-
-  <script>
-const cards = document.querySelectorAll(".metric-card");
-const title = document.getElementById("metric-title");
-const value = document.getElementById("metric-value");
-const oneYear = document.getElementById("one-year-change");
-const threeYear = document.getElementById("three-year-change");
-
-cards.forEach(card => {
+<script>
+document.querySelectorAll(".metric-card").forEach(card => {
   card.addEventListener("click", () => {
-    cards.forEach(item => item.classList.remove("active"));
+    document.querySelectorAll(".metric-card").forEach(item => item.classList.remove("active"));
     card.classList.add("active");
 
-    title.textContent = card.dataset.title;
-    value.textContent = card.dataset.value;
-    oneYear.textContent = card.dataset.one;
-    threeYear.textContent = card.dataset.three;
+    document.getElementById("metric-title").textContent = card.dataset.title;
+    document.getElementById("metric-value").textContent = card.dataset.value;
+    document.getElementById("one-year-change").textContent = card.dataset.one;
+    document.getElementById("three-year-change").textContent = card.dataset.three;
+    document.getElementById("metric-note").textContent = card.dataset.note;
   });
 });
 </script>
 
 
-</html>
-</body>
+
+
+
+
 </html>

@@ -236,25 +236,297 @@
   </div>
 </section>
 
-    <section id="gameplay" class="bg-black py-16 sm:py-24">
-      <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-        <p class="text-sm font-black uppercase tracking-[0.28em] text-[#84944c]">Gameplay Loop</p>
-        <div class="mt-8 grid gap-5 md:grid-cols-3">
-          <div class="border border-white/10 bg-white/[.03] p-6">
-            <h3 class="text-2xl font-black uppercase">Study</h3>
-            <p class="mt-3 leading-7 text-stone-300">Learn a survival principle before the day begins.</p>
+   <section id="gameplay" class="relative isolate overflow-hidden bg-black py-16 sm:py-24">
+  <!-- Background texture -->
+  <div class="absolute inset-0 -z-10 opacity-40"
+    style="background-image:
+      radial-gradient(circle at 20% 20%, rgba(132,148,76,.22), transparent 32%),
+      radial-gradient(circle at 80% 10%, rgba(120,81,49,.18), transparent 28%),
+      linear-gradient(to bottom, rgba(0,0,0,.65), #000 72%);">
+  </div>
+
+  <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+    <div class="max-w-3xl">
+      <p class="text-sm font-black uppercase tracking-[0.28em] text-[#84944c]">
+        Gameplay System
+      </p>
+
+      <h2 class="mt-5 text-4xl font-black uppercase tracking-tight text-white sm:text-5xl">
+        Every choice costs daylight.
+      </h2>
+
+      <p class="mt-5 max-w-2xl text-lg leading-8 text-stone-300">
+        Bush IQ drops players into a survival map where each location unlocks a field module.
+        Study the principle, choose your action, manage your resources, and survive long enough
+        to make it to extraction.
+      </p>
+    </div>
+
+    <div class="mt-12 grid gap-8 lg:grid-cols-[1fr_.9fr]">
+      <!-- Gameplay loop cards -->
+      <div class="grid gap-5">
+        <div class="border border-white/10 bg-white/[.04] p-6 shadow-2xl shadow-black/30">
+          <div class="flex items-start gap-4">
+            <div class="flex h-11 w-11 shrink-0 items-center justify-center border border-[#84944c]/50 bg-[#84944c]/15 text-sm font-black text-[#c4d17b]">
+              01
+            </div>
+            <div>
+              <h3 class="text-2xl font-black uppercase text-white">Study the Skill</h3>
+              <p class="mt-3 leading-7 text-stone-300">
+                Each module begins with a short survival lesson: water safety, shelter,
+                fire, navigation, first aid, foraging, weather, or signaling.
+              </p>
+            </div>
           </div>
-          <div class="border border-white/10 bg-white/[.03] p-6">
-            <h3 class="text-2xl font-black uppercase">Act</h3>
-            <p class="mt-3 leading-7 text-stone-300">Choose where to spend time, energy, tools, and daylight.</p>
+        </div>
+
+        <div class="border border-white/10 bg-white/[.04] p-6 shadow-2xl shadow-black/30">
+          <div class="flex items-start gap-4">
+            <div class="flex h-11 w-11 shrink-0 items-center justify-center border border-[#84944c]/50 bg-[#84944c]/15 text-sm font-black text-[#c4d17b]">
+              02
+            </div>
+            <div>
+              <h3 class="text-2xl font-black uppercase text-white">Choose Your Action</h3>
+              <p class="mt-3 leading-7 text-stone-300">
+                Players decide where to spend time, energy, tools, and daylight. Safer choices
+                may cost more resources. Faster choices may create bigger risks.
+              </p>
+            </div>
           </div>
-          <div class="border border-white/10 bg-white/[.03] p-6">
-            <h3 class="text-2xl font-black uppercase">Survive</h3>
-            <p class="mt-3 leading-7 text-stone-300">Adapt to injuries, weather, hunger, thirst, and mistakes.</p>
+        </div>
+
+        <div class="border border-white/10 bg-white/[.04] p-6 shadow-2xl shadow-black/30">
+          <div class="flex items-start gap-4">
+            <div class="flex h-11 w-11 shrink-0 items-center justify-center border border-[#84944c]/50 bg-[#84944c]/15 text-sm font-black text-[#c4d17b]">
+              03
+            </div>
+            <div>
+              <h3 class="text-2xl font-black uppercase text-white">Survive the Consequence</h3>
+              <p class="mt-3 leading-7 text-stone-300">
+                Hunger, thirst, injuries, shelter quality, weather, and knowledge shift after
+                every decision. Good judgment keeps you alive. Guessing gets expensive.
+              </p>
+            </div>
           </div>
         </div>
       </div>
-    </section>
+
+      <!-- Game preview panel -->
+      <div class="border border-[#84944c]/30 bg-stone-950/90 p-5 shadow-2xl shadow-black/40">
+        <div class="flex items-center justify-between border-b border-white/10 pb-4">
+          <div>
+            <p class="text-xs font-black uppercase tracking-[0.24em] text-[#84944c]">
+              Mission Preview
+            </p>
+            <h3 class="mt-2 text-2xl font-black uppercase text-white">
+              Day 07: River Crossing
+            </h3>
+          </div>
+          <div class="border border-white/10 bg-black px-3 py-2 text-right">
+            <p class="text-[10px] uppercase tracking-[0.2em] text-stone-500">Goal</p>
+            <p class="text-sm font-black text-white">Survive 30 Days</p>
+          </div>
+        </div>
+
+        <!-- Resource meters -->
+        <div class="mt-5 grid gap-4">
+          <div>
+            <div class="mb-2 flex justify-between text-xs font-bold uppercase tracking-[0.18em] text-stone-400">
+              <span>Health</span><span>84%</span>
+            </div>
+            <div class="h-2 bg-white/10">
+              <div class="h-2 w-[84%] bg-[#84944c]"></div>
+            </div>
+          </div>
+
+          <div>
+            <div class="mb-2 flex justify-between text-xs font-bold uppercase tracking-[0.18em] text-stone-400">
+              <span>Thirst</span><span>41%</span>
+            </div>
+            <div class="h-2 bg-white/10">
+              <div class="h-2 w-[41%] bg-[#84944c]"></div>
+            </div>
+          </div>
+
+          <div>
+            <div class="mb-2 flex justify-between text-xs font-bold uppercase tracking-[0.18em] text-stone-400">
+              <span>Energy</span><span>62%</span>
+            </div>
+            <div class="h-2 bg-white/10">
+              <div class="h-2 w-[62%] bg-[#84944c]"></div>
+            </div>
+          </div>
+
+          <div>
+            <div class="mb-2 flex justify-between text-xs font-bold uppercase tracking-[0.18em] text-stone-400">
+              <span>Knowledge</span><span>28%</span>
+            </div>
+            <div class="h-2 bg-white/10">
+              <div class="h-2 w-[28%] bg-[#84944c]"></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Module card -->
+        <div class="mt-6 border border-white/10 bg-black/70 p-5">
+          <p class="text-xs font-black uppercase tracking-[0.24em] text-[#84944c]">
+            Active Module
+          </p>
+          <h4 class="mt-2 text-xl font-black uppercase text-white">
+            Water Purification
+          </h4>
+          <p class="mt-3 leading-7 text-stone-300">
+            The stream looks clear, but clear water is not the same thing as safe water.
+            Filter, boil, treat, or take the risk.
+          </p>
+
+          <div class="mt-5 grid gap-3 sm:grid-cols-2">
+            <div class="border border-[#84944c]/40 bg-[#84944c]/10 p-4">
+              <p class="text-sm font-black uppercase text-white">Careful Choice</p>
+              <p class="mt-2 text-sm leading-6 text-stone-300">
+                Filter and boil. Gain safe water, lose daylight and energy.
+              </p>
+            </div>
+
+            <div class="border border-red-500/30 bg-red-950/20 p-4">
+              <p class="text-sm font-black uppercase text-white">Risky Choice</p>
+              <p class="mt-2 text-sm leading-6 text-stone-300">
+                Drink directly. Save time now, risk sickness later. Classic bad bargain.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Map modules -->
+    <div class="mt-12">
+      <div class="flex flex-col justify-between gap-4 border-t border-white/10 pt-8 sm:flex-row sm:items-end">
+        <div>
+          <p class="text-sm font-black uppercase tracking-[0.28em] text-[#84944c]">
+            World Map Modules
+          </p>
+          <h3 class="mt-3 text-3xl font-black uppercase text-white">
+            Unlock the map by proving the skill.
+          </h3>
+        </div>
+        <p class="max-w-xl leading-7 text-stone-400">
+          Each hotspot opens a playable module. Completing one location can unlock the next
+          survival zone, new gear, or harder conditions.
+        </p>
+      </div>
+
+      <div class="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+        <details class="group border border-white/10 bg-white/[.03] p-5 open:border-[#84944c]/50 open:bg-[#84944c]/10">
+          <summary class="cursor-pointer list-none">
+            <div class="flex items-center justify-between gap-4">
+              <h4 class="font-black uppercase text-white">Base Camp</h4>
+              <span class="text-xs font-black uppercase tracking-[0.16em] text-[#84944c]">Open</span>
+            </div>
+            <p class="mt-2 text-sm text-stone-400">Orientation and survival priorities.</p>
+          </summary>
+          <p class="mt-4 border-t border-white/10 pt-4 text-sm leading-6 text-stone-300">
+            Learn the first rule: shelter, water, fire, food, and signal. The order matters.
+          </p>
+        </details>
+
+        <details class="group border border-white/10 bg-white/[.03] p-5 open:border-[#84944c]/50 open:bg-[#84944c]/10">
+          <summary class="cursor-pointer list-none">
+            <div class="flex items-center justify-between gap-4">
+              <h4 class="font-black uppercase text-white">River Crossing</h4>
+              <span class="text-xs font-black uppercase tracking-[0.16em] text-[#84944c]">Open</span>
+            </div>
+            <p class="mt-2 text-sm text-stone-400">Water sourcing and purification.</p>
+          </summary>
+          <p class="mt-4 border-t border-white/10 pt-4 text-sm leading-6 text-stone-300">
+            Decide whether to filter, boil, treat, or move on. Each option changes thirst,
+            energy, and health.
+          </p>
+        </details>
+
+        <details class="group border border-white/10 bg-white/[.03] p-5 open:border-[#84944c]/50 open:bg-[#84944c]/10">
+          <summary class="cursor-pointer list-none">
+            <div class="flex items-center justify-between gap-4">
+              <h4 class="font-black uppercase text-white">Dense Woods</h4>
+              <span class="text-xs font-black uppercase tracking-[0.16em] text-[#84944c]">Open</span>
+            </div>
+            <p class="mt-2 text-sm text-stone-400">Foraging and plant identification.</p>
+          </summary>
+          <p class="mt-4 border-t border-white/10 pt-4 text-sm leading-6 text-stone-300">
+            Identify useful plants, avoid harmful lookalikes, and decide whether the calories
+            are worth the risk.
+          </p>
+        </details>
+
+        <details class="group border border-white/10 bg-white/[.03] p-5 open:border-[#84944c]/50 open:bg-[#84944c]/10">
+          <summary class="cursor-pointer list-none">
+            <div class="flex items-center justify-between gap-4">
+              <h4 class="font-black uppercase text-white">Ridge Shelter</h4>
+              <span class="text-xs font-black uppercase tracking-[0.16em] text-stone-500">Locked</span>
+            </div>
+            <p class="mt-2 text-sm text-stone-400">Shelter site selection and weather defense.</p>
+          </summary>
+          <p class="mt-4 border-t border-white/10 pt-4 text-sm leading-6 text-stone-300">
+            Unlock this zone after completing Base Camp and River Crossing.
+          </p>
+        </details>
+
+        <details class="group border border-white/10 bg-white/[.03] p-5 open:border-[#84944c]/50 open:bg-[#84944c]/10">
+          <summary class="cursor-pointer list-none">
+            <div class="flex items-center justify-between gap-4">
+              <h4 class="font-black uppercase text-white">Signal Hill</h4>
+              <span class="text-xs font-black uppercase tracking-[0.16em] text-stone-500">Locked</span>
+            </div>
+            <p class="mt-2 text-sm text-stone-400">Navigation, signaling, and route planning.</p>
+          </summary>
+          <p class="mt-4 border-t border-white/10 pt-4 text-sm leading-6 text-stone-300">
+            Use landmarks, sun position, map logic, and emergency signaling to move toward extraction.
+          </p>
+        </details>
+
+        <details class="group border border-white/10 bg-white/[.03] p-5 open:border-[#84944c]/50 open:bg-[#84944c]/10">
+          <summary class="cursor-pointer list-none">
+            <div class="flex items-center justify-between gap-4">
+              <h4 class="font-black uppercase text-white">Storm Zone</h4>
+              <span class="text-xs font-black uppercase tracking-[0.16em] text-stone-500">Locked</span>
+            </div>
+            <p class="mt-2 text-sm text-stone-400">Weather reading and risk response.</p>
+          </summary>
+          <p class="mt-4 border-t border-white/10 pt-4 text-sm leading-6 text-stone-300">
+            Bad weather punishes weak shelter, poor timing, and overconfidence. It is very fair,
+            which is to say, completely unforgiving.
+          </p>
+        </details>
+
+        <details class="group border border-white/10 bg-white/[.03] p-5 open:border-[#84944c]/50 open:bg-[#84944c]/10">
+          <summary class="cursor-pointer list-none">
+            <div class="flex items-center justify-between gap-4">
+              <h4 class="font-black uppercase text-white">Medic Point</h4>
+              <span class="text-xs font-black uppercase tracking-[0.16em] text-stone-500">Locked</span>
+            </div>
+            <p class="mt-2 text-sm text-stone-400">First aid and injury management.</p>
+          </summary>
+          <p class="mt-4 border-t border-white/10 pt-4 text-sm leading-6 text-stone-300">
+            Treat cuts, dehydration, exposure, sprains, burns, and sickness before they compound.
+          </p>
+        </details>
+
+        <details class="group border border-[#84944c]/30 bg-[#84944c]/10 p-5 open:border-[#84944c]/60">
+          <summary class="cursor-pointer list-none">
+            <div class="flex items-center justify-between gap-4">
+              <h4 class="font-black uppercase text-white">Extraction</h4>
+              <span class="text-xs font-black uppercase tracking-[0.16em] text-[#c4d17b]">Final</span>
+            </div>
+            <p class="mt-2 text-sm text-stone-300">The 30-day survival test.</p>
+          </summary>
+          <p class="mt-4 border-t border-white/10 pt-4 text-sm leading-6 text-stone-300">
+            Reach the final zone with enough health, knowledge, and supplies to complete the mission.
+          </p>
+        </details>
+      </div>
+    </div>
+  </div>
+</section>
 
     <section id="wishlist" class="bg-[#14180d] py-16 sm:py-24">
       <div class="mx-auto max-w-3xl px-4 text-center sm:px-6">

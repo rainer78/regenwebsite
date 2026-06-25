@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <title>Pickahroo - Digital Flyer</title>
+  
+  <!-- Importing Google Fonts matching the brand guide recommendations -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&family=Merriweather:wght@700;900&display=swap" rel="stylesheet">
+
+  <style>
+    /* =========================
+       Pickahroo Flyer CSS
+       ========================= */
+    :root {
+      --forest: #1F5D3A;
+      --deep: #0D2B1C;
+      --leaf: #6BAA44;
+      --fig: #6B3E87;
+      --harvest: #E96B2C;
+      --cream: #F7F5EE;
+      --paper: #FFFFFF;
+      --ink: #08140D;
+      --muted: #5E6F64;
+      --line: #D7DED6;
+      --soft-green: #EAF4E5;
+      --black: #030303;
+    }
+
+    * {
+      box-sizing: border-box;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    body {
+      margin: 0;
+      padding: 24px 16px;
+      background: #EFEFEF; /* Outer background to frame the flyer */
+      color: var(--ink);
+      font-family: 'Inter', ui-sans-serif, system-ui, sans-serif;
+      font-size: 18px;
+      line-height: 1.55;
+      display: flex;
+      justify-content: center;
+    }
+
+    /* Flyer Container */
+    .flyer-wrapper {
+      background: var(--cream);
+      max-width: 540px;
+      width: 100%;
+      border-radius: 24px;
+      overflow: hidden;
+      box-shadow: 0 20px 40px rgba(13, 43, 28, 0.1);
+      border: 1px solid var(--line);
+    }
+
+    /* Hero Image Section */
+    .hero-image {
+      width: 100%;
+      height: 280px;
+      object-fit: cover;
+      display: block;
+      background: var(--soft-green);
+    }
+
+    /* Content Area */
+    .flyer-content {
+      padding: 40px 32px 32px;
+      background: var(--paper);
+    }
+
+    .brand-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 24px;
+    }
+
+    .brand-name {
+      color: var(--harvest);
+      font-weight: 900;
+      font-size: 24px;
+      letter-spacing: -0.04em;
+    }
+
+    .pill {
+      background: #FCEBDD;
+      color: #9C3E16;
+      padding: 6px 12px;
+      border-radius: 999px;
+      font-size: 12px;
+      font-weight: 900;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+    }
+
+    /* Typography */
+    h1 {
+      font-family: 'Merriweather', Georgia, serif;
+      font-size: clamp(36px, 8vw, 46px);
+      line-height: 1.05;
+      letter-spacing: -0.04em;
+      color: var(--forest);
+      margin: 0 0 16px 0;
+    }
+
+    p.lead {
+      font-size: 20px;
+      color: var(--ink);
+      margin: 0 0 32px 0;
+    }
+
+    /* Feature List */
+    .feature-list {
+      display: grid;
+      gap: 16px;
+      margin-bottom: 40px;
+    }
+
+    .feature-item {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      background: #FAFAFA;
+      padding: 16px 20px;
+      border-radius: 12px;
+      border: 1px solid var(--line);
+    }
+
+    .feature-icon {
+      width: 24px;
+      height: 24px;
+      flex-shrink: 0;
+      fill: none;
+      stroke: var(--forest);
+      stroke-width: 2;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
+
+    .feature-text {
+      font-weight: 700;
+      color: var(--deep);
+      font-size: 16px;
+    }
+
+    /* Call to Action Band */
+    .cta-band {
+      background: var(--harvest);
+      margin: 0 -32px; /* Pulls out to the edges */
+      padding: 32px;
+      text-align: center;
+      color: var(--paper);
+    }
+
+    .cta-band h2 {
+      font-family: 'Merriweather', Georgia, serif;
+      font-size: 26px;
+      margin: 0 0 12px 0;
+      line-height: 1.1;
+      letter-spacing: -0.02em;
+    }
+
+    .cta-band p {
+      font-size: 16px;
+      margin: 0 0 24px 0;
+      opacity: 0.95;
+    }
+
+    /* Button (from UI Components) */
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 54px; /* Accessible touch target */
+      width: 100%;
+      background: var(--paper);
+      color: var(--harvest);
+      border-radius: 8px;
+      text-decoration: none;
+      font-size: 16px;
+      font-weight: 900;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      transition: transform 0.1s ease;
+    }
+
+    .btn:active {
+      transform: scale(0.97);
+    }
+
+    /* Footer */
+    .flyer-footer {
+      background: var(--cream);
+      padding: 24px 32px;
+      text-align: center;
+    }
+
+    .flyer-footer strong {
+      color: var(--forest);
+      font-size: 22px;
+      display: block;
+      margin-bottom: 4px;
+    }
+
+    .flyer-footer span {
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    @media (max-width: 480px) {
+      body {
+        padding: 0;
+        background: var(--paper);
+      }
+      .flyer-wrapper {
+        border-radius: 0;
+        border: none;
+        box-shadow: none;
+      }
+      .flyer-content {
+        padding: 32px 20px 24px;
+      }
+      .cta-band {
+        margin: 0 -20px;
+        padding: 32px 20px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <main class="flyer-wrapper">
+    <!-- Hero Photography (Real harvest per the guide) -->
+    <img src="./assets/fresh_harvest.png?text=Photo:+Fresh+Figs+on+Branch" alt="Fresh figs growing on a tree" class="hero-image" />
+
+    <div class="flyer-content">
+      
+      <div class="brand-header">
+        <span class="brand-name">Pickahroo</span>
+        <span class="pill">Free App</span>
+      </div>
+
+      <!-- Headline using Serif brand font -->
+      <h1>Find What's Growing Near You</h1>
+      
+      <!-- Body copy using Sans-Serif brand font -->
+      <p class="lead">
+        Your neighborhood is an orchard. Discover local fruit trees, berry patches, and gardens shared by your community.
+      </p>
+
+      <!-- Functional, card-based feature list -->
+      <div class="feature-list">
+        <div class="feature-item">
+          <svg class="feature-icon" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+            <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/>
+            <circle cx="12" cy="10" r="3"/>
+          </svg>
+          <span class="feature-text">Spot local harvests on the map</span>
+        </div>
+        <div class="feature-item">
+          <svg class="feature-icon" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+            <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/>
+            <circle cx="12" cy="7" r="4"/>
+          </svg>
+          <span class="feature-text">Meet your neighbors</span>
+        </div>
+        <div class="feature-item">
+          <svg class="feature-icon" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+            <path d="M12 22v-6m-4-4c-2 0-4-1-4-3s2-3 4-3 4 1 4 3m0 0c0-2 2-3 4-3s4 1 4 3-2 3-4 3m-4 4c-2 0-4-1-4-3m4 3c2 0 4-1 4-3"/>
+          </svg>
+          <span class="feature-text">List a tree and share abundance</span>
+        </div>
+      </div>
+
+      <!-- High-contrast CTA Band using Harvest Orange -->
+      <div class="cta-band">
+        <h2>Join the Harvest</h2>
+        <p>Ready to see what's growing around the corner?</p>
+        <a href="#" class="btn">Get the App</a>
+      </div>
+
+    </div>
+
+    <!-- Grounded, warm footer using Cream background -->
+    <div class="flyer-footer">
+      <strong>Pickahroo.com</strong>
+      <span>Community harvest and foraging network</span>
+    </div>
+
+  </main>
+
+</body>
+</html>

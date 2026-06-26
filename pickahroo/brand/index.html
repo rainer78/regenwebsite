@@ -128,6 +128,36 @@
        transition: color 0.1s ease, transform 0.1s ease;
      }
 
+      .sidebar {
+max-height: calc(100vh - 130px);
+overflow: hidden;
+}
+
+.sidebar nav {
+max-height: calc(100vh - 190px);
+overflow-y: auto;
+padding-right: 6px;
+overscroll-behavior: contain;
+}
+
+.sidebar nav::-webkit-scrollbar {
+width: 6px;
+}
+
+.sidebar nav::-webkit-scrollbar-track {
+background: transparent;
+}
+
+.sidebar nav::-webkit-scrollbar-thumb {
+background: #CACACA;
+border-radius: 999px;
+}
+
+.sidebar nav::-webkit-scrollbar-thumb:hover {
+background: var(--muted);
+}
+
+
      /* Mobile interactions - trigger strictly on tap/active */
      .sidebar a:active {
        color: var(--forest);

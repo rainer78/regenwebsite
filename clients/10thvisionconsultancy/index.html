@@ -1557,6 +1557,60 @@
     font-size: 0.96rem;
   }
 }
+
+    /* =====================================================
+   AUTOSITE AI INSIGHTS RECEIVER
+   ===================================================== */
+
+.insights-loading,
+.insights-empty,
+.insights-error {
+  grid-column: 1 / -1;
+  margin: 0;
+  padding: 32px;
+  border-radius: 12px;
+  color: #c6d2e1;
+  background: var(--navy-card);
+  text-align: center;
+}
+
+.feature-insight-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: right center;
+}
+
+.featured-insight {
+  min-width: 0;
+}
+
+.article-card h3 {
+  overflow-wrap: anywhere;
+}
+
+.article-link {
+  display: inline-flex;
+  align-items: center;
+  margin-top: auto;
+}
+
+.article-link::after {
+  content: " →";
+  margin-left: 6px;
+}
+
+@media screen and (max-width: 700px) {
+  .insights-loading,
+  .insights-empty,
+  .insights-error {
+    padding: 24px 20px;
+  }
+
+  .feature-insight-image {
+    object-position: center;
+  }
+}
   </style>
 </head>
 
@@ -2032,12 +2086,12 @@
 
   </div>
 </section>
+    
+<!-- ===================================================
+     AUTOSITE AI INSIGHTS RECEIVER
+     =================================================== -->
 
-    <!-- ===================================================
-         INSIGHTS
-         =================================================== -->
-
-  <section class="insights" id="insights">
+<section class="insights" id="insights">
   <div class="container">
 
     <div class="insights-heading">
@@ -2054,14 +2108,23 @@
       id="autosite-insights"
       data-site-id="10th-vision"
       data-limit="4"
+      aria-live="polite"
+      aria-busy="true"
     >
       <p class="insights-loading">
         Loading the latest insights...
       </p>
     </div>
 
+    <noscript>
+      <p class="insights-error">
+        JavaScript is required to display the latest insights.
+      </p>
+    </noscript>
+
   </div>
 </section>
+
     
     <!-- ===================================================
          FAQ
@@ -2660,6 +2723,299 @@
       }
     );
   </script>
+  <script>
+  /*
+   * =====================================================
+   * AUTOSITE AI WEBSITE RECEIVER
+   *
+   * Replace AUTOSITE_API_URL with the public endpoint
+   * that returns approved website updates.
+   * =====================================================
+   */
+
+  document.addEventListener("DOMContentLoaded", () => {
+    const receiver = document.querySelector("#autosite-insights");
+
+    if (!receiver) {
+      return;
+    }
+
+    const siteId =
+      receiver.dataset.siteId || "10th-vision";
+
+    const limit =
+      Number.parseInt(receiver.dataset.limit || "4", 10);
+
+    /*
+     * Replace this URL when the AutoSite AI API is ready.
+     *
+     * Expected example:
+     * https://www.autositeai.com/api/sites/10th-vision/updates?limit=4
+     */
+    const AUTOSITE_API_URL =
+      `https://www.autositeai.com/api/sites/${encodeURIComponent(siteId)}/updates?limit=${limit}`;
+
+    function createElement(tagName, className, textContent) {
+      const element = document.createElement(tagName);
+
+      if (className) {
+        element.className = className;
+      }
+
+      if (textContent) {
+        element.textContent = textContent;
+      }
+
+      return element;
+    }
+
+    function createArticleCard(update, isFeatured = false) {
+      const article =
+        createElement("article", "article-card");
+
+      const category =
+        createElement(
+          "span",
+          "article-tag",
+          update.category || "Business Update"
+        );
+
+      const title =
+        createElement(
+          "h3",
+          "",
+          update.title || "Latest Business Update"
+        );
+
+      const excerpt =
+        createElement(
+          "p",
+          "",
+          update.excerpt || ""
+        );
+
+      const link =
+        createElement(
+          "a",
+          "article-link",
+          update.linkLabel ||
+            (isFeatured ? "Read the Update" : "Read More")
+        );
+
+      link.href = update.url || "#";
+
+      if (
+        update.url &&
+        /^https?:\/\//i.test(update.url)
+      ) {
+        link.rel = "noopener noreferrer";
+      }
+
+      article.append(
+        category,
+        title,
+        excerpt,
+        link
+      );
+
+      return article;
+    }
+
+    function createFeaturedUpdate(update) {
+      const featuredColumn =
+        createElement("div", "featured-insight");
+
+      const imageWrapper =
+        createElement("div", "feature-image");
+
+      const image =
+        document.createElement("img");
+
+      image.className = "feature-insight-image";
+      image.src =
+        update.imageUrl ||
+        "./img/team-development-insights.png";
+
+      image.alt =
+        update.imageAlt ||
+        "10th Vision Consultancy business update";
+
+      image.loading = "eager";
+      image.decoding = "async";
+
+      image.addEventListener("error", () => {
+        image.src =
+          "./img/team-development-insights.png";
+      });
+
+      imageWrapper.appendChild(image);
+
+      const article =
+        createArticleCard(update, true);
+
+      featuredColumn.append(
+        imageWrapper,
+        article
+      );
+
+      return featuredColumn;
+    }
+
+    function createSecondaryUpdates(updates) {
+      const sideArticles =
+        createElement("div", "side-articles");
+
+      updates.forEach((update) => {
+        const article =
+          createArticleCard(update, false);
+
+        sideArticles.appendChild(article);
+      });
+
+      return sideArticles;
+    }
+
+    function normalizeUpdates(payload) {
+      /*
+       * Supports either:
+       *
+       * { "updates": [...] }
+       *
+       * or:
+       *
+       * [...]
+       */
+
+      const records =
+        Array.isArray(payload)
+          ? payload
+          : payload.updates;
+
+      if (!Array.isArray(records)) {
+        return [];
+      }
+
+      return records
+        .filter((update) => {
+          if (!update || typeof update !== "object") {
+            return false;
+          }
+
+          /*
+           * If status is omitted, the record is accepted.
+           * If status is supplied, it must be "published".
+           */
+          return (
+            !update.status ||
+            update.status === "published"
+          );
+        })
+        .sort((first, second) => {
+          const firstDate =
+            new Date(
+              first.publishedAt ||
+              first.createdAt ||
+              0
+            ).getTime();
+
+          const secondDate =
+            new Date(
+              second.publishedAt ||
+              second.createdAt ||
+              0
+            ).getTime();
+
+          return secondDate - firstDate;
+        })
+        .slice(0, limit);
+    }
+
+    function renderUpdates(updates) {
+      receiver.replaceChildren();
+
+      if (updates.length === 0) {
+        const emptyMessage =
+          createElement(
+            "p",
+            "insights-empty",
+            "New insights are being prepared. Please check back soon."
+          );
+
+        receiver.appendChild(emptyMessage);
+        receiver.setAttribute("aria-busy", "false");
+
+        return;
+      }
+
+      const featuredUpdate = updates[0];
+      const secondaryUpdates = updates.slice(1, 4);
+
+      const featuredColumn =
+        createFeaturedUpdate(featuredUpdate);
+
+      const sideArticles =
+        createSecondaryUpdates(secondaryUpdates);
+
+      receiver.append(
+        featuredColumn,
+        sideArticles
+      );
+
+      receiver.setAttribute("aria-busy", "false");
+    }
+
+    function renderError() {
+      receiver.replaceChildren();
+
+      const errorMessage =
+        createElement(
+          "div",
+          "insights-error",
+          "The latest insights could not be loaded. Please try again later."
+        );
+
+      errorMessage.setAttribute("role", "status");
+
+      receiver.appendChild(errorMessage);
+      receiver.setAttribute("aria-busy", "false");
+    }
+
+    async function loadAutoSiteUpdates() {
+      try {
+        const response = await fetch(
+          AUTOSITE_API_URL,
+          {
+            method: "GET",
+            headers: {
+              Accept: "application/json"
+            },
+            cache: "no-store"
+          }
+        );
+
+        if (!response.ok) {
+          throw new Error(
+            `AutoSite receiver returned ${response.status}.`
+          );
+        }
+
+        const payload = await response.json();
+        const updates = normalizeUpdates(payload);
+
+        renderUpdates(updates);
+      } catch (error) {
+        console.error(
+          "AutoSite AI receiver error:",
+          error
+        );
+
+        renderError();
+      }
+    }
+
+    loadAutoSiteUpdates();
+  });
+</script>
 
 </body>
 </html>

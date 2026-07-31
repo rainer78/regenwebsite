@@ -984,9 +984,94 @@
       background: var(--pale);
     }
 
-    .prototype-message.visible {
-      display: block;
-    }
+ .assessment-group {
+  margin: 0;
+  padding: 22px;
+  border: 1px solid #cbd6e1;
+  border-radius: 10px;
+  background: var(--pale);
+}
+
+.assessment-group legend {
+  padding: 0 8px;
+  color: var(--navy);
+  font-family: var(--heading);
+  font-weight: 700;
+}
+
+.assessment-help {
+  margin: 0 0 14px;
+  color: var(--muted);
+  font-size: 0.92rem;
+}
+
+.assessment-options {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px 18px;
+}
+
+.assessment-option {
+  display: flex !important;
+  grid-template-columns: auto 1fr !important;
+  align-items: flex-start;
+  gap: 10px !important;
+  color: var(--text) !important;
+  font-weight: 500 !important;
+}
+
+.assessment-option input {
+  width: auto;
+  margin-top: 4px;
+}
+
+.assessment-section-heading {
+  margin-top: 12px;
+  padding-top: 24px;
+  border-top: 1px solid var(--line);
+}
+
+.assessment-section-heading h3 {
+  margin-bottom: 8px;
+  font-size: 1.5rem;
+}
+
+.assessment-section-heading p:last-child {
+  margin: 0;
+  color: var(--muted);
+}
+
+.assessment-notice {
+  padding: 18px 20px;
+  border-left: 4px solid var(--orange);
+  color: var(--muted);
+  background: var(--pale);
+  font-size: 0.9rem;
+}
+
+.assessment-notice p:last-child {
+  margin-bottom: 0;
+}
+
+.form-honeypot {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+
+@media screen and (max-width: 700px) {
+  .assessment-options {
+    grid-template-columns: 1fr;
+  }
+
+  .assessment-group {
+    padding: 20px 16px;
+  }
+}
 
     /* =====================================================
        TABLET
@@ -2485,120 +2570,671 @@
       </p>
 
       <form
-        class="assessment-form"
-        id="assessment-form"
+  class="assessment-form"
+  id="assessment-form"
+  action="https://formsubmit.co/info@10thvision.com"
+  method="POST"
+>
+
+  <!-- FormSubmit settings -->
+
+  <input
+    type="hidden"
+    name="_subject"
+    value="New Team Development Assessment"
+  >
+
+  <input
+    type="hidden"
+    name="_template"
+    value="table"
+  >
+
+  <input
+    type="hidden"
+    name="_next"
+    value="https://www.10thvision.com/thank-you.html"
+  >
+
+  <input
+    type="hidden"
+    name="formType"
+    value="Team Development Assessment"
+  >
+
+  <!-- Basic contact information -->
+
+  <label>
+    Name
+
+    <input
+      name="name"
+      type="text"
+      autocomplete="name"
+      required
+    >
+  </label>
+
+  <label>
+    Work email
+
+    <input
+      name="email"
+      type="email"
+      autocomplete="email"
+      required
+    >
+  </label>
+
+  <label>
+    Organization
+
+    <input
+      name="organization"
+      type="text"
+      autocomplete="organization"
+      required
+    >
+  </label>
+
+  <label>
+    Position or title
+
+    <input
+      name="positionTitle"
+      type="text"
+      autocomplete="organization-title"
+    >
+  </label>
+
+  <label>
+    Department or team name
+
+    <input
+      name="teamName"
+      type="text"
+    >
+  </label>
+
+  <label>
+    Team size
+
+    <select name="teamSize" required>
+      <option value="">
+        Select
+      </option>
+
+      <option value="2-5">
+        2–5
+      </option>
+
+      <option value="6-15">
+        6–15
+      </option>
+
+      <option value="16-50">
+        16–50
+      </option>
+
+      <option value="51-plus">
+        51+
+      </option>
+    </select>
+  </label>
+
+  <label>
+    Primary work arrangement
+
+    <select name="workArrangement" required>
+      <option value="">
+        Select
+      </option>
+
+      <option value="on-site">
+        On-site
+      </option>
+
+      <option value="remote">
+        Remote
+      </option>
+
+      <option value="hybrid">
+        Hybrid
+      </option>
+
+      <option value="multiple-locations">
+        Multiple locations
+      </option>
+    </select>
+  </label>
+
+  <label>
+    How long has the current team worked together?
+
+    <select name="teamAge" required>
+      <option value="">
+        Select
+      </option>
+
+      <option value="less-than-3-months">
+        Less than 3 months
+      </option>
+
+      <option value="3-6-months">
+        3–6 months
+      </option>
+
+      <option value="7-12-months">
+        7–12 months
+      </option>
+
+      <option value="1-3-years">
+        1–3 years
+      </option>
+
+      <option value="more-than-3-years">
+        More than 3 years
+      </option>
+    </select>
+  </label>
+
+  <label class="full-width">
+    What is the primary purpose of this team?
+
+    <textarea
+      name="teamPurpose"
+      rows="3"
+      required
+    ></textarea>
+  </label>
+
+  <label class="full-width">
+    Which situation best describes the team?
+
+    <select name="teamSituation" required>
+      <option value="">
+        Select one
+      </option>
+
+      <option value="new-team">
+        Newly formed team
+      </option>
+
+      <option value="conflict">
+        Recurring conflict or communication problems
+      </option>
+
+      <option value="role-clarity">
+        Unclear roles or accountability
+      </option>
+
+      <option value="leadership-change">
+        New leadership or restructuring
+      </option>
+
+      <option value="growth">
+        Growth or rapid hiring
+      </option>
+
+      <option value="stalled-performance">
+        Performance has stalled
+      </option>
+
+      <option value="transition">
+        Project completion, staffing change, or transition
+      </option>
+
+      <option value="other">
+        Another situation
+      </option>
+    </select>
+  </label>
+
+  <fieldset class="full-width assessment-group">
+    <legend>
+      Has the team recently experienced any significant changes?
+    </legend>
+
+    <div class="assessment-options">
+      <label class="assessment-option">
+        <input
+          type="checkbox"
+          name="recentChanges[]"
+          value="New leader"
+        >
+        New leader
+      </label>
+
+      <label class="assessment-option">
+        <input
+          type="checkbox"
+          name="recentChanges[]"
+          value="New team members"
+        >
+        New team members
+      </label>
+
+      <label class="assessment-option">
+        <input
+          type="checkbox"
+          name="recentChanges[]"
+          value="Reorganization"
+        >
+        Reorganization
+      </label>
+
+      <label class="assessment-option">
+        <input
+          type="checkbox"
+          name="recentChanges[]"
+          value="Change in responsibilities"
+        >
+        Change in responsibilities
+      </label>
+
+      <label class="assessment-option">
+        <input
+          type="checkbox"
+          name="recentChanges[]"
+          value="New technology or work processes"
+        >
+        New technology or work processes
+      </label>
+
+      <label class="assessment-option">
+        <input
+          type="checkbox"
+          name="recentChanges[]"
+          value="Remote or hybrid transition"
+        >
+        Remote or hybrid transition
+      </label>
+
+      <label class="assessment-option">
+        <input
+          type="checkbox"
+          name="recentChanges[]"
+          value="Staffing reduction"
+        >
+        Staffing reduction
+      </label>
+
+      <label class="assessment-option">
+        <input
+          type="checkbox"
+          name="recentChanges[]"
+          value="None"
+        >
+        None
+      </label>
+    </div>
+  </fieldset>
+
+  <div class="full-width assessment-section-heading">
+    <p class="section-kicker">
+      Current Team Conditions
+    </p>
+
+    <h3>
+      Rate the following statements
+    </h3>
+
+    <p>
+      Use a scale from 1 to 5, where 1 means strongly disagree and
+      5 means strongly agree.
+    </p>
+  </div>
+
+  <label class="full-width">
+    Team members understand their roles and responsibilities.
+
+    <select name="roleClarityRating" required>
+      <option value="">
+        Select a rating
+      </option>
+      <option value="1">1 — Strongly disagree</option>
+      <option value="2">2 — Disagree</option>
+      <option value="3">3 — Neutral or unsure</option>
+      <option value="4">4 — Agree</option>
+      <option value="5">5 — Strongly agree</option>
+    </select>
+  </label>
+
+  <label class="full-width">
+    Expectations and performance standards are clearly communicated.
+
+    <select name="expectationsRating" required>
+      <option value="">
+        Select a rating
+      </option>
+      <option value="1">1 — Strongly disagree</option>
+      <option value="2">2 — Disagree</option>
+      <option value="3">3 — Neutral or unsure</option>
+      <option value="4">4 — Agree</option>
+      <option value="5">5 — Strongly agree</option>
+    </select>
+  </label>
+
+  <label class="full-width">
+    Disagreements are handled respectfully and constructively.
+
+    <select name="conflictRating" required>
+      <option value="">
+        Select a rating
+      </option>
+      <option value="1">1 — Strongly disagree</option>
+      <option value="2">2 — Disagree</option>
+      <option value="3">3 — Neutral or unsure</option>
+      <option value="4">4 — Agree</option>
+      <option value="5">5 — Strongly agree</option>
+    </select>
+  </label>
+
+  <label class="full-width">
+    Team members feel safe raising concerns or admitting mistakes.
+
+    <select name="psychologicalSafetyRating" required>
+      <option value="">
+        Select a rating
+      </option>
+      <option value="1">1 — Strongly disagree</option>
+      <option value="2">2 — Disagree</option>
+      <option value="3">3 — Neutral or unsure</option>
+      <option value="4">4 — Agree</option>
+      <option value="5">5 — Strongly agree</option>
+    </select>
+  </label>
+
+  <label class="full-width">
+    Team members consistently follow through on commitments.
+
+    <select name="accountabilityRating" required>
+      <option value="">
+        Select a rating
+      </option>
+      <option value="1">1 — Strongly disagree</option>
+      <option value="2">2 — Disagree</option>
+      <option value="3">3 — Neutral or unsure</option>
+      <option value="4">4 — Agree</option>
+      <option value="5">5 — Strongly agree</option>
+    </select>
+  </label>
+
+  <label class="full-width">
+    The team consistently achieves its goals.
+
+    <select name="performanceRating" required>
+      <option value="">
+        Select a rating
+      </option>
+      <option value="1">1 — Strongly disagree</option>
+      <option value="2">2 — Disagree</option>
+      <option value="3">3 — Neutral or unsure</option>
+      <option value="4">4 — Agree</option>
+      <option value="5">5 — Strongly agree</option>
+    </select>
+  </label>
+
+  <label class="full-width">
+    What is the team’s greatest strength?
+
+    <textarea
+      name="greatestStrength"
+      rows="3"
+      required
+    ></textarea>
+  </label>
+
+  <label class="full-width">
+    What is the team’s most significant challenge?
+
+    <textarea
+      name="greatestChallenge"
+      rows="4"
+      required
+    ></textarea>
+  </label>
+
+  <fieldset class="full-width assessment-group">
+    <legend>
+      What outcomes would you like the engagement to accomplish?
+    </legend>
+
+    <p class="assessment-help">
+      Select all that apply.
+    </p>
+
+    <div class="assessment-options">
+      <label class="assessment-option">
+        <input
+          type="checkbox"
+          name="desiredOutcomes[]"
+          value="Clarify roles and responsibilities"
+        >
+        Clarify roles and responsibilities
+      </label>
+
+      <label class="assessment-option">
+        <input
+          type="checkbox"
+          name="desiredOutcomes[]"
+          value="Improve communication"
+        >
+        Improve communication
+      </label>
+
+      <label class="assessment-option">
+        <input
+          type="checkbox"
+          name="desiredOutcomes[]"
+          value="Build trust"
+        >
+        Build trust
+      </label>
+
+      <label class="assessment-option">
+        <input
+          type="checkbox"
+          name="desiredOutcomes[]"
+          value="Strengthen collaboration"
+        >
+        Strengthen collaboration
+      </label>
+
+      <label class="assessment-option">
+        <input
+          type="checkbox"
+          name="desiredOutcomes[]"
+          value="Address workplace conflict"
+        >
+        Address workplace conflict
+      </label>
+
+      <label class="assessment-option">
+        <input
+          type="checkbox"
+          name="desiredOutcomes[]"
+          value="Improve accountability"
+        >
+        Improve accountability
+      </label>
+
+      <label class="assessment-option">
+        <input
+          type="checkbox"
+          name="desiredOutcomes[]"
+          value="Strengthen leadership effectiveness"
+        >
+        Strengthen leadership effectiveness
+      </label>
+
+      <label class="assessment-option">
+        <input
+          type="checkbox"
+          name="desiredOutcomes[]"
+          value="Improve employee engagement"
+        >
+        Improve employee engagement
+      </label>
+
+      <label class="assessment-option">
+        <input
+          type="checkbox"
+          name="desiredOutcomes[]"
+          value="Improve decision-making"
+        >
+        Improve decision-making
+      </label>
+
+      <label class="assessment-option">
+        <input
+          type="checkbox"
+          name="desiredOutcomes[]"
+          value="Support organizational change"
+        >
+        Support organizational change
+      </label>
+
+      <label class="assessment-option">
+        <input
+          type="checkbox"
+          name="desiredOutcomes[]"
+          value="Strengthen remote or hybrid teamwork"
+        >
+        Strengthen remote or hybrid teamwork
+      </label>
+
+      <label class="assessment-option">
+        <input
+          type="checkbox"
+          name="desiredOutcomes[]"
+          value="Rebuild morale"
+        >
+        Rebuild morale
+      </label>
+    </div>
+  </fieldset>
+
+  <label class="full-width">
+    Which stage best describes the team currently?
+
+    <select name="currentTeamStage" required>
+      <option value="">
+        Select one
+      </option>
+
+      <option value="forming">
+        Forming — The team is new or still developing role clarity
+      </option>
+
+      <option value="storming">
+        Storming — The team is experiencing conflict, tension, or trust concerns
+      </option>
+
+      <option value="norming">
+        Norming — The team is developing stronger expectations and working agreements
+      </option>
+
+      <option value="performing">
+        Performing — The team collaborates effectively and consistently achieves results
+      </option>
+
+      <option value="adjourning-transitioning">
+        Adjourning or transitioning — The team is changing structure or completing work
+      </option>
+
+      <option value="unsure">
+        Unsure
+      </option>
+    </select>
+  </label>
+
+  <label class="full-width">
+    What is the most important thing 10th Vision should know about this team?
+
+    <textarea
+      name="importantContext"
+      rows="4"
+      required
+    ></textarea>
+  </label>
+
+  <label>
+    Preferred consultation format
+
+    <select name="preferredFormat">
+      <option value="">
+        Select
+      </option>
+
+      <option value="virtual">
+        Virtual
+      </option>
+
+      <option value="in-person">
+        In-person
+      </option>
+
+      <option value="hybrid">
+        Hybrid
+      </option>
+
+      <option value="unsure">
+        Unsure
+      </option>
+    </select>
+  </label>
+
+  <label>
+    Preferred timeframe
+
+    <input
+      name="preferredTimeframe"
+      type="text"
+      placeholder="For example, within 30 days"
+    >
+  </label>
+
+  <div class="full-width assessment-notice">
+    <p>
+      Information submitted through this assessment will be used to
+      evaluate team-development needs and prepare for a consultation.
+      Please do not include unnecessary confidential employee details.
+    </p>
+
+    <p>
+      This assessment is not a substitute for a formal employee-relations
+      investigation, legal review, or workplace-complaint process.
+    </p>
+  </div>
+
+  <div
+    class="form-honeypot"
+    aria-hidden="true"
+  >
+    <label for="assessment-website">
+      Website
+
+      <input
+        id="assessment-website"
+        name="_gotcha"
+        type="text"
+        tabindex="-1"
+        autocomplete="off"
       >
+    </label>
+  </div>
 
-        <label>
-          Name
+  <div class="full-width">
+    <button
+      class="btn btn-orange"
+      type="submit"
+    >
+      Submit Assessment
+    </button>
+  </div>
 
-          <input
-            name="name"
-            type="text"
-            required
-          >
-        </label>
-
-        <label>
-          Work email
-
-          <input
-            name="email"
-            type="email"
-            required
-          >
-        </label>
-
-        <label>
-          Organization
-
-          <input
-            name="organization"
-            type="text"
-            required
-          >
-        </label>
-
-        <label>
-          Team size
-
-          <select name="teamSize" required>
-            <option value="">
-              Select
-            </option>
-
-            <option value="2-5">
-              2–5
-            </option>
-
-            <option value="6-15">
-              6–15
-            </option>
-
-            <option value="16-50">
-              16–50
-            </option>
-
-            <option value="51-plus">
-              51+
-            </option>
-          </select>
-        </label>
-
-        <label class="full-width">
-          Which situation best describes the team?
-
-          <select name="teamSituation" required>
-            <option value="">
-              Select one
-            </option>
-
-            <option value="new-team">
-              Newly formed team
-            </option>
-
-            <option value="conflict">
-              Recurring conflict or communication problems
-            </option>
-
-            <option value="role-clarity">
-              Unclear roles or accountability
-            </option>
-
-            <option value="leadership-change">
-              New leadership or restructuring
-            </option>
-
-            <option value="growth">
-              Growth or rapid hiring
-            </option>
-
-            <option value="stalled-performance">
-              Performance has stalled
-            </option>
-          </select>
-        </label>
-
-        <label class="full-width">
-          What would you like to improve?
-
-          <textarea
-            name="desiredImprovement"
-            rows="4"
-            required
-          ></textarea>
-        </label>
-
-        <div class="full-width">
-          <button
-            class="btn btn-orange"
-            type="submit"
-          >
-            Submit Assessment
-          </button>
-        </div>
-
-      </form>
+</form>
 
       <div
         class="prototype-message"
@@ -2720,15 +3356,7 @@
       }
     });
 
-    assessmentForm.addEventListener(
-      "submit",
-      (event) => {
-        event.preventDefault();
-
-        assessmentMessage.classList.add("visible");
-      }
-    );
-
+   
     
   </script>
   <script>

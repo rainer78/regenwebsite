@@ -1,0 +1,439 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+  >
+
+  <meta
+    name="description"
+    content="Thank you for contacting 10th Vision Consultancy. Your message has been received."
+  >
+
+  <meta name="robots" content="noindex, nofollow">
+
+  <title>
+    Thank You | 10th Vision Consultancy
+  </title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+
+  <link
+    rel="preconnect"
+    href="https://fonts.gstatic.com"
+    crossorigin
+  >
+
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Poppins:wght@500;600;700&display=swap"
+    rel="stylesheet"
+  >
+
+  <style>
+    :root {
+      --navy: #0a2540;
+      --navy-deep: #07182f;
+      --orange: #e65100;
+      --orange-dark: #bd4300;
+      --pale: #f2f6fa;
+      --ring-blue: #dce7f1;
+      --line: #d7e1eb;
+      --text: #17263b;
+      --muted: #53657a;
+      --white: #ffffff;
+      --shadow: 0 20px 48px rgba(10, 37, 64, 0.15);
+      --heading: "Poppins", sans-serif;
+      --body: "Inter", sans-serif;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      color: var(--text);
+      background: var(--pale);
+      font-family: var(--body);
+      line-height: 1.65;
+    }
+
+    img {
+      display: block;
+      max-width: 100%;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    .container {
+      width: min(1180px, calc(100% - 48px));
+      margin: 0 auto;
+    }
+
+    .site-header {
+      position: relative;
+      z-index: 2;
+      background: rgba(255, 255, 255, 0.98);
+      box-shadow: 0 2px 12px rgba(10, 37, 64, 0.06);
+    }
+
+    .navigation {
+      min-height: 88px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 32px;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      color: var(--navy);
+      font-family: var(--heading);
+      font-size: 1.35rem;
+      font-weight: 700;
+    }
+
+    .brand-logo {
+      width: 58px;
+      height: 58px;
+      object-fit: cover;
+      border-radius: 10px;
+      box-shadow: 0 5px 12px rgba(0, 0, 0, 0.16);
+    }
+
+    .thank-you {
+      position: relative;
+      flex: 1;
+      display: grid;
+      place-items: center;
+      overflow: hidden;
+      padding: 90px 0;
+    }
+
+    .thank-you::before {
+      content: "";
+      position: absolute;
+      width: 640px;
+      height: 640px;
+      left: -300px;
+      top: 50%;
+      border: 76px solid var(--ring-blue);
+      border-radius: 50%;
+      transform: translateY(-50%);
+    }
+
+    .thank-you::after {
+      content: "";
+      position: absolute;
+      width: 240px;
+      height: 240px;
+      right: -70px;
+      top: 70px;
+      border-radius: 50%;
+      background: var(--orange);
+      opacity: 0.95;
+    }
+
+    .thank-you-card {
+      position: relative;
+      z-index: 1;
+      width: min(760px, 100%);
+      padding: 70px 64px;
+      border-radius: 20px;
+      background: var(--white);
+      box-shadow: var(--shadow);
+      text-align: center;
+    }
+
+    .confirmation-mark {
+      width: 74px;
+      height: 74px;
+      margin: 0 auto 28px;
+      display: grid;
+      place-items: center;
+      border-radius: 50%;
+      color: var(--white);
+      background: var(--orange);
+      font-size: 2rem;
+      font-weight: 700;
+      line-height: 1;
+    }
+
+    .section-kicker {
+      margin-bottom: 14px;
+      color: var(--orange);
+      font-size: 0.82rem;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+    }
+
+    h1 {
+      margin-bottom: 22px;
+      color: var(--navy);
+      font-family: var(--heading);
+      font-size: clamp(2.35rem, 6vw, 4rem);
+      line-height: 1.12;
+      letter-spacing: -0.03em;
+    }
+
+    .lead {
+      max-width: 620px;
+      margin: 0 auto 18px;
+      color: var(--muted);
+      font-size: 1.12rem;
+    }
+
+    .follow-up-note {
+      max-width: 600px;
+      margin: 0 auto 34px;
+      color: var(--text);
+    }
+
+    .button-row {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 14px;
+    }
+
+    .btn {
+      min-height: 56px;
+      padding: 1rem 2.1rem;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      border: 1px solid transparent;
+      border-radius: 6px;
+      font-weight: 700;
+      text-align: center;
+      transition:
+        transform 0.25s ease,
+        background-color 0.25s ease,
+        border-color 0.25s ease;
+    }
+
+    .btn:hover {
+      transform: translateY(-2px);
+    }
+
+    .btn-navy {
+      color: var(--white);
+      background: var(--navy);
+    }
+
+    .btn-navy:hover {
+      background: var(--navy-deep);
+    }
+
+    .btn-outline {
+      border-color: var(--navy);
+      color: var(--navy);
+      background: transparent;
+    }
+
+    .btn-outline:hover {
+      background: rgba(10, 37, 64, 0.06);
+    }
+
+    .site-footer {
+      position: relative;
+      z-index: 1;
+      border-top: 1px solid var(--line);
+      background: var(--white);
+    }
+
+    .footer-inner {
+      min-height: 82px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 24px;
+      color: var(--muted);
+      font-size: 0.93rem;
+    }
+
+    .footer-inner a {
+      color: var(--navy);
+      font-weight: 600;
+    }
+
+    .footer-inner a:hover {
+      color: var(--orange);
+    }
+
+    @media (max-width: 700px) {
+      .container {
+        width: min(100% - 32px, 1180px);
+      }
+
+      .navigation {
+        min-height: 76px;
+      }
+
+      .brand {
+        gap: 10px;
+        font-size: 1rem;
+      }
+
+      .brand-logo {
+        width: 46px;
+        height: 46px;
+      }
+
+      .thank-you {
+        padding: 64px 0;
+      }
+
+      .thank-you::before {
+        width: 460px;
+        height: 460px;
+        left: -310px;
+        border-width: 54px;
+      }
+
+      .thank-you::after {
+        width: 150px;
+        height: 150px;
+        right: -65px;
+        top: 28px;
+      }
+
+      .thank-you-card {
+        padding: 48px 24px;
+        border-radius: 16px;
+      }
+
+      .lead {
+        font-size: 1.03rem;
+      }
+
+      .button-row {
+        width: 100%;
+      }
+
+      .btn {
+        width: 100%;
+      }
+
+      .footer-inner {
+        padding: 24px 0;
+        flex-direction: column;
+        justify-content: center;
+        text-align: center;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <header class="site-header">
+    <div class="container navigation">
+
+      <a
+        class="brand"
+        href="./index.html"
+        aria-label="Return to the 10th Vision Consultancy home page"
+      >
+        <img
+          class="brand-logo"
+          src="./img/10th-vision-consultancy-logo.png"
+          alt="10th Vision Consultancy logo"
+        >
+
+        <span>10th Vision Consultancy</span>
+      </a>
+
+    </div>
+  </header>
+
+  <main class="thank-you">
+
+    <div class="container">
+
+      <section
+        class="thank-you-card"
+        aria-labelledby="thank-you-heading"
+      >
+
+        <div
+          class="confirmation-mark"
+          aria-hidden="true"
+        >
+          ✓
+        </div>
+
+        <p class="section-kicker">
+          Message Received
+        </p>
+
+        <h1 id="thank-you-heading">
+          Thank You for Reaching Out
+        </h1>
+
+        <p class="lead">
+          Your message has been sent to 10th Vision Consultancy.
+        </p>
+
+        <p class="follow-up-note">
+          We will review the information you shared and follow up to discuss
+          the most appropriate next step for your team.
+        </p>
+
+        <div class="button-row">
+
+          <a
+            class="btn btn-navy"
+            href="./index.html"
+          >
+            Return to the Home Page
+          </a>
+
+          <a
+            class="btn btn-outline"
+            href="mailto:info@10thvision.com"
+          >
+            Email 10th Vision
+          </a>
+
+        </div>
+
+      </section>
+
+    </div>
+
+  </main>
+
+  <footer class="site-footer">
+    <div class="container footer-inner">
+
+      <p>
+        © 2026 10th Vision Consultancy. All rights reserved.
+      </p>
+
+      <a href="./index.html#contact">
+        Contact
+      </a>
+
+    </div>
+  </footer>
+
+</body>
+</html>

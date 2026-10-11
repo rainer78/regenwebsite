@@ -607,7 +607,7 @@
             max-width: 42rem;
           "
         >
-        Our process begins by giving you clarity first. Complete this 10-minute diagnostic to get a complimentary Business Outline. We map your architecture and highlight bottlenecks for free, ensuring we provide clear solutions before you spend a single dollar with us.
+        Our process begins by giving you clarity first. Complete this comprehensive business diagnostic to get a complimentary Business Outline. We map your architecture and highlight bottlenecks for free, ensuring we provide clear solutions before you spend a single dollar with us.
         </p>
 
         
@@ -658,7 +658,7 @@
             color: var(--text-soft);
           "
         >
-          <div>About 10 minutes</div>
+          <div>Comprehensive assessment; take the time you need</div>
           <div><span id="section-count"></span> structured sections</div>
           <div>One question at a time</div>
         </div>
@@ -843,7 +843,7 @@
     icon: 'flag',
     fields: [
       { name: 'primary_growth_goal', label: 'What is your top business goal right now?', type: 'radio', options: ['Get more leads', 'Respond faster to leads', 'Book more appointments', 'Improve follow-up', 'Improve website visibility', 'Save time on admin', 'Improve customer experience', 'Organize operations'], required: true },
-      { name: 'main_service_interest', label: 'Which type of support are you most interested in right now?', type: 'radio', options: ['Autonomous website updates through AutoSite', 'Lead capture and follow-up agent', 'Process mapping and operations support', 'A combination of these', 'Not sure yet'], required: true },
+      { name: 'main_service_interest', label: "After describing your business operations, which type of REGEN support would you like to explore, if any?", type: 'radio', options: ['Autonomous website updates through AutoSite', 'Lead capture and follow-up agent', 'Process mapping and operations support', 'A combination of these', 'Not sure yet'], required: true },
       { name: 'urgency_level', label: 'How soon are you looking to improve this area?', type: 'radio', options: ['Immediately', 'Within 30 days', 'Within 90 days', 'Just exploring for now'], required: true },
       { name: 'most_important_offer', label: 'Which service or offer do you most want to generate more leads for?', type: 'text', placeholder: 'e.g., Buyer consultations, hair appointments, bookkeeping packages', required: true },
       { name: 'typical_customer_value', label: 'What is the typical value of a new customer, booking, or client engagement?', type: 'radio', options: ['Under $100', '$100–$500', '$500–$1,500', '$1,500–$5,000', '$5,000+', 'Not sure'], required: true }
@@ -887,7 +887,7 @@
     fields: [
       { name: 'contact_methods', label: 'How do customers currently contact your business?', type: 'checkbox', options: ['Website form', 'Email', 'Phone call', 'Text message', 'Social media DM', 'Google Business Profile', 'Walk-in', 'Other'], required: true },
       { name: 'inquiry_tracking', label: 'Where are new inquiries actually recorded or tracked?', type: 'radio', options: ['CRM software', 'Spreadsheet', 'Email inbox', 'Social inbox only', 'Paper or notebook', 'Not tracked consistently'], required: true },
-      { name: 'after_contact', label: 'What usually happens after someone contacts your business?', type: 'textarea', placeholder: 'Describe your typical process from inquiry to next step...', required: true },
+      { name: 'after_contact', label: "Think about the last customer inquiry you received. What happened next, step by step, including any delays or handoffs?", type: 'textarea', placeholder: 'Describe your typical process from inquiry to next step...', required: true },
       { name: 'who_responds', label: 'Who usually responds to new inquiries?', type: 'radio', options: ['Me, the owner', 'A specific team member', 'Whoever is available', 'No consistent person'], required: true },
       { name: 'response_timing_actual', label: 'How quickly are inquiries usually answered in real life?', type: 'radio', options: ['Within 1 hour', 'Same day', 'Within 24 hours', 'More than 24 hours', 'It varies'], required: true }
     ]
@@ -913,7 +913,7 @@
     fields: [
       { name: 'followup_method', label: 'How are follow-ups currently handled?', type: 'checkbox', options: ['Email', 'Phone call', 'Text message', 'Social media message', 'Not currently done'], required: true },
       { name: 'communication_tracked', label: 'Is client communication tracked anywhere?', type: 'radio', options: ['Yes, in a CRM', 'Yes, in a spreadsheet', 'Somewhat, in email or messages', 'No, not really'], required: true },
-      { name: 'followup_challenges', label: 'What challenges do you face with follow-up?', type: 'textarea', placeholder: 'e.g., I forget to follow up, it takes too long, messages are scattered...', required: true },
+      { name: 'followup_challenges', label: "Think about the last difficult, forgotten, or delayed follow-up. What happened, and what was the consequence?", type: 'textarea', placeholder: 'e.g., I forget to follow up, it takes too long, messages are scattered...', required: true },
       { name: 'client_response_goal', label: 'What should happen after a client or lead engages with your business?', type: 'radio', options: ['Book an appointment', 'Receive a quote', 'Get a callback', 'Receive more information', 'Be added to follow-up sequence', 'It depends'], required: true }
     ]
   },
@@ -964,10 +964,10 @@
     description: 'Help us understand where you need the most support.',
     icon: 'target',
     fields: [
-      { name: 'time_consuming_task', label: 'What is your most time-consuming task right now?', type: 'textarea', placeholder: 'e.g., Responding to emails, creating invoices, following up with leads...', required: true },
-      { name: 'disorganized_process', label: 'What is your most disorganized process right now?', type: 'textarea', placeholder: 'e.g., Client onboarding, lead tracking, appointment follow-up...', required: true },
+      { name: 'time_consuming_task', label: "What is your most time-consuming recurring task? Describe the last time you did it, how long it took, and how often it occurs.", type: 'textarea', placeholder: 'e.g., Responding to emails, creating invoices, following up with leads...', required: true },
+      { name: 'disorganized_process', label: "Which process is most difficult to keep organized? Describe the last time it broke down and which tools or people were involved.", type: 'textarea', placeholder: 'e.g., Client onboarding, lead tracking, appointment follow-up...', required: true },
       { name: 'simplify_task', label: 'If you could simplify one task immediately, what would it be?', type: 'textarea', placeholder: 'Describe the one thing you wish was easier...', required: true },
-      { name: 'manual_workarounds', label: 'Are there any manual workarounds or repetitive tasks your business relies on right now?', type: 'textarea', placeholder: 'Describe any repeated steps, copy-paste tasks, reminders, or workarounds...', required: false }
+      { name: 'manual_workarounds', label: "Describe the last manual workaround or repeated copy-and-paste task you performed. What triggered it and where did the information go?", type: 'textarea', placeholder: 'Describe any repeated steps, copy-paste tasks, reminders, or workarounds...', required: false }
     ]
   },
   {
@@ -981,7 +981,107 @@
       { name: 'response_timing', label: 'What is your intended response timing for new inquiries?', type: 'radio', options: ['Within 1 hour', 'Same day', 'Within 24 hours', 'More than 24 hours', 'It varies'], required: true },
       { name: 'post_scheduling_step', label: 'After someone books or schedules, what normally happens next?', type: 'radio', options: ['Consultation call', 'In-person appointment', 'Quote or proposal', 'Immediate service', 'Automated follow-up', 'It varies'], required: true },
       { name: 'post_interaction_followup', label: 'After a client interaction, what follow-up normally happens?', type: 'radio', options: ['Automated follow-up', 'Manual follow-up', 'Occasional follow-up', 'No formal follow-up'], required: true },
-      { name: 'workflow_notes', label: 'Is there anything else about your workflow we should know before recommending systems or automation?', type: 'textarea', placeholder: 'Add any notes that would help us understand your real-world process...', required: false }
+      { name: 'workflow_notes', label: "What happens in daily practice that differs from your written process or what you have described above? What have we missed?", type: 'textarea', placeholder: 'Add any notes that would help us understand your real-world process...', required: false }
+    ]
+  },
+  {
+    id: 'business_realities',
+    title: 'Business Realities',
+    description: 'Describe what happens in practice. Specific examples help us distinguish current behavior from goals.',
+    icon: 'clipboard-list',
+    fields: [
+      { name: 'business_realities_1', label: "Who is responsible for sales, service delivery, billing, and customer support today?", type: 'textarea', placeholder: "Describe a specific recent example. Include people, tools, steps, and outcomes where relevant. If this has not happened, say so.", required: false },
+      { name: 'business_realities_2', label: "What percentage of your workweek is spent delivering paid work versus running the business?", type: 'textarea', placeholder: "Describe a specific recent example. Include people, tools, steps, and outcomes where relevant. If this has not happened, say so.", required: false },
+      { name: 'business_realities_3', label: "What has changed most in how your business operates during the last six months?", type: 'textarea', placeholder: "Describe a specific recent example. Include people, tools, steps, and outcomes where relevant. If this has not happened, say so.", required: false },
+      { name: 'business_realities_4', label: "Which business activity stops completely when you are unavailable?", type: 'textarea', placeholder: "Describe a specific recent example. Include people, tools, steps, and outcomes where relevant. If this has not happened, say so.", required: false }
+    ]
+  },
+  {
+    id: 'recent_behavior',
+    title: 'Recent Business Activity',
+    description: 'Describe what happens in practice. Specific examples help us distinguish current behavior from goals.',
+    icon: 'clipboard-list',
+    fields: [
+      { name: 'recent_behavior_1', label: "Think of the last customer who paid you. How did that relationship begin?", type: 'textarea', placeholder: "Describe a specific recent example. Include people, tools, steps, and outcomes where relevant. If this has not happened, say so.", required: false },
+      { name: 'recent_behavior_2', label: "Walk through the last job from inquiry to payment, including every handoff.", type: 'textarea', placeholder: "Describe a specific recent example. Include people, tools, steps, and outcomes where relevant. If this has not happened, say so.", required: false },
+      { name: 'recent_behavior_3', label: "Which app, record, or person did you check to determine the next step in that job?", type: 'textarea', placeholder: "Describe a specific recent example. Include people, tools, steps, and outcomes where relevant. If this has not happened, say so.", required: false },
+      { name: 'recent_behavior_4', label: "What was the last promise you made to a customer, and where did you record it?", type: 'textarea', placeholder: "Describe a specific recent example. Include people, tools, steps, and outcomes where relevant. If this has not happened, say so.", required: false },
+      { name: 'recent_behavior_5', label: "Tell us about the last time you had to recover from a mistake or missed step.", type: 'textarea', placeholder: "Describe a specific recent example. Include people, tools, steps, and outcomes where relevant. If this has not happened, say so.", required: false },
+      { name: 'recent_behavior_6', label: "What task did you do yesterday that you wish had been handled for you?", type: 'textarea', placeholder: "Describe a specific recent example. Include people, tools, steps, and outcomes where relevant. If this has not happened, say so.", required: false },
+      { name: 'recent_behavior_7', label: "Which business task did you perform three or more times in the past week? Describe the last instance.", type: 'textarea', placeholder: "Describe a specific recent example. Include people, tools, steps, and outcomes where relevant. If this has not happened, say so.", required: false },
+      { name: 'recent_behavior_8', label: "What information did you enter more than once this week, and into which systems?", type: 'textarea', placeholder: "Describe a specific recent example. Include people, tools, steps, and outcomes where relevant. If this has not happened, say so.", required: false }
+    ]
+  },
+  {
+    id: 'customer_journey_reality',
+    title: 'Customer Journey in Practice',
+    description: 'Describe what happens in practice. Specific examples help us distinguish current behavior from goals.',
+    icon: 'clipboard-list',
+    fields: [
+      { name: 'customer_journey_reality_1', label: "How did the most recent prospect become a customer, or why did they not?", type: 'textarea', placeholder: "Describe a specific recent example. Include people, tools, steps, and outcomes where relevant. If this has not happened, say so.", required: false },
+      { name: 'customer_journey_reality_2', label: "What happens after you finish delivering a product or service? Describe the last occurrence.", type: 'textarea', placeholder: "Describe a specific recent example. Include people, tools, steps, and outcomes where relevant. If this has not happened, say so.", required: false },
+      { name: 'customer_journey_reality_3', label: "What does a returning customer have to repeat or re-explain to you?", type: 'textarea', placeholder: "Describe a specific recent example. Include people, tools, steps, and outcomes where relevant. If this has not happened, say so.", required: false }
+    ]
+  },
+  {
+    id: 'financial_workflow',
+    title: 'Financial Workflow',
+    description: 'Describe what happens in practice. Specific examples help us distinguish current behavior from goals.',
+    icon: 'clipboard-list',
+    fields: [
+      { name: 'financial_workflow_1', label: "How was your most recent invoice created, delivered, and recorded?", type: 'textarea', placeholder: "Describe a specific recent example. Include people, tools, steps, and outcomes where relevant. If this has not happened, say so.", required: false },
+      { name: 'financial_workflow_2', label: "How do you know which customers have paid and which have not?", type: 'textarea', placeholder: "Describe a specific recent example. Include people, tools, steps, and outcomes where relevant. If this has not happened, say so.", required: false },
+      { name: 'financial_workflow_3', label: "Tell us about the last overdue payment and what you did next.", type: 'textarea', placeholder: "Describe a specific recent example. Include people, tools, steps, and outcomes where relevant. If this has not happened, say so.", required: false },
+      { name: 'financial_workflow_4', label: "What expense, renewal, or recurring bill did you last have to remember manually?", type: 'textarea', placeholder: "Describe a specific recent example. Include people, tools, steps, and outcomes where relevant. If this has not happened, say so.", required: false }
+    ]
+  },
+  {
+    id: 'delivery_operations',
+    title: 'Service Delivery and Capacity',
+    description: 'Describe what happens in practice. Specific examples help us distinguish current behavior from goals.',
+    icon: 'clipboard-list',
+    fields: [
+      { name: 'delivery_operations_1', label: "How do you decide whether you can take on a new client or job?", type: 'textarea', placeholder: "Describe a specific recent example. Include people, tools, steps, and outcomes where relevant. If this has not happened, say so.", required: false },
+      { name: 'delivery_operations_2', label: "Where are deadlines, deliverables, and scope changes recorded?", type: 'textarea', placeholder: "Describe a specific recent example. Include people, tools, steps, and outcomes where relevant. If this has not happened, say so.", required: false },
+      { name: 'delivery_operations_3', label: "Describe the last time a client requested a change after work began.", type: 'textarea', placeholder: "Describe a specific recent example. Include people, tools, steps, and outcomes where relevant. If this has not happened, say so.", required: false },
+      { name: 'delivery_operations_4', label: "What part of delivery regularly requires chasing a customer for information?", type: 'textarea', placeholder: "Describe a specific recent example. Include people, tools, steps, and outcomes where relevant. If this has not happened, say so.", required: false }
+    ]
+  },
+  {
+    id: 'content_reality',
+    title: 'Publishing Behavior',
+    description: 'Describe what happens in practice. Specific examples help us distinguish current behavior from goals.',
+    icon: 'clipboard-list',
+    fields: [
+      { name: 'content_reality_1', label: "Which accounts received your five most recent business-related posts?", type: 'textarea', placeholder: "Describe a specific recent example. Include people, tools, steps, and outcomes where relevant. If this has not happened, say so.", required: false },
+      { name: 'content_reality_2', label: "How did the last social post move from idea to publishing on each channel?", type: 'textarea', placeholder: "Describe a specific recent example. Include people, tools, steps, and outcomes where relevant. If this has not happened, say so.", required: false },
+      { name: 'content_reality_3', label: "What evidence currently tells you whether your content creates inquiries or leads?", type: 'textarea', placeholder: "Describe a specific recent example. Include people, tools, steps, and outcomes where relevant. If this has not happened, say so.", required: false }
+    ]
+  },
+  {
+    id: 'delegation_definition',
+    title: 'Define the Job to Delegate',
+    description: 'Describe what happens in practice. Specific examples help us distinguish current behavior from goals.',
+    icon: 'clipboard-list',
+    fields: [
+      { name: 'delegation_definition_1', label: "If you could hand off one recurring responsibility tomorrow, what would the new helper need to do from start to finish?", type: 'textarea', placeholder: "Describe a specific recent example. Include people, tools, steps, and outcomes where relevant. If this has not happened, say so.", required: true },
+      { name: 'delegation_definition_2', label: "What starts that responsibility, and how will a helper know it is finished?", type: 'textarea', placeholder: "Describe a specific recent example. Include people, tools, steps, and outcomes where relevant. If this has not happened, say so.", required: true },
+      { name: 'delegation_definition_3', label: "What mistakes would be unacceptable if the responsibility were automated?", type: 'textarea', placeholder: "Describe a specific recent example. Include people, tools, steps, and outcomes where relevant. If this has not happened, say so.", required: true },
+      { name: 'delegation_definition_4', label: "Which decisions can a system take alone, and which must come back to you for approval?", type: 'textarea', placeholder: "Describe a specific recent example. Include people, tools, steps, and outcomes where relevant. If this has not happened, say so.", required: true },
+      { name: 'delegation_definition_5', label: "What data could a system access, and what information should it never use?", type: 'textarea', placeholder: "Describe a specific recent example. Include people, tools, steps, and outcomes where relevant. If this has not happened, say so.", required: true },
+      { name: 'delegation_definition_6', label: "What should happen if a connected system stops working halfway through the job?", type: 'textarea', placeholder: "Describe a specific recent example. Include people, tools, steps, and outcomes where relevant. If this has not happened, say so.", required: true },
+      { name: 'delegation_definition_7', label: "How would you measure the time or money recovered if this job were handled consistently?", type: 'textarea', placeholder: "Describe a specific recent example. Include people, tools, steps, and outcomes where relevant. If this has not happened, say so.", required: true }
+    ]
+  },
+  {
+    id: 'define_synthesis',
+    title: 'Priorities and Success',
+    description: 'Describe what happens in practice. Specific examples help us distinguish current behavior from goals.',
+    icon: 'clipboard-list',
+    fields: [
+      { name: 'define_synthesis_1', label: "What finding in this diagnostic surprises you or does not match your experience?", type: 'textarea', placeholder: "Describe a specific recent example. Include people, tools, steps, and outcomes where relevant. If this has not happened, say so.", required: true },
+      { name: 'define_synthesis_2', label: "Which three jobs should be investigated further, ranked by importance and consequence?", type: 'textarea', placeholder: "Describe a specific recent example. Include people, tools, steps, and outcomes where relevant. If this has not happened, say so.", required: true },
+      { name: 'define_synthesis_3', label: "For the top job, what would successful operation look like after 30 days?", type: 'textarea', placeholder: "Describe a specific recent example. Include people, tools, steps, and outcomes where relevant. If this has not happened, say so.", required: true }
     ]
   },
   {
@@ -1645,9 +1745,9 @@ function autoAdvanceAfterVoiceInput() {
     payload.results_delivery_email = formData.email || '';
     payload.submitted_at = new Date().toISOString();
     payload.form_name = 'Business Process Intake Questionnaire';
-    payload.form_version = 'v2';
+    payload.form_version = 'v3';
     payload.workflow_output_requested = 'client intake document, process map, sop';
-    payload.output_note = 'Use this submission to generate a consulting intake summary, a basic current-state process map, and a basic SOP for the mapped process.';
+    payload.output_note = 'Use this submission to generate a consulting intake summary, a current-state process map, and a basic SOP. Distinguish owner-reported behavior from verified facts and hypotheses. Define specific jobs to be done and identify missing evidence; do not invent observations or recommend tools without support.';
 
     return payload;
   }

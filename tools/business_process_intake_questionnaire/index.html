@@ -1745,7 +1745,8 @@ function autoAdvanceAfterVoiceInput() {
     payload.results_delivery_email = formData.email || '';
     payload.submitted_at = new Date().toISOString();
     payload.form_name = 'Business Process Intake Questionnaire';
-    payload.form_version = 'v3';
+    payload.form_version = 'v2';
+    payload.diagnostic_revision = 'discover-define-v3';
     payload.workflow_output_requested = 'client intake document, process map, sop';
     payload.output_note = 'Use this submission to generate a consulting intake summary, a current-state process map, and a basic SOP. Distinguish owner-reported behavior from verified facts and hypotheses. Define specific jobs to be done and identify missing evidence; do not invent observations or recommend tools without support.';
 
